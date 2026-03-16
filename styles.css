@@ -1,236 +1,945 @@
+/* ===================================================
+   Styles — Rodolphe Vandaele iOS Apps
+   Apple Design Language 2026
+   =================================================== */
+
+/* === TOKENS === */
 :root {
-  /* Apple System Colors */
-  --bg-color: #f5f5f7;
-  --card-bg: rgba(255, 255, 255, 0.72);
-  --text-primary: #1d1d1f;
-  --text-secondary: #86868b;
-  --link-color: #0066cc;
-  --accent-blue: #0071e3;
-  --separator: #d2d2d7;
-  
-  /* Metrics */
-  --radius-l: 20px;
-  --radius-m: 12px;
-  --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  --apps-bg:        #f5f5f7;
+  --card-bg:        #ffffff;
+  --text-primary:   #1d1d1f;
+  --text-secondary: #6e6e73;
+  --link-color:     #0066cc;
+  --accent-blue:    #0071e3;
+  --separator:      rgba(0, 0, 0, 0.09);
+
+  --radius-xl: 20px;
+  --radius-m:  12px;
+
+  --font: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg-color: #000000;
-    --card-bg: rgba(28, 28, 30, 0.72);
-    --text-primary: #f5f5f7;
-    --text-secondary: #86868b;
-    --link-color: #2997ff;
-    --accent-blue: #0a84ff;
-    --separator: #38383a;
+    --apps-bg:        #111111;
+    --card-bg:        #1c1c1e;
+    --text-primary:   #f5f5f7;
+    --text-secondary: #98989d;
+    --link-color:     #2997ff;
+    --accent-blue:    #0a84ff;
+    --separator:      rgba(255, 255, 255, 0.08);
   }
 }
+
+/* === BASE === */
+html { scroll-behavior: smooth; }
+
+*, *::before, *::after { box-sizing: border-box; }
 
 body {
   margin: 0;
   padding: 0;
-  font-family: var(--font-stack);
-  background-color: var(--bg-color);
+  font-family: var(--font);
+  background: var(--apps-bg);
   color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.5;
 }
 
-.container {
+/* === ANIMATION === */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ===================================================
+   HERO — fond noir, gradient blanc→bleu→violet
+   Style Apple Intelligence / apple.com produit
+   =================================================== */
+.hero {
+  background: #000;
+  text-align: center;
+  padding: 112px 24px 96px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Halos de lumière derrière le titre */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 20%, rgba(0, 113, 227, 0.28) 0%, transparent 60%),
+    radial-gradient(ellipse 55% 40% at 72% 8%,  rgba(191, 90, 242, 0.14) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 1;
   max-width: 980px;
   margin: 0 auto;
-  padding: 40px 20px;
 }
 
-.container-narrow {
-  max-width: 680px;
-}
-
-/* Header / Hero */
-h1 {
-  font-size: 40px;
-  line-height: 1.1;
+.hero-eyebrow {
+  font-size: 12px;
   font-weight: 700;
-  margin-bottom: 10px;
-  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #2997ff;
+  margin: 0 0 20px 0;
+  animation: fade-up 0.5s ease both;
 }
 
-.subtitle {
-  font-size: 24px;
-  line-height: 1.3;
-  font-weight: 500;
-  color: var(--text-secondary);
-  margin-top: 0;
-  margin-bottom: 40px;
+/* Titre gradient blanc → bleu → violet */
+.hero-title {
+  /* Mobile : 2 lignes, taille ajustée */
+  font-size: clamp(46px, 13vw, 62px);
+  font-weight: 700;
+  letter-spacing: -0.042em;
+  line-height: 1.0;
+  background: linear-gradient(
+    150deg,
+    #ffffff 0%,
+    #ffffff 38%,
+    #2997ff 65%,
+    #bf5af2 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0 0 24px 0;
+  animation: fade-up 0.5s 0.08s ease both;
 }
 
-/* Cards & Sections */
-.section {
-  margin-bottom: 40px;
+/* Tablette : 1 ligne */
+@media (min-width: 768px) {
+  .hero-title { font-size: clamp(52px, 7.5vw, 72px); }
+  .hero-title .name-break { display: inline; }
+}
+
+/* Desktop : 1 ligne, grand */
+@media (min-width: 1024px) {
+  .hero-title { font-size: clamp(72px, 7vw, 88px); }
+}
+
+/* Mobile (< 768px) : "Vandaele" passe à la ligne */
+@media (max-width: 767px) {
+  .hero-title .name-break { display: block; }
+}
+
+.hero-sub {
+  font-size: clamp(17px, 2.5vw, 21px);
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.48);
+  margin: 0;
+  animation: fade-up 0.5s 0.16s ease both;
+}
+
+/* ===================================================
+   SECTION APPLICATIONS
+   =================================================== */
+.apps-section {
+  background: var(--apps-bg);
+  padding: 72px 0 96px;
+}
+
+.apps-container {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0 24px;
+  animation: fade-up 0.6s 0.28s ease both;
+}
+
+.section-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent-blue);
+  margin: 0 0 20px 2px;
+}
+
+/* ===================================================
+   GRILLE & CARTES
+   =================================================== */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+@media (min-width: 768px) {
+  .grid-2 { grid-template-columns: 1fr 1fr; }
 }
 
 .card {
   background: var(--card-bg);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-radius: var(--radius-l);
-  padding: 30px;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-  border: 1px solid rgba(128,128,128, 0.1);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-radius: var(--radius-xl);
+  padding: 28px;
+  box-shadow:
+    0 2px 20px rgba(0, 0, 0, 0.08),
+    0 0 0 0.5px rgba(0, 0, 0, 0.06);
+  transition: transform 0.24s ease, box-shadow 0.24s ease;
 }
 
-.card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+@media (prefers-color-scheme: dark) {
+  .card {
+    box-shadow:
+      0 2px 24px rgba(0, 0, 0, 0.50),
+      0 0 0 0.5px rgba(255, 255, 255, 0.06);
+  }
+}
+
+.grid-2 .card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 56px rgba(0, 0, 0, 0.13), 0 0 0 0.5px rgba(0, 0, 0, 0.04);
+}
+
+@media (prefers-color-scheme: dark) {
+  .grid-2 .card:hover {
+    box-shadow: 0 20px 56px rgba(0, 0, 0, 0.60), 0 0 0 0.5px rgba(255, 255, 255, 0.09);
+  }
+}
+
+.grid-2 .card:hover .app-icon { transform: scale(1.05); }
+
+.card-disabled {
+  opacity: 0.36;
+  pointer-events: none;
+  filter: grayscale(1);
 }
 
 .card-header {
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
+  gap: 16px;
+  margin-bottom: 18px;
 }
 
 .app-icon {
-  width: 64px;
-  height: 64px;
-  border-radius: 14px;
-  margin-right: 20px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  width: 80px;
+  height: 80px;
+  border-radius: 18px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+  flex-shrink: 0;
+  transition: transform 0.24s ease;
 }
 
 .app-title {
-  margin: 0;
-  font-size: 24px;
+  margin: 0 0 6px 0;
+  font-size: 22px;
   font-weight: 600;
+  letter-spacing: -0.015em;
 }
 
 .app-badge {
-  display: inline-block;
-  padding: 4px 10px;
-  background-color: var(--accent-blue);
-  color: white;
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  background: var(--accent-blue);
+  color: #fff;
   border-radius: 20px;
-  font-size: 12px;
-  font-weight: 600;
-  margin-top: 6px;
+  font-size: 11px;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.06em;
+}
+
+.app-badge-muted {
+  background: var(--separator);
+  color: var(--text-secondary);
 }
 
 .card-content {
-  font-size: 17px;
+  font-size: 15px;
+  line-height: 1.65;
   color: var(--text-secondary);
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
-/* Links & Metadata */
+/* ===================================================
+   LISTE DE LIENS — iOS Settings style
+   =================================================== */
 .link-list {
   list-style: none;
   padding: 0;
-  margin: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 16px;
+  margin: 0 0 24px 0;
+  border-radius: var(--radius-m);
+  border: 1px solid var(--separator);
+  overflow: hidden;
 }
 
 .link-item {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--separator);
+  transition: background 0.12s ease;
 }
 
-.link-label {
-  font-size: 12px;
-  font-weight: 600;
-  text-transform: uppercase;
-  color: var(--text-secondary);
-  margin-bottom: 4px;
-  letter-spacing: 0.05em;
+.link-item:last-child { border-bottom: none; }
+
+.link-item:has(a.link-url):hover { background: rgba(0, 102, 204, 0.05); }
+
+@media (prefers-color-scheme: dark) {
+  .link-item:has(a.link-url):hover { background: rgba(41, 151, 255, 0.09); }
 }
 
-.link-url {
+.link-label  { font-size: 15px; color: var(--text-primary); }
+
+a.link-url {
+  display: inline-flex;
+  align-items: center;
+  gap: 1px;
   color: var(--link-color);
   text-decoration: none;
   font-size: 15px;
-  font-weight: 500;
+}
+
+a.link-url::after {
+  content: '›';
+  font-size: 18px;
+  line-height: 1;
+  opacity: 0.45;
+}
+
+span.link-url { font-size: 15px; color: var(--text-secondary); }
+
+/* ===================================================
+   BOUTONS
+   =================================================== */
+
+/* Badge App Store — noir/blanc selon le mode */
+.store-link-badge {
   display: inline-flex;
   align-items: center;
+  background: #000;
+  color: #fff;
+  padding: 11px 22px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  transition: opacity 0.15s ease, transform 0.15s ease;
 }
 
-.link-url:hover {
-  text-decoration: underline;
+.store-link-badge:hover  { opacity: 0.80; transform: scale(1.02); }
+.store-link-badge:active { transform: scale(0.97); }
+
+@media (prefers-color-scheme: dark) {
+  .store-link-badge { background: #fff; color: #000; }
 }
 
-/* App Store Button */
+/* Bouton contact email — pill bleu
+   Note: color:#fff avec !important pour neutraliser
+   tout sélecteur parent qui hérite sa couleur sur les <a> */
 .store-link {
   display: inline-flex;
   align-items: center;
-  background-color: var(--text-primary);
-  color: var(--bg-color);
-  padding: 12px 24px;
-  border-radius: 999px;
-  text-decoration: none;
+  justify-content: center;
+  background: var(--accent-blue);
+  color: #fff !important;
+  padding: 12px 26px;
+  border-radius: 980px;
+  text-decoration: none !important;
+  font-size: 15px;
   font-weight: 600;
-  margin-top: 10px;
+  transition: filter 0.15s ease, transform 0.15s ease;
 }
 
-.store-link:hover {
-  opacity: 0.9;
+.store-link:hover  { filter: brightness(1.12); transform: scale(1.02); }
+.store-link:active { transform: scale(0.97); }
+
+/* ===================================================
+   SOUS-PAGES — structure & header
+   =================================================== */
+.page-container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 64px 24px 80px;
 }
 
-/* Privacy Pages */
-.privacy-section {
-  margin-bottom: 30px;
+.page-header {
+  margin-bottom: 36px;
+  animation: fade-up 0.5s ease both;
 }
 
-.privacy-section h2 {
-  font-size: 20px;
-  font-weight: 600;
-  margin-bottom: 12px;
+.page-header-inner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.page-icon-link {
+  display: flex;
+  flex-shrink: 0;
+  border-radius: 15px;
+  transition: opacity 0.15s ease;
+}
+
+.page-icon-link:hover { opacity: 0.70; }
+
+.page-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 15px;
+  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.16);
+  display: block;
+}
+
+.page-title {
+  font-size: clamp(22px, 4vw, 30px);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  margin: 0;
   color: var(--text-primary);
 }
 
-.privacy-section p {
-  font-size: 16px;
+.page-subtitle {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* ===================================================
+   SOUS-PAGES — carte contenu
+   =================================================== */
+.page-card {
+  background: var(--card-bg);
+  border-radius: var(--radius-xl);
+  padding: 32px;
+  box-shadow:
+    0 2px 20px rgba(0, 0, 0, 0.07),
+    0 0 0 0.5px rgba(0, 0, 0, 0.06);
+  animation: fade-up 0.5s 0.12s ease both;
+}
+
+@media (prefers-color-scheme: dark) {
+  .page-card {
+    box-shadow:
+      0 2px 24px rgba(0, 0, 0, 0.50),
+      0 0 0 0.5px rgba(255, 255, 255, 0.06);
+  }
+}
+
+.page-section {
+  padding-bottom: 28px;
+  margin-bottom: 28px;
+  border-bottom: 1px solid var(--separator);
+}
+
+.page-section:last-child {
+  padding-bottom: 0;
+  margin-bottom: 0;
+  border-bottom: none;
+}
+
+.page-section h2 {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0 0 12px 0;
+  color: var(--text-primary);
+}
+
+.page-section p {
+  font-size: 15px;
+  line-height: 1.65;
   color: var(--text-secondary);
   margin: 0 0 10px 0;
 }
 
-/* Footer */
-footer {
-  margin-top: 60px;
-  padding-top: 20px;
-  border-top: 1px solid var(--separator);
-  color: var(--text-secondary);
-  font-size: 13px;
-  text-align: center;
+.page-section p:last-child { margin-bottom: 0; }
+
+.page-section p strong {
+  color: var(--text-primary);
+  font-weight: 600;
 }
 
-footer a {
-  color: var(--text-secondary);
+/* Liens texte dans les sections — exclut les boutons et les lignes support */
+.page-section a:not(.store-link):not(.support-item) {
+  color: var(--link-color);
   text-decoration: none;
 }
 
-footer a:hover {
-  text-decoration: underline;
+.page-section a:not(.store-link):not(.support-item):hover { text-decoration: underline; }
+
+/* FAQ */
+.faq-item { margin-bottom: 16px; }
+.faq-item:last-child { margin-bottom: 0; }
+
+.faq-q {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 5px 0;
+}
+
+.faq-a {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--text-secondary);
+  margin: 0;
 }
 
 .muted-text {
-    font-size: 14px;
-    color: var(--text-secondary);
-    font-style: italic;
-    margin-top: 8px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-style: italic;
+  margin-top: 6px;
 }
 
-.grid-2 {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 20px;
+/* ===================================================
+   FOOTERS
+   =================================================== */
+.site-footer {
+  background: var(--apps-bg);
+  border-top: 1px solid var(--separator);
+  padding: 28px 24px 40px;
+  color: var(--text-secondary);
+  font-size: 12px;
+  text-align: center;
+  line-height: 2;
 }
 
-@media (min-width: 768px) {
-    .grid-2 {
-        grid-template-columns: 1fr 1fr;
-    }
+.site-footer p { margin: 0; }
+
+.site-footer a,
+.page-footer a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.site-footer a:hover,
+.page-footer a:hover { color: var(--text-primary); }
+
+.page-footer {
+  margin-top: 48px;
+  padding-top: 20px;
+  border-top: 1px solid var(--separator);
+  color: var(--text-secondary);
+  font-size: 12px;
+  text-align: center;
+  line-height: 2;
+}
+
+.page-footer p { margin: 0; }
+
+/* ===================================================
+   BOUTON PROFIL TYPE iOS (index page)
+   Inspiré du royal blue (#1560BD) des icônes apps
+   =================================================== */
+.dev-row {
+  margin-top: 44px;
+}
+
+.profile-btn {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--card-bg);
+  border-radius: var(--radius-xl);
+  padding: 16px 18px;
+  text-decoration: none;
+  box-shadow:
+    0 2px 16px rgba(0, 0, 0, 0.07),
+    0 0 0 0.5px rgba(0, 0, 0, 0.06);
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+@media (prefers-color-scheme: dark) {
+  .profile-btn {
+    box-shadow:
+      0 2px 20px rgba(0, 0, 0, 0.42),
+      0 0 0 0.5px rgba(255, 255, 255, 0.06);
+  }
+}
+
+.profile-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.10), 0 0 0 0.5px rgba(0, 0, 0, 0.04);
+}
+
+@media (prefers-color-scheme: dark) {
+  .profile-btn:hover {
+    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.52), 0 0 0 0.5px rgba(255, 255, 255, 0.08);
+  }
+}
+
+.profile-btn-photo {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center top;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.profile-btn-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.profile-btn-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.profile-btn-sub {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.profile-btn-chevron {
+  font-size: 22px;
+  color: var(--text-secondary);
+  opacity: 0.40;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+/* ===================================================
+   COEUR — tagline style SwiftUI inline
+   "Créée avec ♥ par un développeur indépendant"
+   =================================================== */
+.about-heart {
+  /* Réinitialisé : plus de gradient, rouge Apple system */
+  display: inline;
+  font-size: inherit;
+  color: #ff3b30;            /* Apple systemRed — équiv. .foregroundStyle(.red) */
+  background: none;
+  -webkit-text-fill-color: #ff3b30;
+  background-clip: initial;
+  margin-top: 0;
+  animation: none;
+}
+
+.about-tagline {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.46);
+  margin: 18px 0 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  animation: fade-up 0.45s 0.24s ease both;
+}
+
+/* ===================================================
+   APPS MINI — lignes avec icônes dans la bio
+   =================================================== */
+.app-mini-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.app-mini-row:last-child { margin-bottom: 0; }
+
+.app-mini-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 9px;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.14);
+}
+
+.app-mini-icon.disabled {
+  filter: grayscale(1);
+  opacity: 0.45;
+}
+
+.app-mini-name {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.app-mini-desc {
+  display: block;
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 1px;
+}
+
+/* ===================================================
+   TECH BADGES — stack technique
+   =================================================== */
+.tech-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 14px;
+}
+
+.tech-badge {
+  padding: 4px 11px;
+  background: var(--apps-bg);
+  color: var(--text-secondary);
+  border: 1px solid var(--separator);
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: "SF Mono", "Menlo", "Monaco", monospace;
+}
+
+/* ===================================================
+   SOUTENIR — Bouton partage natif iOS
+   =================================================== */
+.share-native-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 14px 20px;
+  margin-top: 16px;
+  background: var(--accent-blue);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-m);
+  font-size: 15px;
+  font-weight: 600;
+  font-family: var(--font);
+  cursor: pointer;
+  letter-spacing: -0.01em;
+  transition: filter 0.15s ease, transform 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.share-native-btn:hover  { filter: brightness(1.10); }
+.share-native-btn:active { transform: scale(0.97); }
+
+/* Séparateur "ou" style Apple — ligne + texte + ligne */
+.support-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 16px 0 14px;
+  color: var(--text-secondary);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.support-divider::before,
+.support-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--separator);
+}
+
+/* ===================================================
+   SOUTENIR — iOS Settings rows
+   =================================================== */
+.support-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-radius: var(--radius-m);
+  border: 1px solid var(--separator);
+  overflow: hidden;
+}
+
+.support-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 14px;
+  text-decoration: none;
+  color: inherit;
+  background: transparent;
+  border-bottom: 1px solid var(--separator);
+  transition: background 0.12s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.support-item:last-child { border-bottom: none; }
+
+.support-item:hover { background: rgba(0, 0, 0, 0.04); }
+
+@media (prefers-color-scheme: dark) {
+  .support-item:hover { background: rgba(255, 255, 255, 0.05); }
+}
+
+/* Icône carrée arrondie — style iOS */
+.support-item-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 16px;
+}
+
+.icon-star { background: rgba(255, 204, 0, 0.20); }
+
+.icon-x    { background: #111; color: #fff; }
+
+@media (prefers-color-scheme: dark) {
+  .icon-x  { background: #e8e8e8; color: #000; }
+}
+
+.icon-fb   { background: #1877F2; color: #fff; }
+.icon-li   { background: #0077B5; color: #fff; }
+
+.support-item-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.support-item-label {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.support-item-sub {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.support-item-chevron {
+  font-size: 17px;
+  color: var(--text-secondary);
+  opacity: 0.40;
+  line-height: 1;
+}
+
+/* ===================================================
+   PAGE À PROPOS — Hero (halo aux couleurs des apps)
+   =================================================== */
+.about-hero {
+  background: #000;
+  text-align: center;
+  padding: 80px 24px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+.about-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  /* Royal blue des icônes (#1560BD) + halo violet */
+  background:
+    radial-gradient(ellipse 70% 60% at 50% 42%, rgba(21, 96, 189, 0.28) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 40% at 75% 8%,  rgba(191, 90, 242, 0.10) 0%, transparent 55%);
+  pointer-events: none;
+}
+
+.about-hero-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Photo avec anneau gradient */
+.about-photo-ring {
+  width: 148px;
+  height: 148px;
+  border-radius: 50%;
+  padding: 3px;
+  background: linear-gradient(135deg, #2997ff, #bf5af2);
+  margin: 0 auto 28px;
+  animation: fade-up 0.45s ease both;
+}
+
+.about-photo {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center top;
+  border: 3px solid #000;
+  display: block;
+}
+
+.about-name {
+  font-size: clamp(30px, 5.5vw, 48px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  color: #ffffff;
+  margin: 0 0 20px 0;
+  animation: fade-up 0.45s 0.08s ease both;
+}
+
+/* Badges : 32 ans · Autodidacte · Développeur */
+.about-tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  animation: fade-up 0.45s 0.16s ease both;
+}
+
+.about-tag {
+  display: inline-flex;
+  padding: 5px 14px;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.72);
+  border-radius: 980px;
+  font-size: 13px;
+  font-weight: 500;
+  border: 0.5px solid rgba(255, 255, 255, 0.14);
+}
+
+/* ===================================================
+   PAGE À PROPOS — Section bio
+   =================================================== */
+.about-section {
+  background: var(--apps-bg);
+  padding: 64px 0 80px;
+}
+
+.about-container {
+  max-width: 660px;
+  margin: 0 auto;
+  padding: 0 24px;
+  animation: fade-up 0.5s 0.28s ease both;
+}
+
+/* Lien retour discret */
+.about-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  margin-bottom: 32px;
+  opacity: 0.7;
+  transition: opacity 0.15s ease;
+}
+
+.about-back:hover { opacity: 1; }
+
+.about-back::before {
+  content: '‹';
+  font-size: 17px;
+  font-weight: 300;
+  line-height: 1;
 }
