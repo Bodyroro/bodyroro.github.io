@@ -260,13 +260,26 @@ body {
   margin-bottom: 20px;
 }
 
+/* Réduction légère sur mobile */
+@media (max-width: 767px) {
+  .card               { padding: 20px; }
+  .app-icon           { width: 60px; height: 60px; border-radius: 14px; }
+  .app-title          { font-size: 18px; }
+  .card-content       { font-size: 14px; margin-bottom: 16px; }
+  .card-header        { margin-bottom: 14px; gap: 12px; }
+  .page-card          { padding: 20px; }
+  .page-section h2    { font-size: 15px; }
+  .page-section p,
+  .faq-a, .faq-q     { font-size: 14px; }
+}
+
 /* ===================================================
-   LISTE DE LIENS — iOS Settings style
+   LISTE DE LIENS — iOS Settings style (row pleine largeur)
    =================================================== */
 .link-list {
   list-style: none;
   padding: 0;
-  margin: 0 0 24px 0;
+  margin: 0 0 20px 0;
   border-radius: var(--radius-m);
   border: 1px solid var(--separator);
   overflow: hidden;
@@ -275,39 +288,53 @@ body {
 .link-item {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 11px 14px;
+  padding: 0;
   border-bottom: 1px solid var(--separator);
   transition: background 0.12s ease;
 }
 
 .link-item:last-child { border-bottom: none; }
 
-.link-item:has(a.link-url):hover { background: rgba(0, 102, 204, 0.05); }
+.link-item:has(a.link-url):hover { background: rgba(0, 0, 0, 0.04); }
 
 @media (prefers-color-scheme: dark) {
-  .link-item:has(a.link-url):hover { background: rgba(41, 151, 255, 0.09); }
+  .link-item:has(a.link-url):hover { background: rgba(255, 255, 255, 0.05); }
 }
 
-.link-label  { font-size: 15px; color: var(--text-primary); }
-
+/* Lien pleine largeur — label à gauche, chevron à droite */
 a.link-url {
-  display: inline-flex;
+  flex: 1;
+  display: flex;
   align-items: center;
-  gap: 1px;
-  color: var(--link-color);
+  justify-content: space-between;
+  padding: 10px 14px;
+  color: var(--text-primary);
   text-decoration: none;
-  font-size: 15px;
+  font-size: 14px;
+  font-weight: 500;
+  gap: 8px;
 }
 
 a.link-url::after {
   content: '›';
-  font-size: 18px;
+  font-size: 17px;
   line-height: 1;
-  opacity: 0.45;
+  color: var(--text-secondary);
+  opacity: 0.40;
+  flex-shrink: 0;
 }
 
-span.link-url { font-size: 15px; color: var(--text-secondary); }
+/* Texte désactivé — même padding, sans interaction */
+span.link-url {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  gap: 8px;
+}
 
 /* ===================================================
    BOUTONS
