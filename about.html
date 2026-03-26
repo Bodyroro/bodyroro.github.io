@@ -110,21 +110,5 @@
 <footer class="site-footer">
     <p>&copy; 2026 Rodolphe Vandaele</p>
 </footer>
-
-<script>
-function shareCarbuFrance() {
-    var url = 'https://apps.apple.com/us/app/carbufrance/id6760407573';
-    if (navigator.share) {
-        navigator.share({
-            title: 'CarbuFrance',
-            text: 'Comparez les prix des carburants partout en France 🚗⛽',
-            url: url
-        }).catch(function() {});
-    } else {
-        window.open(url, '_blank');
-    }
-}
-</script>
-
 </body>
 </html>
