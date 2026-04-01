@@ -1,0 +1,14 @@
+{
+  "_app":         "DefibFrance",
+  "_description": "Configuration distante de l'application DefibFrance — défibrillateurs AED.",
+  "_updated":     "2026-03-28",
+  "_fields": {
+    "premiumFree":     "true = supprime toutes les publicités pour tous les utilisateurs",
+    "premiumFreeDays": "nb de jours à afficher dans le message de bienvenue (0 = message générique)",
+    "adsEnabled":      "false = désactive toutes les publicités (bannières, interstitiels, natif, app open)"
+  },
+
+  "premiumFree":     false,
+  "premiumFreeDays": 0,
+  "adsEnabled":      true
+}
