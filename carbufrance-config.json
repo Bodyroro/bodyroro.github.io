@@ -10,5 +10,5 @@
 
   "premiumFree":     false,
   "premiumFreeDays": 0,
-  "adsEnabled":      true
+  "adsEnabled":      false,
 }
