@@ -1,11 +1,11 @@
 {
-  "_comment": "=============================================================",
-  "_comment_1": "  Remote Config — bodyroro.github.io/config.json             ",
-  "_comment_2": "  Utilisé uniquement en RELEASE (ignoré en DEBUG Xcode)       ",
-  "_comment_3": "  Cache côté app : 15 minutes                                 ",
-  "_comment_4": "  Auteur : Rodolphe Vandaele                                  ",
-  "_comment_5": "  Dernière mise à jour : 2 avril 2026                         ",
-  "_comment_6": "=============================================================",
+  "_comment":   "===========================================================",
+  "_comment_1": "  Remote Config — bodyroro.github.io/config.json           ",
+  "_comment_2": "  Utilisé uniquement en RELEASE (ignoré en DEBUG Xcode)    ",
+  "_comment_3": "  Cache côté app : 15 minutes                              ",
+  "_comment_4": "  Auteur : Rodolphe Vandaele                               ",
+  "_comment_5": "  Dernière mise à jour : 2 avril 2026                      ",
+  "_comment_6": "===========================================================",
 
   "_comment_rules": [
     "Les deux niveaux (global + app) doivent être true pour activer.",
@@ -29,7 +29,7 @@
       "_comment": "CarburantFrance — Prix des carburants en France",
       "_bundleId": "com.bodyroro.CarburantFrance",
       "_storeId": "ca-app-pub-8071918795747299~5418570215",
-      "adsEnabled": true,
+      "adsEnabled": false,
       "premiumEnabled": false
     },
 
@@ -37,7 +37,7 @@
       "_comment": "IRVEFrance — Bornes de recharge électrique",
       "_bundleId": "com.bodyroro.IRVEFrance",
       "_storeId": "ca-app-pub-8071918795747299~3605729434",
-      "adsEnabled": true,
+      "adsEnabled": false,
       "premiumEnabled": false
     },
 
@@ -45,7 +45,7 @@
       "_comment": "DefibFrance — Défibrillateurs (DAE) — pas de premium",
       "_bundleId": "com.bodyroro.DefibFrance",
       "_storeId": "ca-app-pub-8071918795747299~2804259019",
-      "adsEnabled": true,
+      "adsEnabled": false,
       "premiumEnabled": false
     },
 
@@ -53,7 +53,7 @@
       "_comment": "ToiletteFrance — Toilettes publiques — pas de premium",
       "_bundleId": "com.bodyroro.ToiletteFrance",
       "_storeId": "ca-app-pub-8071918795747299~5675100408",
-      "adsEnabled": true,
+      "adsEnabled": false,
       "premiumEnabled": false
     }
   }
