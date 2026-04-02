@@ -17,7 +17,7 @@
 
   "global": {
     "_comment": "Interrupteurs globaux — s'appliquent à toutes les apps",
-    "adsEnabled": true,
+    "adsEnabled": false,
     "premiumEnabled": false,
     "maintenanceMessage": null
   },
