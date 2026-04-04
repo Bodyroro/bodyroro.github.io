@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<!-- Hero — photo, nom, tagline cœur -->
+<!-- Hero -->
 <section class="about-hero" aria-label="Présentation">
     <div class="about-hero-inner">
         <div class="about-photo-ring">
@@ -22,7 +22,6 @@
             <span class="about-tag">Autodidacte</span>
             <span class="about-tag">Développeur iOS</span>
         </div>
-        <!-- Style SwiftUI : Text + heart.fill + Text -->
         <p class="about-tagline">
             Créée avec <span class="about-heart">♥</span> par un développeur indépendant
         </p>
@@ -32,6 +31,8 @@
 <!-- Bio & Contenu -->
 <section class="about-section">
     <div class="about-container">
+        <a href="./index.html" class="about-back">Retour</a>
+
         <div class="page-card">
 
             <!-- Qui suis-je -->
@@ -52,16 +53,16 @@
                         <span class="app-mini-name">CarbuFrance</span>
                         <span class="app-mini-desc">Comparez les prix des carburants en temps réel · Disponible sur l'App Store</span>
                     </div>
-                    <a href="https://apps.apple.com/us/app/carbufrance/id6760407573" class="store-link" target="_blank" rel="noopener">Voir</a>
+                    <a href="https://apps.apple.com/fr/app/carbufrance/id6760407573" class="store-link" target="_blank" rel="noopener">Voir</a>
                 </div>
 
                 <div class="app-mini-row">
                     <img src="./icons/irvefrance.png" alt="IRVEFrance" class="app-mini-icon">
                     <div style="flex:1;min-width:0;">
                         <span class="app-mini-name">IRVEFrance</span>
-                        <span class="app-mini-desc">Localisez les bornes de recharge électrique · En cours</span>
+                        <span class="app-mini-desc">Localisez les bornes de recharge électrique · Disponible sur l'App Store</span>
                     </div>
-                    <a href="" class="store-link" target="_blank" rel="noopener">Voir</a>
+                    <a href="#" class="store-link" target="_blank" rel="noopener">Voir</a>
                 </div>
 
                 <div class="app-mini-row">
@@ -77,9 +78,9 @@
                     <img src="./icons/defibfrance.png" alt="DefibFrance" class="app-mini-icon">
                     <div style="flex:1;min-width:0;">
                         <span class="app-mini-name">DefibFrance</span>
-                        <span class="app-mini-desc">Localisez les défibrillateurs (DAE) en France · En cours</span>
+                        <span class="app-mini-desc">Localisez les défibrillateurs (DAE) en France · Disponible sur l'App Store</span>
                     </div>
-                    <a href="" class="store-link" target="_blank" rel="noopener">Voir</a>
+                    <a href="#" class="store-link" target="_blank" rel="noopener">Voir</a>
                 </div>
             </div>
 
@@ -88,12 +89,13 @@
                 <h2>Stack &amp; Outils</h2>
                 <p>Je travaille exclusivement dans l'écosystème Apple, en suivant les dernières recommandations du framework.</p>
                 <div class="tech-badges">
-                    <span class="tech-badge">Swift</span>
+                    <span class="tech-badge">Swift 6.2</span>
                     <span class="tech-badge">SwiftUI</span>
-                    <span class="tech-badge">Xcode</span>
+                    <span class="tech-badge">Xcode 26</span>
                     <span class="tech-badge">MapKit</span>
                     <span class="tech-badge">Core Location</span>
-                    <span class="tech-badge">StoreKit</span>
+                    <span class="tech-badge">StoreKit 2</span>
+                    <span class="tech-badge">SwiftData</span>
                     <span class="tech-badge">AdMob</span>
                 </div>
             </div>
@@ -119,21 +121,6 @@
 <footer class="site-footer">
     <p>&copy; 2026 Rodolphe Vandaele</p>
 </footer>
-
-<script>
-function shareCarbuFrance() {
-    var url = 'https://apps.apple.com/us/app/carbufrance/id6760407573';
-    if (navigator.share) {
-        navigator.share({
-            title: 'CarbuFrance',
-            text: 'Comparez les prix des carburants partout en France 🚗⛽',
-            url: url
-        }).catch(function() {});
-    } else {
-        window.open(url, '_blank');
-    }
-}
-</script>
 
 </body>
 </html>
