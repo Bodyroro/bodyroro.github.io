@@ -1,0 +1,11 @@
+{
+  "networkRates": [
+    { "id": "ionity",      "name": "Ionity",        "priceKWh": 0.69, "connector": "CCS 350 kW" },
+    { "id": "total",       "name": "TotalEnergies", "priceKWh": 0.60, "connector": "CCS 150 kW" },
+    { "id": "chargepoint", "name": "ChargePoint",   "priceKWh": 0.55, "connector": "CCS/Type 2" },
+    { "id": "driveco",     "name": "DRIVECO",       "priceKWh": 0.49, "connector": "CCS 150 kW" },
+    { "id": "electra",     "name": "Electra",       "priceKWh": 0.44, "connector": "CCS 300 kW" },
+    { "id": "freshmile",   "name": "Freshmile",     "priceKWh": 0.45, "connector": "CCS/Type 2" },
+    { "id": "belib",       "name": "Bélib'",        "priceKWh": 0.30, "connector": "AC 22 kW" }
+  ]
+}

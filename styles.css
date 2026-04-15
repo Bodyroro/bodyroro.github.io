@@ -357,8 +357,31 @@ span.link-url {
 .store-link-badge:hover  { opacity: 0.80; transform: scale(1.02); }
 .store-link-badge:active { transform: scale(0.97); }
 
+/* Badge désactivé — apps en cours */
+.store-link-disabled {
+  background: var(--separator) !important;
+  color: var(--text-secondary) !important;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* Carte en cours — teinte réduite */
+.card-wip {
+  opacity: 0.72;
+}
+
+.app-badge-wip {
+  background: var(--separator);
+  color: var(--text-secondary);
+}
+
+.app-icon-wip {
+  filter: grayscale(40%);
+}
+
 @media (prefers-color-scheme: dark) {
   .store-link-badge { background: #fff; color: #000; }
+  .store-link-disabled { background: #3a3a3c !important; color: #8e8e93 !important; }
 }
 
 /* Bouton contact email — pill bleu

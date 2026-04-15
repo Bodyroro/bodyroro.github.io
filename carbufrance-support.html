@@ -17,40 +17,149 @@
             <a href="./index.html" class="page-icon-link">
                 <img src="./icons/carbufrance.png" alt="CarbuFrance" class="page-icon">
             </a>
-            <h1 class="page-title">Assistance &amp; Support</h1>
+            <h1 class="page-title" id="page-title">Assistance &amp; Support</h1>
         </div>
-        <p class="page-subtitle">Besoin d'aide avec CarbuFrance ?</p>
+        <p class="page-subtitle" id="page-subtitle">Besoin d'aide avec CarbuFrance ?</p>
     </header>
 
     <main>
-        <div class="page-card">
 
-            <div class="page-section">
-                <h2>Problèmes fréquents</h2>
-
-                <div class="faq-item">
-                    <p class="faq-q">Les prix ne sont pas à jour ?</p>
-                    <p class="faq-a">Les données sont actualisées plusieurs fois par jour depuis les serveurs du gouvernement. Si une station n'a pas mis à jour ses prix, cela sera indiqué dans l'application.</p>
+        <!-- Français -->
+        <div id="content-fr">
+            <div class="page-card">
+                <div class="page-section">
+                    <h2>Problèmes fréquents</h2>
+                    <div class="faq-item">
+                        <p class="faq-q">Les prix ne sont pas à jour ?</p>
+                        <p class="faq-a">Les données sont actualisées plusieurs fois par jour depuis les serveurs du gouvernement. Si une station n'a pas mis à jour ses prix, cela sera indiqué dans l'application.</p>
+                    </div>
+                    <div class="faq-item">
+                        <p class="faq-q">La géolocalisation ne fonctionne pas ?</p>
+                        <p class="faq-a">Vérifiez dans les Réglages de votre iPhone › Confidentialité › Service de localisation › CarbuFrance que l'accès est autorisé sur <em>Lorsque l'app est active</em>.</p>
+                    </div>
+                    <div class="faq-item">
+                        <p class="faq-q">Comment restaurer mon abonnement Premium ?</p>
+                        <p class="faq-a">Ouvrez CarbuFrance › onglet Premium › « Restaurer les achats ». L'abonnement est lié à votre identifiant Apple.</p>
+                    </div>
+                    <div class="faq-item">
+                        <p class="faq-q">Mes favoris ont disparu après une réinstallation ?</p>
+                        <p class="faq-a">Les favoris sont stockés localement. Une réinstallation les efface définitivement. Activez iCloud pour les sauvegarder automatiquement.</p>
+                    </div>
                 </div>
-
-                <div class="faq-item">
-                    <p class="faq-q">La géolocalisation ne fonctionne pas ?</p>
-                    <p class="faq-a">Vérifiez dans les Réglages de votre iPhone &rsaquo; Confidentialité &rsaquo; Service de localisation &rsaquo; CarbuFrance que l'accès est autorisé sur <em>Lorsque l'app est active</em>.</p>
+                <div class="page-section">
+                    <h2>Contacter le support</h2>
+                    <p>Si vous rencontrez un bug ou avez une suggestion, contactez-nous par email. Nous répondons généralement sous 24h.</p>
+                    <p><a href="mailto:rodolphe_vandaele@hotmail.fr" class="store-link">Envoyer un email au support</a></p>
+                </div>
+                <div class="page-section">
+                    <h2>Suppression des données</h2>
+                    <p>CarbuFrance ne crée pas de compte utilisateur. Vos favoris et préférences sont stockés localement. Pour supprimer toutes vos données, désinstallez simplement l'application.</p>
                 </div>
             </div>
-
-            <div class="page-section">
-                <h2>Contacter le support</h2>
-                <p>Si vous rencontrez un bug ou avez une suggestion, contactez-nous par email. Nous répondons généralement sous 24h.</p>
-                <p><a href="mailto:rodolphe_vandaele@hotmail.fr" class="store-link">Envoyer un email au support</a></p>
-            </div>
-
-            <div class="page-section">
-                <h2>Suppression des données</h2>
-                <p>CarbuFrance ne crée pas de compte utilisateur. Vos favoris et préférences sont stockés localement sur votre appareil. Pour supprimer toutes vos données, désinstallez simplement l'application.</p>
-            </div>
-
         </div>
+
+        <!-- English -->
+        <div id="content-en" style="display:none">
+            <div class="page-card">
+                <div class="page-section">
+                    <h2>Common issues</h2>
+                    <div class="faq-item">
+                        <p class="faq-q">Prices are not up to date?</p>
+                        <p class="faq-a">Data is refreshed several times a day from government servers. If a station hasn't updated its prices, this will be indicated in the app.</p>
+                    </div>
+                    <div class="faq-item">
+                        <p class="faq-q">Location doesn't work?</p>
+                        <p class="faq-a">Go to iPhone Settings › Privacy › Location Services › CarbuFrance and make sure access is set to <em>While Using the App</em>.</p>
+                    </div>
+                    <div class="faq-item">
+                        <p class="faq-q">How do I restore my Premium subscription?</p>
+                        <p class="faq-a">Open CarbuFrance › Premium tab › "Restore Purchases". The subscription is linked to your Apple ID.</p>
+                    </div>
+                    <div class="faq-item">
+                        <p class="faq-q">My favourites disappeared after reinstalling?</p>
+                        <p class="faq-a">Favourites are stored locally. Reinstalling the app permanently removes them. Enable iCloud to back them up automatically.</p>
+                    </div>
+                </div>
+                <div class="page-section">
+                    <h2>Contact support</h2>
+                    <p>If you encounter a bug or have a suggestion, contact us by email. We typically respond within 24 hours.</p>
+                    <p><a href="mailto:rodolphe_vandaele@hotmail.fr" class="store-link">Email support</a></p>
+                </div>
+                <div class="page-section">
+                    <h2>Data deletion</h2>
+                    <p>CarbuFrance does not create user accounts. Your favourites and preferences are stored locally. To delete all your data, simply uninstall the app.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Deutsch -->
+        <div id="content-de" style="display:none">
+            <div class="page-card">
+                <div class="page-section">
+                    <h2>Häufige Probleme</h2>
+                    <div class="faq-item">
+                        <p class="faq-q">Die Preise sind nicht aktuell?</p>
+                        <p class="faq-a">Die Daten werden täglich mehrfach von den Regierungsservern aktualisiert. Falls eine Tankstelle ihre Preise nicht aktualisiert hat, wird dies in der App angezeigt.</p>
+                    </div>
+                    <div class="faq-item">
+                        <p class="faq-q">Die Ortung funktioniert nicht?</p>
+                        <p class="faq-a">Gehen Sie zu iPhone-Einstellungen › Datenschutz › Ortungsdienste › CarbuFrance und stellen Sie sicher, dass der Zugriff auf <em>Beim Verwenden der App</em> eingestellt ist.</p>
+                    </div>
+                    <div class="faq-item">
+                        <p class="faq-q">Wie stelle ich mein Premium-Abonnement wieder her?</p>
+                        <p class="faq-a">Öffnen Sie CarbuFrance › Premium-Tab › „Käufe wiederherstellen". Das Abonnement ist mit Ihrer Apple-ID verknüpft.</p>
+                    </div>
+                    <div class="faq-item">
+                        <p class="faq-q">Meine Favoriten sind nach einer Neuinstallation verschwunden?</p>
+                        <p class="faq-a">Favoriten werden lokal gespeichert. Eine Neuinstallation löscht sie dauerhaft. Aktivieren Sie iCloud, um sie automatisch zu sichern.</p>
+                    </div>
+                </div>
+                <div class="page-section">
+                    <h2>Support kontaktieren</h2>
+                    <p>Bei Fehlern oder Verbesserungsvorschlägen kontaktieren Sie uns per E-Mail. Wir antworten in der Regel innerhalb von 24 Stunden.</p>
+                    <p><a href="mailto:rodolphe_vandaele@hotmail.fr" class="store-link">E-Mail an den Support</a></p>
+                </div>
+                <div class="page-section">
+                    <h2>Datenlöschung</h2>
+                    <p>CarbuFrance erstellt keine Benutzerkonten. Ihre Favoriten und Einstellungen werden lokal gespeichert. Um alle Ihre Daten zu löschen, deinstallieren Sie einfach die App.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Italiano -->
+        <div id="content-it" style="display:none">
+            <div class="page-card">
+                <div class="page-section">
+                    <h2>Problemi comuni</h2>
+                    <div class="faq-item">
+                        <p class="faq-q">I prezzi non sono aggiornati?</p>
+                        <p class="faq-a">I dati vengono aggiornati più volte al giorno dai server governativi. Se una stazione non ha aggiornato i prezzi, questo verrà indicato nell'app.</p>
+                    </div>
+                    <div class="faq-item">
+                        <p class="faq-q">La geolocalizzazione non funziona?</p>
+                        <p class="faq-a">Vai su Impostazioni iPhone › Privacy › Servizi di localizzazione › CarbuFrance e assicurati che l'accesso sia impostato su <em>Mentre usi l'app</em>.</p>
+                    </div>
+                    <div class="faq-item">
+                        <p class="faq-q">Come ripristino il mio abbonamento Premium?</p>
+                        <p class="faq-a">Apri CarbuFrance › scheda Premium › "Ripristina acquisti". L'abbonamento è collegato al tuo ID Apple.</p>
+                    </div>
+                    <div class="faq-item">
+                        <p class="faq-q">I preferiti sono spariti dopo la reinstallazione?</p>
+                        <p class="faq-a">I preferiti vengono salvati localmente. La reinstallazione li elimina definitivamente. Attiva iCloud per eseguirne automaticamente il backup.</p>
+                    </div>
+                </div>
+                <div class="page-section">
+                    <h2>Contattare il supporto</h2>
+                    <p>Se riscontri un bug o hai un suggerimento, contattaci via email. Rispondiamo generalmente entro 24 ore.</p>
+                    <p><a href="mailto:rodolphe_vandaele@hotmail.fr" class="store-link">Invia un'email al supporto</a></p>
+                </div>
+                <div class="page-section">
+                    <h2>Eliminazione dei dati</h2>
+                    <p>CarbuFrance non crea account utente. I tuoi preferiti e le preferenze sono salvati localmente. Per eliminare tutti i dati, disinstalla semplicemente l'app.</p>
+                </div>
+            </div>
+        </div>
+
     </main>
 
     <footer class="page-footer">
@@ -58,6 +167,36 @@
     </footer>
 
 </div>
+
+<script>
+(function () {
+    var lang = (navigator.language || navigator.userLanguage || 'fr').slice(0, 2).toLowerCase();
+    var supported = ['fr', 'en', 'de', 'it'];
+    if (supported.indexOf(lang) === -1) lang = 'en';
+
+    var titles = {
+        fr: 'Assistance & Support',
+        en: 'Help & Support',
+        de: 'Hilfe & Support',
+        it: 'Assistenza & Supporto'
+    };
+    var subtitles = {
+        fr: "Besoin d\u2019aide avec CarbuFrance\u00a0?",
+        en: 'Need help with CarbuFrance?',
+        de: 'Benötigen Sie Hilfe mit CarbuFrance?',
+        it: 'Hai bisogno di aiuto con CarbuFrance?'
+    };
+
+    document.getElementById('page-title').innerHTML = titles[lang];
+    document.getElementById('page-subtitle').textContent = subtitles[lang];
+    document.documentElement.lang = lang;
+
+    ['fr', 'en', 'de', 'it'].forEach(function (l) {
+        var el = document.getElementById('content-' + l);
+        if (el) el.style.display = (l === lang) ? '' : 'none';
+    });
+})();
+</script>
 
 </body>
 </html>
