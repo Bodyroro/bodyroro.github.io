@@ -1,0 +1,3088 @@
+{
+  "version": "2026-04-24",
+  "name": "Préfixes démarchage France — ARCEP + opérateurs",
+  "description": "Préfixes ARCEP et préfixes opérateurs VoIP utilisés pour le démarchage téléphonique non sollicité.",
+  "blocked_numbers_count": 14269000,
+  "patterns": [
+    {
+      "name": "Préfixe démarchage ARCEP",
+      "action": "block",
+      "pattern": "33162######"
+    },
+    {
+      "name": "Préfixe démarchage ARCEP",
+      "action": "block",
+      "pattern": "33163######"
+    },
+    {
+      "name": "Préfixe démarchage ARCEP",
+      "action": "block",
+      "pattern": "33270######"
+    },
+    {
+      "name": "Préfixe démarchage ARCEP",
+      "action": "block",
+      "pattern": "33271######"
+    },
+    {
+      "name": "Préfixe démarchage ARCEP",
+      "action": "block",
+      "pattern": "33377######"
+    },
+    {
+      "name": "Préfixe démarchage ARCEP",
+      "action": "block",
+      "pattern": "33378######"
+    },
+    {
+      "name": "Préfixe démarchage ARCEP",
+      "action": "block",
+      "pattern": "33424######"
+    },
+    {
+      "name": "Préfixe démarchage ARCEP",
+      "action": "block",
+      "pattern": "33425######"
+    },
+    {
+      "name": "Préfixe démarchage ARCEP",
+      "action": "block",
+      "pattern": "33568######"
+    },
+    {
+      "name": "Préfixe démarchage ARCEP",
+      "action": "block",
+      "pattern": "33569######"
+    },
+    {
+      "name": "Préfixe démarchage ARCEP",
+      "action": "block",
+      "pattern": "33948######"
+    },
+    {
+      "name": "Préfixe démarchage ARCEP",
+      "action": "block",
+      "pattern": "33949######"
+    },
+    {
+      "name": "Préfixe démarchage ARCEP",
+      "action": "block",
+      "pattern": "339475#####"
+    },
+    {
+      "name": "Préfixe démarchage ARCEP",
+      "action": "block",
+      "pattern": "339476#####"
+    },
+    {
+      "name": "Préfixe démarchage ARCEP",
+      "action": "block",
+      "pattern": "339477#####"
+    },
+    {
+      "name": "Préfixe démarchage ARCEP",
+      "action": "block",
+      "pattern": "339478#####"
+    },
+    {
+      "name": "Préfixe démarchage ARCEP",
+      "action": "block",
+      "pattern": "339479#####"
+    },
+    {
+      "name": "Digital integration",
+      "action": "block",
+      "pattern": "33159070###"
+    },
+    {
+      "name": "Digital integration",
+      "action": "block",
+      "pattern": "33159077###"
+    },
+    {
+      "name": "Digital integration",
+      "action": "block",
+      "pattern": "33159079###"
+    },
+    {
+      "name": "Twilio Ireland Limited",
+      "action": "block",
+      "pattern": "3315913####"
+    },
+    {
+      "name": "Twilio Ireland Limited",
+      "action": "block",
+      "pattern": "3315916####"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "33159175###"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "33159176###"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "33159177###"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "33159178###"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "33159179###"
+    },
+    {
+      "name": "AMCS LLC",
+      "action": "block",
+      "pattern": "3315924####"
+    },
+    {
+      "name": "CM Telecom France",
+      "action": "block",
+      "pattern": "33159270###"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "3315931####"
+    },
+    {
+      "name": "Voiped telecom",
+      "action": "block",
+      "pattern": "3315942####"
+    },
+    {
+      "name": "Idline",
+      "action": "block",
+      "pattern": "33159535###"
+    },
+    {
+      "name": "Twilio Ireland Limited",
+      "action": "block",
+      "pattern": "33159580###"
+    },
+    {
+      "name": "Destiny global infra services",
+      "action": "block",
+      "pattern": "33159581###"
+    },
+    {
+      "name": "Twilio Ireland Limited",
+      "action": "block",
+      "pattern": "33175954###"
+    },
+    {
+      "name": "Twilio Ireland Limited",
+      "action": "block",
+      "pattern": "33176634###"
+    },
+    {
+      "name": "Twilio Ireland Limited",
+      "action": "block",
+      "pattern": "33176635###"
+    },
+    {
+      "name": "Manifone",
+      "action": "block",
+      "pattern": "3318656####"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33186706###"
+    },
+    {
+      "name": "Manifone",
+      "action": "block",
+      "pattern": "3318764####"
+    },
+    {
+      "name": "Vast new telecom",
+      "action": "block",
+      "pattern": "3318778####"
+    },
+    {
+      "name": "Talkcycle LLC DBA FrontSpin",
+      "action": "block",
+      "pattern": "33187941###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33188440###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33188441###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33188442###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33188443###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33188444###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33188445###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33188446###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33188447###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33188448###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33188449###"
+    },
+    {
+      "name": "GH-NET",
+      "action": "block",
+      "pattern": "33188740###"
+    },
+    {
+      "name": "GH-NET",
+      "action": "block",
+      "pattern": "33188741###"
+    },
+    {
+      "name": "GH-NET",
+      "action": "block",
+      "pattern": "33188742###"
+    },
+    {
+      "name": "GH-NET",
+      "action": "block",
+      "pattern": "33188749###"
+    },
+    {
+      "name": "ZE telecom",
+      "action": "block",
+      "pattern": "33189260###"
+    },
+    {
+      "name": "ZE telecom",
+      "action": "block",
+      "pattern": "33189261###"
+    },
+    {
+      "name": "ZE telecom",
+      "action": "block",
+      "pattern": "33189262###"
+    },
+    {
+      "name": "ZE telecom",
+      "action": "block",
+      "pattern": "33189263###"
+    },
+    {
+      "name": "ZE telecom",
+      "action": "block",
+      "pattern": "33189264###"
+    },
+    {
+      "name": "ZE telecom",
+      "action": "block",
+      "pattern": "33189266###"
+    },
+    {
+      "name": "ZE telecom",
+      "action": "block",
+      "pattern": "33189267###"
+    },
+    {
+      "name": "ZE telecom",
+      "action": "block",
+      "pattern": "33189268###"
+    },
+    {
+      "name": "ZE telecom",
+      "action": "block",
+      "pattern": "33189269###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33189366###"
+    },
+    {
+      "name": "DidXL B.V.",
+      "action": "block",
+      "pattern": "33189368###"
+    },
+    {
+      "name": "Avoxi, inc.",
+      "action": "block",
+      "pattern": "33189370###"
+    },
+    {
+      "name": "Infinivox",
+      "action": "block",
+      "pattern": "33189375###"
+    },
+    {
+      "name": "Kav El International",
+      "action": "block",
+      "pattern": "33189470###"
+    },
+    {
+      "name": "Kav El International",
+      "action": "block",
+      "pattern": "33189471###"
+    },
+    {
+      "name": "Kav El International",
+      "action": "block",
+      "pattern": "33189472###"
+    },
+    {
+      "name": "Kav El International",
+      "action": "block",
+      "pattern": "33189473###"
+    },
+    {
+      "name": "Kav El International",
+      "action": "block",
+      "pattern": "33189474###"
+    },
+    {
+      "name": "Kav El International",
+      "action": "block",
+      "pattern": "33189477###"
+    },
+    {
+      "name": "Kav El International",
+      "action": "block",
+      "pattern": "33189479###"
+    },
+    {
+      "name": "IP telecom Bulgaria Ltd",
+      "action": "block",
+      "pattern": "3318948####"
+    },
+    {
+      "name": "Plug and tel",
+      "action": "block",
+      "pattern": "3318960####"
+    },
+    {
+      "name": "Manifone",
+      "action": "block",
+      "pattern": "3318961####"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "33189620###"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "33189621###"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "33189622###"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "33189623###"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "33189624###"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "33189625###"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "33189626###"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "33189627###"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "33189628###"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "33189629###"
+    },
+    {
+      "name": "Eone trade",
+      "action": "block",
+      "pattern": "3318963####"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "3318971####"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33189720###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33189721###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33189722###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33189723###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33189724###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33189730###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33189731###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33189732###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33189733###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33189734###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33189740###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33189741###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33189742###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33189743###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33189744###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33189750###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33189751###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33189752###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33189753###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33189754###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33189760###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33189761###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33189762###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33189763###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33189764###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33189770###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33189771###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33189772###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33189773###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33189774###"
+    },
+    {
+      "name": "Setera communications OY",
+      "action": "block",
+      "pattern": "33189870###"
+    },
+    {
+      "name": "Twilio Ireland Limited",
+      "action": "block",
+      "pattern": "3321473####"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "3321886####"
+    },
+    {
+      "name": "Manifone",
+      "action": "block",
+      "pattern": "3321901####"
+    },
+    {
+      "name": "Twilio Ireland Limited",
+      "action": "block",
+      "pattern": "33219071###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33219380###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33219381###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33219382###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33219383###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33219384###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33219390###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33219391###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33219392###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33219393###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33219394###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33220050###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33220051###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33220052###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33220053###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33220054###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33220060###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33220061###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33220062###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33220063###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33220064###"
+    },
+    {
+      "name": "Manifone",
+      "action": "block",
+      "pattern": "3322164####"
+    },
+    {
+      "name": "Digital integration",
+      "action": "block",
+      "pattern": "33221820###"
+    },
+    {
+      "name": "Avoxi, inc.",
+      "action": "block",
+      "pattern": "33221825###"
+    },
+    {
+      "name": "Infinivox",
+      "action": "block",
+      "pattern": "33221829###"
+    },
+    {
+      "name": "Plug and tel",
+      "action": "block",
+      "pattern": "3322196####"
+    },
+    {
+      "name": "Voiped telecom",
+      "action": "block",
+      "pattern": "33236588###"
+    },
+    {
+      "name": "ZE telecom",
+      "action": "block",
+      "pattern": "33252149###"
+    },
+    {
+      "name": "Manifone",
+      "action": "block",
+      "pattern": "3325545####"
+    },
+    {
+      "name": "Kav El International",
+      "action": "block",
+      "pattern": "33258480###"
+    },
+    {
+      "name": "Kav El International",
+      "action": "block",
+      "pattern": "33258481###"
+    },
+    {
+      "name": "Kav El International",
+      "action": "block",
+      "pattern": "33258482###"
+    },
+    {
+      "name": "Kav El International",
+      "action": "block",
+      "pattern": "33258483###"
+    },
+    {
+      "name": "Kav El International",
+      "action": "block",
+      "pattern": "33258484###"
+    },
+    {
+      "name": "Kav El International",
+      "action": "block",
+      "pattern": "33258485###"
+    },
+    {
+      "name": "Kav El International",
+      "action": "block",
+      "pattern": "33258488###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33258540###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33258541###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33258542###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33258543###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33258544###"
+    },
+    {
+      "name": "Eone trade",
+      "action": "block",
+      "pattern": "3325937####"
+    },
+    {
+      "name": "Twilio Ireland Limited",
+      "action": "block",
+      "pattern": "33259394###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33259450###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33259451###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33259452###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33259453###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33259454###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33259460###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33259461###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33259462###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33259463###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33259464###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33259470###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33259471###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33259472###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33259473###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33259474###"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "3325950####"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33259590###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33259591###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33259592###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33259593###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33259594###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33259595###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33259596###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33259597###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33259598###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33259599###"
+    },
+    {
+      "name": "AMCS LLC",
+      "action": "block",
+      "pattern": "3325963####"
+    },
+    {
+      "name": "CM Telecom France",
+      "action": "block",
+      "pattern": "33259650###"
+    },
+    {
+      "name": "IP telecom Bulgaria Ltd",
+      "action": "block",
+      "pattern": "33259660###"
+    },
+    {
+      "name": "Destiny global infra services",
+      "action": "block",
+      "pattern": "33259671###"
+    },
+    {
+      "name": "Kav El International",
+      "action": "block",
+      "pattern": "33263070###"
+    },
+    {
+      "name": "Kav El International",
+      "action": "block",
+      "pattern": "33263071###"
+    },
+    {
+      "name": "Digital integration",
+      "action": "block",
+      "pattern": "33263150###"
+    },
+    {
+      "name": "Kav El International",
+      "action": "block",
+      "pattern": "33269026###"
+    },
+    {
+      "name": "Digital integration",
+      "action": "block",
+      "pattern": "33269532###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33279570###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33279571###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33279572###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33279573###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33279574###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33279580###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33279581###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33279582###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33279583###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33279584###"
+    },
+    {
+      "name": "Idline",
+      "action": "block",
+      "pattern": "33279767###"
+    },
+    {
+      "name": "Manifone",
+      "action": "block",
+      "pattern": "3327983####"
+    },
+    {
+      "name": "Twilio Ireland Limited",
+      "action": "block",
+      "pattern": "3333910####"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "33339661###"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "33339662###"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "33339663###"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "33339664###"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "33339665###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33339690###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33339691###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33339692###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33339693###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33339694###"
+    },
+    {
+      "name": "Voiped telecom",
+      "action": "block",
+      "pattern": "33351802###"
+    },
+    {
+      "name": "Manifone",
+      "action": "block",
+      "pattern": "3335349####"
+    },
+    {
+      "name": "Avoxi, inc.",
+      "action": "block",
+      "pattern": "33353654###"
+    },
+    {
+      "name": "Infinivox",
+      "action": "block",
+      "pattern": "33353658###"
+    },
+    {
+      "name": "Twilio Ireland Limited",
+      "action": "block",
+      "pattern": "33353706###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33353720###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33353721###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33353722###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33353723###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33353724###"
+    },
+    {
+      "name": "Idline",
+      "action": "block",
+      "pattern": "33353769###"
+    },
+    {
+      "name": "Destiny global infra services",
+      "action": "block",
+      "pattern": "33353791###"
+    },
+    {
+      "name": "Digital integration",
+      "action": "block",
+      "pattern": "33353795###"
+    },
+    {
+      "name": "ZE telecom",
+      "action": "block",
+      "pattern": "33356664###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33356840###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33356841###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33356842###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33356843###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33356844###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33356850###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33356851###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33356852###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33356853###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33356854###"
+    },
+    {
+      "name": "Manifone",
+      "action": "block",
+      "pattern": "3336748####"
+    },
+    {
+      "name": "Manifone",
+      "action": "block",
+      "pattern": "3337466####"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33375900###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33375901###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33375902###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33375903###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33375904###"
+    },
+    {
+      "name": "Plug and tel",
+      "action": "block",
+      "pattern": "3337629####"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33376320###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33376321###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33376322###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33376323###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33376324###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33376330###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33376331###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33376332###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33376333###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33376334###"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "3337637####"
+    },
+    {
+      "name": "CM Telecom France",
+      "action": "block",
+      "pattern": "33376430###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33376470###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33376471###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33376472###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33376473###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33376474###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33376475###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33376476###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33376477###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33376478###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33376479###"
+    },
+    {
+      "name": "Manifone",
+      "action": "block",
+      "pattern": "3337933####"
+    },
+    {
+      "name": "Kav El International",
+      "action": "block",
+      "pattern": "33379580###"
+    },
+    {
+      "name": "Kav El International",
+      "action": "block",
+      "pattern": "33379581###"
+    },
+    {
+      "name": "Kav El International",
+      "action": "block",
+      "pattern": "33379582###"
+    },
+    {
+      "name": "Kav El International",
+      "action": "block",
+      "pattern": "33379583###"
+    },
+    {
+      "name": "Kav El International",
+      "action": "block",
+      "pattern": "33379584###"
+    },
+    {
+      "name": "Kav El International",
+      "action": "block",
+      "pattern": "33379588###"
+    },
+    {
+      "name": "Kav El International",
+      "action": "block",
+      "pattern": "33379589###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33379660###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33379661###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33379662###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33379663###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33379664###"
+    },
+    {
+      "name": "Eone trade",
+      "action": "block",
+      "pattern": "3339217####"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33392200###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33392201###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33392202###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33392203###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33392204###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33392210###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33392211###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33392212###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33392213###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33392214###"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "3339223####"
+    },
+    {
+      "name": "AMCS LLC",
+      "action": "block",
+      "pattern": "3339227####"
+    },
+    {
+      "name": "IP telecom Bulgaria Ltd",
+      "action": "block",
+      "pattern": "33392280###"
+    },
+    {
+      "name": "Twilio Ireland Limited",
+      "action": "block",
+      "pattern": "33411347###"
+    },
+    {
+      "name": "Twilio Ireland Limited",
+      "action": "block",
+      "pattern": "3341178####"
+    },
+    {
+      "name": "Twilio Ireland Limited",
+      "action": "block",
+      "pattern": "33412058###"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "33412061###"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "33412062###"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "33412063###"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "33412064###"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "33412065###"
+    },
+    {
+      "name": "Avoxi, inc.",
+      "action": "block",
+      "pattern": "33412135###"
+    },
+    {
+      "name": "Infinivox",
+      "action": "block",
+      "pattern": "33412139###"
+    },
+    {
+      "name": "Eone trade",
+      "action": "block",
+      "pattern": "3341214####"
+    },
+    {
+      "name": "Plug and tel",
+      "action": "block",
+      "pattern": "3341226####"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33412280###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33412281###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33412282###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33412283###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33412284###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33412290###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33412291###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33412292###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33412293###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33412294###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33412300###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33412301###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33412302###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33412303###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33412304###"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "3341233####"
+    },
+    {
+      "name": "AMCS LLC",
+      "action": "block",
+      "pattern": "3341243####"
+    },
+    {
+      "name": "CM Telecom France",
+      "action": "block",
+      "pattern": "33412440###"
+    },
+    {
+      "name": "Idline",
+      "action": "block",
+      "pattern": "33420232###"
+    },
+    {
+      "name": "Destiny global infra services",
+      "action": "block",
+      "pattern": "33420261###"
+    },
+    {
+      "name": "Digital integration",
+      "action": "block",
+      "pattern": "33420265###"
+    },
+    {
+      "name": "Manifone",
+      "action": "block",
+      "pattern": "3342285####"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33423450###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33423451###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33423452###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33423453###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33423454###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33423460###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33423461###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33423462###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33423463###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33423464###"
+    },
+    {
+      "name": "IP telecom Bulgaria Ltd",
+      "action": "block",
+      "pattern": "33423500###"
+    },
+    {
+      "name": "IP telecom Bulgaria Ltd",
+      "action": "block",
+      "pattern": "33423501###"
+    },
+    {
+      "name": "IP telecom Bulgaria Ltd",
+      "action": "block",
+      "pattern": "33423502###"
+    },
+    {
+      "name": "Voiped telecom",
+      "action": "block",
+      "pattern": "33426469###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33444090###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33444091###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33444092###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33444093###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33444094###"
+    },
+    {
+      "name": "Manifone",
+      "action": "block",
+      "pattern": "3344902####"
+    },
+    {
+      "name": "Kav El International",
+      "action": "block",
+      "pattern": "33449310###"
+    },
+    {
+      "name": "Kav El International",
+      "action": "block",
+      "pattern": "33449311###"
+    },
+    {
+      "name": "Kav El International",
+      "action": "block",
+      "pattern": "33449312###"
+    },
+    {
+      "name": "Kav El International",
+      "action": "block",
+      "pattern": "33449313###"
+    },
+    {
+      "name": "Kav El International",
+      "action": "block",
+      "pattern": "33449315###"
+    },
+    {
+      "name": "Kav El International",
+      "action": "block",
+      "pattern": "33449317###"
+    },
+    {
+      "name": "ZE telecom",
+      "action": "block",
+      "pattern": "33449381###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33449410###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33449411###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33449412###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33449413###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33449414###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33449420###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33449421###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33449422###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33449423###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33449424###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33449430###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33449431###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33449432###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33449433###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33449434###"
+    },
+    {
+      "name": "Twilio Ireland Limited",
+      "action": "block",
+      "pattern": "33451144###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33451410###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33451411###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33451412###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33451413###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33451414###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33451420###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33451421###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33451422###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33451423###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33451424###"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "3345145####"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33451630###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33451631###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33451632###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33451633###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33451634###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33451635###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33451636###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33451637###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33451638###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33451639###"
+    },
+    {
+      "name": "Manifone",
+      "action": "block",
+      "pattern": "3346563####"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33485630###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33485631###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33485632###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33485633###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33485634###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33485640###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33485641###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33485642###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33485643###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33485644###"
+    },
+    {
+      "name": "Manifone",
+      "action": "block",
+      "pattern": "3348793####"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "33516434###"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "33516435###"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "33516436###"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "33516437###"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "33516438###"
+    },
+    {
+      "name": "Voiped telecom",
+      "action": "block",
+      "pattern": "33516478###"
+    },
+    {
+      "name": "Twilio Ireland Limited",
+      "action": "block",
+      "pattern": "33516881###"
+    },
+    {
+      "name": "Twilio Ireland Limited",
+      "action": "block",
+      "pattern": "3351794####"
+    },
+    {
+      "name": "Manifone",
+      "action": "block",
+      "pattern": "3351807####"
+    },
+    {
+      "name": "Twilio Ireland Limited",
+      "action": "block",
+      "pattern": "33518251###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33518270###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33518271###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33518272###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33518273###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33518274###"
+    },
+    {
+      "name": "Idline",
+      "action": "block",
+      "pattern": "33519090###"
+    },
+    {
+      "name": "Idline",
+      "action": "block",
+      "pattern": "33519091###"
+    },
+    {
+      "name": "Destiny global infra services",
+      "action": "block",
+      "pattern": "33523651###"
+    },
+    {
+      "name": "Digital integration",
+      "action": "block",
+      "pattern": "33523655###"
+    },
+    {
+      "name": "ZE telecom",
+      "action": "block",
+      "pattern": "33525261###"
+    },
+    {
+      "name": "Avoxi, inc.",
+      "action": "block",
+      "pattern": "33525343###"
+    },
+    {
+      "name": "Infinivox",
+      "action": "block",
+      "pattern": "33525347###"
+    },
+    {
+      "name": "Kav El International",
+      "action": "block",
+      "pattern": "33525360###"
+    },
+    {
+      "name": "Kav El International",
+      "action": "block",
+      "pattern": "33525361###"
+    },
+    {
+      "name": "Kav El International",
+      "action": "block",
+      "pattern": "33525364###"
+    },
+    {
+      "name": "Kav El International",
+      "action": "block",
+      "pattern": "33525366###"
+    },
+    {
+      "name": "Kav El International",
+      "action": "block",
+      "pattern": "33525367###"
+    },
+    {
+      "name": "Kav El International",
+      "action": "block",
+      "pattern": "33525369###"
+    },
+    {
+      "name": "Plug and tel",
+      "action": "block",
+      "pattern": "3352547####"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33525530###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33525531###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33525532###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33525533###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33525534###"
+    },
+    {
+      "name": "AMCS LLC",
+      "action": "block",
+      "pattern": "3352567####"
+    },
+    {
+      "name": "IP telecom Bulgaria Ltd",
+      "action": "block",
+      "pattern": "33525680###"
+    },
+    {
+      "name": "IP telecom Bulgaria Ltd",
+      "action": "block",
+      "pattern": "33525681###"
+    },
+    {
+      "name": "Manifone",
+      "action": "block",
+      "pattern": "3353294####"
+    },
+    {
+      "name": "Eone trade",
+      "action": "block",
+      "pattern": "3353696####"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33537040###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33537041###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33537042###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33537043###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33537044###"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "3353707####"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33537160###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33537161###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33537162###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33537163###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33537164###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33537165###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33537166###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33537167###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33537168###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33537169###"
+    },
+    {
+      "name": "CM Telecom France",
+      "action": "block",
+      "pattern": "33537270###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33548290###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33548291###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33548292###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33548293###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33548294###"
+    },
+    {
+      "name": "Manifone",
+      "action": "block",
+      "pattern": "3355464####"
+    },
+    {
+      "name": "Manifone",
+      "action": "block",
+      "pattern": "3355465####"
+    },
+    {
+      "name": "Digital integration",
+      "action": "block",
+      "pattern": "33590150###"
+    },
+    {
+      "name": "Kav El International",
+      "action": "block",
+      "pattern": "33590160###"
+    },
+    {
+      "name": "Kav El International",
+      "action": "block",
+      "pattern": "33590162###"
+    },
+    {
+      "name": "Kav El International",
+      "action": "block",
+      "pattern": "33590169###"
+    },
+    {
+      "name": "Kav El International",
+      "action": "block",
+      "pattern": "33590340###"
+    },
+    {
+      "name": "Kav El International",
+      "action": "block",
+      "pattern": "33590344###"
+    },
+    {
+      "name": "Kav El International",
+      "action": "block",
+      "pattern": "33590345###"
+    },
+    {
+      "name": "Kav El International",
+      "action": "block",
+      "pattern": "33590349###"
+    },
+    {
+      "name": "Digital integration",
+      "action": "block",
+      "pattern": "33594140###"
+    },
+    {
+      "name": "Kav El International",
+      "action": "block",
+      "pattern": "33594950###"
+    },
+    {
+      "name": "Kav El International",
+      "action": "block",
+      "pattern": "33594952###"
+    },
+    {
+      "name": "Kav El International",
+      "action": "block",
+      "pattern": "33594959###"
+    },
+    {
+      "name": "Kav El International",
+      "action": "block",
+      "pattern": "33596450###"
+    },
+    {
+      "name": "Digital integration",
+      "action": "block",
+      "pattern": "33596901###"
+    },
+    {
+      "name": "Sellig",
+      "action": "block",
+      "pattern": "33640043###"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "3364466####"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "3364467####"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "3364468####"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "3364469####"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33743034###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33743035###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33743113###"
+    },
+    {
+      "name": "Did logic pte Ltd",
+      "action": "block",
+      "pattern": "33743120###"
+    },
+    {
+      "name": "Did logic pte Ltd",
+      "action": "block",
+      "pattern": "33743124###"
+    },
+    {
+      "name": "Vast new telecom",
+      "action": "block",
+      "pattern": "3374313####"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "3374339####"
+    },
+    {
+      "name": "Kav El International",
+      "action": "block",
+      "pattern": "3374403####"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33744058###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33744059###"
+    },
+    {
+      "name": "Plug and tel",
+      "action": "block",
+      "pattern": "3374406####"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "3374409####"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "3374430####"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "3374431####"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "3374432####"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "3374433####"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "3374434####"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "3374435####"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "3374436####"
+    },
+    {
+      "name": "Vast new telecom",
+      "action": "block",
+      "pattern": "33748761###"
+    },
+    {
+      "name": "Vast new telecom",
+      "action": "block",
+      "pattern": "33748762###"
+    },
+    {
+      "name": "Twilio Ireland Limited",
+      "action": "block",
+      "pattern": "33755535###"
+    },
+    {
+      "name": "Twilio Ireland Limited",
+      "action": "block",
+      "pattern": "33755536###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33756239###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "3375628####"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "337568#####"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "337569#####"
+    },
+    {
+      "name": "Kav El International",
+      "action": "block",
+      "pattern": "33757130###"
+    },
+    {
+      "name": "Kav El International",
+      "action": "block",
+      "pattern": "33757131###"
+    },
+    {
+      "name": "Kav El International",
+      "action": "block",
+      "pattern": "33757132###"
+    },
+    {
+      "name": "Twilio Ireland Limited",
+      "action": "block",
+      "pattern": "3375759####"
+    },
+    {
+      "name": "IP telecom Bulgaria Ltd",
+      "action": "block",
+      "pattern": "3375769####"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "3375780####"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "3375781####"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "3375782####"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "3375783####"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "3375784####"
+    },
+    {
+      "name": "Plug and tel",
+      "action": "block",
+      "pattern": "3375786####"
+    },
+    {
+      "name": "Twilio Ireland Limited",
+      "action": "block",
+      "pattern": "33757900###"
+    },
+    {
+      "name": "Twilio Ireland Limited",
+      "action": "block",
+      "pattern": "33757901###"
+    },
+    {
+      "name": "Twilio Ireland Limited",
+      "action": "block",
+      "pattern": "33757902###"
+    },
+    {
+      "name": "Twilio Ireland Limited",
+      "action": "block",
+      "pattern": "33757903###"
+    },
+    {
+      "name": "Twilio Ireland Limited",
+      "action": "block",
+      "pattern": "33757904###"
+    },
+    {
+      "name": "Twilio Ireland Limited",
+      "action": "block",
+      "pattern": "33757905###"
+    },
+    {
+      "name": "Twilio Ireland Limited",
+      "action": "block",
+      "pattern": "33757907###"
+    },
+    {
+      "name": "Twilio Ireland Limited",
+      "action": "block",
+      "pattern": "33757913###"
+    },
+    {
+      "name": "Twilio Ireland Limited",
+      "action": "block",
+      "pattern": "33757916###"
+    },
+    {
+      "name": "Twilio Ireland Limited",
+      "action": "block",
+      "pattern": "33757917###"
+    },
+    {
+      "name": "Twilio Ireland Limited",
+      "action": "block",
+      "pattern": "33757918###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33757941###"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "337809#####"
+    },
+    {
+      "name": "Avoxi, inc.",
+      "action": "block",
+      "pattern": "33801130###"
+    },
+    {
+      "name": "Twilio Ireland Limited",
+      "action": "block",
+      "pattern": "3380124####"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "3380127####"
+    },
+    {
+      "name": "AMCS LLC",
+      "action": "block",
+      "pattern": "3380131####"
+    },
+    {
+      "name": "Plug and tel",
+      "action": "block",
+      "pattern": "3380136####"
+    },
+    {
+      "name": "Manifone",
+      "action": "block",
+      "pattern": "3380300####"
+    },
+    {
+      "name": "Destiny global infra services",
+      "action": "block",
+      "pattern": "33803870###"
+    },
+    {
+      "name": "Destiny global infra services",
+      "action": "block",
+      "pattern": "33803871###"
+    },
+    {
+      "name": "Plug and tel",
+      "action": "block",
+      "pattern": "33806020###"
+    },
+    {
+      "name": "Manifone",
+      "action": "block",
+      "pattern": "3380603####"
+    },
+    {
+      "name": "Twilio Ireland Limited",
+      "action": "block",
+      "pattern": "3393903####"
+    },
+    {
+      "name": "CM Telecom France",
+      "action": "block",
+      "pattern": "33939070###"
+    },
+    {
+      "name": "CM Telecom France",
+      "action": "block",
+      "pattern": "33939071###"
+    },
+    {
+      "name": "CM Telecom France",
+      "action": "block",
+      "pattern": "33939072###"
+    },
+    {
+      "name": "Vast new telecom",
+      "action": "block",
+      "pattern": "33939090###"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "33939130###"
+    },
+    {
+      "name": "Twilio Ireland Limited",
+      "action": "block",
+      "pattern": "3393924####"
+    },
+    {
+      "name": "Compatel Limited",
+      "action": "block",
+      "pattern": "33939370###"
+    },
+    {
+      "name": "Plug and tel",
+      "action": "block",
+      "pattern": "33939375###"
+    },
+    {
+      "name": "AMCS LLC",
+      "action": "block",
+      "pattern": "33939377###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33939401###"
+    },
+    {
+      "name": "Compatel Limited",
+      "action": "block",
+      "pattern": "3397039####"
+    },
+    {
+      "name": "Destiny global infra services",
+      "action": "block",
+      "pattern": "33972037###"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "33972048###"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "33972049###"
+    },
+    {
+      "name": "Plug and tel",
+      "action": "block",
+      "pattern": "3397274####"
+    },
+    {
+      "name": "IP telecom Bulgaria Ltd",
+      "action": "block",
+      "pattern": "3397341####"
+    },
+    {
+      "name": "Eone trade",
+      "action": "block",
+      "pattern": "3397347####"
+    },
+    {
+      "name": "Onoff telecom",
+      "action": "block",
+      "pattern": "3397349####"
+    },
+    {
+      "name": "Manifone",
+      "action": "block",
+      "pattern": "3397396####"
+    },
+    {
+      "name": "Voiped telecom",
+      "action": "block",
+      "pattern": "33974012###"
+    },
+    {
+      "name": "ZE telecom",
+      "action": "block",
+      "pattern": "33974030###"
+    },
+    {
+      "name": "ZE telecom",
+      "action": "block",
+      "pattern": "33974031###"
+    },
+    {
+      "name": "ZE telecom",
+      "action": "block",
+      "pattern": "33974033###"
+    },
+    {
+      "name": "ZE telecom",
+      "action": "block",
+      "pattern": "33974034###"
+    },
+    {
+      "name": "ZE telecom",
+      "action": "block",
+      "pattern": "33974035###"
+    },
+    {
+      "name": "ZE telecom",
+      "action": "block",
+      "pattern": "33974036###"
+    },
+    {
+      "name": "ZE telecom",
+      "action": "block",
+      "pattern": "33974037###"
+    },
+    {
+      "name": "ZE telecom",
+      "action": "block",
+      "pattern": "33974039###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33974071###"
+    },
+    {
+      "name": "Avoxi, inc.",
+      "action": "block",
+      "pattern": "33974074###"
+    },
+    {
+      "name": "Infinivox",
+      "action": "block",
+      "pattern": "33974079###"
+    },
+    {
+      "name": "Kav El International",
+      "action": "block",
+      "pattern": "33974348###"
+    },
+    {
+      "name": "Kav El International",
+      "action": "block",
+      "pattern": "33974377###"
+    },
+    {
+      "name": "Kav El International",
+      "action": "block",
+      "pattern": "33974378###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33974720###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33974721###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33974722###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33974723###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33974724###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33974725###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33974726###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33974727###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33974728###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33974729###"
+    },
+    {
+      "name": "Twilio Ireland Limited",
+      "action": "block",
+      "pattern": "3397499####"
+    },
+    {
+      "name": "Aircall",
+      "action": "block",
+      "pattern": "3397845####"
+    },
+    {
+      "name": "Twilio Ireland Limited",
+      "action": "block",
+      "pattern": "3397846####"
+    },
+    {
+      "name": "AMCS LLC",
+      "action": "block",
+      "pattern": "3397890####"
+    },
+    {
+      "name": "Digital integration",
+      "action": "block",
+      "pattern": "33982084###"
+    },
+    {
+      "name": "Kav El International",
+      "action": "block",
+      "pattern": "3398540####"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33987282###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33987283###"
+    },
+    {
+      "name": "DVS Connect",
+      "action": "block",
+      "pattern": "33987284###"
+    },
+    {
+      "name": "Idline",
+      "action": "block",
+      "pattern": "33987990###"
+    },
+    {
+      "name": "Manifone",
+      "action": "block",
+      "pattern": "3398829####"
+    }
+  ]
+}
