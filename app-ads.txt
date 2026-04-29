@@ -1,2 +1,3 @@
+ownerdomain=bodyroro.github.io
 google.com, pub-8071918795747299, DIRECT, f08c47fec0942fa0
 facebook.com, 2772011036498706, DIRECT, c3e20eee3f780d68
