@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page introuvable — Rodolphe Vandaele</title>
+    <meta name="description" content="Cette page n'existe pas ou a été déplacée. Retrouvez les applications iPhone et les utilitaires Mac de Rodolphe Vandaele.">
+    <meta name="robots" content="noindex, follow">
+    <meta name="theme-color" content="#0a0e1a">
+    <link rel="icon" type="image/jpeg" href="./assets/img/favicon.jpg">
+    <link rel="preload" href="./assets/fonts/bricolage-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="./assets/site.css">
+    <style>
+        /* Page autonome : elle ne passe pas par le moteur, pour rester lisible
+           même si assets/site.js échoue. Rien ici ne dépend de son rendu. */
+        .nf {
+            min-height: 100svh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+            padding: 32px 20px;
+            text-align: center;
+        }
+        .nf-code {
+            font-size: clamp(56px, 14vw, 108px);
+            font-weight: 800;
+            line-height: 1;
+            letter-spacing: -0.03em;
+            background: linear-gradient(180deg, #cfe0ff, #6d8cff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .nf h1 { font-size: clamp(20px, 4.5vw, 30px); margin: 0; }
+        .nf p { max-width: 46ch; margin: 0; line-height: 1.6; }
+        .nf-en { font-size: 0.92em; opacity: 0.62; }
+        .nf-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        .nf-links a {
+            padding: 9px 16px;
+            border-radius: 10px;
+            border: 1px solid rgba(122, 157, 255, 0.32);
+            background: rgba(122, 157, 255, 0.10);
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .nf-links a.is-primary {
+            border-color: transparent;
+            background: linear-gradient(180deg, #4d7dff, #3a63e0);
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <main class="nf">
+        <span class="nf-code" aria-hidden="true">404</span>
+        <h1>Cette page n'existe pas.</h1>
+        <p>Le lien est peut-être ancien, ou la page a été déplacée. Tout le reste
+           du site est accessible ci-dessous.</p>
+        <p class="nf-en" lang="en">This page does not exist. The link may be out of
+           date, or the page may have moved.</p>
+        <nav class="nf-links" aria-label="Aller à">
+            <a class="is-primary" href="/">Accueil</a>
+            <a href="/carbufrance.html">CarbuFrance</a>
+            <a href="/irvefrance.html">IRVEFrance</a>
+            <a href="/toilettefrance.html">ToiletteFrance</a>
+            <a href="/defibfrance.html">DefibFrance</a>
+            <a href="/mactuner.html">MacTuner</a>
+            <a href="/dnstuner.html">DNSTuner</a>
+            <a href="/contact.html">Contact</a>
+        </nav>
+    </main>
+</body>
+</html>

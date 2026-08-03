@@ -1,0 +1,9 @@
+# Documentation interne — ne doit JAMAIS être publiée.
+# GitHub Pages sert le dépôt tel quel : tout fichier présent est lisible par
+# n'importe qui à https://bodyroro.github.io/<chemin>.
+CLAUDE.md
+**/CLAUDE.md
+
+# macOS
+.DS_Store
+**/.DS_Store

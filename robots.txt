@@ -1,0 +1,68 @@
+# bodyroro.github.io — site statique, tout est public et indexable.
+# Aucune zone privée : la règle générale suffirait. Les robots des moteurs de
+# réponse par IA sont nommés explicitement parce que plusieurs d'entre eux
+# traitent l'absence de mention comme un refus.
+
+User-agent: *
+Allow: /
+
+# Moteurs de réponse par IA
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+# Moteurs de recherche classiques
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Qwantify
+Allow: /
+
+Sitemap: https://bodyroro.github.io/sitemap.xml

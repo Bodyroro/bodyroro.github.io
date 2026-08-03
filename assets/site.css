@@ -1,0 +1,2352 @@
+/* ---------------------------------------------------------------------------
+   Police hébergée sur le site, pas chez un tiers
+   ---------------------------------------------------------------------------
+   Le site annonce qu'aucune donnée personnelle n'est collectée. Charger la
+   police depuis un serveur tiers transmettait pourtant l'adresse IP de chaque
+   visiteur à ce tiers, sur chaque page. Bricolage Grotesque est sous licence
+   SIL Open Font : l'héberger est permis, et supprime deux connexions externes.
+   --------------------------------------------------------------------------- */
+@font-face {
+    font-family: 'Bricolage Grotesque';
+    font-style: normal;
+    font-weight: 400 700;
+    font-stretch: 75% 100%;
+    font-display: swap;
+    src: url('./fonts/bricolage-latin.woff2') format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+        U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191,
+        U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+    font-family: 'Bricolage Grotesque';
+    font-style: normal;
+    font-weight: 400 700;
+    font-stretch: 75% 100%;
+    font-display: swap;
+    src: url('./fonts/bricolage-latin-ext.woff2') format('woff2');
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+        U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
+        U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* ==========================================================================
+   site.css : design system « Cartographie de nuit »
+   Pages : index, pages app, contact, à propos.
+   Les pages légales des apps iPhone gardent styles.css, ne rien partager ici.
+   ========================================================================== */
+
+:root {
+    /* Encre de nuit, biaisée bleu — jamais un gris neutre */
+    --bg: #0a0e1a;
+    --bg-raise: #10162a;
+    --surface: rgba(255, 255, 255, 0.045);
+    --surface-strong: rgba(255, 255, 255, 0.08);
+    --line: rgba(151, 173, 255, 0.14);
+    --line-strong: rgba(151, 173, 255, 0.28);
+    --ink: #f2f5fd;
+    --muted: #9aa4c0;
+    --faint: #6b7494;
+
+    /* Tricolore — tiré des icônes des apps */
+    --bleu: #4d7dff;
+    --bleu-deep: #2e54d4;
+    --rouge: #f5483c;
+    --blanc: #f2f5fd;
+
+    /* Accents par application (fidèles aux icônes) */
+    --c-carbu: #4d7dff;
+    --c-irve: #6a5cff;
+    --c-toilette: #3d9bff;
+    --c-defib: #17b26a;
+    --c-sos: #f5483c;
+    --c-mac: #8eb8ff;
+
+    --font-display: "Bricolage Grotesque", -apple-system, "SF Pro Display", sans-serif;
+    --font-body: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, monospace;
+
+    --radius: 22px;
+    --radius-sm: 13px;
+    --shadow-card: 0 24px 60px -24px rgba(3, 6, 18, 0.9);
+    --wrap: 1160px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; overflow-x: clip; scrollbar-color: rgba(151, 173, 255, 0.22) transparent; }
+
+/* Ascenseur assorti à l'encre de nuit (WebKit) */
+::-webkit-scrollbar { width: 11px; height: 11px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+    background: rgba(151, 173, 255, 0.18);
+    border-radius: 9px;
+    border: 3px solid var(--bg);
+}
+::-webkit-scrollbar-thumb:hover { background: rgba(151, 173, 255, 0.32); }
+
+body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.56;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    text-wrap: pretty;
+}
+
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+
+::selection { background: rgba(77, 125, 255, 0.35); }
+
+:focus-visible { outline: 2px solid var(--bleu); outline-offset: 3px; border-radius: 6px; }
+
+/* --------------------------------------------------------------------------
+   Signature tricolore — volontairement rare : une seule par page (footer)
+   -------------------------------------------------------------------------- */
+.tricolore {
+    display: inline-flex;
+    width: 46px;
+    height: 4px;
+    border-radius: 4px;
+    overflow: hidden;
+}
+.tricolore i { flex: 1; }
+.tricolore i:nth-child(1) { background: var(--bleu); }
+.tricolore i:nth-child(2) { background: var(--blanc); }
+.tricolore i:nth-child(3) { background: var(--rouge); }
+
+/* Étiquette façon légende de carte */
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+.eyebrow::before {
+    content: "";
+    width: 22px;
+    height: 1px;
+    background: var(--bleu);
+}
+
+/* --------------------------------------------------------------------------
+   Layout
+   -------------------------------------------------------------------------- */
+.wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 28px; }
+
+.section { padding: 76px 0; position: relative; scroll-margin-top: 62px; }
+.section-head { max-width: 620px; display: grid; gap: 14px; margin-bottom: 44px; }
+.section-head h2 {
+    font-family: var(--font-display);
+    font-size: clamp(25px, 3vw, 34px);
+    font-weight: 600;
+    line-height: 1.08;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+}
+.section-head p { color: var(--muted); font-size: 15.5px; max-width: 56ch; }
+
+/* --------------------------------------------------------------------------
+   Navigation
+   -------------------------------------------------------------------------- */
+.nav {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 60;
+    backdrop-filter: blur(18px) saturate(1.4);
+    -webkit-backdrop-filter: blur(18px) saturate(1.4);
+    background: rgba(10, 14, 26, 0.66);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s ease;
+}
+.nav.is-scrolled { border-bottom-color: var(--line); }
+.nav-inner {
+    max-width: var(--wrap);
+    margin: 0 auto;
+    padding: 0 28px;
+    height: 62px;
+    display: flex;
+    align-items: center;
+    gap: 26px;
+}
+.brand { display: inline-flex; align-items: center; gap: 11px; font-weight: 700; }
+.brand-mark {
+    width: 30px; height: 30px;
+    border-radius: 9px;
+    display: grid;
+    place-items: center;
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+    background: linear-gradient(140deg, var(--bleu) 0%, var(--bleu-deep) 100%);
+    box-shadow: 0 4px 14px -4px rgba(77, 125, 255, 0.6);
+    transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.4);
+}
+.brand:hover .brand-mark { transform: rotate(-7deg) scale(1.07); }
+.brand-name { font-size: 14.5px; letter-spacing: 0.01em; white-space: nowrap; }
+.brand-name small { display: block; font-size: 10.5px; font-weight: 500; color: var(--faint); letter-spacing: 0.06em; }
+
+.nav-links { display: flex; gap: 4px; margin-left: auto; }
+.nav-links a {
+    padding: 7px 13px;
+    border-radius: 9px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--muted);
+    transition: color 0.2s, background 0.2s;
+}
+.nav-links a:hover { color: var(--ink); background: var(--surface); }
+/* Page courante : l'entrée s'éclaircit et porte un repère sous le libellé.
+   Sans marqueur, on ne savait pas où l'on se trouvait une fois dans une app. */
+.nav-links a.is-on { color: var(--ink); background: var(--surface); position: relative; }
+.nav-links a.is-on::after {
+    content: '';
+    position: absolute; left: 13px; right: 13px; bottom: 3px;
+    height: 2px; border-radius: 2px;
+    background: var(--bleu);
+}
+
+/* Lien d'évitement : hors écran jusqu'à ce qu'il reçoive le focus clavier */
+.skip-link {
+    position: absolute; left: 12px; top: -60px; z-index: 200;
+    padding: 10px 16px; border-radius: 10px;
+    font-size: 14px; font-weight: 600;
+    color: #fff; background: var(--bleu);
+    transition: top 0.18s;
+}
+.skip-link:focus-visible { top: 12px; outline: 2px solid #fff; outline-offset: 2px; }
+
+.lang-switch {
+    display: inline-flex;
+    flex: none;
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    overflow: hidden;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+}
+.lang-switch button {
+    padding: 6px 11px;
+    color: var(--faint);
+    transition: color 0.2s, background 0.2s;
+}
+.lang-switch button.is-on { background: var(--surface-strong); color: var(--ink); }
+
+.nav-burger { display: none; width: 40px; height: 40px; border-radius: 9px; position: relative; flex: none; }
+.nav-burger span, .nav-burger span::before, .nav-burger span::after {
+    content: "";
+    position: absolute;
+    left: 10px; right: 10px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--ink);
+    transition: transform 0.25s, opacity 0.2s, top 0.25s;
+}
+.nav-burger span { top: 19px; }
+.nav-burger span::before { left: 0; right: 0; top: -6px; }
+.nav-burger span::after { left: 0; right: 0; top: 6px; }
+body.nav-open .nav-burger span { background: transparent; }
+body.nav-open .nav-burger span::before { top: 0; transform: rotate(45deg); }
+body.nav-open .nav-burger span::after { top: 0; transform: rotate(-45deg); }
+
+/* --------------------------------------------------------------------------
+   Hero — constellation de la France
+   -------------------------------------------------------------------------- */
+.hero {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    padding: 132px 0 84px;
+    overflow: clip;
+}
+.hero-veil {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(10, 14, 26, 0.4) 0%, rgba(10, 14, 26, 0) 30%, rgba(10, 14, 26, 0) 64%, var(--bg) 100%);
+    pointer-events: none;
+}
+.hero-wrap {
+    position: relative;
+    width: 100%;
+    display: grid;
+    grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
+    gap: 48px;
+    align-items: center;
+}
+.hero-inner { position: relative; z-index: 2; display: grid; gap: 30px; max-width: 600px; }
+/* Le héro n'a plus d'illustration : elle est descendue dans la section iPhone.
+   Sans colonne de droite, il est centré et raccourci, sinon il laisse un vide
+   sur toute la moitié de l'écran. */
+/* Le héro occupe toute la fenêtre, quelle que soit sa taille. `100svh` et non
+   `100vh` : sur mobile, la barre d'adresse qui se rétracte ferait sauter la
+   hauteur au premier défilement. Le fond animé, en `inset: 0`, couvre donc bien
+   toute la zone. */
+.hero-intro { min-height: 100svh; padding: 132px 0 108px; }
+
+/* Indice de défilement : le mot et un chevron qui descend. */
+.hero-scroll {
+    position: absolute;
+    left: 50%;
+    bottom: 34px;
+    transform: translateX(-50%);
+    z-index: 2;
+    color: var(--faint);
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    display: grid;
+    justify-items: center;
+    gap: 11px;
+}
+.hero-scroll::after {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-right: 1.5px solid var(--bleu);
+    border-bottom: 1.5px solid var(--bleu);
+    transform: rotate(45deg);
+    animation: chevron-bas 1.9s ease-in-out infinite;
+}
+@keyframes chevron-bas {
+    0%, 100% { transform: rotate(45deg) translate(-2px, -2px); opacity: 0.45; }
+    50% { transform: rotate(45deg) translate(2px, 2px); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .hero-scroll::after { animation: none; opacity: 0.7; }
+}
+@media (max-width: 640px) {
+    .hero-scroll { bottom: 20px; font-size: 8.5px; gap: 8px; }
+}
+/* Fond animé : sous le voile et sous le texte, jamais au-dessus. */
+#hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+.hero-intro .hero-veil { z-index: 1; }
+.hero-centered {
+    max-width: 760px;
+    margin-inline: auto;
+    justify-items: center;
+    text-align: center;
+}
+.hero-centered .hero-lead { max-width: 62ch; }
+.hero-badges { display: flex; flex-wrap: wrap; gap: 9px; }
+.chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 13px;
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    background: var(--surface);
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    color: var(--muted);
+}
+/* Puce de vitrine sélectionnée : sans repère, on ne savait pas quelle app
+   était affichée dans la fenêtre de démonstration. */
+button.chip { font: inherit; font-family: var(--font-mono); }
+button.chip:hover { color: var(--ink); border-color: rgba(142, 184, 255, 0.34); }
+.chip.is-on {
+    color: var(--ink);
+    border-color: rgba(77, 125, 255, 0.55);
+    background: rgba(77, 125, 255, 0.16);
+    box-shadow: 0 0 0 1px rgba(77, 125, 255, 0.18);
+}
+.chip:focus-visible { outline: 2px solid var(--bleu); outline-offset: 2px; }
+
+.chip .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--c-defib); box-shadow: 0 0 8px var(--c-defib); animation: dot-breathe 2.6s ease-in-out infinite; }
+@keyframes dot-breathe {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.55; transform: scale(0.8); }
+}
+
+.hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(36px, 5vw, 60px);
+    font-weight: 640;
+    font-variation-settings: "wdth" 90;
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+}
+.hero h1 em {
+    font-style: normal;
+    background: linear-gradient(115deg, #a8c2ff 0%, var(--bleu) 55%, #7a9dff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+.hero-lead { font-size: 17px; color: var(--muted); max-width: 54ch; }
+
+.hero-actions { display: flex; flex-wrap: wrap; gap: 13px; align-items: center; }
+
+.btn {
+    position: relative;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 13px 24px;
+    border-radius: 13px;
+    font-size: 15px;
+    font-weight: 600;
+    transition: transform 0.25s cubic-bezier(0.2, 0.9, 0.3, 1.4), box-shadow 0.25s, background 0.2s, border-color 0.2s;
+    will-change: transform;
+}
+.btn:active { transform: translateY(0) scale(0.97); transition-duration: 0.08s; }
+.btn-solid {
+    background: linear-gradient(140deg, var(--bleu) 0%, var(--bleu-deep) 110%);
+    color: #fff;
+    box-shadow: 0 12px 30px -10px rgba(77, 125, 255, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+/* Reflet balayé au survol, comme une vitre qui accroche la lumière */
+.btn-solid::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, 0.25) 50%, transparent 65%);
+    transform: translateX(-130%);
+    transition: transform 0.7s cubic-bezier(0.3, 0.6, 0.3, 1);
+    pointer-events: none;
+}
+.btn-solid:hover::after { transform: translateX(130%); }
+.btn-solid:hover { transform: translateY(-2px); box-shadow: 0 18px 40px -12px rgba(77, 125, 255, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
+.btn-ghost { border: 1px solid var(--line-strong); background: var(--surface); color: var(--ink); }
+.btn-ghost:hover { transform: translateY(-2px); background: var(--surface-strong); }
+.btn svg { width: 17px; height: 17px; }
+
+/* Carte de France dans le hero : les apps iPhone épinglées sur le territoire */
+.hero-map {
+    position: relative;
+    width: 100%;
+    height: min(72vh, 620px);
+    pointer-events: none;
+}
+.hero-map canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.map-pins { position: absolute; inset: 0; }
+/* Deux éléments imbriqués = deux animations qui ne se disputent jamais le
+   même transform : l'extérieur gère la chute, l'intérieur le flottement
+   (déjà en mouvement grâce à un délai négatif, l'atterrissage est fluide). */
+.map-app-pin {
+    position: absolute;
+    width: 46px;
+    height: 46px;
+    margin: -23px 0 0 -23px;
+    opacity: 0;
+    animation: pin-fall 0.55s cubic-bezier(0.2, 0.7, 0.3, 1) var(--pd, 0s) forwards;
+}
+/* nom unique : « pin-drop » désigne déjà l'animation des marqueurs de la démo iPhone */
+@keyframes pin-fall {
+    0% { opacity: 0; transform: translateY(-24px) scale(0.8); }
+    55% { opacity: 1; }
+    100% { opacity: 1; transform: none; }
+}
+.pin-core {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 13px;
+    box-shadow:
+        0 14px 30px -10px rgba(3, 6, 18, 0.9),
+        0 0 0 1px rgba(255, 255, 255, 0.1),
+        0 0 30px -4px var(--glow, rgba(77, 125, 255, 0.45));
+    animation: pin-bob 5.5s ease-in-out var(--d, 0s) infinite;
+}
+.pin-core img { width: 100%; height: 100%; border-radius: inherit; object-fit: cover; }
+.map-app-pin::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -9px;
+    width: 12px;
+    height: 5px;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    background: rgba(3, 6, 18, 0.7);
+    filter: blur(2px);
+}
+@keyframes pin-bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-9px); }
+}
+
+
+/* --------------------------------------------------------------------------
+   Bandeau de stats
+   -------------------------------------------------------------------------- */
+/* Bandeau de stats : cartes autonomes, aucun trait traversant */
+.stats { padding: 26px 0 0; }
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+}
+.stat {
+    padding: 26px 24px 28px;
+    display: grid;
+    gap: 8px;
+    align-content: start;
+    border-radius: 18px;
+    border: 1px solid var(--line);
+    background: linear-gradient(165deg, var(--surface-strong) 0%, var(--surface) 60%);
+    transition: transform 0.25s, border-color 0.2s;
+}
+.stat:hover { transform: translateY(-4px); border-color: var(--line-strong); }
+.stat-icon {
+    width: 38px; height: 38px;
+    display: grid;
+    place-items: center;
+    border-radius: 11px;
+    background: rgba(77, 125, 255, 0.12);
+    border: 1px solid rgba(77, 125, 255, 0.24);
+    color: #a8c2ff;
+    margin-bottom: 6px;
+}
+.stat-icon svg { width: 19px; height: 19px; }
+.stat b {
+    font-family: var(--font-display);
+    font-size: 46px;
+    font-weight: 660;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+    background: linear-gradient(160deg, #c7d6ff 0%, var(--bleu) 120%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    width: max-content;
+}
+.stat-label { font-size: 13.5px; font-weight: 600; color: var(--ink); }
+.stat-desc { font-size: 12.5px; color: var(--faint); line-height: 1.5; text-wrap: pretty; max-width: 26ch; }
+
+/* --------------------------------------------------------------------------
+   Chapitres plateforme — iOS vs macOS
+   -------------------------------------------------------------------------- */
+.platform-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 8px 16px;
+    border-radius: 100px;
+    font-size: 13.5px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    justify-self: start;
+    width: max-content;
+    max-width: 100%;
+}
+.platform-tag svg { width: 15px; height: 15px; }
+.platform-ios { background: rgba(77, 125, 255, 0.14); color: #a8c2ff; border: 1px solid rgba(77, 125, 255, 0.3); }
+.platform-mac { background: rgba(142, 184, 255, 0.1); color: #c9dcff; border: 1px solid rgba(142, 184, 255, 0.26); }
+
+/* Grille de cartes apps iOS */
+.app-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+}
+.app-card {
+    position: relative;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    background: linear-gradient(165deg, var(--surface-strong) 0%, var(--surface) 55%);
+    padding: 18px;
+    display: grid;
+    gap: 11px;
+    transform-style: preserve-3d;
+    transition: border-color 0.3s;
+    overflow: hidden;
+}
+.app-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 0%), color-mix(in srgb, var(--accent, var(--bleu)) 13%, transparent), transparent 65%);
+    opacity: 0;
+    transition: opacity 0.35s;
+    pointer-events: none;
+}
+.app-card:hover::before { opacity: 1; }
+.app-card:hover { border-color: color-mix(in srgb, var(--accent, var(--bleu)) 45%, var(--line)); }
+
+.app-card-head { display: flex; align-items: center; gap: 14px; }
+.app-icon {
+    width: 40px; height: 40px;
+    border-radius: 11px;
+    box-shadow: 0 10px 24px -8px rgba(3, 6, 18, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.09);
+    transform: translateZ(34px);
+}
+.app-card h3 {
+    font-family: var(--font-display);
+    font-size: 17px;
+    font-weight: 620;
+    letter-spacing: -0.01em;
+    transform: translateZ(22px);
+}
+.app-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 3px;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+.app-status .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--c-defib); box-shadow: 0 0 7px var(--c-defib); animation: dot-breathe 2.6s ease-in-out infinite; }
+.app-status.is-soon .dot { background: #f7b731; box-shadow: 0 0 7px #f7b731; }
+
+.app-card > p { color: var(--muted); font-size: 15px; max-width: 52ch; transform: translateZ(14px); }
+
+.app-card-foot { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; transform: translateZ(20px); }
+.link-arrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 14.5px;
+    font-weight: 600;
+    color: color-mix(in srgb, var(--accent, var(--bleu)) 75%, #fff);
+}
+.link-arrow svg { width: 14px; height: 14px; transition: transform 0.25s; }
+.link-arrow:hover svg { transform: translateX(4px); }
+.link-quiet { font-size: 14px; color: var(--faint); font-weight: 500; }
+.link-quiet:hover { color: var(--muted); }
+
+/* Badge App Store / GitHub */
+.store-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 11px;
+    padding: 10px 18px;
+    border-radius: 12px;
+    border: 1px solid var(--line-strong);
+    background: rgba(255, 255, 255, 0.06);
+    transition: transform 0.25s, background 0.2s, border-color 0.2s;
+}
+.store-badge:hover { transform: translateY(-2px); background: rgba(255, 255, 255, 0.1); }
+.store-badge svg { width: 21px; height: 21px; }
+.store-badge small { display: block; font-size: 10px; color: var(--faint); letter-spacing: 0.04em; text-transform: uppercase; }
+.store-badge strong { font-size: 14.5px; font-weight: 650; letter-spacing: 0.01em; }
+.store-badge.is-muted { opacity: 0.55; pointer-events: none; }
+
+/* --------------------------------------------------------------------------
+   Chapitre macOS — fenêtre Mac + démo MacTuner
+   -------------------------------------------------------------------------- */
+/* Les deux gammes ont exactement le même traitement de fond, au côté du halo
+   près. Ce sont les **seules** bandes séparées du site : une gamme forme un
+   bloc unique, entête, cartes et vitrine comprises. */
+.range-section {
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+}
+/* ⚠️ Fond **linéaire uniquement**. Un dégradé radial avec un arrêt à 62 % pose
+   un bord circulaire parfaitement visible derrière la scène, décentré puisque
+   son foyer ne coïncide pas avec l'illustration. C'était le halo étrange que
+   l'on voyait derrière la carte. Ne pas réintroduire de radial ici : la
+   profondeur vient du dégradé vertical et des bordures de section. */
+.range-section#ios,
+.range-section#macos,
+.mac-section {
+    background: linear-gradient(180deg, var(--bg) 0%, #0b1020 50%, var(--bg) 100%);
+}
+/* La vitrine, dans la même bande, juste séparée par un filet discret. */
+.range-demo {
+    margin-top: 72px;
+    padding-top: 64px;
+    border-top: 1px solid rgba(151, 173, 255, 0.08);
+}
+/* Bandeau d'ouverture de la section Mac : le Mac, son routeur et sa clé USB.
+   Même mécanique que la carte de France, d'où la réutilisation de `.map-pins`
+   et `.map-app-pin` pour les icônes posées sur les objets. */
+/* Entête d'une gamme : texte à gauche, illustration à droite. Les deux gammes
+   emploient exactement les mêmes règles, il n'existe pas de variante par
+   plateforme : c'est ce qui garantit qu'elles se lisent de la même façon. */
+.range-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    gap: 48px;
+    align-items: center;
+    margin-bottom: 56px;
+}
+.range-copy { display: grid; gap: 20px; }
+.range-copy h2 {
+    font-family: var(--font-display);
+    font-size: clamp(25px, 2.9vw, 33px);
+    font-weight: 620;
+    line-height: 1.08;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+}
+.range-copy > p { color: var(--muted); max-width: 54ch; }
+.range-scene {
+    position: relative;
+    width: 100%;
+    height: min(48vh, 390px);
+    pointer-events: none;
+}
+.range-scene canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; }
+/* Les épingles doivent rester au-dessus du canvas : sans plan explicite, le
+   canvas et son `z-index: 1` passaient devant et les icônes disparaissaient
+   derrière le remplissage des composants. */
+.range-scene .map-pins { z-index: 2; }
+/* Aucun halo en CSS derrière les scènes. Un disque posé dans une boîte plus
+   large que haute déborde verticalement : son bord se voyait, décentré, et
+   trahissait le procédé. Le fondu appartient au canvas (`fondreBords`), qui
+   éteint l'illustration elle-même ; le fond de section fait le reste. */
+/* La puce de la gamme iPhone garde sa couleur, celle du Mac la sienne. */
+.range-section#ios .mac-points li::before { background: var(--c-ios, var(--bleu)); box-shadow: 0 0 9px var(--c-ios, var(--bleu)); }
+
+.mac-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: 56px;
+    align-items: center;
+}
+.mac-copy { display: grid; gap: 20px; }
+.mac-copy h2 {
+    font-family: var(--font-display);
+    font-size: clamp(25px, 2.9vw, 33px);
+    font-weight: 620;
+    line-height: 1.08;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+}
+.mac-copy > p { color: var(--muted); max-width: 54ch; }
+.mac-points { display: grid; gap: 11px; list-style: none; }
+.mac-points li { display: flex; gap: 12px; font-size: 15px; color: var(--muted); }
+.mac-points li::before {
+    content: "";
+    flex: none;
+    width: 7px; height: 7px;
+    margin-top: 8px;
+    border-radius: 50%;
+    background: var(--c-mac);
+    box-shadow: 0 0 9px var(--c-mac);
+}
+.mac-points li b { color: var(--ink); font-weight: 600; }
+
+/* Fenêtre macOS */
+.mac-scene { position: relative; }
+.mac-window {
+    position: relative;
+    border-radius: 16px;
+    border: 1px solid rgba(142, 184, 255, 0.22);
+    background: linear-gradient(180deg, #141a2e 0%, #0e1425 100%);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+    transform: perspective(1400px) rotateY(-5deg) rotateX(2deg);
+    /* L'orientation 3D est pilotée par le pointeur (attachMacTilt) ;
+       cette transition ne sert que de repli sans JS */
+    transition: transform 0.5s ease;
+}
+.mac-titlebar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.03);
+}
+.mac-titlebar i { width: 11px; height: 11px; border-radius: 50%; flex: none; }
+.mac-titlebar i:nth-child(1) { background: #ff5f57; }
+.mac-titlebar i:nth-child(2) { background: #febc2e; }
+.mac-titlebar i:nth-child(3) { background: #28c840; }
+
+/* Onglets de la vraie app, dans la barre de titre */
+.mt-tabs {
+    display: flex;
+    gap: 3px;
+    margin-left: 8px;
+    min-width: 0;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+}
+.mt-tab {
+    flex: none;
+    padding: 4px 9px;
+    border-radius: 7px;
+    font-size: 9.5px;
+    font-weight: 600;
+    color: var(--faint);
+    white-space: nowrap;
+    border: 1px solid transparent;
+    transition: color 0.25s, background 0.25s, border-color 0.25s;
+    cursor: pointer;
+}
+.mt-tab.is-on {
+    background: rgba(255, 255, 255, 0.09);
+    border-color: rgba(255, 255, 255, 0.13);
+    color: var(--ink);
+}
+.mt-shield {
+    margin-left: auto;
+    flex: none;
+    width: 20px; height: 20px;
+    display: grid;
+    place-items: center;
+    border-radius: 6px;
+    background: rgba(255, 159, 10, 0.12);
+    color: #ff9f0a;
+}
+.mt-shield svg { width: 12px; height: 12px; }
+
+/* En-tête machine, comme la vraie app */
+.mt-idcard {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 12px 14px 0;
+    padding: 10px 12px;
+    border-radius: 11px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.055);
+}
+.mt-idcard img { width: 27px; height: 27px; border-radius: 7px; }
+.mt-idcard-name { display: grid; gap: 1px; min-width: 0; }
+.mt-idcard-name b { font-size: 12px; display: flex; align-items: center; gap: 6px; }
+.mt-idcard-name b em {
+    font-style: normal;
+    font-size: 8.5px;
+    font-weight: 600;
+    color: var(--faint);
+    padding: 1px 6px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.07);
+}
+.mt-idcard-name small { font-size: 9.5px; color: var(--faint); }
+.mt-idcard-os {
+    margin-left: auto;
+    text-align: right;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--muted);
+    white-space: nowrap;
+}
+.mt-idcard-os small { display: block; font-size: 8.5px; font-weight: 500; color: var(--faint); }
+
+/* Vues commutables : toutes empilées dans la même cellule pour que la fenêtre
+   garde une hauteur constante (celle du plus grand onglet) pendant le cycle
+   automatique. */
+.mt-body { padding: 10px 12px 12px; min-height: 336px; display: grid; grid-template-columns: minmax(0, 1fr); }
+.mt-view {
+    grid-area: 1 / 1;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+}
+.mt-view.is-live {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    animation: mt-view-in 0.35s ease;
+}
+@keyframes mt-view-in {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: none; }
+}
+/* Les éléments de la vue arrivent en cascade, comme une vraie app qui charge */
+.mt-view.is-live :is(.mt-line, .mt-card, .mt-tile) {
+    animation: mt-item-in 0.45s cubic-bezier(0.2, 0.8, 0.3, 1) both;
+}
+.mt-view.is-live :is(.mt-line, .mt-card, .mt-tile):nth-child(2) { animation-delay: 60ms; }
+.mt-view.is-live :is(.mt-line, .mt-card, .mt-tile):nth-child(3) { animation-delay: 120ms; }
+.mt-view.is-live :is(.mt-line, .mt-card, .mt-tile):nth-child(4) { animation-delay: 180ms; }
+/* Les vues de DNSTuner listent jusqu'à six entrées : la cascade va aussi loin,
+   sinon les dernières lignes apparaissaient d'un bloc. */
+.mt-view.is-live :is(.mt-line, .mt-card, .mt-tile):nth-child(5) { animation-delay: 240ms; }
+.mt-view.is-live :is(.mt-line, .mt-card, .mt-tile):nth-child(6) { animation-delay: 300ms; }
+.mt-view.is-live :is(.mt-cta, .mt-fan) { animation: mt-item-in 0.45s 230ms cubic-bezier(0.2, 0.8, 0.3, 1) both; }
+@keyframes mt-item-in {
+    from { opacity: 0; transform: translateY(8px) scale(0.985); }
+    to { opacity: 1; transform: none; }
+}
+/* Les interrupteurs actifs s'enclenchent à l'ouverture de la vue */
+.mt-view.is-live .mt-toggle.is-on::after {
+    animation: mt-knob-on 0.45s 0.3s cubic-bezier(0.3, 1.35, 0.4, 1) backwards;
+}
+@keyframes mt-knob-on {
+    from { transform: translateX(0); }
+    to { transform: translateX(12px); }
+}
+
+/* Lignes génériques (fonctionnalités, nettoyage, maintenance…) */
+.mt-list { display: grid; gap: 7px; }
+.mt-line {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 9px 11px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    font-size: 11px;
+    color: var(--muted);
+}
+.mt-line svg { width: 13px; height: 13px; flex: none; color: var(--c-mac); }
+.mt-line b { color: var(--ink); font-weight: 600; font-size: 11.5px; }
+.mt-line small { font-size: 9.5px; color: var(--faint); }
+.mt-line .mt-val { margin-left: auto; font-variant-numeric: tabular-nums; font-weight: 650; color: var(--ink); font-size: 11px; white-space: nowrap; }
+.mt-line-txt { display: grid; gap: 1px; min-width: 0; }
+/* Matrice de blocage de DNSTuner : une pastille par catégorie, alignées à droite */
+.mt-line-dots { margin-left: auto; display: flex; gap: 6px; flex: none; }
+
+/* ---------------------------------------------------------------------------
+   Fenêtre DNSTuner : tableau de bord de démonstration
+   --------------------------------------------------------------------------- */
+/* Le drapeau sert d'icône de ligne : même gabarit qu'un svg de .mt-line */
+.dt-flag { font-size: 12px; line-height: 1; width: 13px; flex: none; text-align: center; }
+/* Une carte pleine largeur dans la grille à deux colonnes */
+.dt-card-wide { grid-column: 1 / -1; }
+
+.dt-hero { display: flex; align-items: center; gap: 12px; }
+.dt-hero .mt-ring { margin: 0; flex: none; }
+.dt-hero-txt { display: grid; gap: 3px; min-width: 0; }
+.dt-hero-txt b { font-size: 12.5px; color: var(--ink); font-weight: 650; }
+.dt-hero-txt small { font-size: 10px; color: var(--faint); }
+.dt-chiprow { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 2px; }
+.dt-hero-num { margin-left: auto; text-align: right; display: grid; gap: 1px; flex: none; }
+.dt-hero-num small { font-size: 9px; color: var(--faint); }
+.dt-hero-num b {
+    font-size: 17px; font-weight: 700; color: var(--ink);
+    font-variant-numeric: tabular-nums; letter-spacing: -0.02em;
+}
+
+/* Compteurs du catalogue */
+.dt-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 10px; }
+.dt-stat { display: grid; gap: 0; }
+.dt-stat b {
+    font-size: 16px; font-weight: 750; color: var(--ink);
+    font-variant-numeric: tabular-nums; letter-spacing: -0.02em;
+}
+.dt-stat small { font-size: 9px; color: var(--faint); }
+
+/* Barres de couverture et de latence : la largeur s'anime à l'ouverture de la vue */
+.dt-bars { display: grid; gap: 6px; }
+.dt-bar { display: flex; align-items: center; gap: 8px; font-size: 10px; color: var(--muted); }
+.dt-bar em { font-style: normal; width: 92px; flex: none; }
+.dt-bar b { margin-left: auto; font-variant-numeric: tabular-nums; color: var(--ink); font-weight: 650; }
+.dt-bar i, .dt-lat i {
+    flex: 1; height: 5px; border-radius: 3px;
+    background: rgba(255, 255, 255, 0.07); overflow: hidden; display: block;
+}
+.dt-bar u, .dt-lat u {
+    display: block; height: 100%; width: var(--w, 0%);
+    border-radius: 3px; text-decoration: none;
+    background: linear-gradient(90deg, #4d7dff, #6d5cff);
+}
+.mt-view.is-live .dt-bar u,
+.mt-view.is-live .dt-lat u { animation: dt-fill 0.8s 0.15s cubic-bezier(0.2, 0.8, 0.3, 1) backwards; }
+@keyframes dt-fill { from { width: 0; } to { width: var(--w, 0%); } }
+
+.dt-lat { margin-left: auto; display: flex; align-items: center; gap: 7px; flex: none; width: 128px; }
+
+@media (max-width: 720px) {
+    .dt-hero { flex-wrap: wrap; }
+    .dt-hero-num { margin-left: 0; text-align: left; }
+    .dt-stats { grid-template-columns: 1fr; }
+}
+.mt-check {
+    width: 15px; height: 15px;
+    border-radius: 5px;
+    flex: none;
+    display: grid;
+    place-items: center;
+    font-size: 10px;
+    color: #fff;
+    background: var(--bleu);
+}
+.mt-check.is-off { background: rgba(255, 255, 255, 0.1); color: transparent; }
+.mt-toggle {
+    margin-left: auto;
+    width: 30px; height: 18px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.12);
+    position: relative;
+    flex: none;
+}
+.mt-toggle::after {
+    content: "";
+    position: absolute;
+    top: 2px; left: 2px;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: #fff;
+    transition: transform 0.25s;
+}
+.mt-toggle.is-on { background: var(--c-defib); }
+.mt-toggle.is-on::after { transform: translateX(12px); }
+.mt-chip {
+    margin-left: auto;
+    flex: none;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 9.5px;
+    font-weight: 700;
+    color: #cfe0ff;
+    background: rgba(122, 157, 255, 0.14);
+    border: 1px solid rgba(122, 157, 255, 0.28);
+}
+.mt-chip.is-green { color: #7ce3ae; background: rgba(23, 178, 106, 0.13); border-color: rgba(23, 178, 106, 0.3); }
+.mt-note { margin-top: 9px; font-size: 9.5px; color: var(--faint); text-align: center; }
+.mt-cta {
+    margin-top: 10px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+    background: linear-gradient(140deg, var(--bleu), var(--bleu-deep));
+    box-shadow: 0 8px 18px -8px rgba(77, 125, 255, 0.6);
+}
+.mt-cta.is-red { background: linear-gradient(140deg, #ff6259, #d63a31); box-shadow: 0 8px 18px -8px rgba(245, 72, 60, 0.55); }
+
+/* Tuiles Gains */
+.mt-tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.mt-tile {
+    padding: 13px 10px;
+    border-radius: 11px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.055);
+    display: grid;
+    gap: 3px;
+    justify-items: center;
+    text-align: center;
+}
+.mt-tile b {
+    font-family: var(--font-display);
+    font-size: 17px;
+    font-weight: 700;
+    background: linear-gradient(160deg, #c7d6ff, var(--bleu));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+.mt-tile span { font-size: 9px; color: var(--faint); line-height: 1.35; }
+
+/* Carte Ventilation */
+.mt-fan {
+    margin-top: 10px;
+    padding: 11px 12px;
+    border-radius: 11px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.055);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.mt-fan-ring { position: relative; width: 58px; flex: none; }
+.mt-fan-ring svg { width: 58px; height: 58px; display: block; }
+.mt-fan-center {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-content: center;
+    justify-items: center;
+}
+.mt-fan-center b { font-size: 11px; font-weight: 750; font-variant-numeric: tabular-nums; }
+.mt-fan-center small { font-size: 7.5px; color: var(--faint); }
+.mt-fan-mid { display: grid; gap: 6px; min-width: 0; flex: 1; }
+.mt-fan-row { display: flex; align-items: center; gap: 8px; font-size: 10.5px; color: var(--ink); font-weight: 600; }
+.mt-fan-slider {
+    height: 5px;
+    border-radius: 5px;
+    background: linear-gradient(90deg, #17b26a, #4d7dff, #6a5cff);
+    position: relative;
+    opacity: 0.75;
+}
+.mt-fan-slider i {
+    position: absolute;
+    left: 4%; top: 50%;
+    width: 11px; height: 11px;
+    border-radius: 50%;
+    background: #fff;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+.mt-fan-scale { display: flex; justify-content: space-between; font-size: 8px; color: var(--faint); }
+/* Tableau de bord MacTuner : grille 2x2 de cartes, comme la vraie app */
+.mt-grid {
+    padding: 14px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+.mt-card {
+    min-width: 0;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.045);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 12px 13px;
+    display: grid;
+    gap: 9px;
+    align-content: start;
+}
+.mt-head {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+    font-weight: 650;
+    color: var(--ink);
+}
+.mt-head svg { width: 14px; height: 14px; }
+.mt-head.is-orange svg { color: #ff9f0a; }
+.mt-head.is-purple svg { color: #bf5af2; }
+.mt-head.is-teal svg { color: #40c8e0; }
+.mt-head.is-blue svg { color: #0a84ff; }
+.mt-ring { position: relative; width: 84px; margin: 0 auto; }
+.mt-ring svg { width: 84px; height: 84px; display: block; }
+.mt-ring circle[data-mt-ring] { transition: stroke-dashoffset 1.1s cubic-bezier(0.3, 0.8, 0.3, 1); }
+.mt-ring-center {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    text-align: center;
+    gap: 0;
+}
+.mt-ring-center b { font-size: 13.5px; font-weight: 750; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+.mt-ring-center small { font-size: 8.5px; color: var(--faint); }
+.mt-cores {
+    display: flex;
+    align-items: end;
+    gap: 3px;
+    height: 22px;
+}
+.mt-cores i {
+    flex: 1;
+    height: 30%;
+    border-radius: 2px;
+    background: linear-gradient(180deg, #ffb84d, #ff9f0a);
+    transition: height 0.8s cubic-bezier(0.3, 0.8, 0.3, 1);
+    min-height: 3px;
+}
+.mt-rows { display: grid; gap: 4px; }
+.mt-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10px;
+    color: var(--muted);
+}
+.mt-row i { width: 7px; height: 7px; border-radius: 50%; flex: none; }
+.mt-row b { margin-left: auto; font-variant-numeric: tabular-nums; color: var(--ink); font-weight: 600; font-size: 10px; }
+.mt-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 10px;
+    color: var(--faint);
+}
+.mt-foot b { font-variant-numeric: tabular-nums; font-weight: 650; }
+.mt-foot-center { justify-content: center; }
+.mt-net { display: grid; gap: 7px; align-content: center; min-height: 96px; }
+.mt-net-row {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 10.5px;
+    color: var(--muted);
+}
+.mt-net-row em {
+    font-style: normal;
+    width: 17px; height: 17px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-size: 10px;
+    font-weight: 800;
+    color: #fff;
+    flex: none;
+}
+.mt-net-row em.is-down { background: #30d158; }
+.mt-net-row em.is-up { background: #0a84ff; }
+.mt-net-row b { margin-left: auto; font-variant-numeric: tabular-nums; color: var(--ink); font-weight: 650; font-size: 11px; }
+.mt-spark { width: 100%; height: 34px; display: block; }
+
+/* --------------------------------------------------------------------------
+   Mockup iPhone + démo carte animée
+   -------------------------------------------------------------------------- */
+.iphone {
+    width: min(248px, 70vw);
+    aspect-ratio: 9 / 19;
+    border-radius: 37px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: #05070f;
+    box-shadow:
+        var(--shadow-card),
+        inset 0 0 0 7px #05070f,
+        inset 0 0 0 8px rgba(255, 255, 255, 0.1),
+        0 0 90px -30px var(--glow, rgba(77, 125, 255, 0.4));
+    padding: 8px;
+    position: relative;
+    margin: 0 auto;
+    /* Arrive en douceur à chaque changement d'app, puis flotte */
+    animation:
+        iphone-in 0.6s cubic-bezier(0.2, 0.8, 0.3, 1) both,
+        iphone-float 8s 0.6s ease-in-out infinite;
+}
+@keyframes iphone-in {
+    from { opacity: 0; transform: translateY(16px) scale(0.975); }
+    to { opacity: 1; transform: none; }
+}
+@keyframes iphone-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+.iphone-screen {
+    width: 100%; height: 100%;
+    border-radius: 31px;
+    overflow: hidden;
+    position: relative;
+    background: #0b1020;
+}
+.iphone-screen canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+/* Dynamic Island */
+.demo-island {
+    position: absolute;
+    top: 9px; left: 50%;
+    transform: translateX(-50%);
+    width: 82px; height: 25px;
+    border-radius: 14px;
+    background: #05070f;
+    z-index: 6;
+}
+
+/* Interface d'app par-dessus la carte */
+.demo-ui {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    display: flex;
+    flex-direction: column;
+    pointer-events: none;
+    animation: demo-enter 0.5s cubic-bezier(0.2, 0.8, 0.3, 1.05);
+}
+@keyframes demo-enter {
+    from { opacity: 0; transform: scale(0.97); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* Barre d'état iOS */
+.demo-status {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 13px 22px 0;
+    color: #fff;
+}
+.demo-time { font-size: 13px; font-weight: 700; letter-spacing: 0.02em; font-variant-numeric: tabular-nums; }
+.demo-status-icons { display: flex; align-items: center; gap: 5px; }
+.demo-status-icons svg { display: block; fill: currentColor; }
+.si-signal { width: 17px; height: 11px; }
+.si-wifi { width: 16px; height: 11px; }
+.si-batt { width: 24px; height: 12px; }
+
+/* En-tête d'écran */
+.demo-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 12px 16px 10px;
+}
+.demo-header h4 {
+    font-family: var(--font-display);
+    font-size: 21px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.demo-header-btns { display: flex; gap: 8px; flex: none; }
+.demo-header-btns button {
+    width: 31px; height: 31px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.09);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: 0 4px 12px -4px rgba(0, 0, 0, 0.5);
+    color: #fff;
+}
+.demo-header-btns svg { width: 15px; height: 15px; }
+
+/* Marqueurs sur la carte */
+.demo-pins { position: absolute; inset: 0; }
+.demo-pin {
+    position: absolute;
+    transform: translate(-50%, -100%);
+    animation: pin-drop 0.5s cubic-bezier(0.2, 1.35, 0.35, 1) backwards;
+    animation-delay: var(--pd, 0ms);
+}
+@keyframes pin-drop {
+    from { opacity: 0; transform: translate(-50%, -138%); }
+    to { opacity: 1; transform: translate(-50%, -100%); }
+}
+/* Marqueur fidèle aux vraies apps : tête (pastille ronde à glyphe ou badge
+   de marque) et étiquette en dessous */
+.demo-pin { display: grid; justify-items: center; gap: 3px; }
+.demo-pin-head {
+    position: relative;
+    min-width: 32px;
+    height: 32px;
+    padding: 0 6px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--tone);
+    border: 2.5px solid #f4f7ff;
+    box-shadow: 0 6px 14px -5px rgba(2, 5, 14, 0.8);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 800;
+    line-height: 1;
+}
+.demo-pin-head svg { width: 16px; height: 16px; }
+/* Badge de marque : taille fixe strictement identique pour tous les pins,
+   comme sur la vraie carte (TOTAL, AVIA, bp…) */
+.demo-pin-head.is-brand {
+    border-radius: 9px;
+    width: 40px;
+    min-width: 40px;
+    height: 28px;
+    padding: 0 3px;
+    font-size: 8.5px;
+    letter-spacing: 0.01em;
+    margin-bottom: 5px; /* place pour la pointe */
+    overflow: hidden;
+}
+/* Petite pointe sous les badges de marque, comme sur la vraie carte */
+.demo-pin-head.is-brand::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -6.5px;
+    width: 8px; height: 8px;
+    background: var(--tone);
+    border-right: 2.5px solid #f4f7ff;
+    border-bottom: 2.5px solid #f4f7ff;
+    border-bottom-right-radius: 2px;
+    transform: translateX(-50%) rotate(45deg);
+}
+/* Badge accessibilité accolé (l'emoji ♿ est déjà une pastille bleue) */
+.demo-pin-sub {
+    position: absolute;
+    top: -7px; left: -8px;
+    font-style: normal;
+    font-size: 12px;
+    line-height: 1;
+    filter: drop-shadow(0 2px 3px rgba(2, 5, 14, 0.6));
+}
+/* Étiquette en texte nu avec halo, fidèle aux libellés MapKit
+   (transposé au thème sombre : texte clair, halo d'encre) */
+.demo-pin-tag {
+    font-size: 9.5px;
+    font-weight: 800;
+    color: #f2f5fd;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.01em;
+    text-shadow:
+        0 1px 3px rgba(4, 8, 18, 0.95),
+        0 0 6px rgba(4, 8, 18, 0.85),
+        0 0 2px rgba(4, 8, 18, 1);
+}
+/* Le pin principal garde la même taille que les autres (fidèle à la vraie
+   carte) : seuls l'anneau de pulsation et l'éclat le distinguent */
+.demo-pin.is-main { z-index: 3; }
+.demo-pin.is-main .demo-pin-head {
+    box-shadow: 0 8px 18px -5px rgba(2, 5, 14, 0.85), 0 0 20px -3px var(--tone);
+}
+.demo-pin.is-main .demo-pin-head::before {
+    content: "";
+    position: absolute;
+    inset: -6px;
+    border-radius: inherit;
+    border: 2px solid var(--tone);
+    animation: pin-ring 1.9s ease-out infinite;
+}
+@keyframes pin-ring {
+    0% { transform: scale(1); opacity: 0.55; }
+    100% { transform: scale(1.6); opacity: 0; }
+}
+
+/* Bouton recentrer */
+.demo-fab {
+    position: absolute;
+    right: 13px; bottom: 118px;
+    width: 36px; height: 36px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: rgba(16, 23, 42, 0.72);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: 0 6px 16px -6px rgba(0, 0, 0, 0.6);
+    color: color-mix(in srgb, var(--accent, var(--bleu)) 80%, #fff);
+}
+.demo-fab svg { width: 17px; height: 17px; }
+
+/* Bouton flottant façon vraie app : « Le plus Proche », « URGENCE »… */
+.demo-cta {
+    position: absolute;
+    left: 13px; bottom: 118px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 16px;
+    border-radius: 100px;
+    background: var(--cta, var(--bleu));
+    color: #fff;
+    font-size: 11.5px;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    box-shadow: 0 10px 22px -8px var(--cta, var(--bleu)), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    animation: demo-cta-in 0.5s 0.6s cubic-bezier(0.2, 0.9, 0.3, 1.2) backwards;
+}
+.demo-cta svg { width: 13px; height: 13px; }
+@keyframes demo-cta-in {
+    from { opacity: 0; transform: translateY(10px) scale(0.9); }
+    to { opacity: 1; transform: none; }
+}
+/* Sans rangée de filtres, les boutons flottants descendent au ras des onglets */
+.demo-ui.no-selector .demo-fab,
+.demo-ui.no-selector .demo-cta { bottom: 78px; }
+
+/* Sélecteur bas (carburants / filtres) */
+.demo-bottom { margin-top: auto; display: grid; }
+.demo-selector {
+    display: flex;
+    gap: 6px;
+    padding: 10px 10px 8px;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+.demo-selector span {
+    flex: none;
+    padding: 6px 12px;
+    border-radius: 100px;
+    background: rgba(16, 23, 42, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 3px 10px -6px rgba(0, 0, 0, 0.6);
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.74);
+    white-space: nowrap;
+}
+.demo-selector span.is-on {
+    background: var(--accent, var(--bleu));
+    border-color: transparent;
+    color: #fff;
+    box-shadow: 0 4px 12px -4px var(--accent, var(--bleu));
+}
+.demo-footer {
+    background: rgba(11, 16, 30, 0.82);
+    backdrop-filter: blur(18px) saturate(1.4);
+    -webkit-backdrop-filter: blur(18px) saturate(1.4);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+.demo-tabbar {
+    display: flex;
+    justify-content: space-around;
+    align-items: end;
+    padding: 7px 6px 0;
+}
+.demo-tab {
+    display: grid;
+    justify-items: center;
+    gap: 2px;
+    color: rgba(255, 255, 255, 0.48);
+    min-width: 44px;
+}
+.demo-tab svg { width: 20px; height: 20px; }
+.demo-tab small { font-size: 8.5px; font-weight: 600; letter-spacing: 0.01em; }
+.demo-tab.is-on { color: var(--accent, var(--bleu)); }
+.demo-home {
+    display: block;
+    width: 40%;
+    height: 4.5px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.85);
+    margin: 7px auto 7px;
+}
+
+/* --------------------------------------------------------------------------
+   Galerie de captures réelles (pages app)
+   -------------------------------------------------------------------------- */
+.shots-gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    align-items: start;
+    perspective: 1400px;
+}
+.shot { display: grid; gap: 16px; justify-items: center; }
+.shot-frame {
+    width: min(240px, 100%);
+    border-radius: 34px;
+    padding: 6px;
+    background: linear-gradient(160deg, #1b2236, #0a0e1a);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow:
+        var(--shadow-card),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.05),
+        0 0 30px -14px color-mix(in srgb, var(--accent, var(--bleu)) 38%, transparent);
+    overflow: hidden;
+    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.3, 1), box-shadow 0.5s;
+}
+.shot-frame img { width: 100%; display: block; border-radius: 28px; }
+.shot:nth-child(1) .shot-frame { transform: rotateY(9deg) translateZ(-10px); transform-origin: right center; }
+.shot:nth-child(3) .shot-frame { transform: rotateY(-9deg) translateZ(-10px); transform-origin: left center; }
+.shot:nth-child(2) .shot-frame { transform: translateY(-14px) scale(1.04); z-index: 2; }
+.shot-frame:hover { transform: translateY(-6px) rotateY(0deg) scale(1.02); }
+.shot figcaption {
+    font-size: 13.5px;
+    color: var(--muted);
+    text-align: center;
+    max-width: 24ch;
+    text-wrap: pretty;
+}
+
+/* --------------------------------------------------------------------------
+   Valeurs / engagements
+   -------------------------------------------------------------------------- */
+/* `auto-fit` plutôt que trois colonnes fixes : la page À propos pose deux
+   cartes puis quatre, et une grille figée à trois les aurait laissées
+   orphelines sur la dernière rangée. */
+.values-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(248px, 1fr)); gap: 18px; }
+.value-card {
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    background: var(--surface);
+    padding: 18px;
+    display: grid;
+    gap: 13px;
+    align-content: start;
+    transition: transform 0.3s, border-color 0.3s;
+}
+.value-card:hover { transform: translateY(-4px); border-color: var(--line-strong); }
+.value-card svg { width: 26px; height: 26px; color: var(--bleu); }
+.value-card h3 { font-family: var(--font-display); font-size: 17px; font-weight: 620; }
+.value-card p { font-size: 14.5px; color: var(--muted); }
+
+/* --------------------------------------------------------------------------
+   Soutien
+   -------------------------------------------------------------------------- */
+.support-band {
+    border-radius: calc(var(--radius) + 6px);
+    border: 1px solid var(--line);
+    background:
+        radial-gradient(110% 150% at 12% 0%, rgba(77, 125, 255, 0.13), transparent 100%),
+        radial-gradient(90% 140% at 92% 100%, rgba(245, 72, 60, 0.08), transparent 100%),
+        var(--bg-raise);
+    padding: clamp(34px, 5vw, 60px);
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+    gap: 40px;
+    align-items: center;
+}
+.support-band h2 { font-family: var(--font-display); font-size: clamp(26px, 3.4vw, 36px); font-weight: 620; line-height: 1.1; text-wrap: balance; }
+.support-band > div { display: grid; gap: 18px; }
+.support-band p { color: var(--muted); max-width: 52ch; }
+.support-note { font-size: 12.5px; color: var(--faint); }
+.support-cards { display: grid; gap: 12px; }
+.support-mini {
+    display: flex;
+    gap: 14px;
+    padding: 16px 18px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--line);
+    background: var(--surface);
+    font-size: 14px;
+    color: var(--muted);
+}
+.support-mini b { color: var(--ink); display: block; font-size: 14.5px; margin-bottom: 2px; }
+.support-mini svg { width: 20px; height: 20px; flex: none; color: var(--bleu); margin-top: 2px; }
+
+/* --------------------------------------------------------------------------
+   Profil / à propos
+   -------------------------------------------------------------------------- */
+.profile-band {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 44px;
+    align-items: center;
+    /* Les paragraphes sont plafonnés à 58ch pour rester lisibles : sans limite
+       sur le bandeau lui-même, la colonne de texte s'arrêtait bien avant le bord
+       et laissait un vide de trois cents pixels sur grand écran. */
+    max-width: 940px;
+    margin-inline: auto;
+}
+/* Photo façon « pile de polaroïds » : un second cadre décalé derrière,
+   et tout se redresse au survol */
+.profile-frame {
+    position: relative;
+    width: clamp(180px, 22vw, 250px);
+    flex: none;
+}
+.profile-frame::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 28px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    transform: rotate(3.5deg);
+    transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.3, 1);
+}
+.profile-photo {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 28px;
+    object-fit: cover;
+    border: 1px solid var(--line-strong);
+    box-shadow: var(--shadow-card);
+    transform: rotate(-2deg);
+    transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.3, 1);
+}
+.profile-frame:hover .profile-photo { transform: rotate(0deg) scale(1.02); }
+.profile-frame:hover::before { transform: rotate(1.2deg); }
+.profile-copy { display: grid; gap: 17px; }
+.profile-copy h2 { font-family: var(--font-display); font-size: clamp(28px, 3.6vw, 40px); font-weight: 620; letter-spacing: -0.015em; }
+.profile-copy p { color: var(--muted); max-width: 58ch; }
+.stack-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.stack-chips span {
+    padding: 6px 13px;
+    border-radius: 100px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--muted);
+}
+
+/* --------------------------------------------------------------------------
+   Footer
+   -------------------------------------------------------------------------- */
+.footer { border-top: 1px solid var(--line); padding: 52px 0 40px; margin-top: 40px; }
+.footer-grid { display: flex; flex-wrap: wrap; gap: 34px; justify-content: space-between; align-items: flex-start; }
+.footer-brand { display: grid; gap: 12px; max-width: 320px; }
+.footer-brand p { font-size: 13.5px; color: var(--faint); }
+.footer nav { display: grid; gap: 9px; font-size: 14px; }
+.footer nav b { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--faint); margin-bottom: 4px; }
+.footer nav a { color: var(--muted); transition: color 0.2s; }
+.footer nav a:hover { color: var(--ink); }
+.footer-legal {
+    margin-top: 42px;
+    padding-top: 22px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    justify-content: space-between;
+    font-size: 12.5px;
+    color: var(--faint);
+}
+
+/* Compteur de visiteurs : pastille verte + total, dans la ligne légale */
+.visit-count { display: inline-flex; align-items: center; gap: 8px; }
+.visit-count::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--c-defib);
+    box-shadow: 0 0 7px var(--c-defib);
+}
+.visit-count b { color: var(--muted); font-weight: 600; font-variant-numeric: tabular-nums; }
+
+/* --------------------------------------------------------------------------
+   Page app (v2-app)
+   -------------------------------------------------------------------------- */
+.product-hero {
+    position: relative;
+    padding: 150px 0 60px;
+    overflow: clip;
+}
+.product-hero::before {
+    content: "";
+    position: absolute;
+    inset: -20% -10% auto;
+    height: 130%;
+    /* Même règle que les sections de gamme : la lueur va jusqu'au bord de son
+       élément, sinon son arrêt dessine un arc visible en plein fond. */
+    background: radial-gradient(120% 90% at 50% 0%, color-mix(in srgb, var(--accent, var(--bleu)) 12%, transparent), transparent 100%);
+    pointer-events: none;
+}
+.product-layout {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: 54px;
+    align-items: center;
+}
+.product-copy { display: grid; gap: 22px; }
+.product-identity { display: flex; align-items: center; gap: 20px; }
+.product-icon {
+    width: 66px; height: 66px;
+    border-radius: 17px;
+    box-shadow: 0 18px 40px -12px rgba(3, 6, 18, 0.85), 0 0 0 1px rgba(255, 255, 255, 0.1), 0 0 54px -8px color-mix(in srgb, var(--accent, var(--bleu)) 50%, transparent);
+    animation: iphone-float 7s 1s ease-in-out infinite;
+}
+.product-copy h1 {
+    font-family: var(--font-display);
+    font-size: clamp(29px, 3.5vw, 41px);
+    font-weight: 640;
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+}
+.product-tagline { font-size: 15px; color: color-mix(in srgb, var(--accent, var(--bleu)) 70%, #fff); font-weight: 600; }
+.product-copy > p { font-size: 18px; color: var(--muted); max-width: 54ch; }
+.product-actions { display: flex; flex-wrap: wrap; gap: 13px; align-items: center; }
+
+.feature-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.feature-card {
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    background: var(--surface);
+    padding: 22px;
+    display: grid;
+    gap: 12px;
+    align-content: start;
+    transition: transform 0.3s, border-color 0.3s;
+}
+.feature-card:hover { transform: translateY(-4px); border-color: color-mix(in srgb, var(--accent, var(--bleu)) 40%, var(--line)); }
+.feature-head { display: flex; align-items: center; justify-content: space-between; }
+.feature-ico {
+    width: 40px; height: 40px;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    color: color-mix(in srgb, var(--accent, var(--bleu)) 80%, #fff);
+    background: color-mix(in srgb, var(--accent, var(--bleu)) 13%, transparent);
+    border: 1px solid color-mix(in srgb, var(--accent, var(--bleu)) 28%, transparent);
+}
+.feature-ico svg { width: 20px; height: 20px; }
+.feature-num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: color-mix(in srgb, var(--accent, var(--bleu)) 75%, #fff);
+    opacity: 0.75;
+}
+.feature-card p { font-size: 15px; color: var(--muted); }
+
+.legal-strip {
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    background: var(--surface);
+    padding: 30px;
+    display: grid;
+    gap: 20px;
+}
+.legal-strip > p { font-size: 13.5px; color: var(--faint); max-width: 70ch; }
+.legal-links { display: flex; flex-wrap: wrap; gap: 12px; }
+.legal-links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 11px 18px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--line-strong);
+    background: rgba(255, 255, 255, 0.05);
+    font-size: 14px;
+    font-weight: 600;
+    transition: background 0.2s, transform 0.25s;
+}
+.legal-links a:hover { background: rgba(255, 255, 255, 0.09); transform: translateY(-2px); }
+.legal-links svg { width: 15px; height: 15px; color: var(--muted); }
+
+.data-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.data-card {
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    background: var(--surface);
+    padding: 21px;
+    display: grid;
+    gap: 10px;
+    align-content: start;
+    transition: transform 0.25s, border-color 0.2s;
+}
+.data-card:hover { transform: translateY(-4px); border-color: color-mix(in srgb, var(--accent, var(--bleu)) 35%, var(--line)); }
+.data-ico {
+    width: 36px; height: 36px;
+    display: grid;
+    place-items: center;
+    border-radius: 11px;
+    color: color-mix(in srgb, var(--accent, var(--bleu)) 80%, #fff);
+    background: color-mix(in srgb, var(--accent, var(--bleu)) 12%, transparent);
+    border: 1px solid color-mix(in srgb, var(--accent, var(--bleu)) 26%, transparent);
+    margin-bottom: 2px;
+}
+.data-ico svg { width: 18px; height: 18px; }
+.data-card b {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--accent, var(--bleu)) 70%, #fff);
+}
+.data-card p { font-size: 14px; color: var(--muted); }
+
+/* --------------------------------------------------------------------------
+   Page contact
+   -------------------------------------------------------------------------- */
+.contact-hero { padding: 150px 0 30px; }
+.contact-hero .section-head { margin-bottom: 0; }
+.app-picker { display: flex; flex-wrap: wrap; gap: 8px; margin: 32px 0 8px; }
+.app-pick {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 13px 7px 8px;
+    border-radius: 100px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    transition: border-color 0.2s, color 0.2s, transform 0.25s, background 0.2s;
+}
+.app-pick img { width: 22px; height: 22px; border-radius: 7px; }
+.app-pick:hover { transform: translateY(-2px); color: var(--ink); }
+.app-pick.is-on {
+    border-color: color-mix(in srgb, var(--accent, var(--bleu)) 60%, transparent);
+    background: color-mix(in srgb, var(--accent, var(--bleu)) 12%, transparent);
+    color: var(--ink);
+    animation: pick-pop 0.35s cubic-bezier(0.3, 1.4, 0.4, 1);
+}
+@keyframes pick-pop { from { transform: scale(0.93); } }
+
+.composer {
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    background: var(--bg-raise);
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+}
+.composer-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 15px;
+    border-bottom: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.03);
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: var(--faint);
+    letter-spacing: 0.06em;
+}
+.composer-head i { width: 11px; height: 11px; border-radius: 50%; }
+.composer-head i:nth-child(1) { background: #ff5f57; }
+.composer-head i:nth-child(2) { background: #febc2e; }
+.composer-head i:nth-child(3) { background: #28c840; }
+.composer-head span { margin-left: 8px; }
+.composer-body { padding: 18px; display: grid; gap: 11px; }
+.composer-field {
+    display: grid;
+    gap: 5px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--faint);
+}
+.composer-field div {
+    font-family: var(--font-body);
+    font-size: 13.5px;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--ink);
+    padding: 9px 12px;
+    border-radius: 9px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--line);
+}
+/* Champs éditables : mêmes surfaces, focus à la couleur de l'app */
+.composer-input {
+    font-family: var(--font-body);
+    font-size: 13.5px;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--ink);
+    width: 100%;
+    padding: 9px 12px;
+    border-radius: 9px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--line);
+    outline: none;
+    transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+}
+.composer-input::placeholder { color: var(--faint); }
+.composer-input:hover { border-color: var(--line-strong); }
+.composer-input:focus {
+    border-color: color-mix(in srgb, var(--accent, var(--bleu)) 55%, transparent);
+    background: rgba(255, 255, 255, 0.06);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent, var(--bleu)) 14%, transparent);
+}
+.composer-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 11px; }
+/* Badge « détecté » sur les champs pré-remplis automatiquement */
+.cf-auto {
+    font-style: normal;
+    justify-self: start;
+    display: inline-block;
+    margin-left: 7px;
+    padding: 1px 8px;
+    border-radius: 20px;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    color: #7ce3ae;
+    background: rgba(23, 178, 106, 0.12);
+    border: 1px solid rgba(23, 178, 106, 0.28);
+}
+.composer-field pre {
+    font-family: var(--font-body);
+    font-size: 14px;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--muted);
+    padding: 12px;
+    border-radius: 9px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--line);
+    white-space: pre-wrap;
+    line-height: 1.55;
+    font-size: 13px;
+}
+/* Curseur pendant que le mail « se tape tout seul » */
+.composer-field pre.is-typing::after {
+    content: "▍";
+    color: var(--accent, var(--bleu));
+    animation: caret-blink 0.9s steps(1) infinite;
+}
+@keyframes caret-blink { 50% { opacity: 0; } }
+.composer-actions { display: flex; flex-wrap: wrap; gap: 11px; padding: 0 24px 24px; }
+.copy-hint { font-size: 12.5px; color: var(--faint); align-self: center; }
+
+.tips-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.tip-card {
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--line);
+    background: var(--surface);
+    padding: 18px;
+    display: grid;
+    gap: 8px;
+    align-content: start;
+    transition: transform 0.25s, border-color 0.2s, background 0.2s;
+}
+.tip-card:hover { transform: translateY(-4px); border-color: var(--line-strong); background: var(--surface-strong); }
+.tip-card b { font-size: 14.5px; }
+.tip-card p { font-size: 13.5px; color: var(--muted); }
+.tip-num { font-family: var(--font-mono); font-size: 10.5px; font-weight: 700; letter-spacing: 0.12em; color: var(--bleu); }
+
+/* --------------------------------------------------------------------------
+   Page à propos
+   -------------------------------------------------------------------------- */
+.about-hero { padding: 150px 0 40px; }
+.about-apps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+/* Titre de gamme au-dessus de chaque grille. Regrouper les sept applications en
+   quatre puis trois évite la carte orpheline d'une grille unique, et rend le
+   suffixe « · iPhone » de chaque ligne inutile. */
+.about-group {
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--faint);
+    margin-bottom: 15px;
+}
+.about-group + .about-apps { margin-bottom: 34px; }
+.about-app {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 15px 17px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--line);
+    background: var(--surface);
+    transition: transform 0.25s, border-color 0.2s;
+}
+.about-app:hover { transform: translateY(-3px); border-color: var(--line-strong); }
+.about-app img { width: 40px; height: 40px; border-radius: 11px; }
+.about-app b { display: block; font-size: 14.5px; }
+.about-app span { font-size: 12px; color: var(--faint); }
+
+/* --------------------------------------------------------------------------
+   Contenu de repli indexable (SEO) : présent dans le HTML statique,
+   remplacé par le rendu JS ; visible seulement sans JavaScript
+   -------------------------------------------------------------------------- */
+.seo-fallback { max-width: 720px; margin: 0 auto; padding: 110px 24px 60px; }
+.seo-fallback h1 { font-family: var(--font-display); font-size: 30px; line-height: 1.15; margin-bottom: 14px; }
+.seo-fallback p { color: var(--muted); }
+.seo-fallback ul { margin-top: 16px; padding-left: 20px; display: grid; gap: 8px; }
+.seo-fallback a { color: var(--bleu); text-decoration: underline; }
+
+/* --------------------------------------------------------------------------
+   Animations d'apparition
+   -------------------------------------------------------------------------- */
+.reveal { opacity: 0; transform: translateY(26px) scale(0.985); transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.2, 0.7, 0.3, 1); transition-delay: var(--rd, 0ms); }
+.reveal.is-in { opacity: 1; transform: none; }
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+@media (max-width: 1020px) {
+    /* Tablette : un cran plus petit que le bureau, avant le cran mobile */
+    body { font-size: 15px; }
+    .section { padding: 80px 0; }
+    .section-head { margin-bottom: 44px; }
+    .section-head h2 { font-size: clamp(26px, 4vw, 38px); }
+    .section-head p { font-size: 16px; }
+    /* Le héro garde la pleine fenêtre à toutes les tailles : c'est ce qui est
+       demandé, et `svh` évite le saut de hauteur quand la barre d'adresse se
+       rétracte. Seul le rembourrage se resserre. */
+    .hero, .hero-intro { min-height: 100svh; padding: 104px 0 78px; }
+    .hero-wrap { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+    .hero-inner { max-width: 680px; margin: 0 auto; text-align: center; justify-items: center; }
+    .hero-inner .hero-badges, .hero-inner .hero-actions { justify-content: center; }
+    .hero h1 { font-size: clamp(34px, 6vw, 56px); }
+    .hero-lead { margin: 0 auto; font-size: 17px; }
+    .btn { padding: 12px 21px; font-size: 14.5px; }
+    .hero-map { height: 380px; }
+    .map-app-pin { width: 40px; height: 40px; margin: -20px 0 0 -20px; }
+    .stat { padding: 22px 20px 24px; }
+    .stat b { font-size: 38px; }
+    .app-card { padding: 26px; }
+    .app-card h3 { font-size: 21px; }
+    .app-icon { width: 56px; height: 56px; }
+    .mac-copy h2 { font-size: clamp(26px, 3.6vw, 36px); }
+    .product-hero { padding: 132px 0 52px; }
+    .product-copy h1 { font-size: clamp(32px, 4.6vw, 46px); }
+    .product-icon { width: 76px; height: 76px; }
+    .feature-card, .value-card { padding: 24px; }
+    .data-card { padding: 22px; }
+    .support-band h2 { font-size: clamp(24px, 3.2vw, 32px); }
+    .profile-copy h2 { font-size: clamp(26px, 3.4vw, 34px); }
+    .contact-hero, .about-hero { padding: 128px 0 28px; }
+    .footer { padding: 46px 0 36px; }
+    .mac-layout, .range-hero, .product-layout, .support-band { grid-template-columns: minmax(0, 1fr); }
+    .mac-window { transform: none; }
+    .app-grid, .feature-grid { grid-template-columns: minmax(0, 1fr); }
+    .values-grid, .data-grid, .tips-grid, .about-apps { grid-template-columns: 1fr 1fr; }
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .profile-band { grid-template-columns: 1fr; justify-items: start; }
+    /* Galerie : défilement horizontal, sans inclinaison 3D */
+    .shots-gallery {
+        display: flex;
+        gap: 20px;
+        perspective: none;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        padding: 8px 4px 16px;
+        margin: 0 -4px;
+    }
+    .shot { flex: 0 0 auto; width: 210px; scroll-snap-align: center; }
+    .shot:nth-child(1) .shot-frame,
+    .shot:nth-child(2) .shot-frame,
+    .shot:nth-child(3) .shot-frame { transform: none; }
+}
+
+/* Nav : menu replié dès que les liens ne tiennent plus sur une ligne */
+@media (max-width: 900px) {
+    .nav-links {
+        position: fixed;
+        inset: 62px 0 auto 0;
+        flex-direction: column;
+        padding: 14px 20px 22px;
+        background: rgba(10, 14, 26, 0.97);
+        border-bottom: 1px solid var(--line);
+        display: none;
+        margin-left: 0;
+    }
+    body.nav-open .nav-links { display: flex; animation: nav-drop 0.32s cubic-bezier(0.2, 0.8, 0.3, 1); }
+    @keyframes nav-drop {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: none; }
+    }
+    .nav-links a { padding: 13px 10px; font-size: 16px; }
+    .lang-switch { margin-left: auto; }
+    .nav-burger { display: block; margin-left: 0; }
+}
+
+/* Mobile en portrait, et téléphone en paysage (largeur de tablette mais
+   hauteur d'écran minuscule : les tailles tablette y étaient énormes) */
+@media (max-width: 640px), (orientation: landscape) and (max-height: 480px) {
+    /* Tout est réduit d'un cran sur mobile : typo, espacements, cartes,
+       boutons. Les pages légales (styles.css) ne sont pas concernées. */
+    body { font-size: 14px; }
+    .wrap { padding: 0 18px; }
+    .section { padding: 46px 0; }
+    .section-head { gap: 10px; margin-bottom: 28px; }
+    .section-head h2 { font-size: clamp(21px, 5.8vw, 26px); }
+    .section-head p { font-size: 14px; }
+    .eyebrow { font-size: 10px; }
+    .values-grid, .data-grid, .tips-grid, .about-apps, .stats-grid { grid-template-columns: 1fr; }
+    .hero { padding: 92px 0 62px; }
+    .hero-inner { gap: 17px; }
+    .hero h1 { font-size: clamp(26px, 7.6vw, 34px); }
+    .hero-lead { font-size: 14.5px; }
+    .hero-badges { gap: 6px; }
+    .chip { padding: 4px 10px; font-size: 9.5px; }
+    .btn { padding: 9px 16px; font-size: 13px; border-radius: 10px; gap: 7px; }
+    .btn svg { width: 14px; height: 14px; }
+    .hero-map { height: 350px; }
+    .map-app-pin { width: 31px; height: 31px; margin: -16px 0 0 -16px; }
+    .pin-core { border-radius: 8px; }
+    .map-app-pin::after { bottom: -7px; width: 9px; height: 4px; }
+    @keyframes pin-bob {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-6px); }
+    }
+    /* Indicateur « Explorer » conservé, en version discrète */
+    .stats { padding-top: 14px; }
+    .stats-grid { gap: 8px; }
+    /* Bandeau de stats compact : icône à gauche, chiffre + libellé sur une
+       ligne, description en dessous. Quatre rangées courtes au lieu de
+       quatre grandes cartes empilées sur deux écrans. */
+    .stat {
+        grid-template-columns: auto auto 1fr;
+        align-items: center;
+        column-gap: 11px;
+        row-gap: 2px;
+        padding: 11px 14px 12px;
+        border-radius: 13px;
+    }
+    .stat:hover { transform: none; }
+    .stat-icon { grid-row: 1 / 3; width: 30px; height: 30px; border-radius: 9px; margin-bottom: 0; }
+    .stat-icon svg { width: 15px; height: 15px; }
+    .stat b { grid-row: 1; grid-column: 2; font-size: 21px; }
+    .stat-label { grid-row: 1; grid-column: 3; font-size: 13px; }
+    .stat-desc { grid-row: 2; grid-column: 2 / 4; font-size: 11px; max-width: none; }
+    .platform-tag { padding: 5px 12px; font-size: 11px; }
+    .app-grid { gap: 12px; }
+    .app-card { padding: 16px; gap: 11px; border-radius: 15px; }
+    .app-card-head { gap: 11px; }
+    .app-icon { width: 42px; height: 42px; border-radius: 10px; }
+    .app-card h3 { font-size: 16.5px; }
+    .app-status { font-size: 9px; }
+    .app-card > p { font-size: 13px; }
+    .link-arrow { font-size: 13px; }
+    .link-quiet { font-size: 12px; }
+    .store-badge { padding: 7px 12px; gap: 8px; border-radius: 10px; }
+    .store-badge svg { width: 16px; height: 16px; }
+    .store-badge strong { font-size: 12.5px; }
+    .mac-layout { gap: 28px; }
+    .mac-copy { gap: 12px; }
+    .mac-copy h2 { font-size: clamp(21px, 5.6vw, 26px); }
+    .mac-copy > p, .mac-points li { font-size: 13px; }
+    .iphone { width: min(230px, 64vw); }
+    .product-hero { padding: 104px 0 36px; }
+    .product-identity { flex-direction: column; align-items: flex-start; gap: 12px; }
+    .product-icon { width: 54px; height: 54px; border-radius: 14px; }
+    .product-copy { gap: 14px; }
+    .product-copy h1 { font-size: clamp(24px, 6.8vw, 30px); }
+    .product-copy > p { font-size: 14px; }
+    .product-tagline { font-size: 13px; }
+    .feature-grid { gap: 11px; }
+    .feature-card { padding: 16px; gap: 8px; border-radius: 15px; }
+    .feature-ico { width: 31px; height: 31px; border-radius: 9px; }
+    .feature-ico svg { width: 15px; height: 15px; }
+    .feature-card h3 { font-size: 15px; }
+    .feature-card p { font-size: 13px; }
+    .legal-strip { padding: 17px; gap: 13px; border-radius: 15px; }
+    .legal-links a { padding: 8px 12px; font-size: 12.5px; }
+    .data-card { padding: 15px; gap: 7px; border-radius: 15px; }
+    .data-card p { font-size: 12.5px; }
+    .value-card { padding: 16px; gap: 8px; border-radius: 15px; }
+    .value-card svg { width: 20px; height: 20px; }
+    .value-card h3 { font-size: 15px; }
+    .value-card p { font-size: 13px; }
+    .support-band { gap: 20px; border-radius: 20px; }
+    .support-band h2 { font-size: clamp(19px, 5.2vw, 24px); }
+    .support-band p { font-size: 13px; }
+    .support-mini { padding: 11px 12px; font-size: 12.5px; gap: 10px; }
+    .profile-band { gap: 22px; }
+    .profile-frame { width: clamp(130px, 38vw, 170px); }
+    .profile-copy { gap: 11px; }
+    .profile-copy h2 { font-size: clamp(21px, 5.8vw, 26px); }
+    .profile-copy p { font-size: 13px; }
+    .stack-chips span { padding: 4px 10px; font-size: 10px; }
+    .contact-hero, .about-hero { padding: 100px 0 20px; }
+    .app-picker { margin: 22px 0 5px; }
+    .app-pick { padding: 6px 12px 6px 7px; font-size: 12.5px; }
+    .app-pick img { width: 20px; height: 20px; }
+    .composer-body { padding: 15px; gap: 10px; }
+    .composer-field div, .composer-input, .composer-field pre { font-size: 13px; }
+    .composer-actions { padding: 0 15px 15px; }
+    .tip-card { padding: 14px; }
+    .about-app { padding: 10px 12px; gap: 10px; }
+    .about-app img { width: 30px; height: 30px; }
+    .shot { width: 160px; }
+    .shot figcaption { font-size: 12px; }
+
+    /* Footer mobile : marque en tête, deux colonnes de liens côte à côte,
+       ligne légale empilée et centrée */
+    .footer { padding: 26px 0 20px; margin-top: 16px; }
+    .footer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 14px; }
+    .footer-brand { grid-column: 1 / -1; max-width: none; gap: 8px; }
+    .footer-brand b { font-size: 14px; }
+    .footer-brand p { font-size: 12px; }
+    .footer-brand .tricolore { width: 38px; height: 3px; }
+    .footer nav { gap: 6px; font-size: 12.5px; align-content: start; }
+    .footer nav b { font-size: 9.5px; margin-bottom: 2px; }
+    .footer nav a { overflow-wrap: anywhere; }
+    .footer nav a[href^="mailto:"] { font-size: 11.5px; }
+    .footer-legal {
+        margin-top: 18px;
+        padding-top: 12px;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        text-align: center;
+        font-size: 11px;
+    }
+    /* Démo MacTuner compacte : sans la carte ventilation, le tableau de bord
+       n'impose plus une fenêtre géante (tous les onglets ont sa hauteur) */
+    .mt-view[data-mt-view="0"] .mt-fan { display: none; }
+    .mt-body { min-height: 0; padding: 10px 10px 12px; }
+    .mt-idcard { margin: 10px 10px 0; padding: 8px 10px; }
+    .mt-grid { gap: 7px; }
+    .mt-card { padding: 10px; gap: 7px; }
+    .mt-ring { width: 62px; }
+    .mt-ring svg { width: 62px; height: 62px; }
+    .mt-ring-center b { font-size: 12px; }
+    .mt-cores { height: 16px; }
+    .mt-spark { height: 24px; }
+}
+
+/* Petits mobiles : marque compacte, tableau MacTuner sur une colonne */
+@media (max-width: 480px) {
+    .nav-inner { gap: 12px; }
+    .brand-name { font-size: 13.5px; }
+    .brand-name small { display: none; }
+}
+
+@media (max-width: 380px) {
+    .brand-name { display: none; }
+}
+
+@media (max-width: 480px) {
+    .composer-duo { grid-template-columns: 1fr; }
+    .mt-row, .mt-row b { font-size: 9px; }
+    .mt-line { font-size: 10px; padding: 8px 9px; }
+    .mt-line b { font-size: 10.5px; }
+    .mt-fan .mt-chip { display: none; }
+    .mt-idcard-os small { display: none; }
+}
+
+@media (max-width: 420px) {
+    /* On garde le tableau de bord en 2 colonnes : à 1 colonne la fenêtre
+       devenait très haute et, tous les onglets étant calés sur le plus
+       grand, toute la démo était géante. */
+    .mt-ring { width: 54px; }
+    .mt-ring svg { width: 54px; height: 54px; }
+    .mt-ring-center b { font-size: 11px; }
+    .mt-net { min-height: 0; }
+}
+
+/* Téléphone en paysage : tailles mobiles (bloc ci-dessus) mais deux
+   colonnes, pour profiter de la largeur sans pages interminables */
+@media (orientation: landscape) and (max-height: 480px) {
+    .stats-grid, .values-grid, .data-grid, .tips-grid, .about-apps,
+    .app-grid, .feature-grid { grid-template-columns: 1fr 1fr; }
+    .hero, .hero-intro { min-height: 100svh; padding: 96px 0 72px; }
+    .hero-map { height: 300px; }
+    .footer-grid { grid-template-columns: 1.2fr 1fr 1fr 1fr; }
+    .footer-brand { grid-column: auto; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+    .reveal { opacity: 1; transform: none; }
+}
+
+
+/* --------------------------------------------------------------------------
+   Transitions entre pages
+   --------------------------------------------------------------------------
+   Le site est fait de documents séparés : chaque lien provoquait une coupure
+   sèche, alors que l'en-tête, le pied et l'icône de l'app sont identiques de
+   part et d'autre. Le navigateur sait faire la liaison lui-même.
+
+   Amélioration progressive : un navigateur qui ignore la règle navigue
+   normalement. Le repli est la coupure d'avant, pas une erreur.
+
+   Les icônes portent leur nom de transition depuis `assets/site.js`
+   (`view-transition-name:icone-<clé>`), identique sur la carte d'accueil et
+   sur l'en-tête de la page produit : le navigateur fait morpher l'une en
+   l'autre. Un nom doit rester unique dans un document.
+   -------------------------------------------------------------------------- */
+@view-transition {
+    navigation: auto;
+}
+
+/* En-tête et pied ne changent pas d'une page à l'autre : les nommer les fait
+   tenir en place pendant que le contenu se remplace. */
+.nav { view-transition-name: entete; }
+.footer { view-transition-name: pied; }
+
+/* Durée commune, plus courte que la valeur par défaut : une navigation doit
+   rester rapide, on ne doit pas attendre la transition. */
+::view-transition-group(*) { animation-duration: 240ms; }
+
+/* Le contenu se croise en fondu, avec un léger décalage vertical. */
+::view-transition-old(root) {
+    animation: 90ms cubic-bezier(0.4, 0, 1, 1) both vt-sortie;
+}
+::view-transition-new(root) {
+    animation: 220ms cubic-bezier(0, 0, 0.2, 1) 60ms both vt-entree;
+}
+@keyframes vt-sortie {
+    to { opacity: 0; transform: translateY(-6px); }
+}
+@keyframes vt-entree {
+    from { opacity: 0; transform: translateY(8px); }
+}
+
+/* En-tête et pied restent strictement fixes : les animer donnerait un
+   scintillement sur des éléments que l'œil sait immobiles. */
+::view-transition-old(entete), ::view-transition-new(entete),
+::view-transition-old(pied), ::view-transition-new(pied) {
+    animation: none;
+    mix-blend-mode: normal;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    /* Une transition de page est un mouvement plein écran : exactement ce que
+       ce réglage demande d'éviter. */
+    @view-transition { navigation: none; }
+}
