@@ -3,16 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Servi par GitHub Pages : aucun en-tête personnalisé possible, la
+         politique passe donc par une balise. Elle doit précéder tout
+         chargement de ressource. `inline-speculation-rules` autorise le
+         seul script en ligne de la page, celui des règles de préchargement. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'inline-speculation-rules'; style-src 'self' 'unsafe-inline'; img-src 'self'; font-src 'self'; connect-src 'self' https://abacus.jasoncameron.dev; base-uri 'none'; form-action 'none'; object-src 'none'; frame-src 'none'">
     <title>Confidentialité — DefibFrance</title>
     <meta name="description" content="Politique de confidentialité de l'application DefibFrance.">
     <link rel="stylesheet" href="./styles.css">
-    <link rel="icon" type="image/jpeg" href="./assets/img/favicon.jpg">
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/img/favicon-32.png">
+    <link rel="icon" type="image/jpeg" sizes="180x180" href="./assets/img/favicon.jpg">
+    <link rel="apple-touch-icon" sizes="180x180" href="./assets/img/apple-touch-icon.png">
     <link rel="canonical" href="https://bodyroro.github.io/defibfrance-privacy.html">
     <link rel="alternate" hreflang="fr" href="https://bodyroro.github.io/defibfrance-privacy.html?lang=fr">
     <link rel="alternate" hreflang="en" href="https://bodyroro.github.io/defibfrance-privacy.html?lang=en">
     <link rel="alternate" hreflang="x-default" href="https://bodyroro.github.io/defibfrance-privacy.html">
     <meta name="author" content="Rodolphe Vandaele">
-    <meta name="theme-color" content="#0a0e1a">
+    <meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="Rodolphe Vandaele">
     <meta property="og:locale" content="fr_FR">
@@ -22,6 +30,13 @@
     <meta property="og:image" content="https://bodyroro.github.io/icons/defibfrance.png">
     <meta name="twitter:card" content="summary">
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Confidentialité — DefibFrance","url":"https://bodyroro.github.io/defibfrance-privacy.html","description":"Politique de confidentialité de l'application DefibFrance.","inLanguage":"fr-FR","isPartOf":{"@type":"WebSite","name":"Rodolphe Vandaele","url":"https://bodyroro.github.io/"},"about":{"@type":"SoftwareApplication","name":"DefibFrance","applicationCategory":"MobileApplication","operatingSystem":"iOS"},"publisher":{"@type":"Person","name":"Rodolphe Vandaele","url":"https://bodyroro.github.io/"}}</script>
+    <!-- Préchargement au survol : la page cible est construite avant le clic,
+         la transition de vue part alors d'un document déjà rendu.
+         `moderate` = au survol seulement ; sans lui les 21 pages partiraient
+         toutes. Les navigateurs qui ignorent la balise ne perdent rien. -->
+    <script type="speculationrules">
+    {"prerender":[{"where":{"href_matches":"/*"},"eagerness":"moderate"}]}
+    </script>
 </head>
 <body data-page="privacy" data-app="defibfrance">
     <div id="site-root" class="site-shell">

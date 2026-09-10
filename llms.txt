@@ -1,0 +1,38 @@
+# Rodolphe Vandaele
+
+> Développeur indépendant basé en France. Cinq applications iPhone gratuites
+> construites sur les données publiques françaises, et deux utilitaires macOS
+> libres et open source. Aucune application ne demande de compte, aucune ne
+> propose d'achat intégré, et les données restent sur l'appareil.
+
+Le site est bilingue français / anglais : ajouter `?lang=en` à n'importe quelle
+adresse en donne la version anglaise. Les pages de confidentialité et de support
+des applications iPhone existent en onze langues.
+
+## Applications iPhone
+
+- [CarbuFrance](https://bodyroro.github.io/carbufrance.html) : prix des carburants en France. Carte et liste des stations, tri par prix ou distance, favoris, widget de la station la moins chère, carnet de bord avec consommation et CO₂, observatoire des marchés, CarPlay.
+- [IRVEFrance](https://bodyroro.github.io/irvefrance.html) : bornes de recharge pour véhicules électriques. Réseaux, connecteurs, puissance, disponibilité, guidage, calculateur de recharge et catalogue de véhicules.
+- [ToiletteFrance](https://bodyroro.github.io/toilettefrance.html) : toilettes publiques en France. Carte, filtres d'accessibilité, horaires, guidage, fonctionnement hors ligne.
+- [DefibFrance](https://bodyroro.github.io/defibfrance.html) : défibrillateurs automatisés externes. Disponibilité, accessibilité, mode Urgence, appel du SAMU 15, guide de réanimation cardio-pulmonaire avec métronome haptique.
+- [DVFFrance](https://bodyroro.github.io/dvffrance.html) : prix de l'immobilier d'après les ventes réellement enregistrées (base DVF). Carte, médianes par commune, plan cadastral, fiche de quartier, fourchette d'estimation. **Bientôt disponible** — pas encore publiée sur l'App Store.
+
+## Utilitaires macOS
+
+- [MacTuner](https://bodyroro.github.io/mactuner.html) : centre de contrôle pour Mac. Tableau de bord temps réel, réglages système réversibles, nettoyage, désinstallation sans résidu, maintenance, contrôle du ventilateur. Libre, code sur [GitHub](https://github.com/Bodyroro/MacTuner).
+- [DNSTuner](https://bodyroro.github.io/dnstuner.html) : sélecteur de DNS système. Bascule le DNS de tout le Mac vers l'un des 46 résolveurs publics, en clair ou chiffré (DoH / DoT), et mesure ce que chacun bloque réellement. Libre, code sur [GitHub](https://github.com/Bodyroro/DNSTuner).
+
+## Le site
+
+- [Accueil](https://bodyroro.github.io/) : présentation des sept applications.
+- [À propos](https://bodyroro.github.io/about.html) : la démarche, les sources de données, le modèle économique.
+- [Contact](https://bodyroro.github.io/contact.html) : signaler une anomalie, proposer une correction, poser une question.
+
+## Optional
+
+- [Confidentialité CarbuFrance](https://bodyroro.github.io/carbufrance-privacy.html) · [Support](https://bodyroro.github.io/carbufrance-support.html)
+- [Confidentialité IRVEFrance](https://bodyroro.github.io/irvefrance-privacy.html) · [Support](https://bodyroro.github.io/irvefrance-support.html)
+- [Confidentialité ToiletteFrance](https://bodyroro.github.io/toilettefrance-privacy.html) · [Support](https://bodyroro.github.io/toilettefrance-support.html)
+- [Confidentialité DefibFrance](https://bodyroro.github.io/defibfrance-privacy.html) · [Support](https://bodyroro.github.io/defibfrance-support.html)
+- [Confidentialité DVFFrance](https://bodyroro.github.io/dvffrance-privacy.html) · [Support](https://bodyroro.github.io/dvffrance-support.html)
+- [Plan du site](https://bodyroro.github.io/sitemap.xml)

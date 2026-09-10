@@ -1,0 +1,524 @@
+/* ===========================================================================
+   styles.css — pages légales et d'assistance des applications iPhone
+   ===========================================================================
+   Ces dix pages (confidentialité et assistance des cinq apps) portaient encore
+   la charte claire « Apple Design Language », tandis que l'accueil, les pages
+   produit, « à propos » et « contact » sont passés à « Cartographie de nuit »
+   (assets/site.css). Un visiteur qui suivait le lien « Confidentialité » depuis
+   une page produit changeait de site : fond blanc, autre police, autres rayons.
+
+   Cette feuille reprend donc, à l'identique, les jetons d'assets/site.css. Elle
+   reste un fichier distinct parce que ces pages sont rendues par site-pages.js
+   et n'ont aucun composant en commun avec la vitrine : les mêmes couleurs, pas
+   le même inventaire.
+
+   Le balisage servi par site-pages.js est intégralement couvert ici. Ajouter un
+   composant là-bas demande une règle ici.
+   =========================================================================== */
+
+/* Police hébergée sur le site, jamais chez un tiers : ces pages promettent
+   qu'aucune donnée ne part ailleurs, une police distante démentirait la page
+   qu'elle sert à écrire. */
+@font-face {
+    font-family: 'Bricolage Grotesque';
+    font-style: normal;
+    font-weight: 400 700;
+    font-stretch: 75% 100%;
+    font-display: swap;
+    src: url('./assets/fonts/bricolage-latin.woff2') format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+        U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191,
+        U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+    font-family: 'Bricolage Grotesque';
+    font-style: normal;
+    font-weight: 400 700;
+    font-stretch: 75% 100%;
+    font-display: swap;
+    src: url('./assets/fonts/bricolage-latin-ext.woff2') format('woff2');
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+        U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
+        U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* ------------------------------------------------------------------ Jetons */
+
+:root {
+    /* Encre de nuit, biaisée bleu — jamais un gris neutre. */
+    --bg: #0a0e1a;
+    --bg-raise: #10162a;
+    --surface: rgba(255, 255, 255, 0.045);
+    --surface-strong: rgba(255, 255, 255, 0.08);
+    --line: rgba(151, 173, 255, 0.14);
+    --line-strong: rgba(151, 173, 255, 0.28);
+    --ink: #f2f5fd;
+    --muted: #9aa4c0;
+    --faint: #777f9d;
+
+    --bleu: #4d7dff;
+    --rouge: #f5483c;
+
+    --font-display: "Bricolage Grotesque", -apple-system, "SF Pro Display", sans-serif;
+    --font-body: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, monospace;
+
+    --radius: 22px;
+    --radius-sm: 13px;
+    --shadow-card: 0 24px 60px -24px rgba(3, 6, 18, 0.9);
+    --wrap: 760px;
+
+    --accent: var(--bleu);
+}
+
+/* L'accent suit l'application dont on lit les conditions : ce sont les teintes
+   déclarées dans assets/site.js, pour que la page de confidentialité et la page
+   produit d'une même app portent la même couleur. */
+body[data-app="carbufrance"]    { --accent: #4d7dff; }
+body[data-app="irvefrance"]     { --accent: #6a5cff; }
+body[data-app="toilettefrance"] { --accent: #3d9bff; }
+body[data-app="defibfrance"]    { --accent: #17b26a; }
+body[data-app="dvffrance"]      { --accent: #0a7d3c; }
+
+/* Un accent sombre — celui de DVFFrance — n'a pas le contraste nécessaire pour
+   porter du texte sur fond de nuit. Le texte accentué passe donc toujours par ce
+   mélange, jamais par l'accent brut.
+
+   La déclaration est portée par `body`, et non par `:root` : c'est sur `body` que
+   `data-app` redéfinit `--accent`, et une propriété calculée sur `:root` aurait
+   figé la teinte par défaut pour les cinq applications. */
+body {
+    --accent-ink: color-mix(in srgb, var(--accent) 72%, #ffffff);
+}
+
+/* -------------------------------------------------------------- Fondations */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+    scroll-behavior: smooth;
+    color-scheme: dark;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Halo froid au sommet de la page, comme sur la vitrine. Décoratif seulement :
+   posé sur ::before pour ne pas être lu, ni imprimé. */
+body::before {
+    content: "";
+    position: fixed;
+    inset-block-start: 0;
+    inset-inline: 0;
+    block-size: 60vh;
+    pointer-events: none;
+    z-index: 0;
+    background:
+        radial-gradient(ellipse 80% 55% at 50% 0%, color-mix(in srgb, var(--accent) 18%, transparent) 0%, transparent 62%),
+        radial-gradient(ellipse 50% 35% at 78% 4%, rgba(122, 92, 255, 0.10) 0%, transparent 55%);
+}
+
+a { color: var(--accent-ink); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+a:hover { color: #ffffff; }
+
+picture { display: contents; }
+img { max-inline-size: 100%; block-size: auto; }
+
+:focus-visible {
+    outline: 2px solid var(--accent-ink);
+    outline-offset: 3px;
+    border-radius: 6px;
+}
+
+/* --------------------------------------------------------------- Structure */
+
+.site-shell {
+    position: relative;
+    z-index: 1;
+    max-inline-size: var(--wrap);
+    margin-inline: auto;
+    padding-inline: 24px;
+    padding-block: 56px 88px;
+}
+
+/* ---------------------------------------------------------------- En-tête */
+
+.page-header {
+    margin-block-end: 36px;
+    animation: page-rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.page-header-inner {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-block-end: 14px;
+}
+
+.page-icon-link {
+    display: flex;
+    flex: none;
+    border-radius: 15px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.page-icon-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 34px -12px color-mix(in srgb, var(--accent) 60%, transparent);
+}
+
+.page-icon {
+    inline-size: 60px;
+    block-size: 60px;
+    border-radius: 15px;
+    display: block;
+    box-shadow: 0 10px 26px -10px rgba(3, 6, 18, 0.95);
+}
+
+.premium-eyebrow {
+    margin: 0 0 2px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--accent-ink);
+}
+
+.page-title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(26px, 5vw, 36px);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.025em;
+    font-stretch: 92%;
+}
+
+.page-subtitle {
+    margin: 0;
+    color: var(--muted);
+    font-size: 15px;
+}
+
+/* ------------------------------------------------------------------ Cartes */
+
+.premium-page {
+    display: grid;
+    gap: 20px;
+}
+
+.page-card {
+    position: relative;
+    padding: 28px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--bg-raise);
+    box-shadow: var(--shadow-card);
+    animation: page-rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: 60ms;
+}
+
+/* Carte d'ouverture : le titre de l'app, et la phrase qui dit ce que la page
+   engage. Un filet accentué la distingue des sections de texte. */
+.premium-hero-clean {
+    overflow: hidden;
+    background:
+        linear-gradient(180deg, color-mix(in srgb, var(--accent) 9%, transparent), transparent 70%),
+        var(--bg-raise);
+    border-color: color-mix(in srgb, var(--accent) 26%, var(--line));
+}
+
+.premium-hero-clean::before {
+    content: "";
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline: 0;
+    block-size: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+}
+
+.premium-heading {
+    margin: 6px 0 10px;
+    font-family: var(--font-display);
+    font-size: clamp(22px, 4vw, 28px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    font-stretch: 92%;
+}
+
+.premium-lead {
+    margin: 0;
+    color: var(--muted);
+    font-size: 16px;
+    line-height: 1.65;
+}
+
+/* --------------------------------------------------------------- Sections */
+
+.page-section + .page-section {
+    margin-block-start: 30px;
+    padding-block-start: 30px;
+    border-block-start: 1px solid var(--line);
+}
+
+.page-section h2 {
+    margin: 0 0 12px;
+    font-family: var(--font-display);
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+}
+
+.page-section p {
+    margin: 0 0 12px;
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.68;
+}
+
+.page-section p:last-child { margin-block-end: 0; }
+
+/* Liste de faits : une puce accentuée, pas une puce de navigateur, pour que la
+   colonne de texte reste alignée quel que soit le sens d'écriture. */
+.summary-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 10px;
+}
+
+.summary-list li {
+    position: relative;
+    padding-inline-start: 22px;
+}
+
+.summary-list li::before {
+    content: "";
+    position: absolute;
+    inset-inline-start: 4px;
+    inset-block-start: 0.62em;
+    inline-size: 6px;
+    block-size: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+}
+
+.summary-list li p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+/* ------------------------------------------------------- Questions fréquentes */
+
+.faq-item {
+    padding: 16px 18px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+}
+
+.faq-item + .faq-item { margin-block-start: 10px; }
+
+.faq-q {
+    margin: 0 0 6px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+}
+
+.faq-a {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--muted);
+}
+
+/* ----------------------------------------------------------------- Contact */
+
+.support-mail-card {
+    display: grid;
+    gap: 12px;
+    justify-items: start;
+}
+
+.support-mail-card p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.store-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border: 0;
+    border-radius: 999px;
+    background: var(--accent);
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 650;
+    text-decoration: none;
+    box-shadow: 0 12px 28px -14px var(--accent);
+    transition: transform 0.16s ease, box-shadow 0.16s ease, filter 0.16s ease;
+}
+
+.store-link:hover {
+    color: #ffffff;
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+    box-shadow: 0 16px 34px -14px var(--accent);
+}
+
+.store-link:active { transform: translateY(0) scale(0.985); }
+
+.support-mail-primary { inline-size: fit-content; }
+
+/* L'adresse en clair, pour qui n'a pas de client de messagerie configuré. */
+.support-mail-fallback {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    inline-size: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+}
+
+.support-mail-fallback code {
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--ink);
+}
+
+.support-copy-button {
+    margin-inline-start: auto;
+    padding: 8px 14px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    background: var(--surface-strong);
+    color: var(--ink);
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: border-color 0.16s ease, color 0.16s ease, background 0.16s ease;
+}
+
+.support-copy-button:hover {
+    border-color: color-mix(in srgb, var(--accent) 55%, transparent);
+    background: color-mix(in srgb, var(--accent) 16%, transparent);
+    color: #ffffff;
+}
+
+/* -------------------------------------------------------------- Pied de page */
+
+.page-footer {
+    margin-block-start: 40px;
+    padding-block-start: 20px;
+    border-block-start: 1px solid var(--line);
+    text-align: center;
+}
+
+.page-footer p {
+    margin: 0;
+    color: var(--faint);
+    font-size: 13px;
+}
+
+/* ---------------------------------------------- Repli sans JavaScript, et SEO */
+
+/* Le contenu inscrit dans le HTML est remplacé par site-pages.js dès qu'il
+   s'exécute. Sans script — ou avant lui — il doit rester lisible : c'est aussi
+   ce que lisent les robots d'indexation. */
+.seo-fallback {
+    max-inline-size: var(--wrap);
+    margin-inline: auto;
+    padding-block: 8px 40px;
+}
+
+.seo-fallback h1 {
+    font-family: var(--font-display);
+    font-size: clamp(24px, 5vw, 34px);
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    margin: 0 0 14px;
+}
+
+.seo-fallback h2 {
+    font-family: var(--font-display);
+    font-size: 18px;
+    margin: 28px 0 10px;
+}
+
+.seo-fallback p,
+.seo-fallback li {
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.65;
+}
+
+.seo-fallback ul { padding-inline-start: 20px; }
+
+/* ------------------------------------------------------------- Mouvement */
+
+@keyframes page-rise {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ------------------------------------------------------------- Téléphone */
+
+@media (max-width: 640px) {
+    .site-shell { padding-inline: 18px; padding-block: 36px 64px; }
+    .page-card { padding: 22px 18px; }
+    .page-icon { inline-size: 52px; block-size: 52px; }
+    .page-header-inner { gap: 14px; }
+    .support-copy-button { margin-inline-start: 0; }
+}
+
+/* ---------------------------------------------------------------- Impression */
+
+/* Une politique de confidentialité s'imprime et s'archive : sur papier, l'encre
+   de nuit devient du noir sur blanc, et les fonds décoratifs disparaissent. */
+@media print {
+    body::before { display: none; }
+    body { background: #ffffff; color: #000000; }
+    .page-card, .faq-item, .support-mail-fallback {
+        background: #ffffff;
+        border-color: #cccccc;
+        box-shadow: none;
+    }
+    .page-subtitle, .premium-lead, .page-section p,
+    .summary-list li p, .faq-a, .page-footer p { color: #333333; }
+    .store-link, .support-copy-button { display: none; }
+    a { color: #000000; text-decoration: underline; }
+    a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 11px; }
+}

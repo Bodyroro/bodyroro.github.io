@@ -3,12 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rodolphe Vandaele — Apps iPhone pour la France et utilitaires Mac open source</title>
-    <meta name="description" content="Site officiel des applications iPhone CarbuFrance (prix des carburants), IRVEFrance (bornes de recharge), ToiletteFrance et DefibFrance, et des utilitaires macOS MacTuner et DNSTuner.">
+    <!-- Servi par GitHub Pages : aucun en-tête personnalisé possible, la
+         politique passe donc par une balise. Elle doit précéder tout
+         chargement de ressource. `inline-speculation-rules` autorise le
+         seul script en ligne de la page, celui des règles de préchargement. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'inline-speculation-rules'; style-src 'self' 'unsafe-inline'; img-src 'self'; font-src 'self'; connect-src 'self' https://abacus.jasoncameron.dev; base-uri 'none'; form-action 'none'; object-src 'none'; frame-src 'none'">
+    <title>Rodolphe Vandaele — Apps iPhone France & utilitaires Mac</title>
+    <meta name="description" content="Cinq apps iPhone gratuites sur les données publiques françaises — carburants, recharge, toilettes, défibrillateurs, immobilier — et deux utilitaires macOS libres.">
     <meta name="theme-color" content="#0a0e1a">
     <link rel="preload" href="./assets/fonts/bricolage-latin.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="./assets/site.css">
-    <link rel="icon" type="image/jpeg" href="./assets/img/favicon.jpg">
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/img/favicon-32.png">
+    <link rel="icon" type="image/jpeg" sizes="180x180" href="./assets/img/favicon.jpg">
+    <link rel="apple-touch-icon" sizes="180x180" href="./assets/img/apple-touch-icon.png">
     <link rel="canonical" href="https://bodyroro.github.io/">
     <link rel="alternate" hreflang="fr" href="https://bodyroro.github.io/?lang=fr">
     <link rel="alternate" hreflang="en" href="https://bodyroro.github.io/?lang=en">
@@ -17,24 +24,32 @@
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Rodolphe Vandaele">
     <meta property="og:locale" content="fr_FR">
-    <meta property="og:title" content="Rodolphe Vandaele — Apps iPhone pour la France et utilitaires Mac open source">
-    <meta property="og:description" content="Site officiel des applications iPhone CarbuFrance (prix des carburants), IRVEFrance (bornes de recharge), ToiletteFrance et DefibFrance, et des utilitaires macOS MacTuner et DNSTuner.">
+    <meta property="og:title" content="Rodolphe Vandaele — Apps iPhone France & utilitaires Mac">
+    <meta property="og:description" content="Cinq apps iPhone gratuites sur les données publiques françaises — carburants, recharge, toilettes, défibrillateurs, immobilier — et deux utilitaires macOS libres.">
     <meta property="og:url" content="https://bodyroro.github.io/">
     <meta property="og:image" content="https://bodyroro.github.io/assets/img/profile.jpg">
     <meta name="twitter:card" content="summary">
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Rodolphe Vandaele","url":"https://bodyroro.github.io/","description":"Applications iPhone et Mac : CarbuFrance, IRVEFrance, ToiletteFrance, DefibFrance, MacTuner et DNSTuner.","author":{"@type":"Person","name":"Rodolphe Vandaele","url":"https://bodyroro.github.io/","sameAs":["https://github.com/Bodyroro"]}}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Rodolphe Vandaele","url":"https://bodyroro.github.io/","description":"Applications iPhone et Mac : CarbuFrance, IRVEFrance, ToiletteFrance, DefibFrance, DVFFrance, MacTuner et DNSTuner.","author":{"@type":"Person","name":"Rodolphe Vandaele","url":"https://bodyroro.github.io/","sameAs":["https://github.com/Bodyroro"]}}</script>
+    <!-- Préchargement au survol : la page cible est construite avant le clic,
+         la transition de vue part alors d'un document déjà rendu.
+         `moderate` = au survol seulement ; sans lui les 21 pages partiraient
+         toutes. Les navigateurs qui ignorent la balise ne perdent rien. -->
+    <script type="speculationrules">
+    {"prerender":[{"where":{"href_matches":"/*"},"eagerness":"moderate"}]}
+    </script>
 </head>
 <body data-page="v2-home">
     <div id="site-root">
         <main class="seo-fallback">
             <h1>Rodolphe Vandaele — Applications iPhone et Mac</h1>
-            <p>Développeur indépendant basé en France. Sur iPhone, quatre applications gratuites construites sur les données publiques françaises. Sur Mac, deux utilitaires libres et open source. Aucune ne demande de compte, et les données restent sur l'appareil.</p>
+            <p>Développeur indépendant basé en France. Sur iPhone, cinq applications gratuites construites sur les données publiques françaises. Sur Mac, deux utilitaires libres et open source. Aucune ne demande de compte, et les données restent sur l'appareil.</p>
             <h2>Applications iPhone</h2>
             <ul>
                 <li><a href="./carbufrance.html">CarbuFrance</a> — Prix des carburants. Prix des carburants en France : carte, liste, favoris, widget station la moins chère, carnet de bord avec CO₂ et consommation, observatoire des marchés et CarPlay. 100 % gratuit.</li>
                 <li><a href="./irvefrance.html">IRVEFrance</a> — Bornes de recharge. Bornes de recharge électrique : réseaux, connecteurs, puissance, disponibilité, guidage et calculateur de recharge.</li>
                 <li><a href="./toilettefrance.html">ToiletteFrance</a> — Toilettes publiques. Toilettes publiques en France : carte, filtres utiles, accessibilité, horaires et guidage.</li>
                 <li><a href="./defibfrance.html">DefibFrance</a> — Défibrillateurs. Défibrillateurs (DAE) : disponibilité, accessibilité, mode Urgence, appel SAMU 15 et guide RCP avec métronome haptique.</li>
+                <li><a href="./dvffrance.html">DVFFrance</a> — Prix de l’immobilier. Prix de l’immobilier en France d’après les ventes réellement enregistrées : carte, médianes par commune, plan cadastral, fiche de quartier et fourchette d’estimation. Bientôt disponible.</li>
             </ul>
             <h2>Utilitaires macOS</h2>
             <ul>
