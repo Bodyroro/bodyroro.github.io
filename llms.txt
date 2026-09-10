@@ -2,8 +2,8 @@
 
 > Développeur indépendant basé en France. Cinq applications iPhone gratuites
 > construites sur les données publiques françaises, et deux utilitaires macOS
-> libres et open source. Aucune application ne demande de compte, aucune ne
-> propose d'achat intégré, et les données restent sur l'appareil.
+> libres et open source. Aucune application ne demande de compte, et les
+> données restent sur l'appareil.
 
 Le site est bilingue français / anglais : ajouter `?lang=en` à n'importe quelle
 adresse en donne la version anglaise. Les pages de confidentialité et de support
@@ -21,6 +21,14 @@ des applications iPhone existent en onze langues.
 
 - [MacTuner](https://bodyroro.github.io/mactuner.html) : centre de contrôle pour Mac. Tableau de bord temps réel, réglages système réversibles, nettoyage, désinstallation sans résidu, maintenance, contrôle du ventilateur. Libre, code sur [GitHub](https://github.com/Bodyroro/MacTuner).
 - [DNSTuner](https://bodyroro.github.io/dnstuner.html) : sélecteur de DNS système. Bascule le DNS de tout le Mac vers l'un des 46 résolveurs publics, en clair ou chiffré (DoH / DoT), et mesure ce que chacun bloque réellement. Libre, code sur [GitHub](https://github.com/Bodyroro/DNSTuner).
+
+## Versions web
+
+Deux applications ont un site qui donne la même donnée sans rien installer, dans un
+navigateur :
+
+- [CarbuFrance.fr](https://carbufrance.fr) : prix des carburants, carte, fiche par station et page par commune.
+- [ToiletteFrance.fr](https://toilettefrance.fr) : toilettes publiques, carte, fiche par emplacement et page par commune.
 
 ## Le site
 

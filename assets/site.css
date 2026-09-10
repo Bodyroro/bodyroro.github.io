@@ -17,6 +17,20 @@
         U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191,
         U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
+/* Police de secours aux mesures ajustées : le temps que Bricolage arrive, les
+   titres sont composés dans une Arial élargie de 12 % dont les hauteurs sont
+   ramenées à celles de Bricolage. À l'échange, la ligne ne bouge presque pas —
+   c'était la seule source de décalage de mise en page mesurée sur l'accueil. */
+@font-face {
+    font-family: 'Bricolage Fallback';
+    src: local('Arial Bold'), local('Arial-BoldMT'), local('Helvetica Neue Bold'), local('Arial');
+    font-weight: 400 700;
+    size-adjust: 112%;
+    ascent-override: 83%;
+    descent-override: 24%;
+    line-gap-override: 0%;
+}
+
 @font-face {
     font-family: 'Bricolage Grotesque';
     font-style: normal;
@@ -68,7 +82,7 @@
     --trait: rgba(0, 0, 0, 0.1);
     --trait-sombre: rgba(255, 255, 255, 0.14);
 
-    --police-titre: "Bricolage Grotesque", -apple-system, BlinkMacSystemFont, sans-serif;
+    --police-titre: "Bricolage Grotesque", "Bricolage Fallback", -apple-system, BlinkMacSystemFont, sans-serif;
     --police-texte: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
     --police-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, monospace;
 
@@ -140,7 +154,12 @@ a { color: inherit; text-decoration: none; }
 .skip-link:focus { top: 16px; }
 
 /* Le rendu servi aux moteurs avant que le script ne prenne la main. Il reste
-   dans le document jusqu'au remplacement : rien ne clignote. */
+   dans le document jusqu'au remplacement : rien ne clignote.
+
+   `flow-root` sur le conteneur : sans lui, la marge haute du repli traversait
+   `body` et posait la page à 80 px du bord ; au remplacement, tout remontait
+   d'un coup. C'était l'unique décalage de mise en page mesuré sur le site. */
+#site-root { display: flow-root; }
 .seo-fallback { max-width: 720px; margin: 80px auto; padding: 0 24px; }
 
 /* ==========================================================================
@@ -254,7 +273,16 @@ a { color: inherit; text-decoration: none; }
    plus ensemble : la bascule sortait du cadre. Le nom se réduit à son initiale. */
 @media (max-width: 560px) {
     .nav-inner { padding-inline: 16px; gap: 10px; }
-    .nav-brand span { display: none; }
+    /* Le nom sort de l'écran, pas de l'arbre d'accessibilité : le lien garde
+       son intitulé pour un lecteur d'écran. */
+    .nav-brand span {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+    }
     .nav-links { gap: 14px; }
     /* 10,5 px passait sous le plancher de lisibilité pour un libellé cliquable. */
     .lang-switch { font-size: 11.5px; }
@@ -634,11 +662,55 @@ a { color: inherit; text-decoration: none; }
 
 .scene.on-dark .card-icon { background: rgba(41, 151, 255, 0.16); color: var(--bleu-clair); }
 
-/* Grille des applications, en fin d'accueil. */
+/* ==========================================================================
+   Index des applications
+   ==========================================================================
+   Deux gammes, deux grilles : cinq applications iPhone sur une ligne, deux
+   utilitaires Mac sur la suivante. Une grille unique de sept laissait une rangée
+   de quatre puis trois tuiles centrées dessous — un décrochage qui ne voulait
+   rien dire.
+
+   Le nombre de colonnes est fixé, pas déduit d'une largeur minimale : c'est la
+   seule façon d'obtenir exactement cinq colonnes sur grand écran, et donc une
+   ligne pleine pour la gamme iPhone.
+   ========================================================================== */
+
+.app-index {
+    display: grid;
+    gap: 44px;
+    width: 100%;
+    text-align: left;
+}
+
+/* Deux classes dans le sélecteur : `.scene h2` fixe une taille de titre d'écran,
+   et c'est ici un intitulé de groupe, pas un titre de section. */
+.app-index .app-group-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 6px 12px;
+    margin-bottom: 18px;
+    font-family: var(--police-titre);
+    font-size: 24px;
+    font-weight: 700;
+    font-stretch: 92%;
+    letter-spacing: -0.02em;
+}
+
+.app-index .app-group-head span {
+    font-family: var(--police-texte);
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0;
+    color: var(--encre-2);
+}
+
+.scene.on-dark .app-group-head span { color: var(--sur-sombre-2); }
+
 .app-tiles {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 14px;
     width: 100%;
 }
 
@@ -646,27 +718,92 @@ a { color: inherit; text-decoration: none; }
     display: grid;
     gap: 12px;
     justify-items: center;
-    padding: 26px 18px;
+    padding: 22px 14px 20px;
+    border: 1px solid var(--trait);
     border-radius: 18px;
-    background: var(--clair-2);
+    background: var(--clair);
     text-align: center;
-    transition: transform 0.28s var(--sortie), box-shadow 0.28s var(--sortie);
+    transition:
+        transform 0.24s var(--sortie),
+        border-color 0.2s,
+        box-shadow 0.24s var(--sortie);
 }
 
-.scene.on-dark .app-tile { background: var(--sombre-2); }
+.scene.on-light-2 .app-tile,
+.scene.on-light .app-tile { background: var(--clair); }
 
-/* Sur le gris clair, une tuile du même gris disparaît : elle passe au blanc. */
-.scene.on-light-2 .app-tile { background: var(--clair); }
+.scene.on-dark .app-tile {
+    border-color: var(--trait-sombre);
+    background: var(--sombre-2);
+}
 
 .app-tile:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.35);
+    transform: translateY(-3px);
+    border-color: rgba(0, 113, 227, 0.35);
+    box-shadow: 0 14px 32px -16px rgba(0, 0, 0, 0.35);
 }
 
-.app-tile img { width: 62px; height: 62px; border-radius: 15px; }
+.scene.on-dark .app-tile:hover { border-color: rgba(41, 151, 255, 0.45); }
+
+/* L'icône garde son ombre propre : posée à plat sur la tuile, elle paraissait
+   collée au fond. */
+.app-tile-icon img {
+    width: 60px;
+    height: 60px;
+    border-radius: 14px;
+    box-shadow: 0 4px 12px -4px rgba(0, 0, 0, 0.3);
+}
+
+.app-tile-text { display: grid; gap: 3px; }
 .app-tile b { font-size: 15px; font-weight: 600; }
-.app-tile span { font-size: 13px; color: var(--encre-2); }
-.scene.on-dark .app-tile span { color: var(--sur-sombre-2); }
+
+.app-tile-tag {
+    font-size: 13px;
+    line-height: 1.35;
+    color: var(--encre-2);
+    text-wrap: balance;
+}
+
+.scene.on-dark .app-tile-tag { color: var(--sur-sombre-2); }
+
+/* L'application finie mais pas encore en vente le dit sur sa tuile.
+   La mention est dans le flux, sous la description, et non posée en coin : au
+   coin d'une tuile de cent-soixante pixels, elle recouvrait l'icône. */
+.app-tile-soon {
+    justify-self: center;
+    margin-top: 8px;
+    padding: 3px 10px;
+    border-radius: 100px;
+    background: var(--clair-2);
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: var(--encre-2);
+}
+
+.scene.on-dark .app-tile-soon {
+    background: rgba(255, 255, 255, 0.12);
+    color: var(--sur-sombre-2);
+}
+
+/* La section d'index n'a pas à occuper un écran entier : elle se lit d'un coup. */
+.scene.is-index {
+    min-height: auto;
+    padding: clamp(64px, 9vw, 112px) 0;
+}
+
+@media (max-width: 1000px) {
+    .app-tiles { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (max-width: 620px) {
+    .app-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .app-index { gap: 34px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .app-tile:hover { transform: none; }
+}
 
 /* ==========================================================================
    Galerie de captures (page d'une application)
@@ -751,7 +888,9 @@ a { color: inherit; text-decoration: none; }
 /* Le badge d'Apple est servi tel quel : ses règles d'usage interdisent de le
    redessiner, de le recolorer ou de le déformer. Seule sa hauteur est fixée. */
 .store-badge { display: inline-flex; transition: opacity 0.2s; }
-.store-badge img { height: 40px; width: auto; }
+/* Largeur et hauteur écrites toutes deux : une image chargée à la demande dont
+   une dimension reste « auto » réserve mal sa place. */
+.store-badge img { width: 126px; height: 40px; }
 .store-badge:hover { opacity: 0.82; }
 
 .partner {
@@ -890,30 +1029,9 @@ a { color: inherit; text-decoration: none; }
     .scene-device { order: -1; }
 }
 
-/* Sept applications : une rangée de quatre puis une de trois, centrée, plutôt
-   qu'une rangée pleine suivie de deux orphelines. */
-.app-tiles {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.app-tile {
-    flex: 0 1 calc(25% - 12px);
-    min-width: 176px;
-}
-
-@media (max-width: 900px) {
-    .app-tile { flex-basis: calc(33.333% - 11px); }
-}
-
-@media (max-width: 560px) {
-    .app-tile { flex-basis: calc(50% - 8px); min-width: 0; }
-}
-
 /* Le bouton et le badge d'Apple partagent la même hauteur : posés côte à côte,
    un écart de quatre pixels se voit. */
-.btn-row .store-badge img { height: 44px; }
+.btn-row .store-badge img { width: 138.6px; height: 44px; }
 
 /* Le portrait n'est pas carré : sans recadrage il s'écrase dans son cadre. */
 .portrait {
@@ -1058,20 +1176,14 @@ a { color: inherit; text-decoration: none; }
         0 18px 42px -16px rgba(0, 0, 0, 0.2);
 }
 
-/* La tuile d'application s'incline vers le curseur, très légèrement : c'est le
-   même vocabulaire que l'appareil, à une échelle plus petite. */
-.app-tile {
-    box-shadow:
-        0 1px 2px rgba(0, 0, 0, 0.04),
-        0 8px 22px -14px rgba(0, 0, 0, 0.16);
-}
-
+/* L'icône se soulève à peine sous le pointeur : de quoi montrer que la tuile
+   répond, sans que l'image quitte son cadre. */
 .app-tile img {
-    transition: transform 0.32s cubic-bezier(0.34, 1.32, 0.64, 1);
+    transition: transform 0.3s cubic-bezier(0.34, 1.32, 0.64, 1);
 }
 
 .app-tile:hover img {
-    transform: scale(1.07) rotate(-3deg);
+    transform: scale(1.05);
 }
 
 /* Les captures de la galerie reçoivent le même relief au survol. */
@@ -1087,6 +1199,7 @@ a { color: inherit; text-decoration: none; }
 
 @media (prefers-reduced-motion: reduce) {
     .scene-device > *,
+    .app-tile,
     .app-tile img,
     .shot .phone,
     .card {
@@ -1102,3 +1215,94 @@ a { color: inherit; text-decoration: none; }
     height: 16px;
     flex: none;
 }
+
+/* ==========================================================================
+   Relief, second temps : la scène
+   ==========================================================================
+   L'accueil ne présente pas des cartes posées à plat, mais un plateau que l'on
+   regarde de face et qui s'incline de quelques degrés vers le pointeur. Les
+   tuiles y flottent à des profondeurs différentes, et chaque appareil entre en
+   pivotant, comme un objet que l'on tourne vers soi. Tout est porté par des
+   transformations : rien ne recalcule la mise en page, rien ne coûte au
+   défilement, et tout s'annule sous `prefers-reduced-motion`.
+   ========================================================================== */
+
+/* L'appareil entre en pivotant vers le visiteur, puis se pose. */
+.scene-device.rise {
+    transform: perspective(1400px) translateY(36px) rotateY(-18deg) rotateX(5deg) scale(0.96);
+    transition: opacity 0.9s var(--sortie), transform 1.1s var(--sortie);
+    transition-delay: var(--delai, 0ms);
+}
+
+.scene-device.rise.is-in {
+    transform: perspective(1400px) translateY(0) rotateY(0deg) rotateX(0deg) scale(1);
+}
+
+/* Une fois posé, l'appareil flotte : quelques pixels, lentement. */
+.phone,
+.macwin {
+    animation: device-float 7s ease-in-out infinite alternate;
+}
+
+@keyframes device-float {
+    from { translate: 0 0; }
+    to   { translate: 0 -8px; }
+}
+
+/* La nappe de couleur recule quand la page défile : l'appareil semble posé
+   devant elle, et non dessus. Seuls les navigateurs qui lient une animation au
+   défilement l'appliquent ; ailleurs, la nappe reste centrée. */
+@supports (animation-timeline: view()) {
+    .scene-glow {
+        animation: glow-drift linear both;
+        animation-timeline: view();
+    }
+
+    @keyframes glow-drift {
+        from { translate: -50% -30%; }
+        to   { translate: -50% -70%; }
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .phone,
+    .macwin { animation: none; translate: none; }
+    .scene-device.rise,
+    .scene-device.rise.is-in { transform: none; transition: none; }
+    .scene-glow { animation: none; }
+}
+
+/* ==========================================================================
+   Mentions légales
+   ==========================================================================
+   Obligation, pas argument de vente : la section garde la grille du site mais
+   revient à une échelle de lecture. Elle ne prend pas la hauteur d'un écran,
+   son titre a la taille d'un intitulé de carte, et l'adresse de contact reste
+   un lien visible.
+   ========================================================================== */
+
+.scene.is-legal {
+    min-height: auto;
+    padding: clamp(56px, 8vw, 96px) 0;
+}
+
+.scene.is-legal h2 {
+    font-size: clamp(24px, 3vw, 34px);
+}
+
+.scene.is-legal .card p {
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* Le bleu du site tombe à 4,31:1 sur le gris d'une carte, sous le seuil de 4,5
+   exigé pour du texte de 14 px. Cette nuance plus dense passe à 4,96 sans
+   changer de famille. */
+.legal-mail {
+    display: inline-block;
+    margin-top: 6px;
+    color: #0068d0;
+    overflow-wrap: anywhere;
+}
+
+.legal-mail:hover { text-decoration: underline; }

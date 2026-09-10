@@ -23,7 +23,8 @@
     /* Les applications qui ont aussi un site : le bouton « version web » n'apparaît
        que pour celles-là. */
     var SITES_WEB = {
-        carbufrance: 'https://carbufrance.fr'
+        carbufrance: 'https://carbufrance.fr',
+        toilettefrance: 'https://toilettefrance.fr'
     };
 
     var PARTENAIRES = [
@@ -339,6 +340,27 @@
            le contraire. */
         aboutAppsSub: { fr: 'Les apps iPhone sur l’App Store, les utilitaires Mac en open source sur GitHub.',
                         en: 'The iPhone apps on the App Store, the Mac utilities as open source on GitHub.' },
+
+        /* Mentions légales. La loi pour la confiance dans l'économie numérique
+           demande l'éditeur, un moyen de le joindre, et l'hébergeur nommé avec son
+           adresse. Elles tiennent en trois blocs, sur la page qui parle déjà de la
+           personne — un site de sept pages n'a pas besoin d'une page pour cela. */
+        legalTitleSite: { fr: 'Mentions légales', en: 'Legal notice' },
+        legalEditor: { fr: 'Éditeur', en: 'Publisher' },
+        legalEditorText: {
+            fr: 'Rodolphe Vandaele, développeur indépendant. Directeur de la publication : Rodolphe Vandaele.',
+            en: 'Rodolphe Vandaele, independent developer. Publication director: Rodolphe Vandaele.'
+        },
+        legalHost: { fr: 'Hébergeur', en: 'Host' },
+        legalHostText: {
+            fr: 'GitHub Pages — GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis.',
+            en: 'GitHub Pages — GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, United States.'
+        },
+        legalContent: { fr: 'Contenus', en: 'Content' },
+        legalContentText: {
+            fr: 'Les captures et les icônes des applications appartiennent à leur auteur. Les marques citées appartiennent à leurs titulaires respectifs.',
+            en: 'App screenshots and icons belong to their author. Trademarks mentioned belong to their respective owners.'
+        },
 
         /* Les deux gammes n'ont ni le même public, ni le même mode de
            distribution. La page À propos est l'endroit où le dire une fois,
@@ -801,6 +823,36 @@
             '</div></div>';
     }
 
+    /**
+     * Une tuile d'application : l'icône, le nom, une ligne de description.
+     *
+     * L'accueil et la page Contact s'en servent toutes deux — l'une pour ouvrir la
+     * page de l'application, l'autre pour ouvrir son assistance. Le libellé de la
+     * seconde ligne change donc, le reste non.
+     */
+    function tuileApp(cle, options) {
+        options = options || {};
+        var app = APPS[cle];
+        var href = options.href || withLang('./' + cle + '.html');
+        var sousTitre = options.sousTitre || pick(app.tag);
+        var externe = options.externe ? ' target="_blank" rel="noopener"' : '';
+        // Une application finie mais pas encore en vente le dit ici : sans cela, la
+        // tuile promet une fiche App Store qui n'existe pas.
+        var bientot = !app.store && !options.href
+            ? '<span class="app-tile-soon">' + esc(pick(V.soonBadge)) + '</span>'
+            : '';
+
+        return '<a class="app-tile" href="' + href + '"' + externe + '>' +
+            '<span class="app-tile-icon">' +
+            picture('./assets/img/' + cle + '.png',
+                ' width="60" height="60" alt="" decoding="async"') +
+            '</span>' +
+            '<span class="app-tile-text">' +
+            '<b>' + esc(app.name) + '</b>' +
+            '<span class="app-tile-tag">' + esc(sousTitre) + '</span>' +
+            bientot + '</span></a>';
+    }
+
     /* Les faits saillants, en pastilles. */
     function pastilles(cle) {
         var app = APPS[cle];
@@ -868,6 +920,7 @@
             '<nav aria-label="' + esc(pick(T.footerSite)) + '"><h2>' + esc(pick(T.footerSite)) + '</h2>' +
             '<a href="' + withLang('./about.html') + '">' + esc(pick(T.navAbout)) + '</a>' +
             '<a href="' + withLang('./contact.html') + '">' + esc(pick(T.navContact)) + '</a>' +
+            '<a href="' + withLang('./about.html') + '#mentions">' + esc(pick(T.legalTitleSite)) + '</a>' +
             '<a href="' + LIBERAPAY + '" target="_blank" rel="noopener">Liberapay</a>' +
             '<a href="mailto:' + MAIL + '">' + MAIL + '</a></nav>' +
             '</div>' +
@@ -931,15 +984,33 @@
             '<a class="btn btn-primary" href="#' + IOS_ORDER[0] + '">' + esc(pick(V.seeApps)) + '</a>' +
             badgeAppStore(STORE_DEV, pick(T.footerStore)) +
             '</div>' +
-            '<div class="app-tiles rise" style="--delai:180ms">' +
-            toutes.map(function (k) {
-                var app = APPS[k];
-                return '<a class="app-tile" href="' + withLang('./' + k + '.html') + '">' +
-                    picture('./assets/img/' + k + '.png', ' width="62" height="62" alt="" decoding="async"') +
-                    '<b>' + esc(app.name) + '</b><span>' + esc(pick(app.tag)) + '</span></a>';
-            }).join('') +
-            '</div>' +
             '</div></section>';
+
+        /*
+         * L'index des applications.
+         *
+         * Cinq sur iPhone, deux sur Mac : deux gammes qui n'ont ni le même public ni
+         * le même mode de distribution, et que le site sépare partout ailleurs. Les
+         * réunir en une seule grille laissait une rangée de quatre puis trois tuiles
+         * centrées sous elle, sans que ce décrochage veuille dire quoi que ce soit.
+         * Rangées par gamme, les cinq tiennent sur une ligne et les deux sur la
+         * suivante : la mise en page dit enfin ce que le contenu est.
+         */
+        function groupe(titre, cles, sousTitre) {
+            return '<section class="app-group">' +
+                '<h2 class="app-group-head">' + esc(titre) +
+                '<span>' + esc(sousTitre) + '</span></h2>' +
+                '<div class="app-tiles">' +
+                cles.map(function (k) { return tuileApp(k); }).join('') +
+                '</div></section>';
+        }
+
+        var index = '<section class="scene is-index on-light-2">' +
+            '<div class="wrap scene-inner">' +
+            '<div class="app-index rise">' +
+            groupe(pick(T.navIOS), IOS_ORDER, pick(V.onIPhone)) +
+            groupe(pick(T.navMac), MAC_ORDER, pick(V.onMac)) +
+            '</div></div></section>';
 
         var sections = '<div id="ios"></div>' +
             IOS_ORDER.map(function (k, i) { return sectionApp(k, i); }).join('') +
@@ -971,7 +1042,7 @@
             '<a class="btn btn-ghost" href="' + withLang('./about.html') + '">' + esc(pick(T.navAbout)) + '</a>' +
             '</div></div></section>';
 
-        return navHTML('v2-home') + '<main>' + hero + sections + valeurs + contact + '</main>' + footerHTML();
+        return navHTML('v2-home') + '<main>' + hero + index + sections + valeurs + contact + '</main>' + footerHTML();
     }
 
     /* ---------------------------------------------------------------------
@@ -1079,7 +1150,25 @@
             }).join('') +
             '</div></div></section>';
 
-        return navHTML('v2-about') + '<main>' + hero + methode + '</main>' + footerHTML();
+        /* Section volontairement sobre : une mention légale n'a pas à parler
+           aussi fort qu'un titre de produit. Le titre reprend la taille d'un
+           intitulé de carte, et la section se contente d'un fond neutre. */
+        var legal = '<section class="scene on-light is-legal" id="mentions">' +
+            '<div class="wrap scene-inner">' +
+            '<div class="scene-head rise">' +
+            '<h2>' + esc(pick(T.legalTitleSite)) + '</h2>' +
+            '</div>' +
+            '<div class="cards rise" style="--delai:80ms">' +
+            '<article class="card"><h3>' + esc(pick(T.legalEditor)) + '</h3>' +
+            '<p>' + esc(pick(T.legalEditorText)) + '<br>' +
+            '<a class="legal-mail" href="mailto:' + MAIL + '">' + MAIL + '</a></p></article>' +
+            '<article class="card"><h3>' + esc(pick(T.legalHost)) + '</h3>' +
+            '<p>' + esc(pick(T.legalHostText)) + '</p></article>' +
+            '<article class="card"><h3>' + esc(pick(T.legalContent)) + '</h3>' +
+            '<p>' + esc(pick(T.legalContentText)) + '</p></article>' +
+            '</div></div></section>';
+
+        return navHTML('v2-about') + '<main>' + hero + methode + legal + '</main>' + footerHTML();
     }
 
     /* ---------------------------------------------------------------------
@@ -1089,13 +1178,11 @@
     function renderContact() {
         var sujets = IOS_ORDER.concat(MAC_ORDER).map(function (k) {
             var app = APPS[k];
-            var lien = app.platform === 'mac'
-                ? app.store
-                : withLang('./' + k + '-support.html');
-            return '<a class="app-tile" href="' + lien + '"' +
-                (app.platform === 'mac' ? ' target="_blank" rel="noopener"' : '') + '>' +
-                picture('./assets/img/' + k + '.png', ' width="62" height="62" alt="" decoding="async"') +
-                '<b>' + esc(app.name) + '</b><span>' + esc(pick(T.supportLink)) + '</span></a>';
+            return tuileApp(k, {
+                href: app.platform === 'mac' ? app.store : withLang('./' + k + '-support.html'),
+                externe: app.platform === 'mac',
+                sousTitre: pick(T.supportLink)
+            });
         }).join('');
 
         var objet = encodeURIComponent(pick(T.mailSubject) || 'Contact');
