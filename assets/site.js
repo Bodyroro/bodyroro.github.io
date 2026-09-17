@@ -559,7 +559,7 @@
         },
         dvffrance: {
             name: 'DVFFrance', platform: 'ios', accent: '#0a7d3c', glyph: '\u20ac',
-            store: '',
+            store: STORE + 'dvffrance/id6813079672',
             tag: { fr: 'Prix de l\u2019immobilier', en: 'Property prices' },
             desc: {
                 fr: 'Prix de l\u2019immobilier d\u2019apr\u00e8s les ventes r\u00e9ellement enregistr\u00e9es par l\u2019administration fiscale : carte, m\u00e9dianes par commune, plan cadastral, fiche de quartier et fourchette d\u2019estimation. 100 % gratuit.',
@@ -644,9 +644,8 @@
 
     /* Les applications réellement en vente, et elles seules.
        ------------------------------------------------------
-       « 7 apps en ligne » compté sur la liste entière deviendrait faux le jour où une
-       application est finie mais pas encore publiée — c'est le cas de DVFFrance, qui
-       porte `store: ''` et une pastille « Bientôt disponible ». Une vitrine peut
+       Une application finie mais pas encore publiée porte `store: ''` : elle reçoit
+       une pastille « Bientôt disponible » et sort de ce compte. Une vitrine peut
        présenter ce qui arrive ; elle ne peut pas le compter parmi ce qui est en ligne.
        Le jour où la fiche App Store existe, remplir `store` suffit : le chiffre suit. */
     function publiees(cles) {
