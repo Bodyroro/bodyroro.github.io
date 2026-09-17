@@ -114,7 +114,7 @@
             }
         },
         dvffrance: {
-            name: 'DVFFrance', icon: 'dvffrance.png', type: 'realestate', status: 'soon', store: '', premium: false,
+            name: 'DVFFrance', icon: 'dvffrance.png', type: 'realestate', status: 'available', store: appStore + 'dvffrance/id6813079672', premium: false,
             description: {
                 fr: 'Prix de l’immobilier d’après les ventes réellement enregistrées : carte, médianes par commune, quartier et estimation. 100 % gratuit.',
                 en: 'Property prices from sales actually recorded: map, medians by town, neighbourhood profile and valuation range. 100% free.',

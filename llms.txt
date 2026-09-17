@@ -15,7 +15,7 @@ des applications iPhone existent en onze langues.
 - [IRVEFrance](https://bodyroro.github.io/irvefrance.html) : bornes de recharge pour véhicules électriques. Réseaux, connecteurs, puissance, disponibilité, guidage, calculateur de recharge et catalogue de véhicules.
 - [ToiletteFrance](https://bodyroro.github.io/toilettefrance.html) : toilettes publiques en France. Carte, filtres d'accessibilité, horaires, guidage, fonctionnement hors ligne.
 - [DefibFrance](https://bodyroro.github.io/defibfrance.html) : défibrillateurs automatisés externes. Disponibilité, accessibilité, mode Urgence, appel du SAMU 15, guide de réanimation cardio-pulmonaire avec métronome haptique.
-- [DVFFrance](https://bodyroro.github.io/dvffrance.html) : prix de l'immobilier d'après les ventes réellement enregistrées (base DVF). Carte, médianes par commune, plan cadastral, fiche de quartier, fourchette d'estimation. **Bientôt disponible** — pas encore publiée sur l'App Store.
+- [DVFFrance](https://bodyroro.github.io/dvffrance.html) : prix de l'immobilier d'après les ventes réellement enregistrées (base DVF). Carte, médianes par commune, plan cadastral, fiche de quartier, fourchette d'estimation. Gratuite, sur l'App Store.
 
 ## Utilitaires macOS
 
