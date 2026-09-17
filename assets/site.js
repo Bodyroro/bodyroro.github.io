@@ -880,7 +880,7 @@
         return '<a class="skip-link" href="#main">' + esc(pick(T.skipLink)) + '</a>' +
             '<header class="nav" id="nav"><div class="nav-inner">' +
             '<a class="nav-brand" href="' + withLang('./index.html') + '">' +
-            picture('./assets/img/carbufrance.png', ' width="24" height="24" alt="" decoding="async"') +
+            '<img src="./assets/img/favicon.jpg" width="24" height="24" alt="" decoding="async">' +
             '<span>Rodolphe Vandaele</span></a>' +
             '<nav class="nav-links" aria-label="Navigation">' +
             lien('./index.html#ios', pick(T.navIOS), false) +
