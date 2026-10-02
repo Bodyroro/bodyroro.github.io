@@ -1,0 +1,10 @@
+{
+  "adsEnabled": true,
+  "adUnitIDs": {
+    "banner": "ca-app-pub-8071918795747299/5334153198",
+    "interstitial": "ca-app-pub-8071918795747299/7830256345",
+    "rewarded": "ca-app-pub-8071918795747299/9354390309",
+    "appOpen": "ca-app-pub-8071918795747299/6517174678",
+    "native": "ca-app-pub-8071918795747299/5887754751"
+  }
+}

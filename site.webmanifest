@@ -1,0 +1,17 @@
+{
+  "name": "Rodolphe Vandaele : apps iPhone et Mac",
+  "short_name": "R. Vandaele",
+  "description": "Applications iPhone gratuites sur les données publiques françaises, deux jeux et deux utilitaires libres pour Mac.",
+  "lang": "fr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "browser",
+  "background_color": "#ffffff",
+  "theme_color": "#0a2463",
+  "icons": [
+    { "src": "assets/img/favicon.svg", "type": "image/svg+xml", "sizes": "any" },
+    { "src": "assets/img/site-icon-192.png", "type": "image/png", "sizes": "192x192" },
+    { "src": "assets/img/site-icon-512.png", "type": "image/png", "sizes": "512x512" },
+    { "src": "assets/img/site-icon-maskable-512.png", "type": "image/png", "sizes": "512x512", "purpose": "maskable" }
+  ]
+}

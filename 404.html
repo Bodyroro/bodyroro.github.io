@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Servi par GitHub Pages : aucun en-tête personnalisé possible, la
+         politique passe donc par une balise. Elle doit précéder tout
+         chargement de ressource. Le hachage sha256 autorise le seul script en
+         ligne, celui des règles de préchargement : WebKit ne connaît pas le
+         mot-clé `inline-speculation-rules` et journalisait deux erreurs. Toute
+         modification de ce script change son hachage. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-F6HSyGJVGIrZtHhZ4gWBjG/qhzFkXFGAWufz/xhExMo='; style-src 'self' 'unsafe-inline'; img-src 'self'; font-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; frame-src 'none'">
+    <title>Page introuvable · Rodolphe Vandaele</title>
+    <meta name="description" content="Cette page n'existe pas ou a été déplacée. Retrouvez les applications iPhone et les utilitaires Mac de Rodolphe Vandaele.">
+    <meta name="robots" content="noindex, follow">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+    <link rel="icon" href="./favicon.ico" sizes="48x48">
+    <link rel="icon" type="image/svg+xml" href="./assets/img/favicon.svg">
+    <link rel="apple-touch-icon" href="./assets/img/site-apple-touch-icon.png">
+    <link rel="manifest" href="./site.webmanifest">
+    <link rel="stylesheet" href="./assets/site.css">
+    <style>
+        /* Page autonome : elle ne passe pas par le moteur, pour rester lisible
+           meme si assets/site.js echoue. Elle reprend les jetons de site.css,
+           et donc le theme clair ou sombre du systeme. */
+        .nf {
+            min-height: 100svh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+            padding: 40px 22px;
+            text-align: center;
+        }
+        .nf-code {
+            font-family: var(--font-display);
+            font-size: clamp(88px, 22vw, 180px);
+            font-weight: 800;
+            line-height: 0.95;
+            letter-spacing: -0.05em;
+        }
+        .nf h1 {
+            font-family: var(--font-display);
+            font-size: clamp(26px, 5vw, 40px);
+            letter-spacing: -0.025em;
+        }
+        .nf p { max-width: 46ch; color: var(--ink-2); }
+        .nf-en { font-size: 0.94em; }
+        .nf-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            max-width: 640px;
+            margin-top: 14px;
+        }
+        .nf-links a {
+            display: inline-flex;
+            align-items: center;
+            min-height: 44px;
+            padding: 0 18px;
+            border-radius: 100px;
+            background: color-mix(in srgb, var(--ink) 7%, transparent);
+            font-size: 15px;
+        }
+        .nf-links a:hover { background: color-mix(in srgb, var(--ink) 12%, transparent); }
+        .nf-links a.is-primary { background: var(--blue); color: #fff; }
+    </style>
+    <!-- Préchargement au survol : la page cible est construite avant le clic,
+         la transition de vue part alors d'un document déjà rendu.
+         `moderate` = au survol seulement ; sans lui les 21 pages partiraient
+         toutes. Les navigateurs qui ignorent la balise ne perdent rien. -->
+    <script type="speculationrules">
+    {"prerender":[{"where":{"href_matches":"/*"},"eagerness":"moderate"}]}
+    </script>
+</head>
+<body>
+    <main class="nf">
+        <span class="nf-code grad" aria-hidden="true">404</span>
+        <h1>Cette page n'existe pas.</h1>
+        <p>Le lien est peut-être ancien, ou la page a été déplacée. Tout le reste
+           du site est accessible ci-dessous.</p>
+        <p class="nf-en" lang="en">This page does not exist. The link may be out of
+           date, or the page may have moved.</p>
+        <nav class="nf-links" aria-label="Aller à">
+            <a class="is-primary" href="/">Accueil</a>
+            <a href="/carbufrance.html">CarbuFrance</a>
+            <a href="/irvefrance.html">IRVEFrance</a>
+            <a href="/toilettefrance.html">ToiletteFrance</a>
+            <a href="/defibfrance.html">DefibFrance</a>
+            <a href="/dvffrance.html">DVFFrance</a>
+            <a href="/trouchromatique.html">Trou Chromatique</a>
+            <a href="/mongloup.html">Mon Gloup</a>
+            <a href="/mactuner.html">MacTuner</a>
+            <a href="/dnstuner.html">DNSTuner</a>
+            <a href="/contact.html">Contact</a>
+            <a href="/about.html#mentions">Mentions légales</a>
+        </nav>
+    </main>
+</body>
+</html>
