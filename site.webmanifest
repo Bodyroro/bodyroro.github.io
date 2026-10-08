@@ -1,7 +1,7 @@
 {
   "name": "Rodolphe Vandaele : apps iPhone et Mac",
   "short_name": "R. Vandaele",
-  "description": "Applications iPhone gratuites sur les données publiques françaises, deux jeux et deux utilitaires libres pour Mac.",
+  "description": "Trois jeux avec Gloup, applications iPhone gratuites sur les données publiques françaises et deux utilitaires libres pour Mac.",
   "lang": "fr",
   "start_url": "./",
   "scope": "./",

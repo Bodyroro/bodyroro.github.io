@@ -1,14 +1,21 @@
 # Rodolphe Vandaele
 
-> Développeur indépendant basé en France. Cinq applications iPhone gratuites
-> construites sur les données publiques françaises, deux jeux pour iPhone et
-> iPad, et deux utilitaires macOS libres et open source. Aucune application ne demande de compte, et les
+> Développeur indépendant basé en France. Trois jeux pour iPhone et iPad avec
+> Gloup, la petite créature aux grands yeux (ChromaFight bientôt sur l'App Store),
+> cinq applications iPhone gratuites construites sur les données publiques
+> françaises, et deux utilitaires macOS libres et open source. Aucune application ne demande de compte, et les
 > données restent sur l'appareil.
 
 Le site est bilingue français / anglais : ajouter `?lang=en` à n'importe quelle
 adresse en donne la version anglaise. Les pages de confidentialité et de support
-des applications iPhone existent en onze langues, celles des jeux Trou Chromatique
-et Mon Gloup en français et en anglais.
+des applications iPhone existent en onze langues, celles des jeux Trou Chromatique,
+Mon Gloup et ChromaFight en français et en anglais.
+
+## Jeux iPhone et iPad
+
+- [Trou Chromatique](https://bodyroro.github.io/trouchromatique.html) : jeu d'aventure. Gloup attrape les objets de sa couleur pour rendre ses couleurs à dix îles flottantes : cent niveaux, une histoire, défi du jour, 34 langues. Gratuit, sans achat intégré, financé par la publicité. Sur l'App Store : https://apps.apple.com/app/id6816639945
+- [Mon Gloup](https://bodyroro.github.io/mongloup.html) : jeu de compagnon virtuel. Gloup, la petite créature aux grands yeux, vit dans une maison de poupée et son jardin : on le nourrit, cuisine avec lui, le lave, le couche, cultive le potager et joue avec lui. De bébé à adulte sur 60 niveaux, deux modes choisis à l'adoption (Sans mort, Avec mort), maison à décorer, neuf mini-jeux, 34 langues. Gratuit, sans achat intégré, financé par la publicité. Sur l'App Store : https://apps.apple.com/app/id6817347087
+- [ChromaFight](https://bodyroro.github.io/chromafight.html) : jeu de combat, à venir (pas encore sur l'App Store). Gloup, la petite créature aux grands yeux, recrache les objets de son ventre, rangés en grille, sur les Grisons, nés de la Grisaille : fusion sur quatre niveaux, accords de couleur, onze îles et 105 niveaux, onze amis, atelier. Gratuit, financé par la publicité et des achats intégrés facultatifs.
 
 ## Applications iPhone
 
@@ -17,11 +24,6 @@ et Mon Gloup en français et en anglais.
 - [ToiletteFrance](https://bodyroro.github.io/toilettefrance.html) : toilettes publiques en France. Carte, filtres d'accessibilité, horaires, guidage, fonctionnement hors ligne.
 - [DefibFrance](https://bodyroro.github.io/defibfrance.html) : défibrillateurs automatisés externes. Disponibilité, accessibilité, mode Urgence, appel du SAMU 15, guide de réanimation cardio-pulmonaire avec métronome haptique.
 - [DVFFrance](https://bodyroro.github.io/dvffrance.html) : prix de l'immobilier d'après les ventes réellement enregistrées (base DVF). Carte, médianes par commune, plan cadastral, fiche de quartier, fourchette d'estimation. Gratuite, sur l'App Store.
-
-## Jeux iPhone et iPad
-
-- [Trou Chromatique](https://bodyroro.github.io/trouchromatique.html) : jeu d'aventure. Gloup attrape les objets de sa couleur pour rendre ses couleurs à dix îles flottantes : cent niveaux, une histoire, défi du jour, 34 langues. Gratuit, sans achat intégré, financé par la publicité. Sur l'App Store : https://apps.apple.com/app/id6816639945
-- [Mon Gloup](https://bodyroro.github.io/mongloup.html) : jeu de compagnon virtuel. Gloup, la petite créature aux grands yeux, vit dans une maison de poupée et son jardin : on le nourrit, cuisine avec lui, le lave, le couche, cultive le potager et joue avec lui. De bébé à adulte sur 60 niveaux, deux modes choisis à l'adoption (Sans mort, Avec mort), maison à décorer, neuf mini-jeux, 34 langues. Gratuit, sans achat intégré, financé par la publicité. Sur l'App Store : https://apps.apple.com/app/id6817347087
 
 ## Utilitaires macOS
 
@@ -38,7 +40,7 @@ navigateur :
 
 ## Le site
 
-- [Accueil](https://bodyroro.github.io/) : présentation des neuf applications : cinq apps iPhone, deux jeux, deux utilitaires Mac.
+- [Accueil](https://bodyroro.github.io/) : présentation des dix applications : trois jeux, cinq apps iPhone, deux utilitaires Mac.
 - [À propos](https://bodyroro.github.io/about.html) : la démarche, les sources de données, le modèle économique.
 - [Contact](https://bodyroro.github.io/contact.html) : signaler une anomalie, proposer une correction, poser une question.
 - [Mentions légales](https://bodyroro.github.io/about.html#mentions) : éditeur, directeur de la publication, hébergeur.
@@ -52,4 +54,5 @@ navigateur :
 - [Confidentialité DVFFrance](https://bodyroro.github.io/dvffrance-privacy.html) · [Support](https://bodyroro.github.io/dvffrance-support.html)
 - [Confidentialité Trou Chromatique](https://bodyroro.github.io/trouchromatique-privacy.html) · [Support](https://bodyroro.github.io/trouchromatique-support.html)
 - [Confidentialité Mon Gloup](https://bodyroro.github.io/mongloup-privacy.html) · [Support](https://bodyroro.github.io/mongloup-support.html)
+- [Confidentialité ChromaFight](https://bodyroro.github.io/chromafight-privacy.html) · [Support](https://bodyroro.github.io/chromafight-support.html)
 - [Plan du site](https://bodyroro.github.io/sitemap.xml)

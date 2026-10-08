@@ -461,12 +461,12 @@ body.menu-open { overflow: hidden; }
 
 /* La phrase manifeste, d'une seule couleur, lisible en clair comme en sombre. */
 .manifesto {
-    max-width: 30ch;
+    max-width: 42ch;
     font-family: var(--font-display);
-    font-size: clamp(30px, 4.6vw, 60px);
-    font-weight: 700;
-    line-height: 1.12;
-    letter-spacing: -0.026em;
+    font-size: clamp(21px, 2.4vw, 32px);
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.018em;
     text-wrap: balance;
 }
 
@@ -538,9 +538,63 @@ body.menu-open { overflow: hidden; }
 .store-badge:hover { opacity: 0.86; }
 .store-badge:active { transform: scale(0.97); }
 
+/* ================================================ Jeux du premier ecran */
+
+/* Les trois jeux sous les boutons : icone, nom et statut, avant l'anneau. */
+.hero-games {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 268px));
+    justify-content: center;
+    gap: 14px;
+    margin-top: 40px;
+    perspective: 1200px;
+}
+
+.hero-game {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 18px 12px 12px;
+    border-radius: 22px;
+    background: var(--card);
+    box-shadow: var(--shadow);
+    text-align: left;
+    transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateZ(calc(var(--lift, 0) * 16px));
+    transition: transform 0.5s var(--ease), box-shadow 0.4s var(--ease);
+}
+
+.hero-game:hover { box-shadow: var(--shadow-lift); }
+
+.hero-game img {
+    flex: none;
+    width: 56px;
+    height: 56px;
+    border-radius: 23%;
+    box-shadow: 0 10px 22px -10px rgba(0, 0, 0, 0.45);
+}
+
+.hero-game > span { display: grid; gap: 2px; min-width: 0; }
+.hero-game b { font-size: 17px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.2; }
+.hero-game small { font-size: 13px; color: var(--ink-2); }
+.hero-game small.is-soon { color: color-mix(in srgb, var(--accent) 75%, var(--ink)); font-weight: 600; }
+
+@media (max-width: 760px) {
+    .hero-games { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+    .hero-game {
+        flex-direction: column;
+        gap: 8px;
+        padding: 14px 8px;
+        text-align: center;
+    }
+    .hero-game img { width: 52px; height: 52px; }
+    .hero-game b { font-size: 15px; }
+    .hero-game small { font-size: 12px; line-height: 1.3; }
+}
+
 /* ======================================================= Anneau d'icones */
 
-/* Sept icones posees sur un anneau que l'on voit legerement du dessus. L'angle
+/* Les icones posees sur un anneau que l'on voit legerement du dessus. L'angle
    de rotation est une propriete enregistree, `--spin` : chaque icone s'en sert
    pour se placer sur l'anneau, puis pour se retourner vers le visiteur. Elles
    tournent ainsi sans jamais montrer leur envers. */
@@ -676,18 +730,25 @@ body.menu-open { overflow: hidden; }
 
 .app-tiles.is-two { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
 
+/* Les trois jeux : une rangee de trois, puis deux colonnes dont la derniere
+   tuile prend la largeur. */
+.app-tiles.is-three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+@media (max-width: 760px) {
+    .app-tiles.is-three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .app-tiles.is-three > :last-child { grid-column: 1 / -1; }
+}
+
 /* Les sept applications de la page Contact tiennent sur une rangee des qu'il y a
    la place : cinq puis deux laissaient une rangee a moitie vide. */
 .app-tiles.is-seven { grid-template-columns: repeat(auto-fit, minmax(146px, 1fr)); }
 
-/* Neuf applications, depuis l'arrivee du second jeu : trois rangees de trois,
-   puis deux colonnes ou la derniere tuile prend toute la largeur, jamais une
-   tuile seule a cote d'un vide. */
-.app-tiles.is-nine { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+/* Dix applications, depuis l'arrivee du troisieme jeu : deux rangees de cinq,
+   puis deux colonnes de cinq rangees, jamais une tuile seule a cote d'un vide. */
+.app-tiles.is-ten { grid-template-columns: repeat(5, minmax(0, 1fr)); }
 
-@media (max-width: 900px) {
-    .app-tiles.is-nine { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .app-tiles.is-nine > :last-child { grid-column: 1 / -1; }
+@media (max-width: 1100px) {
+    .app-tiles.is-ten { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 .app-tile {
@@ -847,8 +908,8 @@ body.menu-open { overflow: hidden; }
     transition: transform 0.6s var(--ease);
 }
 
-/* Cadre d'iPhone dessine en CSS. Les captures mesurent 289 x 627 : au-dela
-   d'environ 300 pixels de large elles se voient pixelisees. */
+/* Cadre d'iPhone dessine en CSS, autour des visuels des jeux et des apps
+   (1320 x 2868, servis en 360 et 720 pixels de large). */
 .phone {
     position: relative;
     width: clamp(236px, 25vw, 300px);
@@ -873,7 +934,7 @@ body.menu-open { overflow: hidden; }
 
 .phone-screen img { width: 100%; height: 100%; object-fit: cover; }
 
-/* Captures de jeu : une barre d'etat sous l'ilot, l'image commence en dessous. */
+/* Visuels des jeux et des apps : une barre d'etat sous l'ilot, l'image commence en dessous. */
 .phone-screen.is-store { padding-top: 13%; }
 .phone-screen.is-store img { object-position: 50% 0; }
 
@@ -1167,6 +1228,31 @@ body.menu-open { overflow: hidden; }
 }
 
 .promo-grid > .rise { display: grid; }
+
+/* Trois jeux : une rangee de trois des 1200 px, l'eventail se resserre ; entre
+   900 et 1200 px, deux tuiles puis la troisieme sur toute la largeur. */
+@media (min-width: 1200px) {
+    .promo-grid.is-three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .promo-grid.is-three .promo-shot { width: clamp(120px, 10.4vw, 176px); }
+    .promo-grid.is-three .promo-fan { height: clamp(280px, 24vw, 380px); }
+    .promo-grid.is-three .promo h3 { font-size: clamp(32px, 2.9vw, 46px); }
+    .promo-grid.is-three .promo { padding-inline: clamp(20px, 2vw, 32px); }
+}
+
+/* Trois tuiles alignees : titre sur deux lignes et phrase sur quatre reservees, boutons sur une seule ligne, pour
+   que les eventails partent tous de la meme hauteur quel que soit le texte. */
+@media (min-width: 901px) {
+    .promo-grid.is-three .promo h3 { display: flex; align-items: center; justify-content: center; min-height: 2.1em; }
+    .promo-grid.is-three .promo-line { display: flex; align-items: center; min-height: 5.6em; }
+    .promo-grid.is-three .promo .btn-row { flex-wrap: nowrap; min-height: 52px; align-items: center; }
+    .promo-grid.is-three .promo .btn-row > * { white-space: nowrap; }
+    .promo-grid.is-three .promo .btn-row { gap: 10px; }
+    .promo-grid.is-three .promo .btn-quiet { padding-inline: 16px; }
+}
+
+@media (min-width: 901px) and (max-width: 1199px) {
+    .promo-grid.is-three > :last-child { grid-column: 1 / -1; }
+}
 
 .promo {
     position: relative;
@@ -1544,6 +1630,15 @@ html:has(body[data-page="v2-app"]) { scroll-padding-top: 112px; }
 
 .rail-nav { display: flex; gap: 12px; }
 
+.rail-tools {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+}
+
+.gallery[hidden] { display: none; }
+
 .rail-btn {
     display: grid;
     place-items: center;
@@ -1571,13 +1666,54 @@ html:has(body[data-page="v2-app"]) { scroll-padding-top: 112px; }
 .gallery.is-rail .shot { scroll-snap-align: start; }
 .gallery.is-rail .phone { width: clamp(220px, 21vw, 280px); }
 
+/* Cadre d'iPad dessine en CSS, de la meme matiere que l'iPhone : ecran 3:4,
+   bord regulier, camera au centre du bord haut. */
+.tablet {
+    position: relative;
+    width: clamp(300px, 31vw, 440px);
+    padding: 12px;
+    border-radius: 34px;
+    background: linear-gradient(150deg, #4a4a4e, #1c1c1e 38%, #0b0b0c 70%, #2c2c2e);
+    box-shadow:
+        inset 0 0 0 1.5px rgba(255, 255, 255, 0.16),
+        inset 0 0 0 4px #0b0b0c,
+        0 50px 90px -30px rgba(0, 0, 0, 0.55),
+        0 12px 24px -12px rgba(0, 0, 0, 0.35);
+}
+
+.tablet::before {
+    content: "";
+    position: absolute;
+    top: 4px;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    translate: -50% 0;
+    border-radius: 50%;
+    background: #2a2a2e;
+}
+
+.tablet-screen {
+    aspect-ratio: 2064 / 2752;
+    border-radius: 22px;
+    overflow: hidden;
+    background: #000;
+}
+
+.tablet-screen img { width: 100%; height: 100%; object-fit: cover; }
+
+.shot:has(.tablet) figcaption { max-width: 340px; }
+
 @media (max-width: 560px) {
     .gallery.is-rail .phone { width: 62vw; }
+    .tablet { width: 80vw; padding: 9px; border-radius: 26px; }
+    .tablet-screen { border-radius: 17px; }
 }
 
 /* Chaque capture pivote selon sa place dans la bande, de face au centre. */
 @supports (animation-timeline: view()) {
-    .gallery.is-rail .phone {
+    .gallery.is-rail .phone,
+    .gallery.is-rail .tablet {
         animation: couverture-bande linear both;
         animation-timeline: view(inline);
     }
@@ -1655,7 +1791,7 @@ html:has(body[data-page="v2-app"]) { scroll-padding-top: 112px; }
 
 .footer-grid {
     display: grid;
-    grid-template-columns: minmax(0, 1.5fr) repeat(3, minmax(0, 1fr));
+    grid-template-columns: minmax(0, 1.5fr) repeat(4, minmax(0, 1fr));
     gap: 36px 32px;
 }
 
@@ -1672,6 +1808,8 @@ html:has(body[data-page="v2-app"]) { scroll-padding-top: 112px; }
     display: inline-flex;
     align-items: center;
     min-height: 30px;
+    /* L'adresse courriel, d'un seul tenant, debordait de sa colonne a 375 px. */
+    overflow-wrap: anywhere;
     color: var(--ink-2);
     transition: color 0.2s;
 }
@@ -1801,7 +1939,7 @@ html:has(body[data-page="v2-app"]) { scroll-padding-top: 112px; }
     }
 
     .js .rise { opacity: 1; transform: none; }
-    .tilt, .app-tile, .card { transform: none !important; }
+    .tilt, .app-tile, .hero-game, .card { transform: none !important; }
     .orbit { transform: rotateX(-12deg); }
     .shine::after, .phone-screen::after { display: none; }
     .promo-shot { transition: none; }
@@ -1830,7 +1968,7 @@ html:has(body[data-page="v2-app"]) { scroll-padding-top: 112px; }
 
 @media (max-width: 360px) {
     .btn { padding: 0 20px; font-size: 16px; }
-    .app-tiles, .app-tiles.is-two, .app-tiles.is-seven, .app-tiles.is-nine { grid-template-columns: minmax(0, 1fr); }
+    .app-tiles, .app-tiles.is-two, .app-tiles.is-seven, .app-tiles.is-ten { grid-template-columns: minmax(0, 1fr); }
 }
 
 /* Grands ecrans : la colonne s'elargit et les objets grandissent avec elle,
