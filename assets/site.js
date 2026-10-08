@@ -83,14 +83,15 @@
             '</picture>';
     }
 
-    /* Les captures App Store des jeux, dans la langue de la page. Chacune existe
-       en 360 et 720 pixels de large, en AVIF et en WebP, plus un JPEG de 540 pour
-       les navigateurs qui ne lisent ni l'un ni l'autre. `sizes` dit au navigateur
-       la largeur affichée : il choisit le fichier selon la densité de l'écran. */
-    /* Une capture de jeu dans le même téléphone que les autres applications.
-       Le bandeau de titre de la capture occupe le haut de l'image : l'écran
-       garde donc une barre d'état, peinte de la couleur du bord supérieur de
-       chaque capture (`shotTops`), pour que l'îlot ne recouvre pas le titre. */
+    /* Les visuels des jeux (captures App Store) et des apps (visuels de leur fiche, CapturesAppStore.mjs),
+       dans la langue de la page. Chacun existe en 360 et 720 pixels de large, en
+       AVIF et en WebP, plus un JPEG de 540 pour les navigateurs qui ne lisent ni
+       l'un ni l'autre. `sizes` dit au navigateur la largeur affichée : il choisit
+       le fichier selon la densité de l'écran. */
+    /* Un visuel dans le téléphone dessiné par le site. Le titre du visuel occupe
+       le haut de l'image : l'écran garde donc une barre d'état, peinte de la
+       couleur du bord supérieur de chaque visuel (`shotTops`), pour que l'îlot
+       ne recouvre pas le titre. */
     function telephoneJeu(cle, n, alt, paresseux, sizes, classe) {
         var fond = (APPS[cle].shotTops || [])[n - 1] || '#000';
         return '<div class="phone' + (classe ? ' ' + classe : '') + '">' +
@@ -98,13 +99,21 @@
             captureJeu(cle, n, alt, paresseux, sizes) + '</div></div>';
     }
 
-    function captureJeu(cle, n, alt, paresseux, sizes) {
-        var base = './assets/img/shots/' + cle + '-' + lang + '-' + n;
-        function jeu(ext) { return base + '-360.' + ext + ' 360w, ' + base + '-720.' + ext + ' 720w'; }
+    /* Les captures iPad (2064 x 2752, sans îlot à éviter) existent en 480 et 960
+       pixels de large, plus un JPEG de 720 : un iPad s'affiche plus large qu'un iPhone. */
+    function tabletteJeu(cle, n, alt, sizes) {
+        return '<div class="tablet"><div class="tablet-screen">' +
+            captureJeu(cle, n, alt, true, sizes, true) + '</div></div>';
+    }
+
+    function captureJeu(cle, n, alt, paresseux, sizes, ipad) {
+        var base = './assets/img/shots/' + cle + (ipad ? '-ipad-' : '-') + lang + '-' + n;
+        var t = ipad ? [480, 960, 720, 2064, 2752] : [360, 720, 540, 1320, 2868];
+        function jeu(ext) { return base + '-' + t[0] + '.' + ext + ' ' + t[0] + 'w, ' + base + '-' + t[1] + '.' + ext + ' ' + t[1] + 'w'; }
         return '<picture>' +
             '<source type="image/avif" srcset="' + jeu('avif') + '" sizes="' + sizes + '">' +
             '<source type="image/webp" srcset="' + jeu('webp') + '" sizes="' + sizes + '">' +
-            '<img src="' + base + '-540.jpg" width="1320" height="2868" alt="' + esc(alt) + '"' +
+            '<img src="' + base + '-' + t[2] + '.jpg" width="' + t[3] + '" height="' + t[4] + '" alt="' + esc(alt) + '"' +
             (paresseux ? ' loading="lazy"' : ' fetchpriority="high"') + ' decoding="async">' +
             '</picture>';
     }
@@ -278,8 +287,9 @@
         profileCTA: { fr: 'Me contacter', en: 'Get in touch' },
         profileMore: { fr: 'En savoir plus', en: 'Learn more' },
 
-        footerLine: { fr: 'Sur iPhone, les services publics français du quotidien et deux jeux. Sur Mac, des utilitaires libres qui font une chose et la font bien.', en: 'On iPhone, everyday French public services and two games. On Mac, free utilities that do one thing and do it well.' },
+        footerLine: { fr: 'Sur iPhone et iPad, trois jeux avec Gloup et les services publics français du quotidien. Sur Mac, des utilitaires libres qui font une chose et la font bien.', en: 'On iPhone and iPad, three games starring Gloup and everyday French public services. On Mac, free utilities that do one thing and do it well.' },
         footerSite: { fr: 'Site', en: 'Site' },
+        footerApps: { fr: 'Apps iPhone', en: 'iPhone apps' },
         footerTagline: { fr: 'Conçu et développé en France.', en: 'Designed and built in France.' },
         footerVisitors: { fr: 'visiteurs cette semaine', en: 'visitors this week' },
         footerStore: { fr: 'Toutes les applications sur l\u2019App Store', en: 'All apps on the App Store' },
@@ -484,11 +494,12 @@
                 active: 3,
                 tabs: { fr: [['pin', 'Stations'], ['list', 'Liste'], ['chart', 'Marché'], ['book', 'Carnet'], ['gear', 'Réglages']], en: [['pin', 'Stations'], ['list', 'List'], ['chart', 'Market'], ['book', 'Logbook'], ['gear', 'Settings']] }
             },
-            shots: [
-                { file: 'carbufrance-map', caption: { fr: 'Carte des stations et prix en direct', en: 'Live station map and prices' } },
-                { file: 'carbufrance-list', caption: { fr: 'Liste triée par prix, écart affiché', en: 'List sorted by price, savings shown' } },
-                { file: 'carbufrance-detail', caption: { fr: 'Fiche station, Vue 360° et guidage', en: 'Station sheet, 360° view and directions' } }
-            ]
+            /* Visuels de la fiche App Store (Outils/Bodyroro.github.io/CapturesAppStore.py puis .mjs), dans leur ordre. */
+            shotTops: ['#d4e4f8', '#d4e4f8', '#d4e4f8', '#d4e4f8', '#d4e4f8'],
+            storeShots: {
+                fr: ['Les stations autour de vous', 'Comparez sans effort', 'Le détail utile', 'Votre budget carburant', 'Le marché en clair'],
+                en: ['Stations around you', 'Compare effortlessly', 'The details that matter', 'Your fuel budget', 'The market made clear']
+            }
         },
         irvefrance: {
             name: 'IRVEFrance', platform: 'ios', accent: '#6a5cff', glyph: '⚡︎',
@@ -517,11 +528,12 @@
                 active: 0,
                 tabs: { fr: [['pin', 'Bornes'], ['list', 'Liste'], ['chart', 'Marché'], ['gear', 'Réglages']], en: [['pin', 'Chargers'], ['list', 'List'], ['chart', 'Market'], ['gear', 'Settings']] }
             },
-            shots: [
-                { file: 'irvefrance-map', caption: { fr: 'Carte des bornes, puissance en direct', en: 'Charger map, live power' } },
-                { file: 'irvefrance-list', caption: { fr: 'Liste par connecteur, puissance et distance', en: 'List by connector, power and distance' } },
-                { file: 'irvefrance-detail', caption: { fr: 'Fiche borne, Vue 360° et connecteurs', en: 'Charger sheet, 360° view and connectors' } }
-            ]
+            /* Visuels de la fiche App Store (Outils/Bodyroro.github.io/CapturesAppStore.py puis .mjs), dans leur ordre. */
+            shotTops: ['#c9ebda', '#c9ebda', '#c9ebda', '#c9ebda', '#c9ebda'],
+            storeShots: {
+                fr: ['Les bornes autour de vous', 'Filtrez selon votre véhicule', 'Le détail de la borne', 'Calculez votre recharge', 'Suivez vos recharges'],
+                en: ['Chargers around you', 'Filter by your vehicle', 'Charger details', 'Plan your charge', 'Track your charging']
+            }
         },
         toilettefrance: {
             name: 'ToiletteFrance', platform: 'ios', accent: '#3d9bff', glyph: 'WC',
@@ -549,11 +561,12 @@
                 cta: { label: { fr: 'Le plus Proche', en: 'Nearest' }, tone: '#ff9500', icon: 'nav' },
                 tabs: { fr: [['map', 'Toilettes'], ['list', 'Liste'], ['gear', 'Réglages']], en: [['map', 'Toilets'], ['list', 'List'], ['gear', 'Settings']] }
             },
-            shots: [
-                { file: 'toilettefrance-map', caption: { fr: 'Carte des toilettes publiques', en: 'Public toilets map' } },
-                { file: 'toilettefrance-list', caption: { fr: 'Liste triée par distance', en: 'List sorted by distance' } },
-                { file: 'toilettefrance-detail', caption: { fr: 'Fiche toilette, accessibilité et Vue 360°', en: 'Toilet sheet, accessibility and 360° view' } }
-            ]
+            /* Visuels de la fiche App Store (Outils/Bodyroro.github.io/CapturesAppStore.py puis .mjs), dans leur ordre. */
+            shotTops: ['#cce6ef', '#cce6ef', '#cce6ef', '#cce6ef'],
+            storeShots: {
+                fr: ['Les toilettes autour de vous', 'Le détail qui compte', 'Gratuites, accessibles, ouvertes', 'La plus proche, tout de suite'],
+                en: ['Toilets around you', 'The details that count', 'Free, accessible, open', 'The nearest one, right away']
+            }
         },
         defibfrance: {
             name: 'DefibFrance', platform: 'ios', accent: '#17b26a', glyph: '+',
@@ -581,11 +594,12 @@
                 cta: { label: { fr: 'URGENCE', en: 'EMERGENCY' }, tone: '#ff3b30', icon: 'heart' },
                 tabs: { fr: [['map', 'Défibrillateurs'], ['list', 'Liste'], ['gear', 'Réglages']], en: [['map', 'Defibrillators'], ['list', 'List'], ['gear', 'Settings']] }
             },
-            shots: [
-                { file: 'defibfrance-map', caption: { fr: 'Carte des DAE, bouton Urgence', en: 'AED map, Emergency button' } },
-                { file: 'defibfrance-list', caption: { fr: 'Liste avec accès et intérieur/extérieur', en: 'List with access and indoor/outdoor' } },
-                { file: 'defibfrance-detail', caption: { fr: 'Fiche DAE, accès, niveau et localisation', en: 'AED sheet, access, floor and location' } }
-            ]
+            /* Visuels de la fiche App Store (Outils/Bodyroro.github.io/CapturesAppStore.py puis .mjs), dans leur ordre. */
+            shotTops: ['#f7d6d2', '#f7d6d2', '#f7d6d2', '#f7d6d2'],
+            storeShots: {
+                fr: ['Les défibrillateurs autour de vous', 'Le détail précis', 'Chaque seconde compte', 'Les gestes qui sauvent'],
+                en: ['Defibrillators around you', 'Precise details', 'Every second counts', 'Life-saving steps']
+            }
         },
         dvffrance: {
             name: 'DVFFrance', platform: 'ios', accent: '#0a7d3c', glyph: '\u20ac',
@@ -633,11 +647,12 @@
                 active: 0,
                 tabs: { fr: [['pin', 'Carte'], ['list', 'Ventes'], ['chart', 'March\u00e9'], ['book', 'Autour'], ['gear', 'R\u00e9glages']], en: [['pin', 'Map'], ['list', 'Sales'], ['chart', 'Market'], ['book', 'Around'], ['gear', 'Settings']] }
             },
-            shots: [
-                { file: 'dvffrance-map', caption: { fr: 'Carte des prix, une pastille par commune', en: 'Price map, one pill per town' } },
-                { file: 'dvffrance-list', caption: { fr: 'Les ventes enregistr\u00e9es, adresse et prix au m\u00b2', en: 'Recorded sales, address and price per m\u00b2' } },
-                { file: 'dvffrance-detail', caption: { fr: 'Fiche de vente, \u00e9cart au march\u00e9 et parcelle', en: 'Sale sheet, gap to the market and land parcel' } }
-            ]
+            /* Visuels de la fiche App Store (Outils/Bodyroro.github.io/CapturesAppStore.py puis .mjs), dans leur ordre. */
+            shotTops: ['#caefdb', '#caefdb', '#caefdb', '#caefdb', '#caefdb'],
+            storeShots: {
+                fr: ['Les prix autour de vous', 'Le détail d’une vente', 'Le marché de votre commune', 'Votre quartier en un coup d’œil', 'Tout ce qui vous entoure'],
+                en: ['Prices around you', 'The details of a sale', 'Your town’s market', 'Your neighbourhood at a glance', 'Everything around you']
+            }
         },
         mactuner: {
             name: 'MacTuner', platform: 'mac', accent: '#8eb8ff',
@@ -707,10 +722,10 @@
             },
             /* Les huit captures App Store V0.1 (docs/screenshots du projet), dans
                l'ordre de la fiche. Légendes tirées du README des captures. */
-            shotTops: ['#784bfc', '#3e82fc', '#4a67f1', '#582c9b', '#2c87ff', '#bf4fee', '#ff8a3e', '#160c3c'],
+            shotTops: ['#feaf46', '#794bfd', '#3e83fc', '#546ff2', '#582c9c', '#2b86ff', '#be51ee', '#ff8a3d'],
             storeShots: {
-                fr: ['Une partie sur la base lunaire', 'Le boss du village de Noël', 'Dix îles à explorer', 'Le Baron Grisaille, qui a volé les couleurs', 'Les dix amis de Gloup', 'Des looks pour Gloup', 'Victoire et cadeau du jour', 'Une île secrète à débloquer'],
-                en: ['A level on the moon base', 'The Christmas village boss', 'Ten islands to explore', 'Baron Grisaille, who stole the colors', 'Gloup’s ten friends', 'Looks for Gloup', 'Victory and daily gift', 'A secret island to unlock']
+                fr: ['L’accueil et le logo du jeu', 'Une partie sur la base lunaire', 'Le boss du village de Noël', 'Dix îles à explorer', 'Le Baron Grisaille, qui a volé les couleurs', 'Les dix amis de Gloup', 'Des looks pour Gloup', 'Victoire et cadeau du jour'],
+                en: ['The home screen and the game logo', 'A level on the moon base', 'The Christmas village boss', 'Ten islands to explore', 'Baron Grisaille, who stole the colors', 'Gloup’s ten friends', 'Looks for Gloup', 'Victory and daily gift']
             }
         },
         mongloup: {
@@ -751,26 +766,74 @@
                 fr: [['60', 'niveaux, de bébé à adulte'], ['9', 'mini-jeux'], ['33', 'aliments'], ['34', 'langues']],
                 en: [['60', 'levels, from baby to adult'], ['9', 'mini-games'], ['33', 'foods'], ['34', 'languages']]
             },
-            shotTops: ['#6cbeff', '#feaf44', '#7ad3ff', '#6549ca', '#88dc68', '#ff8fc9', '#fa86da', '#39c16d'],
+            shotTops: ['#6cbfff', '#feb045', '#7bd4ff', '#674acc', '#8add69', '#ff8fc8', '#fb87d9', '#39c16c'],
             storeShots: {
                 fr: ['La maison et son jardin', 'La cuisine, un gâteau pour Gloup', 'Le bain moussant', 'Pyjama, doudou et au lit', 'Le potager à cultiver', 'De bébé à adulte', 'La garde-robe', 'Neuf mini-jeux'],
                 en: ['The house and its garden', 'The kitchen, a cake for Gloup', 'The bubble bath', 'Pajamas, teddy and bedtime', 'The vegetable patch to grow', 'From baby to adult', 'The wardrobe', 'Nine mini-games']
+            }
+        },
+        /* Pas encore en vente : `store: ''` donne la pastille « Bientôt disponible » et, dans le
+           premier écran et la section des jeux, « Bientôt sur l'App Store » à la place du badge. Le jour
+           de la sortie : `store: STORE_CF` (fiche App Store), et les pastilles `chips` peuvent partir :
+           elles disent « achats facultatifs » parce que le jeu en propose, contrairement aux deux
+           autres. Les captures (`assets/img/shots/chromafight-*`, issues de
+           `Docs/ChromaFight/Screenshots`, iPhone et iPad) sont provisoires : les régénérer par
+           `Outils/Parc/Marque/CapturesSite.mjs`, mêmes noms, et recaler `shotTops` et `storeShots`
+           si les écrans changent. */
+        chromafight: {
+            name: 'ChromaFight', platform: 'ios', game: true, accent: '#ff7a3d', accent2: '#2d2366',
+            store: '',
+            tag: { fr: 'Jeu de combat', en: 'Battle game' },
+            desc: {
+                fr: 'Gloup, la petite créature aux grands yeux, recrache les objets de son ventre sur les Grisons, nés de la Grisaille, une suie vivante échappée de la forge du volcan. Rangez, fusionnez, accordez les couleurs : onze îles à libérer. Gratuit, avec achats intégrés facultatifs.',
+                en: 'Gloup, the little creature with big eyes, spits the objects from his tummy at the Greylings, born of the Grisaille, a living soot that escaped from the volcano forge. Arrange, merge, match colors: eleven islands to free. Free, with optional in-app purchases.'
+            },
+            chips: {
+                fr: ['Gratuit', 'Achats facultatifs', 'Sans compte'],
+                en: ['Free', 'Optional purchases', 'No account']
+            },
+            features: {
+                fr: [
+                    'Le ventre de Gloup est une grille : faites glisser les objets pour les ranger. À chaque recharge, Gloup recrache chacun d’eux sur les Grisons, et vous pouvez réorganiser en plein combat.',
+                    'Deux objets identiques glissés l’un sur l’autre fusionnent, sur quatre niveaux. Trois objets de même couleur qui se touchent forment un accord, cinq un grand accord : huit couleurs en jeu.',
+                    'Onze îles et 105 niveaux, de la cuisine à la base lunaire, puis une île secrète. Chacune a ses quatre Grisons, un mini-boss au niveau 5 et un boss au niveau 10.',
+                    'Onze amis à débloquer, un par île : chacun donne à Gloup un objet de départ, une forme de ventre et un pouvoir. Un atelier de huit améliorations rend Gloup plus fort au fil des parties.',
+                    'Des coffres sur la barre des vagues et un coffre à la fin de chaque île, des quêtes du jour et de la semaine, des missions, un bestiaire de 44 Grisons, une piste de progression gratuite et un cadeau chaque jour.',
+                    'Aucune pub pendant un niveau : les vidéos sont facultatives, et le moindre achat, comme « Sans pub », supprime la courte publicité entre deux niveaux. À chaque île, une offre d’île facultative, seulement dans la Boutique.',
+                    'iPhone et iPad, portrait et paysage. Sans compte : la progression reste sur l’appareil et dans votre iCloud, jamais chez l’éditeur.'
+                ],
+                en: [
+                    'Gloup’s tummy is a grid: drag objects to arrange them. Each time one recharges, Gloup spits it at the Greylings, and you can rearrange mid-fight.',
+                    'Two identical objects dragged onto each other merge, over four levels. Three objects of the same color that touch form a chord, five a grand chord: eight colors in play.',
+                    'Eleven islands and 105 levels, from the kitchen to the moon base, then a secret island. Each has its four Greylings, a mini-boss on level 5 and a boss on level 10.',
+                    'Eleven friends to unlock, one per island: each gives Gloup a starting object, a tummy shape and a power. A workshop of eight upgrades makes Gloup stronger over time.',
+                    'Chests on the wave bar and a chest at the end of every island, daily and weekly quests, missions, a bestiary of 44 Greylings, a free progress track and a gift every day.',
+                    'No ads during a level: videos are optional, and any purchase, such as “No ads”, removes the short ad between two levels. On each island, an optional island offer, only in the Shop.',
+                    'iPhone and iPad, portrait and landscape. No account: progress stays on the device and in your iCloud, never with the publisher.'
+                ]
+            },
+            sources: { fr: 'Aucune donnée externe : les îles, les niveaux, les objets, les Grisons, les musiques et les textes sont intégrés au jeu, qui se joue hors connexion. Seules la publicité, les achats (App Store) et la copie iCloud de la sauvegarde utilisent le réseau.', en: 'No external data: the islands, levels, objects, Greylings, music and texts are built into the game, which plays offline. Only advertising, purchases (App Store) and the iCloud copy of the save use the network.' },
+            business: { fr: 'Jeu gratuit, financé par la publicité Google AdMob (vidéos facultatives, et courte publicité entre deux niveaux, jamais pendant un niveau) et par des achats intégrés facultatifs : gemmes, pack de départ, « Sans pub » (suppression de la petite publicité) et offres d’île. Aucune puissance n’est vendue, aucune donnée bancaire dans l’app.', en: 'Free game, funded by Google AdMob ads (optional videos, and a short ad between two levels, never during a level) and by optional in-app purchases: gems, a starter pack, “No ads” (removal of the short ad) and island offers. No power is for sale, no payment card data in the app.' },
+            promo: {
+                fr: 'Gloup recrache les objets de son ventre sur les Grisons. Range, fusionne, accorde les couleurs et libère onze îles.',
+                en: 'Gloup spits the objects from his tummy at the Greylings. Arrange, merge, match colors and free eleven islands.'
+            },
+            stats: {
+                fr: [['11', 'îles'], ['105', 'niveaux'], ['44', 'Grisons'], ['4', 'niveaux de fusion']],
+                en: [['11', 'islands'], ['105', 'levels'], ['44', 'Greylings'], ['4', 'merge levels']]
+            },
+            /* Captures App Store du 8 octobre 2026 (CapturesSite.mjs), ordre des fiches. */
+            shotTops: ['#6cbfff', '#fecf47', '#8add69', '#fc7677', '#674acc', '#fb87d9', '#7bd4ff', '#feb045'],
+            storeShots: {
+                fr: ['L’accueil et la carte de l’île aux pirates', 'Gloup recrache les objets de son ventre', 'Fusionne et accorde les couleurs', 'Des boss géants', 'Onze îles à libérer', 'Onze amis à tes côtés', '44 Grisons à découvrir', 'Améliore ton atelier'],
+                en: ['The home screen and the Pirate Island map', 'Gloup spits the objects from his tummy', 'Merge and match colors', 'Giant bosses', 'Eleven islands to free', 'Eleven friends by your side', '44 Greylings to discover', 'Upgrade your workshop']
             }
         }
     };
     var IOS_ORDER = ['carbufrance', 'irvefrance', 'toilettefrance', 'defibfrance', 'dvffrance'];
     /* Les jeux forment leur propre gamme : ni données publiques, ni utilitaire. */
-    var GAME_ORDER = ['trouchromatique', 'mongloup'];
+    var GAME_ORDER = ['trouchromatique', 'mongloup', 'chromafight'];
 
-    /* Les applications réellement en vente, et elles seules.
-       ------------------------------------------------------
-       Une application finie mais pas encore publiée porte `store: ''` : elle reçoit
-       une pastille « Bientôt disponible » et sort de ce compte. Une vitrine peut
-       présenter ce qui arrive ; elle ne peut pas le compter parmi ce qui est en ligne.
-       Le jour où la fiche App Store existe, remplir `store` suffit : le chiffre suit. */
-    function publiees(cles) {
-        return cles.filter(function (k) { return !!APPS[k].store; });
-    }
     var MAC_ORDER = ['mactuner', 'dnstuner'];
     /* ---------------------------------------------------------------------
        Réglages propres à la vitrine
@@ -779,12 +842,12 @@
     /* Textes ajoutés par la refonte. Les autres viennent de T, inchangés. */
     var V = {
         heroKicker: { fr: 'Développeur indépendant · France', en: 'Independent developer · France' },
-        heroTitle: { fr: 'Sept applications,<br>un seul principe.', en: 'Seven apps,<br>one principle.' },
         heroLead: {
-            fr: 'Des applications natives qui font une chose et la font bien. Sur iPhone, les données publiques françaises du quotidien, et deux jeux avec Gloup, la petite créature aux grands yeux. Sur Mac, des utilitaires libres au code entièrement ouvert.',
-            en: 'Native apps that do one thing and do it well. On iPhone, everyday French public data, and two games starring Gloup, the little creature with big eyes. On Mac, free utilities with fully open source code.'
+            fr: 'Des applications natives qui font une chose et la font bien. Sur iPhone et iPad, trois jeux avec Gloup, la petite créature aux grands yeux, et les données publiques françaises du quotidien. Sur Mac, des utilitaires libres au code entièrement ouvert.',
+            en: 'Native apps that do one thing and do it well. On iPhone and iPad, three games starring Gloup, the little creature with big eyes, and everyday French public data. On Mac, free utilities with fully open source code.'
         },
-        seeApps: { fr: 'Voir les applications', en: 'See the apps' },
+        seeGames: { fr: 'Voir les jeux', en: 'See the games' },
+        seeApps: { fr: 'Les applications', en: 'The apps' },
         allApps: { fr: 'Toutes les applications', en: 'All the apps' },
         onIPhone: { fr: 'iPhone · iOS 18 ou plus', en: 'iPhone · iOS 18 or later' },
         onMac: { fr: 'macOS · Apple Silicon', en: 'macOS · Apple Silicon' },
@@ -829,14 +892,18 @@
         gamesSub: { fr: 'iPhone et iPad · iOS 18 ou plus', en: 'iPhone and iPad · iOS 18 or later' },
 
         /* Textes ajoutés par la refonte de septembre 2026. */
+        /* Refonte du 5 octobre 2026 : trois jeux, ils passent en tête de l'accueil. */
         heroTitleHTML: {
-            fr: 'Sept apps pour iPhone, <br><span class="grad">un seul principe.</span>',
-            en: 'Seven iPhone apps, <br><span class="grad">one principle.</span>'
+            fr: 'Des jeux, des apps, <br><span class="grad">un seul principe.</span>',
+            en: 'Games and apps, <br><span class="grad">one principle.</span>'
         },
         heroShort: {
-            fr: 'Cinq services publics du quotidien et deux jeux. Natifs, gratuits, sans compte. Et deux utilitaires libres pour Mac.',
-            en: 'Five everyday public services and two games. Native, free, no account. Plus two free utilities for Mac.'
+            fr: 'Trois jeux pour iPhone et iPad avec Gloup, la petite créature aux grands yeux. Cinq services publics du quotidien, natifs, gratuits et sans compte. Et deux utilitaires libres pour Mac.',
+            en: 'Three games for iPhone and iPad starring Gloup, the little creature with big eyes. Five everyday public services, native, free and with no account. Plus two free utilities for Mac.'
         },
+        heroGamesLabel: { fr: 'Les trois jeux', en: 'The three games' },
+        onStore: { fr: 'Sur l’App Store', en: 'On the App Store' },
+        soonStore: { fr: 'Bientôt sur l’App Store', en: 'Coming soon to the App Store' },
         indexTitle: { fr: 'Toutes les applications.', en: 'All the apps.' },
         discover: { fr: 'Découvrir', en: 'Discover' },
         menuApps: { fr: 'Applications', en: 'Apps' },
@@ -846,8 +913,8 @@
 
         /* Refonte du 30 septembre 2026 : jeux publiés, filtre, questions, sous-barre. */
         badgeAlt: { fr: 'Télécharger {app} dans l’App Store', en: 'Download {app} on the App Store' },
-        newEyebrow: { fr: 'Nouveau sur l’App Store', en: 'New on the App Store' },
-        newTitle: { fr: 'Deux jeux avec Gloup.', en: 'Two games starring Gloup.' },
+        newEyebrow: { fr: 'Jeux · iPhone et iPad', en: 'Games · iPhone and iPad' },
+        newTitle: { fr: 'Trois jeux avec Gloup.', en: 'Three games starring Gloup.' },
         learnMore: { fr: 'En savoir plus', en: 'Learn more' },
         get: { fr: 'Obtenir', en: 'Get' },
         getAria: { fr: 'Obtenir {app} sur l’App Store', en: 'Get {app} on the App Store' },
@@ -860,6 +927,7 @@
         prev: { fr: 'Captures précédentes', en: 'Previous screenshots' },
         next: { fr: 'Captures suivantes', en: 'Next screenshots' },
         storeShotsTitle: { fr: 'Les huit écrans de la fiche App Store.', en: 'The eight App Store screens.' },
+        deviceLabel: { fr: 'Choisir l’appareil', en: 'Choose the device' },
         statsEyebrow: { fr: 'En chiffres', en: 'By the numbers' },
         faqEyebrow: { fr: 'Questions fréquentes', en: 'Frequent questions' },
         faqTitle: { fr: 'Tout ce qu’il faut savoir.', en: 'Everything you need to know.' },
@@ -867,16 +935,16 @@
            n'est affirmé ici qui ne soit dit sur la page d'une application. */
         faq: {
             fr: [
-                ['Les applications sont-elles gratuites ?', 'Oui. Les cinq applications iPhone et les deux jeux se téléchargent gratuitement et sont financés par une publicité discrète. IRVEFrance propose des outils Premium facultatifs, DefibFrance un don facultatif qui retire la publicité. Les deux utilitaires Mac sont libres et open source, sans publicité ni achat.'],
+                ['Les applications sont-elles gratuites ?', 'Oui. Les cinq applications iPhone et les jeux Trou Chromatique et Mon Gloup se téléchargent gratuitement et sont financés par une publicité discrète. ChromaFight, bientôt sur l’App Store, sera gratuit lui aussi, avec des achats intégrés facultatifs. IRVEFrance propose des outils Premium facultatifs, DefibFrance un don facultatif qui retire la publicité. Les deux utilitaires Mac sont libres et open source, sans publicité ni achat.'],
                 ['Faut-il créer un compte ?', 'Non. Aucune application ne demande de compte ni d’inscription. Favoris et réglages restent sur votre appareil.'],
-                ['Fonctionnent-elles sans connexion ?', 'Les applications iPhone mettent en cache les données publiques pour rester utilisables hors connexion. Les deux jeux se jouent hors connexion ; seule la publicité utilise le réseau.'],
+                ['Fonctionnent-elles sans connexion ?', 'Les applications iPhone mettent en cache les données publiques pour rester utilisables hors connexion. Les trois jeux se jouent hors connexion ; seuls la publicité et, pour ChromaFight, les achats et la copie iCloud de la sauvegarde utilisent le réseau.'],
                 ['Sur quels appareils ?', 'iPhone et iPad sous iOS 18 ou plus pour les applications et les jeux. Mac Apple Silicon sous macOS 26 ou 27 pour MacTuner et DNSTuner.'],
                 ['Où trouver de l’aide ?', 'Chaque application a sa page d’assistance. Je réponds moi-même à chaque message, en général sous 24 à 48 heures.']
             ],
             en: [
-                ['Are the apps free?', 'Yes. The five iPhone apps and the two games are free to download and funded by discreet advertising. IRVEFrance offers optional Premium tools, DefibFrance an optional donation that removes ads. The two Mac utilities are free and open source, with no ads and no purchases.'],
+                ['Are the apps free?', 'Yes. The five iPhone apps and the games Trou Chromatique and Mon Gloup are free to download and funded by discreet advertising. ChromaFight, coming soon to the App Store, will be free too, with optional in-app purchases. IRVEFrance offers optional Premium tools, DefibFrance an optional donation that removes ads. The two Mac utilities are free and open source, with no ads and no purchases.'],
                 ['Do I need an account?', 'No. None of the apps asks for an account or a sign-up. Favorites and settings stay on your device.'],
-                ['Do they work offline?', 'The iPhone apps cache public data so they keep working offline. The two games play offline; only advertising uses the network.'],
+                ['Do they work offline?', 'The iPhone apps cache public data so they keep working offline. The three games play offline; only advertising and, for ChromaFight, purchases and the iCloud copy of the save use the network.'],
                 ['Which devices?', 'iPhone and iPad on iOS 18 or later for the apps and games. Apple Silicon Macs on macOS 26 or 27 for MacTuner and DNSTuner.'],
                 ['Where can I get help?', 'Each app has its own support page. I answer every message myself, usually within 24 to 48 hours.']
             ]
@@ -1032,14 +1100,7 @@
                     '(max-width: 560px) 70vw, 300px', 'float') +
                 '</div></div>';
         } else {
-            var shot = (app.shots || [])[0];
-            if (!shot) { return ''; }
-            interieur = '<div class="device-3d is-phone"><div class="tilt">' +
-                '<div class="phone float"><div class="phone-screen">' +
-                picture('./assets/img/shots/' + shot.file + '.jpg',
-                    ' width="289" height="627" alt="' + esc(app.name + ', ' + pick(shot.caption)) + '"' +
-                    chargement + ' decoding="async"') +
-                '</div></div></div></div>';
+            return '';
         }
         return '<div class="device" data-tilt>' + interieur + '</div>';
     }
@@ -1077,7 +1138,7 @@
 
     function pastilles(cle) {
         var app = APPS[cle];
-        var faits = pick(app.platform === 'mac' ? V.chipsMac : (app.game ? V.chipsGame : V.chipsIOS)) || [];
+        var faits = pick(app.chips || (app.platform === 'mac' ? V.chipsMac : (app.game ? V.chipsGame : V.chipsIOS))) || [];
         return '<ul class="facts">' + faits.map(function (f) {
             return '<li>' + esc(f) + '</li>';
         }).join('') + '</ul>';
@@ -1103,8 +1164,8 @@
                 esc(texte) + '</a>';
         }
         var entrees = [
-            ['./index.html#ios', pick(T.navIOS), false],
             ['./index.html#jeux', pick(V.navGames), false],
+            ['./index.html#ios', pick(T.navIOS), false],
             ['./index.html#mac', pick(T.navMac), false],
             ['./about.html', pick(T.navAbout), page === 'v2-about'],
             ['./contact.html', pick(T.navContact), page === 'v2-contact']
@@ -1113,7 +1174,7 @@
             return '<a href="' + withLang(e[0]) + '" style="--i:' + i + '">' + esc(e[1]) + '</a>';
         }).join('') +
             '<small>' + esc(pick(V.menuApps)) + '</small>' +
-            IOS_ORDER.concat(GAME_ORDER, MAC_ORDER).map(function (k, i) {
+            GAME_ORDER.concat(IOS_ORDER, MAC_ORDER).map(function (k, i) {
                 return '<a class="nav-menu-app" href="' + withLang('./' + k + '.html') + '" style="--i:' + (i + entrees.length) + '">' +
                     esc(APPS[k].name) + '</a>';
             }).join('');
@@ -1163,7 +1224,8 @@
         return '<footer class="footer"><div class="wrap">' +
             '<div class="footer-grid">' +
             '<div class="footer-brand"><b>Rodolphe Vandaele</b><p>' + esc(pick(T.footerLine)) + '</p></div>' +
-            colonne(pick(T.navIOS), IOS_ORDER.concat(GAME_ORDER)) +
+            colonne(pick(T.footerApps), IOS_ORDER) +
+            colonne(pick(V.navGames), GAME_ORDER) +
             colonne(pick(T.navMac), MAC_ORDER) +
             '<nav aria-label="' + esc(pick(T.footerSite)) + '"><h2>' + esc(pick(T.footerSite)) + '</h2>' +
             '<a href="' + withLang('./about.html') + '">' + esc(pick(T.navAbout)) + '</a>' +
@@ -1189,7 +1251,7 @@
        Accueil
        --------------------------------------------------------------------- */
 
-    /* Les icônes des neuf applications sur leur anneau. L'anneau double l'index qui suit : il est
+    /* Les icônes des dix applications sur leur anneau. L'anneau double l'index qui suit : il est
        décoratif pour les lecteurs d'écran, et ses liens sortent de l'ordre de
        tabulation. */
     function anneau() {
@@ -1227,6 +1289,19 @@
     }
 
     function renderHome() {
+        /* Les trois jeux dès le premier écran : icône, nom, statut. Un jeu à venir
+           le dit ici plutôt que de promettre une fiche App Store. */
+        var jeuxHero = '<nav class="hero-games" aria-label="' + esc(pick(V.heroGamesLabel)) + '">' +
+            GAME_ORDER.map(function (k) {
+                var app = APPS[k];
+                return '<a class="hero-game shine" data-tilt="self" href="' + withLang('./' + k + '.html') + '"' +
+                    ' style="--accent:' + app.accent + '">' +
+                    picture('./assets/img/' + k + '.png', ' width="56" height="56" alt="" decoding="async"') +
+                    '<span><b>' + esc(app.name) + '</b>' +
+                    '<small' + (app.store ? '' : ' class="is-soon"') + '>' +
+                    esc(pick(app.store ? V.onStore : V.soonStore)) + '</small></span></a>';
+            }).join('') + '</nav>';
+
         var hero = '<section class="scene is-hero center" id="main">' +
             '<span class="glow" aria-hidden="true"></span>' +
             '<div class="wrap">' +
@@ -1234,15 +1309,17 @@
                 '<h1>' + pick(V.heroTitleHTML) + '</h1>' +
                 '<p class="lead">' + esc(pick(V.heroShort)) + '</p>') +
             rise('<div class="btn-row">' +
-                '<a class="btn btn-primary" href="#apps">' + esc(pick(V.seeApps)) + '</a>' +
+                '<a class="btn btn-primary" href="#les-jeux">' + esc(pick(V.seeGames)) + '</a>' +
+                '<a class="btn btn-ghost" href="#apps">' + esc(pick(V.seeApps)) + '</a>' +
                 badgeAppStore(STORE_DEV, pick(T.footerStore)) +
-                '</div>', 120) +
+                '</div>', 80) +
+            rise(jeuxHero, 140) +
             '</div>' + anneau() + '</section>';
 
         /*
-         * Les deux jeux, en tuiles côte à côte comme les nouveautés d'une page
-         * d'accueil de constructeur : un nom, une phrase, le badge, et trois
-         * captures en éventail qui s'écartent au survol.
+         * Les trois jeux, en tuiles côte à côte comme les nouveautés d'une page
+         * d'accueil de constructeur : un nom, une phrase, le badge (ou « Bientôt
+         * sur l'App Store »), et trois captures en éventail qui s'écartent au survol.
          */
         function promo(cle) {
             var app = APPS[cle];
@@ -1258,17 +1335,19 @@
                 '<p class="promo-kicker">' + esc(pick(app.tag)) + '</p>' +
                 '<h3>' + esc(app.name) + '</h3>' +
                 '<p class="promo-line">' + esc(pick(app.promo)) + '</p>' +
-                '<div class="btn-row">' + badgeAppStore(app.store, pick(V.badgeAlt).replace('{app}', app.name)) +
+                '<div class="btn-row">' + (app.store
+                    ? badgeAppStore(app.store, pick(V.badgeAlt).replace('{app}', app.name))
+                    : '<span class="btn btn-quiet" aria-disabled="true">' + esc(pick(V.soonStore)) + '</span>') +
                 lienPlus(withLang('./' + cle + '.html'), pick(V.learnMore)) + '</div>' +
                 '</div>' +
                 '<div class="promo-fan">' + eventail + '</div>' +
                 '</article>';
         }
 
-        var nouveautes = '<section class="scene alt is-tight" aria-labelledby="nouveau-titre">' +
+        var nouveautes = '<section class="scene alt is-tight" id="les-jeux" aria-labelledby="nouveau-titre">' +
             '<div class="wrap">' +
             rise(eyebrow(pick(V.newEyebrow)) + '<h2 class="small" id="nouveau-titre">' + esc(pick(V.newTitle)) + '</h2>') +
-            '<div class="promo-grid">' +
+            '<div class="promo-grid' + (GAME_ORDER.length === 3 ? ' is-three' : '') + '">' +
             GAME_ORDER.map(function (k, i) { return rise(promo(k), i * 100); }).join('') +
             '</div></div></section>';
 
@@ -1277,9 +1356,8 @@
             '</section>';
 
         /*
-         * L'index des applications, rangé par gamme : cinq sur iPhone, deux sur
-         * Mac. Deux publics, deux modes de distribution, et le site les sépare
-         * partout ailleurs.
+         * L'index des applications, rangé par gamme : trois jeux, cinq apps sur
+         * iPhone, deux sur Mac. Trois publics, et le site les sépare partout ailleurs.
          */
         function groupe(titre, cles, sousTitre, classe, filtre) {
             return '<section class="app-group" data-group="' + filtre + '" aria-label="' + esc(titre) + '">' +
@@ -1293,22 +1371,22 @@
             '<div class="wrap">' +
             rise('<div class="index-head"><h2 class="small">' + esc(pick(V.indexTitle)) + '</h2>' +
                 '<div class="segmented" role="group" aria-label="' + esc(pick(V.filterLabel)) + '">' +
-                [['all', pick(V.filterAll)], ['ios', pick(T.navIOS)], ['games', pick(V.navGames)], ['mac', pick(T.navMac)]]
+                [['all', pick(V.filterAll)], ['games', pick(V.navGames)], ['ios', pick(T.navIOS)], ['mac', pick(T.navMac)]]
                     .map(function (f, i) {
                         return '<button type="button" data-filter="' + f[0] + '" aria-pressed="' + (i === 0) + '">' + esc(f[1]) + '</button>';
                     }).join('') +
                 '</div></div>') +
             rise('<div class="app-index">' +
+                groupe(pick(V.navGames), GAME_ORDER, pick(V.gamesSub), 'is-three', 'games') +
                 groupe(pick(T.navIOS), IOS_ORDER, pick(V.onIPhone), '', 'ios') +
-                groupe(pick(V.navGames), GAME_ORDER, pick(V.gamesSub), 'is-two', 'games') +
                 groupe(pick(T.navMac), MAC_ORDER, pick(V.onMac), 'is-two', 'mac') +
                 '</div>', 80) +
             '</div></section>';
 
-        var sections = '<div id="ios"></div>' +
-            IOS_ORDER.map(function (k, i) { return sectionApp(k, i); }).join('') +
-            '<div id="jeux"></div>' +
-            GAME_ORDER.map(function (k, i) { return sectionApp(k, IOS_ORDER.length + i); }).join('') +
+        var sections = '<div id="jeux"></div>' +
+            GAME_ORDER.map(function (k, i) { return sectionApp(k, i); }).join('') +
+            '<div id="ios"></div>' +
+            IOS_ORDER.map(function (k, i) { return sectionApp(k, GAME_ORDER.length + i); }).join('') +
             '<div id="mac"></div>' +
             MAC_ORDER.map(function (k, i) { return sectionApp(k, i); }).join('');
 
@@ -1397,7 +1475,7 @@
                 : '<a class="subnav-cta" href="' + app.store + '" target="_blank" rel="noopener" aria-label="' +
                   esc(pick(V.getAria).replace('{app}', app.name)) + '">' + esc(pick(V.get)) + '</a>';
         }
-        var aCaptures = (app.shots && app.shots.length) || app.storeShots;
+        var aCaptures = !!app.storeShots;
         var sousBarre = '<nav class="subnav" aria-label="' + esc(app.name) + '"><div class="subnav-inner">' +
             '<a class="subnav-title" href="#main">' + esc(app.name) + '</a>' +
             '<div class="subnav-links">' +
@@ -1429,36 +1507,37 @@
         var captures = '';
         if (app.storeShots) {
             var legendes = pick(app.storeShots);
+            /* Une bande par appareil, iPhone d'abord ; le sélecteur montre l'une ou
+               l'autre. Les images de la bande cachée, différées, ne se chargent pas.
+               Les applications n'ont que l'iPhone : ni sélecteur ni bande d'iPad. */
+            var ipad = !!app.game;
+            var bande = function (appareil, figure) {
+                return '<div class="gallery is-rail" data-device="' + appareil + '"' + (appareil === 'ipad' ? ' hidden' : '') +
+                    ' tabindex="0" role="region" aria-label="' + esc(pick(V.galleryLabel) + ', ' + (appareil === 'ipad' ? 'iPad' : 'iPhone')) + '">' +
+                    legendes.map(function (legende, i) {
+                        return '<figure class="shot">' + figure(i + 1, app.name + ', ' + legende) +
+                            '<figcaption>' + esc(legende) + '</figcaption></figure>';
+                    }).join('') + '</div>';
+            };
             captures = '<section class="scene theme-dark" id="captures" style="--accent:' + app.accent + '">' +
                 '<span class="glow" aria-hidden="true"></span>' +
                 '<div class="wrap rail-head">' +
-                rise(eyebrow(pick(T.shotsEyebrow)) + '<h2 class="small">' + esc(pick(V.storeShotsTitle)) + '</h2>') +
+                rise(eyebrow(pick(T.shotsEyebrow)) + '<h2 class="small">' + esc(pick(ipad ? V.storeShotsTitle : V.shotsTitle)) + '</h2>') +
+                '<div class="rail-tools">' +
+                (ipad ? '<div class="segmented" role="group" aria-label="' + esc(pick(V.deviceLabel)) + '">' +
+                '<button type="button" data-device="iphone" aria-pressed="true">iPhone</button>' +
+                '<button type="button" data-device="ipad" aria-pressed="false">iPad</button></div>' : '') +
                 '<div class="rail-nav">' +
                 '<button class="rail-btn" type="button" data-dir="-1" aria-label="' + esc(pick(V.prev)) + '">' + CHEVRON + '</button>' +
                 '<button class="rail-btn" type="button" data-dir="1" aria-label="' + esc(pick(V.next)) + '">' + CHEVRON + '</button>' +
-                '</div></div>' +
-                '<div class="gallery is-rail" tabindex="0" role="region" aria-label="' + esc(pick(V.galleryLabel)) + '">' +
-                legendes.map(function (legende, i) {
-                    return '<figure class="shot">' +
-                        telephoneJeu(cle, i + 1, app.name + ', ' + legende, true, '(max-width: 560px) 62vw, 280px') +
-                        '<figcaption>' + esc(legende) + '</figcaption></figure>';
-                }).join('') +
-                '</div></section>';
-        } else if (app.shots && app.shots.length) {
-            captures = '<section class="scene theme-dark" id="captures" style="--accent:' + app.accent + '">' +
-                '<span class="glow" aria-hidden="true"></span>' +
-                '<div class="wrap center">' +
-                rise(eyebrow(pick(T.shotsEyebrow)) + '<h2 class="small">' + esc(pick(V.shotsTitle)) + '</h2>') +
-                '</div>' +
-                '<div class="gallery" tabindex="0" role="region" aria-label="' + esc(pick(V.galleryLabel)) + '">' +
-                app.shots.map(function (s) {
-                    return '<figure class="shot"><div class="phone"><div class="phone-screen">' +
-                        picture('./assets/img/shots/' + s.file + '.jpg',
-                            ' width="289" height="627" alt="' + esc(app.name + ', ' + pick(s.caption)) +
-                            '" loading="lazy" decoding="async"') +
-                        '</div></div><figcaption>' + esc(pick(s.caption)) + '</figcaption></figure>';
-                }).join('') +
-                '</div></section>';
+                '</div></div></div>' +
+                bande('iphone', function (n, alt) {
+                    return telephoneJeu(cle, n, alt, true, '(max-width: 560px) 62vw, 280px');
+                }) +
+                (ipad ? bande('ipad', function (n, alt) {
+                    return tabletteJeu(cle, n, alt, '(max-width: 560px) 80vw, 440px');
+                }) : '') +
+                '</section>';
         }
 
         var methode = '<section class="scene" id="donnees" style="--accent:' + app.accent + '">' +
@@ -1564,7 +1643,7 @@
             '<div class="wrap">' +
             rise('<h2 class="small">' + esc(pick(V.contactPerApp)) + '</h2>' +
                 '<p class="lead wide">' + esc(pick(V.contactPerAppLead)) + '</p>') +
-            rise('<div class="app-tiles is-nine" style="margin-top:48px">' + sujets + '</div>', 80) +
+            rise('<div class="app-tiles is-ten" style="margin-top:48px">' + sujets + '</div>', 80) +
             '</div></section>';
 
         return navHTML('v2-contact') + '<main>' + hero + parApp + '</main>' + footerHTML();
@@ -1778,12 +1857,20 @@
     }
 
     /* Les flèches de la bande de captures : un écran de défilement par clic,
-       et chacune s'éteint en butée. */
+       et chacune s'éteint en butée. Elles agissent sur la bande visible, que le
+       sélecteur d'appareil choisit. */
     function attacheBandes() {
-        document.querySelectorAll('.gallery.is-rail').forEach(function (bande) {
-            var section = bande.closest('.scene');
-            var fleches = section ? section.querySelectorAll('.rail-btn') : [];
+        document.querySelectorAll('.rail-nav').forEach(function (nav) {
+            var section = nav.closest('.scene');
+            var bandes = section.querySelectorAll('.gallery.is-rail');
+            var fleches = nav.querySelectorAll('.rail-btn');
+            var appareils = section.querySelectorAll('button[data-device]');
+            function visible() {
+                for (var i = 0; i < bandes.length; i++) { if (!bandes[i].hidden) { return bandes[i]; } }
+                return bandes[0];
+            }
             function maj() {
+                var bande = visible();
                 var fin = bande.scrollWidth - bande.clientWidth - 2;
                 fleches.forEach(function (f) {
                     var avant = f.getAttribute('data-dir') === '-1';
@@ -1792,13 +1879,24 @@
             }
             fleches.forEach(function (f) {
                 f.addEventListener('click', function () {
+                    var bande = visible();
                     bande.scrollBy({
                         left: Number(f.getAttribute('data-dir')) * bande.clientWidth * 0.8,
                         behavior: reduceMotion ? 'auto' : 'smooth'
                     });
                 });
             });
-            bande.addEventListener('scroll', function () { requestAnimationFrame(maj); }, { passive: true });
+            appareils.forEach(function (b) {
+                b.addEventListener('click', function () {
+                    var choix = b.getAttribute('data-device');
+                    appareils.forEach(function (o) { o.setAttribute('aria-pressed', String(o === b)); });
+                    bandes.forEach(function (g) { g.hidden = g.getAttribute('data-device') !== choix; });
+                    maj();
+                });
+            });
+            bandes.forEach(function (bande) {
+                bande.addEventListener('scroll', function () { requestAnimationFrame(maj); }, { passive: true });
+            });
             addEventListener('resize', maj);
             maj();
         });

@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://bodyroro.github.io/</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-05</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
@@ -42,7 +42,7 @@
   </url>
   <url>
     <loc>https://bodyroro.github.io/contact.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-04</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
@@ -102,7 +102,7 @@
   </url>
   <url>
     <loc>https://bodyroro.github.io/trouchromatique.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-05</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
@@ -117,7 +117,7 @@
   </url>
   <url>
     <loc>https://bodyroro.github.io/mongloup.html</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-05</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
@@ -128,6 +128,21 @@
   <url>
     <loc>https://bodyroro.github.io/mongloup-support.html</loc>
     <lastmod>2026-09-29</lastmod>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://bodyroro.github.io/chromafight.html</loc>
+    <lastmod>2026-10-05</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://bodyroro.github.io/chromafight-privacy.html</loc>
+    <lastmod>2026-10-04</lastmod>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://bodyroro.github.io/chromafight-support.html</loc>
+    <lastmod>2026-10-04</lastmod>
     <priority>0.4</priority>
   </url>
 </urlset>
