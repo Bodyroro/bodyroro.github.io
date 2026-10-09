@@ -24,6 +24,7 @@
        la vitrine du pays du visiteur. */
     var STORE_TC = 'https://apps.apple.com/app/id6816639945';
     var STORE_MG = 'https://apps.apple.com/app/id6817347087';
+    var STORE_CF = 'https://apps.apple.com/app/id6819280350';
     /* Les applications qui ont aussi un site : le bouton « version web » n'apparaît
        que pour celles-là. */
     var SITES_WEB = {
@@ -97,6 +98,13 @@
         return '<div class="phone' + (classe ? ' ' + classe : '') + '">' +
             '<div class="phone-screen is-store" style="background:' + fond + '">' +
             captureJeu(cle, n, alt, paresseux, sizes) + '</div></div>';
+    }
+
+    /* L'écran réel d'une app, sans titre de fiche : le téléphone d'une page d'app montre l'app elle-même, pas
+       un visuel App Store qui contient déjà son propre téléphone. */
+    function telephoneApp(cle, alt, paresseux, sizes, classe) {
+        return '<div class="phone' + (classe ? ' ' + classe : '') + '"><div class="phone-screen">' +
+            captureJeu(cle, 'ecran', alt, paresseux, sizes) + '</div></div>';
     }
 
     /* Les captures iPad (2064 x 2752, sans îlot à éviter) existent en 480 et 960
@@ -388,8 +396,8 @@
         legalTitleSite: { fr: 'Mentions légales', en: 'Legal notice' },
         legalEditor: { fr: 'Éditeur', en: 'Publisher' },
         legalEditorText: {
-            fr: 'Rodolphe Vandaele, développeur indépendant, particulier. BodyCorp n’est pas une société : c’est le nom d’éditeur sous lequel il publie les jeux Trou Chromatique et Mon Gloup. Directeur de la publication : Rodolphe Vandaele.',
-            en: 'Rodolphe Vandaele, independent developer, private individual. BodyCorp is not a company: it is the publisher name under which he releases the games Trou Chromatique and Mon Gloup. Publication director: Rodolphe Vandaele.'
+            fr: 'Rodolphe Vandaele, développeur indépendant, particulier. BodyCorp n’est pas une société : c’est le nom d’éditeur sous lequel il publie les jeux Trou Chromatique, Mon Gloup et ChromaFight. Directeur de la publication : Rodolphe Vandaele.',
+            en: 'Rodolphe Vandaele, independent developer, private individual. BodyCorp is not a company: it is the publisher name under which he releases the games Trou Chromatique, Mon Gloup and ChromaFight. Publication director: Rodolphe Vandaele.'
         },
         legalHost: { fr: 'Hébergeur', en: 'Host' },
         legalHostText: {
@@ -494,11 +502,11 @@
                 active: 3,
                 tabs: { fr: [['pin', 'Stations'], ['list', 'Liste'], ['chart', 'Marché'], ['book', 'Carnet'], ['gear', 'Réglages']], en: [['pin', 'Stations'], ['list', 'List'], ['chart', 'Market'], ['book', 'Logbook'], ['gear', 'Settings']] }
             },
-            /* Visuels de la fiche App Store (Outils/Bodyroro.github.io/CapturesAppStore.py puis .mjs), dans leur ordre. */
-            shotTops: ['#d4e4f8', '#d4e4f8', '#d4e4f8', '#d4e4f8', '#d4e4f8'],
+            /* Visuels de la fiche App Store (Outils/Bodyroro.github.io/VisuelsApps.mjs puis CapturesAppStore.mjs), dans leur ordre. */
+            shotTops: ['#1e336a', '#0a1a4c', '#233970', '#0b1b4d', '#20356c'],
             storeShots: {
-                fr: ['Les stations autour de vous', 'Comparez sans effort', 'Le détail utile', 'Votre budget carburant', 'Le marché en clair'],
-                en: ['Stations around you', 'Compare effortlessly', 'The details that matter', 'Your fuel budget', 'The market made clear']
+                fr: ['Les stations autour de vous', 'Comparez sans effort', 'Chaque station en détail', 'Votre budget carburant', 'Le marché en clair'],
+                en: ['Fuel stations near you', 'Compare effortlessly', 'Every station in detail', 'Your fuel budget', 'The market made clear']
             }
         },
         irvefrance: {
@@ -528,11 +536,11 @@
                 active: 0,
                 tabs: { fr: [['pin', 'Bornes'], ['list', 'Liste'], ['chart', 'Marché'], ['gear', 'Réglages']], en: [['pin', 'Chargers'], ['list', 'List'], ['chart', 'Market'], ['gear', 'Settings']] }
             },
-            /* Visuels de la fiche App Store (Outils/Bodyroro.github.io/CapturesAppStore.py puis .mjs), dans leur ordre. */
-            shotTops: ['#c9ebda', '#c9ebda', '#c9ebda', '#c9ebda', '#c9ebda'],
+            /* Visuels de la fiche App Store (Outils/Bodyroro.github.io/VisuelsApps.mjs puis CapturesAppStore.mjs), dans leur ordre. */
+            shotTops: ['#1b5155', '#073139', '#20585c', '#08313a', '#1e5459'],
             storeShots: {
-                fr: ['Les bornes autour de vous', 'Filtrez selon votre véhicule', 'Le détail de la borne', 'Calculez votre recharge', 'Suivez vos recharges'],
-                en: ['Chargers around you', 'Filter by your vehicle', 'Charger details', 'Plan your charge', 'Track your charging']
+                fr: ['Les bornes autour de vous', 'Comparez les bornes', 'Le détail de la borne', 'Calculez votre recharge', 'Suivez vos recharges'],
+                en: ['Chargers near you', 'Compare chargers', 'Every charger in detail', 'Plan your charge', 'Track your charging']
             }
         },
         toilettefrance: {
@@ -561,11 +569,11 @@
                 cta: { label: { fr: 'Le plus Proche', en: 'Nearest' }, tone: '#ff9500', icon: 'nav' },
                 tabs: { fr: [['map', 'Toilettes'], ['list', 'Liste'], ['gear', 'Réglages']], en: [['map', 'Toilets'], ['list', 'List'], ['gear', 'Settings']] }
             },
-            /* Visuels de la fiche App Store (Outils/Bodyroro.github.io/CapturesAppStore.py puis .mjs), dans leur ordre. */
-            shotTops: ['#cce6ef', '#cce6ef', '#cce6ef', '#cce6ef'],
+            /* Visuels de la fiche App Store (Outils/Bodyroro.github.io/VisuelsApps.mjs puis CapturesAppStore.mjs), dans leur ordre. */
+            shotTops: ['#23547a', '#0a3760', '#285b80', '#0b3861', '#26587d'],
             storeShots: {
-                fr: ['Les toilettes autour de vous', 'Le détail qui compte', 'Gratuites, accessibles, ouvertes', 'La plus proche, tout de suite'],
-                en: ['Toilets around you', 'The details that count', 'Free, accessible, open', 'The nearest one, right away']
+                fr: ['Les toilettes autour de vous', 'La plus proche, tout de suite', 'Le détail utile', 'Gratuites, ouvertes, accessibles', 'Toutes les toilettes à proximité'],
+                en: ['Public toilets near you', 'The nearest one, right now', 'Useful details', 'Free, open, accessible', 'Every toilet nearby']
             }
         },
         defibfrance: {
@@ -594,11 +602,11 @@
                 cta: { label: { fr: 'URGENCE', en: 'EMERGENCY' }, tone: '#ff3b30', icon: 'heart' },
                 tabs: { fr: [['map', 'Défibrillateurs'], ['list', 'Liste'], ['gear', 'Réglages']], en: [['map', 'Defibrillators'], ['list', 'List'], ['gear', 'Settings']] }
             },
-            /* Visuels de la fiche App Store (Outils/Bodyroro.github.io/CapturesAppStore.py puis .mjs), dans leur ordre. */
-            shotTops: ['#f7d6d2', '#f7d6d2', '#f7d6d2', '#f7d6d2'],
+            /* Visuels de la fiche App Store (Outils/Bodyroro.github.io/VisuelsApps.mjs puis CapturesAppStore.mjs), dans leur ordre. */
+            shotTops: ['#6a212c', '#4d0914', '#712732', '#4e0a15', '#6d242f'],
             storeShots: {
-                fr: ['Les défibrillateurs autour de vous', 'Le détail précis', 'Chaque seconde compte', 'Les gestes qui sauvent'],
-                en: ['Defibrillators around you', 'Precise details', 'Every second counts', 'Life-saving steps']
+                fr: ['Les défibrillateurs autour de vous', 'Chaque seconde compte', 'Le détail précis', 'Les gestes qui sauvent', 'Tous les DAE à portée de main'],
+                en: ['Defibrillators near you', 'Every second counts', 'Precise details', 'Life-saving actions', 'Every AED at hand']
             }
         },
         dvffrance: {
@@ -647,11 +655,11 @@
                 active: 0,
                 tabs: { fr: [['pin', 'Carte'], ['list', 'Ventes'], ['chart', 'March\u00e9'], ['book', 'Autour'], ['gear', 'R\u00e9glages']], en: [['pin', 'Map'], ['list', 'Sales'], ['chart', 'Market'], ['book', 'Around'], ['gear', 'Settings']] }
             },
-            /* Visuels de la fiche App Store (Outils/Bodyroro.github.io/CapturesAppStore.py puis .mjs), dans leur ordre. */
-            shotTops: ['#caefdb', '#caefdb', '#caefdb', '#caefdb', '#caefdb'],
+            /* Visuels de la fiche App Store (Outils/Bodyroro.github.io/VisuelsApps.mjs puis CapturesAppStore.mjs), dans leur ordre. */
+            shotTops: ['#1e4d38', '#072e1e', '#23553e', '#082e1f', '#21513b'],
             storeShots: {
                 fr: ['Les prix autour de vous', 'Le détail d’une vente', 'Le marché de votre commune', 'Votre quartier en un coup d’œil', 'Tout ce qui vous entoure'],
-                en: ['Prices around you', 'The details of a sale', 'Your town’s market', 'Your neighbourhood at a glance', 'Everything around you']
+                en: ['Property prices near you', 'Every sale in detail', 'Your town’s market', 'Your area at a glance', 'Everything around you']
             }
         },
         mactuner: {
@@ -772,17 +780,13 @@
                 en: ['The house and its garden', 'The kitchen, a cake for Gloup', 'The bubble bath', 'Pajamas, teddy and bedtime', 'The vegetable patch to grow', 'From baby to adult', 'The wardrobe', 'Nine mini-games']
             }
         },
-        /* Pas encore en vente : `store: ''` donne la pastille « Bientôt disponible » et, dans le
-           premier écran et la section des jeux, « Bientôt sur l'App Store » à la place du badge. Le jour
-           de la sortie : `store: STORE_CF` (fiche App Store), et les pastilles `chips` peuvent partir :
-           elles disent « achats facultatifs » parce que le jeu en propose, contrairement aux deux
-           autres. Les captures (`assets/img/shots/chromafight-*`, issues de
-           `Docs/ChromaFight/Screenshots`, iPhone et iPad) sont provisoires : les régénérer par
-           `Outils/Parc/Marque/CapturesSite.mjs`, mêmes noms, et recaler `shotTops` et `storeShots`
-           si les écrans changent. */
+        /* En vente depuis octobre 2026 (STORE_CF). Un jeu sans fiche reprend `store: ''` : pastille « Bientôt
+           disponible » et, dans le premier écran et la section des jeux, « Bientôt sur l'App Store ». Les captures
+           (`assets/img/shots/chromafight-*`, issues de `Docs/ChromaFight/Screenshots`, iPhone et iPad) se régénèrent
+           par `Outils/Parc/Marque/CapturesSite.mjs`, mêmes noms, en recalant `shotTops` et `storeShots`. */
         chromafight: {
             name: 'ChromaFight', platform: 'ios', game: true, accent: '#ff7a3d', accent2: '#2d2366',
-            store: '',
+            store: STORE_CF,
             tag: { fr: 'Jeu de combat', en: 'Battle game' },
             desc: {
                 fr: 'Gloup, la petite créature aux grands yeux, recrache les objets de son ventre sur les Grisons, nés de la Grisaille, une suie vivante échappée de la forge du volcan. Rangez, fusionnez, accordez les couleurs : onze îles à libérer. Gratuit, avec achats intégrés facultatifs.',
@@ -935,14 +939,14 @@
            n'est affirmé ici qui ne soit dit sur la page d'une application. */
         faq: {
             fr: [
-                ['Les applications sont-elles gratuites ?', 'Oui. Les cinq applications iPhone et les jeux Trou Chromatique et Mon Gloup se téléchargent gratuitement et sont financés par une publicité discrète. ChromaFight, bientôt sur l’App Store, sera gratuit lui aussi, avec des achats intégrés facultatifs. IRVEFrance propose des outils Premium facultatifs, DefibFrance un don facultatif qui retire la publicité. Les deux utilitaires Mac sont libres et open source, sans publicité ni achat.'],
+                ['Les applications sont-elles gratuites ?', 'Oui. Les cinq applications iPhone et les trois jeux se téléchargent gratuitement et sont financés par une publicité discrète. ChromaFight est gratuit lui aussi, avec des achats intégrés facultatifs. IRVEFrance propose des outils Premium facultatifs, DefibFrance un don facultatif qui retire la publicité. Les deux utilitaires Mac sont libres et open source, sans publicité ni achat.'],
                 ['Faut-il créer un compte ?', 'Non. Aucune application ne demande de compte ni d’inscription. Favoris et réglages restent sur votre appareil.'],
                 ['Fonctionnent-elles sans connexion ?', 'Les applications iPhone mettent en cache les données publiques pour rester utilisables hors connexion. Les trois jeux se jouent hors connexion ; seuls la publicité et, pour ChromaFight, les achats et la copie iCloud de la sauvegarde utilisent le réseau.'],
                 ['Sur quels appareils ?', 'iPhone et iPad sous iOS 18 ou plus pour les applications et les jeux. Mac Apple Silicon sous macOS 26 ou 27 pour MacTuner et DNSTuner.'],
                 ['Où trouver de l’aide ?', 'Chaque application a sa page d’assistance. Je réponds moi-même à chaque message, en général sous 24 à 48 heures.']
             ],
             en: [
-                ['Are the apps free?', 'Yes. The five iPhone apps and the games Trou Chromatique and Mon Gloup are free to download and funded by discreet advertising. ChromaFight, coming soon to the App Store, will be free too, with optional in-app purchases. IRVEFrance offers optional Premium tools, DefibFrance an optional donation that removes ads. The two Mac utilities are free and open source, with no ads and no purchases.'],
+                ['Are the apps free?', 'Yes. The five iPhone apps and the three games are free to download and funded by discreet advertising. ChromaFight is free too, with optional in-app purchases. IRVEFrance offers optional Premium tools, DefibFrance an optional donation that removes ads. The two Mac utilities are free and open source, with no ads and no purchases.'],
                 ['Do I need an account?', 'No. None of the apps asks for an account or a sign-up. Favorites and settings stay on your device.'],
                 ['Do they work offline?', 'The iPhone apps cache public data so they keep working offline. The three games play offline; only advertising and, for ChromaFight, purchases and the iCloud copy of the save use the network.'],
                 ['Which devices?', 'iPhone and iPad on iOS 18 or later for the apps and games. Apple Silicon Macs on macOS 26 or 27 for MacTuner and DNSTuner.'],
@@ -1096,8 +1100,8 @@
                 '</div></div>';
         } else if (app.storeShots) {
             interieur = '<div class="device-3d is-phone"><div class="tilt">' +
-                telephoneJeu(cle, 1, app.name + ', ' + pick(app.storeShots)[0], !charger,
-                    '(max-width: 560px) 70vw, 300px', 'float') +
+                (app.game ? telephoneJeu : function (c, n, alt, p, s, k) { return telephoneApp(c, alt, p, s, k); })(
+                    cle, 1, app.name + ', ' + pick(app.storeShots)[0], !charger, '(max-width: 560px) 70vw, 300px', 'float') +
                 '</div></div>';
         } else {
             return '';
@@ -1531,8 +1535,10 @@
                 '<button class="rail-btn" type="button" data-dir="-1" aria-label="' + esc(pick(V.prev)) + '">' + CHEVRON + '</button>' +
                 '<button class="rail-btn" type="button" data-dir="1" aria-label="' + esc(pick(V.next)) + '">' + CHEVRON + '</button>' +
                 '</div></div></div>' +
+                /* Les visuels des apps ont leur propre téléphone : posés à plat, comme sur l'App Store. */
                 bande('iphone', function (n, alt) {
-                    return telephoneJeu(cle, n, alt, true, '(max-width: 560px) 62vw, 280px');
+                    return ipad ? telephoneJeu(cle, n, alt, true, '(max-width: 560px) 62vw, 280px')
+                        : '<div class="store-shot">' + captureJeu(cle, n, alt, true, '(max-width: 560px) 62vw, 280px') + '</div>';
                 }) +
                 (ipad ? bande('ipad', function (n, alt) {
                     return tabletteJeu(cle, n, alt, '(max-width: 560px) 80vw, 440px');

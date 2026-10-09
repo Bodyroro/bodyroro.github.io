@@ -159,12 +159,10 @@
                 en: 'Mon Gloup is free and offers no in-app purchase: the app never receives payment card data. Its only revenue is Google AdMob advertising, in two forms. First, optional videos, which you choose to watch for a small boost, 12 a day at most: one more reserve for a need (6 a day), a free meal (3), magic growth in the vegetable patch (3), one more surprise chest (2), or double the winnings of a mini-game or of the daily reward. Second, a short ad that may appear after a mini-game, never during the first 3 games, at most once every 4 minutes and never within 3 minutes of a video. On first launch in the European Economic Area and the United Kingdom, a Google form (UMP) asks for your consent; where it applies, you can change it at any time in Settings › Game › Ad choices. Apple’s tracking permission (App Tracking Transparency) is requested next: you can decline it in the iOS prompt or later in iOS Settings › Privacy & Security › Tracking. Without it, the device’s advertising identifier (IDFA) is not shared. The game stays free and complete whatever you choose.'
             }
         },
-        // Pas encore en vente : `status: 'soon'` et aucune adresse `store`, comme la vitrine
-        // (`store: ''` dans assets/site.js). Le jour de la sortie : `status: 'available'`, l'adresse
-        // de la fiche App Store, et la vitrine suit. Français et anglais seulement ; ses textes de
-        // données et d'assistance sont dans `appTypeText`.
+        // En vente depuis octobre 2026. Français et anglais seulement ; ses textes de données et
+        // d'assistance sont dans `appTypeText`.
         chromafight: {
-            name: 'ChromaFight', icon: 'chromafight.png', type: 'game', status: 'soon', store: '', premium: false,
+            name: 'ChromaFight', icon: 'chromafight.png', type: 'game', status: 'available', store: appStore + 'chromafight/id6819280350', premium: false,
             languages: ['fr', 'en'], updated: '2026-10-04',
             description: {
                 fr: 'Jeu de combat pour iPhone et iPad : Gloup, la petite créature aux grands yeux, recrache les objets de son ventre sur les Grisons, nés de la Grisaille. Onze îles, fusion et accords de couleur. Gratuit, avec achats intégrés facultatifs.',

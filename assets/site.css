@@ -1666,6 +1666,21 @@ html:has(body[data-page="v2-app"]) { scroll-padding-top: 112px; }
 .gallery.is-rail .shot { scroll-snap-align: start; }
 .gallery.is-rail .phone { width: clamp(220px, 21vw, 280px); }
 
+/* Visuel App Store d'une app, a plat : il porte deja son appareil et son titre. */
+.store-shot {
+    width: clamp(220px, 21vw, 280px);
+    aspect-ratio: 1320 / 2868;
+    border-radius: 8% / 3.7%;
+    overflow: hidden;
+    background: #000;
+    box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+        0 40px 80px -30px rgba(0, 0, 0, 0.6),
+        0 12px 24px -12px rgba(0, 0, 0, 0.35);
+}
+
+.store-shot img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
 /* Cadre d'iPad dessine en CSS, de la meme matiere que l'iPhone : ecran 3:4,
    bord regulier, camera au centre du bord haut. */
 .tablet {
@@ -1705,7 +1720,7 @@ html:has(body[data-page="v2-app"]) { scroll-padding-top: 112px; }
 .shot:has(.tablet) figcaption { max-width: 340px; }
 
 @media (max-width: 560px) {
-    .gallery.is-rail .phone { width: 62vw; }
+    .gallery.is-rail .phone, .store-shot { width: 62vw; }
     .tablet { width: 80vw; padding: 9px; border-radius: 26px; }
     .tablet-screen { border-radius: 17px; }
 }
@@ -1713,6 +1728,7 @@ html:has(body[data-page="v2-app"]) { scroll-padding-top: 112px; }
 /* Chaque capture pivote selon sa place dans la bande, de face au centre. */
 @supports (animation-timeline: view()) {
     .gallery.is-rail .phone,
+    .gallery.is-rail .store-shot,
     .gallery.is-rail .tablet {
         animation: couverture-bande linear both;
         animation-timeline: view(inline);
@@ -1976,7 +1992,7 @@ html:has(body[data-page="v2-app"]) { scroll-padding-top: 112px; }
 @media (min-width: 1680px) {
     :root { --width: 1360px; }
     body { font-size: 18px; }
-    .gallery.is-rail .phone { width: 300px; }
+    .gallery.is-rail .phone, .store-shot { width: 300px; }
     .macwin { width: min(660px, 100%); }
     .promo { min-height: 720px; }
     .promo-fan { height: 440px; }
@@ -1989,7 +2005,7 @@ html:has(body[data-page="v2-app"]) { scroll-padding-top: 112px; }
     .scene h2 { font-size: 88px; }
     .scene h2.small { font-size: 60px; }
     .lead { font-size: 27px; }
-    .gallery.is-rail .phone { width: 300px; }
+    .gallery.is-rail .phone, .store-shot { width: 300px; }
     .orbit-stage { height: 380px; }
     .orbit-ring { --r: 440px; }
     .orbit-item { --s: 120px; }
