@@ -1,7 +1,7 @@
 # Rodolphe Vandaele
 
 > Développeur indépendant basé en France. Trois jeux pour iPhone et iPad avec
-> Gloup, la petite créature aux grands yeux (ChromaFight bientôt sur l'App Store),
+> Gloup, la petite créature aux grands yeux,
 > cinq applications iPhone gratuites construites sur les données publiques
 > françaises, et deux utilitaires macOS libres et open source. Aucune application ne demande de compte, et les
 > données restent sur l'appareil.
@@ -15,7 +15,7 @@ Mon Gloup et ChromaFight en français et en anglais.
 
 - [Trou Chromatique](https://bodyroro.github.io/trouchromatique.html) : jeu d'aventure. Gloup attrape les objets de sa couleur pour rendre ses couleurs à dix îles flottantes : cent niveaux, une histoire, défi du jour, 34 langues. Gratuit, sans achat intégré, financé par la publicité. Sur l'App Store : https://apps.apple.com/app/id6816639945
 - [Mon Gloup](https://bodyroro.github.io/mongloup.html) : jeu de compagnon virtuel. Gloup, la petite créature aux grands yeux, vit dans une maison de poupée et son jardin : on le nourrit, cuisine avec lui, le lave, le couche, cultive le potager et joue avec lui. De bébé à adulte sur 60 niveaux, deux modes choisis à l'adoption (Sans mort, Avec mort), maison à décorer, neuf mini-jeux, 34 langues. Gratuit, sans achat intégré, financé par la publicité. Sur l'App Store : https://apps.apple.com/app/id6817347087
-- [ChromaFight](https://bodyroro.github.io/chromafight.html) : jeu de combat, à venir (pas encore sur l'App Store). Gloup, la petite créature aux grands yeux, recrache les objets de son ventre, rangés en grille, sur les Grisons, nés de la Grisaille : fusion sur quatre niveaux, accords de couleur, onze îles et 105 niveaux, onze amis, atelier. Gratuit, financé par la publicité et des achats intégrés facultatifs.
+- [ChromaFight](https://bodyroro.github.io/chromafight.html) : jeu de combat, sur l'App Store. Gloup, la petite créature aux grands yeux, recrache les objets de son ventre, rangés en grille, sur les Grisons, nés de la Grisaille : fusion sur quatre niveaux, accords de couleur, onze îles et 105 niveaux, onze amis, atelier. Gratuit, financé par la publicité et des achats intégrés facultatifs.
 
 ## Applications iPhone
 
