@@ -159,6 +159,20 @@
                 en: 'Mon Gloup is free and offers no in-app purchase: the app never receives payment card data. Its only revenue is Google AdMob advertising, in two forms. First, optional videos, which you choose to watch for a small boost, 12 a day at most: one more reserve for a need (6 a day), a free meal (3), magic growth in the vegetable patch (3), one more surprise chest (2), or double the winnings of a mini-game or of the daily reward. Second, a short ad that may appear after a mini-game, never during the first 3 games, at most once every 4 minutes and never within 3 minutes of a video. On first launch in the European Economic Area and the United Kingdom, a Google form (UMP) asks for your consent; where it applies, you can change it at any time in Settings › Game › Ad choices. Apple’s tracking permission (App Tracking Transparency) is requested next: you can decline it in the iOS prompt or later in iOS Settings › Privacy & Security › Tracking. Without it, the device’s advertising identifier (IDFA) is not shared. The game stays free and complete whatever you choose.'
             }
         },
+        // Lecteur multimédia (iPhone, iPad, Apple TV), soumission en préparation. Français et anglais
+        // seulement ; sans publicité (`noAds`), abonnement Telora+ ; textes dans `appTypeText`.
+        telora: {
+            name: 'Telora', publisher: 'BodyCorp', icon: 'telora.png', type: 'media', status: 'soon', store: '', premium: true, noAds: true, webp: false, platform: 'iOS 18+ · iPadOS 18+ · tvOS 18+',
+            languages: ['fr', 'en'], updated: '2026-10-10',
+            description: {
+                fr: 'Lecteur multimédia pour iPhone, iPad et Apple TV : vos films, séries et chaînes, depuis vos propres sources (liste de lecture, Plex, Jellyfin, Emby, NAS, fichiers). Telora ne fournit aucun contenu.',
+                en: 'Media player for iPhone, iPad and Apple TV: your movies, shows and channels, from your own sources (playlist, Plex, Jellyfin, Emby, NAS, files). Telora provides no content.'
+            },
+            adText: {
+                fr: 'Aucune publicité, aucun pistage. Telora s’utilise avec l’abonnement Telora+, au mois ou à l’année, après un essai gratuit de 7 jours. L’abonnement est géré par StoreKit et votre compte Apple : l’application ne reçoit aucune donnée bancaire.',
+                en: 'No ads, no tracking. Telora is used with the Telora+ subscription, monthly or yearly, after a 7-day free trial. The subscription is handled by StoreKit and your Apple account: the app never receives payment card data.'
+            }
+        },
         // En vente depuis octobre 2026. Français et anglais seulement ; ses textes de données et
         // d'assistance sont dans `appTypeText`.
         chromafight: {
@@ -256,6 +270,10 @@
             fr: ['Une maison de poupée en coupe, chambre, salon, cuisine et salle de bain, et son jardin : Gloup mange ce que vous lui glissez jusqu’à la bouche, cuisine 14 recettes avec vous, prend son bain moussant et se couche au terme d’un rituel du soir.', 'Un potager à semer, arroser et récolter, un pommier, une balançoire, une mare et des cachettes à fouiller.', 'Quatre besoins, faim, joie, propreté et énergie, suivent le temps réel. À l’adoption, vous choisissez : Sans mort, Gloup ne tombe jamais malade ; Avec mort, longtemps négligé, il tombe malade et peut partir, toujours après des avertissements.', 'Il grandit de bébé à adulte sur 60 niveaux et se forge un caractère parmi cinq traits : 33 aliments, 20 chapeaux, 14 looks, 24 couleurs, et des papiers peints, sols et meubles pour décorer la maison.', '9 mini-jeux, 18 activités, des quêtes du jour et de la semaine, un album de souvenirs, la visite d’un des dix amis chaque jour et 20 trophées, aussi dans Game Center.', '34 langues, iPhone et iPad. Le jeu se joue hors connexion, sans compte, avec des rappels facultatifs quand Gloup a besoin de vous.'],
             en: ['A cutaway dollhouse with a bedroom, living room, kitchen and bathroom, and its garden: Gloup eats what you slide to his mouth, cooks 14 recipes with you, takes a bubble bath and goes to bed after an evening ritual.', 'A vegetable patch to sow, water and harvest, an apple tree, a swing, a pond and hiding spots to search.', 'Four needs, hunger, joy, cleanliness and energy, follow real time. At adoption you choose: Never dies, Gloup never gets sick; Can pass away, neglected for too long he gets sick and may leave, always after warnings.', 'He grows from baby to adult over 60 levels and builds a personality from five traits: 33 foods, 20 hats, 14 looks, 24 colors, and wallpapers, floors and furniture to decorate the house.', '9 mini-games, 18 activities, daily and weekly quests, a memory album, a visit from one of ten friends each day and 20 trophies, also in Game Center.', '34 languages, iPhone and iPad. The game plays offline, with no account, with optional reminders when Gloup needs you.']
         },
+        telora: {
+            fr: ['Une seule bibliothèque pour toutes vos sources : les doublons sont réunis, une fiche par film ou série avec toutes ses versions.', 'La meilleure source choisie dans votre langue, jusqu’en 4K, avec ses vraies caractéristiques (résolution, codec, HDR, audio).', 'Le direct en bouquets numérotés, programme en cours et à suivre, logos officiels des chaînes.', 'Sagas, studios, plateformes et acteurs, logos des titres, listes personnelles, profils et contrôle parental.', 'Lecteur d’Apple (image dans l’image, AirPlay, HDR) et VLC intégré pour tous les autres formats.'],
+            en: ['One library for all your sources: duplicates merged, one page per movie or show with every version.', 'The best source picked in your language, up to 4K, with its real details (resolution, codec, HDR, audio).', 'Live TV in numbered lineups, now and next, official channel logos.', 'Collections, studios, platforms and cast, title logos, personal lists, profiles and parental controls.', 'Apple’s player (Picture in Picture, AirPlay, HDR) and built-in VLC for every other format.']
+        },
         chromafight: {
             fr: ['Le ventre de Gloup est une grille : faites glisser les objets pour les ranger. À chaque recharge, Gloup recrache chacun d’eux sur les Grisons, et vous pouvez réorganiser en plein combat.', 'Deux objets identiques glissés l’un sur l’autre fusionnent, sur quatre niveaux. Trois objets de même couleur qui se touchent forment un accord, cinq un grand accord : huit couleurs en jeu.', 'Onze îles et 105 niveaux, de la cuisine à la base lunaire, puis une île secrète. Chacune a ses quatre Grisons, un mini-boss au niveau 5 et un boss au niveau 10.', 'Onze amis à débloquer, un par île : chacun donne à Gloup un objet de départ, une forme de ventre et un pouvoir. Un atelier de huit améliorations rend Gloup plus fort au fil des parties.', 'Des coffres sur la barre des vagues et un coffre à la fin de chaque île, des quêtes du jour et de la semaine, des missions, un bestiaire de 44 Grisons, une piste de progression gratuite et un cadeau chaque jour.', 'Aucune pub pendant un niveau : les vidéos sont facultatives, et le moindre achat, comme « Sans pub », supprime la courte publicité entre deux niveaux. À chaque île, une offre d’île facultative, seulement dans la Boutique.', 'iPhone et iPad, portrait et paysage. Sans compte : la progression reste sur l’appareil et dans votre iCloud, jamais chez l’éditeur.'],
             en: ['Gloup’s tummy is a grid: drag objects to arrange them. Each time one recharges, Gloup spits it at the Greylings, and you can rearrange mid-fight.', 'Two identical objects dragged onto each other merge, over four levels. Three objects of the same color that touch form a chord, five a grand chord: eight colors in play.', 'Eleven islands and 105 levels, from the kitchen to the moon base, then a secret island. Each has its four Greylings, a mini-boss on level 5 and a boss on level 10.', 'Eleven friends to unlock, one per island: each gives Gloup a starting object, a tummy shape and a power. A workshop of eight upgrades makes Gloup stronger over time.', 'Chests on the wave bar and a chest at the end of every island, daily and weekly quests, missions, a bestiary of 44 Greylings, a free progress track and a gift every day.', 'No ads during a level: videos are optional, and any purchase, such as “No ads”, removes the short ad between two levels. On each island, an optional island offer, only in the Shop.', 'iPhone and iPad, portrait and landscape. No account: progress stays on the device and in your iCloud, never with the publisher.']
@@ -326,6 +344,34 @@
     // Faits relevés dans le code du jeu le 29 septembre 2026 (PrivacyInfo.xcprivacy,
     // AdBridge, NotifyBridge, GameCenterBridge, ui.js, life.js, economy.js).
     var appTypeText = {
+        telora: {
+            fr: {
+                data: 'Telora ne crée aucun compte et n’envoie au développeur aucune donnée personnelle. Les adresses de vos sources et vos identifiants restent sur l’appareil, dans le Trousseau (mots de passe et liens chiffrés) ; le catalogue, les favoris, les listes, la reprise de lecture et les réglages sont enregistrés sur l’appareil. L’application se connecte directement aux serveurs que vous ajoutez (votre fournisseur, votre serveur Plex, Jellyfin ou Emby, votre NAS) : ces services reçoivent votre adresse IP selon leurs propres règles. Le réseau local n’est utilisé que pour vos serveurs du domicile. Aucune publicité, aucun outil de mesure d’audience.',
+                source: 'Telora ne fournit aucun contenu : films, séries et chaînes viennent uniquement des sources que vous connectez. Les informations complémentaires (logos, affiches de secours, photos des acteurs, sagas et studios) proviennent de bases ouvertes interrogées sans identifiant personnel : Wikidata (CC0), Wikimedia Commons et Wikipédia (licences libres), TVmaze (CC BY-SA). Ces services voient votre adresse IP comme tout site web. L’option DNS chiffré (réglages) fait passer les recherches de noms par Cloudflare, Quad9 ou Google, au choix.',
+                retention: 'Les données restent sur l’appareil tant que l’application est installée. Les supprimer : Réglages de Telora › Données et stockage (cache des images, historique de lecture), retrait d’une source, ou désinstallation de l’application, qui efface aussi le Trousseau de l’app.',
+                deletion: 'Telora ne crée aucun compte. Réglages › Données et stockage vide le cache des images et l’historique de lecture ; retirer une source efface ses identifiants ; supprimer l’application efface tout, Trousseau compris.',
+                support: [
+                    ['Telora fournit-il des chaînes ou des films ?', 'Non. Telora est un lecteur : il affiche et lit les contenus des sources que vous ajoutez (liste de lecture de votre fournisseur, serveur Plex, Jellyfin ou Emby, NAS, fichiers de l’appareil).'],
+                    ['Comment ajouter une source ?', 'Réglages › Ajouter une source, puis choisissez le type : liste de lecture (lien M3U ou accès par identifiant), Plex (code sur plex.tv/link), Jellyfin ou Emby, NAS (WebDAV ou dossier partagé via Fichiers), fichiers de l’appareil.'],
+                    ['Une vidéo ne se lit pas ?', 'Réglages › Lecture › Moteur : en Automatique, le lecteur d’Apple est utilisé quand il le peut, VLC intégré pour les autres formats (MKV, AVI, HEVC, DTS).'],
+                    ['Comment gérer l’abonnement ?', 'Réglages › Telora+ › Gérer l’abonnement, ou Réglages de l’iPhone › votre nom › Abonnements. L’essai gratuit de 7 jours n’est proposé qu’une fois par identifiant Apple.'],
+                    ['Toujours un problème ?', 'Écrivez au support avec le bouton ci-dessous, en précisant votre appareil, sa version et le type de source. Le développeur répond personnellement à chaque message.']
+                ]
+            },
+            en: {
+                data: 'Telora creates no account and sends the developer no personal data. Your source addresses and credentials stay on the device, in the Keychain (encrypted passwords and links); the catalog, favorites, lists, playback progress and settings are stored on the device. The app connects directly to the servers you add (your provider, your Plex, Jellyfin or Emby server, your NAS): these services receive your IP address under their own rules. The local network is used only for your home servers. No ads, no analytics.',
+                source: 'Telora provides no content: movies, shows and channels come only from the sources you connect. Extra information (logos, fallback artwork, cast photos, collections and studios) comes from open databases queried without any personal identifier: Wikidata (CC0), Wikimedia Commons and Wikipedia (free licenses), TVmaze (CC BY-SA). These services see your IP address like any website. The encrypted DNS option (settings) sends name lookups through Cloudflare, Quad9 or Google, your choice.',
+                retention: 'Data stays on the device as long as the app is installed. To delete it: Telora Settings › Data & Storage (image cache, playback history), removing a source, or deleting the app, which also erases the app’s Keychain.',
+                deletion: 'Telora creates no account. Settings › Data & Storage clears the image cache and playback history; removing a source erases its credentials; deleting the app erases everything, Keychain included.',
+                support: [
+                    ['Does Telora provide channels or movies?', 'No. Telora is a player: it shows and plays content from the sources you add (your provider’s playlist, a Plex, Jellyfin or Emby server, a NAS, files on the device).'],
+                    ['How do I add a source?', 'Settings › Add Source, then pick the type: playlist (M3U link or account login), Plex (code at plex.tv/link), Jellyfin or Emby, NAS (WebDAV or a shared folder through Files), device files.'],
+                    ['A video does not play?', 'Settings › Playback › Engine: in Automatic mode, Apple’s player is used when it can, the built-in VLC for other formats (MKV, AVI, HEVC, DTS).'],
+                    ['How do I manage the subscription?', 'Settings › Telora+ › Manage Subscription, or iPhone Settings › your name › Subscriptions. The 7-day free trial is offered once per Apple Account.'],
+                    ['Still having a problem?', 'Write to support with the button below, stating your device, its version and the source type. The developer answers every message personally.']
+                ]
+            }
+        },
         mongloup: {
             fr: {
                 data: 'Le jeu ne crée aucun compte et n’envoie aucune donnée de jeu à un serveur. Sa sauvegarde est enregistrée dans le stockage local de l’application (localStorage), sur l’appareil seulement, sous deux clés : mg-save (Gloup, son nom, son niveau, ses pièces, sa maison, son jardin, son album, ses trophées et le mode de vie choisi à l’adoption) et mg-settings (musique, sons, vibrations, rappels, langue, qualité graphique). Elle n’est ni synchronisée entre vos appareils, ni transmise au développeur. Le jeu ne demande ni la localisation, ni les contacts, ni les photos, ni l’appareil photo, ni le micro.',
@@ -507,8 +553,8 @@
     });
 
     Object.assign(commonCopy, {
-        uk: { homeLead: 'iOS-застосунки для щоденних потреб, екстрених ситуацій, мобільності та публічних сервісів у Франції.', deletion: 'Застосунок не створює обліковий запис користувача. Локальні дані можна видалити, вилучивши застосунок або через налаштування, якщо така опція доступна.', adDetails: 'Google AdMob може обробляти рекламні ідентифікатори, IP-адресу, модель пристрою, дані продуктивності та взаємодії з рекламою. Перегляньте політику конфіденційності Google.', retention: 'Локальні дані залишаються на вашому пристрої, доки ви не видалите застосунок або не скинете налаштування. Рекламні дані підпорядковуються правилам Google AdMob, а покупки — правилам Apple, коли вони існують.', feature: 'Функція', featuresTitle: 'Функції', privacyLead: "Жодного облікового запису, жодного профілю, жодного перепродажу даних. Ця сторінка каже, що застосунок обробляє, навіщо, і чого ви можете вимагати." },
-        ru: { homeLead: 'iOS-приложения для повседневных задач, экстренных ситуаций, мобильности и общественных сервисов во Франции.', deletion: 'Приложение не создает учетную запись пользователя. Локальные данные можно удалить, удалив приложение или через настройки, если такая опция доступна.', adDetails: 'Google AdMob может обрабатывать рекламные идентификаторы, IP-адрес, модель устройства, данные производительности и взаимодействия с рекламой. Ознакомьтесь с политикой конфиденциальности Google.', retention: 'Локальные данные остаются на вашем устройстве, пока вы не удалите приложение или не сбросите настройки. Рекламные данные следуют правилам Google AdMob, а покупки — правилам Apple, если они есть.', feature: 'Функция', featuresTitle: 'Функции', privacyLead: "Никакой учётной записи, никакого профиля, никакой перепродажи данных. Эта страница говорит, что приложение обрабатывает, зачем, и чего вы вправе требовать." }
+        uk: { homeLead: 'iOS-застосунки для щоденних потреб, екстрених ситуацій, мобільності та публічних сервісів у Франції.', deletion: 'Застосунок не створює обліковий запис користувача. Локальні дані можна видалити, вилучивши застосунок або через налаштування, якщо така опція доступна.', adDetails: 'Google AdMob може обробляти рекламні ідентифікатори, IP-адресу, модель пристрою, дані продуктивності та взаємодії з рекламою. Перегляньте політику конфіденційності Google.', retention: 'Локальні дані залишаються на вашому пристрої, доки ви не видалите застосунок або не скинете налаштування. Рекламні дані підпорядковуються правилам Google AdMob, а покупки, правилам Apple, коли вони існують.', feature: 'Функція', featuresTitle: 'Функції', privacyLead: "Жодного облікового запису, жодного профілю, жодного перепродажу даних. Ця сторінка каже, що застосунок обробляє, навіщо, і чого ви можете вимагати." },
+        ru: { homeLead: 'iOS-приложения для повседневных задач, экстренных ситуаций, мобильности и общественных сервисов во Франции.', deletion: 'Приложение не создает учетную запись пользователя. Локальные данные можно удалить, удалив приложение или через настройки, если такая опция доступна.', adDetails: 'Google AdMob может обрабатывать рекламные идентификаторы, IP-адрес, модель устройства, данные производительности и взаимодействия с рекламой. Ознакомьтесь с политикой конфиденциальности Google.', retention: 'Локальные данные остаются на вашем устройстве, пока вы не удалите приложение или не сбросите настройки. Рекламные данные следуют правилам Google AdMob, а покупки, правилам Apple, если они есть.', feature: 'Функция', featuresTitle: 'Функции', privacyLead: "Никакой учётной записи, никакого профиля, никакой перепродажи данных. Эта страница говорит, что приложение обрабатывает, зачем, и чего вы вправе требовать." }
     });
 
     Object.assign(supportMailCopy, {
@@ -680,7 +726,7 @@
         ];
         return '<footer class="page-footer"><nav class="page-footer-links" aria-label="' + escapeHTML(app.name) + '">' +
             liens.map(function (l) { return '<a href="' + escapeHTML(l[0]) + '">' + escapeHTML(l[1]) + '</a>'; }).join('') +
-            '</nav><p>&copy; 2026 ' + escapeHTML(app.name) + ' · Rodolphe Vandaele</p></footer>';
+            '</nav><p>&copy; 2026 ' + escapeHTML(app.name) + ' · ' + escapeHTML(app.publisher || 'Rodolphe Vandaele') + '</p></footer>';
     }
 
     function renderSections(sections) {
@@ -700,7 +746,7 @@
         var appKey = Object.keys(apps).filter(function (key) { return apps[key] === app; })[0];
         var features = appFeatures[appKey] ? appFeatures[appKey][lang] : [app.description[lang]];
         var sections = [
-            { title: labels.quickSupport, items: [app.description[lang], text.source, app.name + ' iOS 18+', labels.email + ' : ' + mail] },
+            { title: labels.quickSupport, items: [app.description[lang], text.source, app.name + ' ' + (app.platform || 'iOS 18+'), labels.email + ' : ' + mail] },
             { title: commonCopy[lang].featuresTitle, items: features },
             { title: labels.faqTitle, html: renderFAQ(text.support) },
             { title: labels.contactTitle, html: supportMailCard(lang, app.name, '') },
@@ -751,7 +797,7 @@
             ar: app.name + ' لا يقدّم أي شراء داخل التطبيق ولا تبرعات. مقطع بمكافأة يمنح 6 ساعات بلا إعلانات. لا يستقبل التطبيق أي بيانات بنكية.'
         };
         // **Le texte suit `premium`, pas le type d'app.** Le branchement portait sur le
-        // domaine — toilettes, défibrillateurs, le reste — et rangeait donc CarbuFrance,
+        // domaine (toilettes, défibrillateurs, le reste) et rangeait donc CarbuFrance,
         // IRVEFrance et DVFFrance dans « le reste », à qui il faisait déclarer des achats
         // intégrés gérés par StoreKit. Aucune des cinq n'en propose : `premium: false`
         // partout, et le commentaire sous `donations` le disait déjà. Une politique de
@@ -769,7 +815,8 @@
         var text = appText(app, lang);
         var sections = [
             { title: labels.dataUsed, paragraphs: [text.data] },
-            { title: labels.business, paragraphs: [adText(lang, app), commonCopy[lang].adDetails] }
+            // Sans publicité (`noAds`) : pas de paragraphe sur Google AdMob.
+            { title: labels.business, paragraphs: [adText(lang, app)].concat(app.noAds ? [] : [commonCopy[lang].adDetails]) }
         ].concat(text.privacyExtra || [], [
             { title: labels.sources, paragraphs: [text.source] },
             { title: labels.retention, paragraphs: [text.retention || commonCopy[lang].retention] },

@@ -9,7 +9,7 @@
 Le site est bilingue français / anglais : ajouter `?lang=en` à n'importe quelle
 adresse en donne la version anglaise. Les pages de confidentialité et de support
 des applications iPhone existent en onze langues, celles des jeux Trou Chromatique,
-Mon Gloup et ChromaFight en français et en anglais.
+Mon Gloup et ChromaFight et de Telora en français et en anglais.
 
 ## Jeux iPhone et iPad
 
@@ -24,6 +24,7 @@ Mon Gloup et ChromaFight en français et en anglais.
 - [ToiletteFrance](https://bodyroro.github.io/toilettefrance.html) : toilettes publiques en France. Carte, filtres d'accessibilité, horaires, guidage, fonctionnement hors ligne.
 - [DefibFrance](https://bodyroro.github.io/defibfrance.html) : défibrillateurs automatisés externes. Disponibilité, accessibilité, mode Urgence, appel du SAMU 15, guide de réanimation cardio-pulmonaire avec métronome haptique.
 - [DVFFrance](https://bodyroro.github.io/dvffrance.html) : prix de l'immobilier d'après les ventes réellement enregistrées (base DVF). Carte, médianes par commune, plan cadastral, fiche de quartier, fourchette d'estimation. Gratuite, sur l'App Store.
+- [Telora](https://bodyroro.github.io/telora.html) : lecteur multimédia pour iPhone, iPad et Apple TV (iOS, iPadOS et tvOS 18 ou plus), bientôt disponible. Lit les films, séries et chaînes des sources de l'utilisateur : liste de lecture (lien M3U ou accès par identifiant), Plex, Jellyfin, Emby, NAS (WebDAV, SMB), fichiers de l'appareil. Telora ne fournit aucun contenu. Bibliothèque sans doublons, meilleure source dans votre langue jusqu'en 4K, direct en bouquets numérotés, profils, contrôle parental, lecteur d'Apple et VLC intégré. Sans publicité ni pistage, abonnement Telora+ au mois ou à l'année avec essai gratuit de 7 jours.
 
 ## Utilitaires macOS
 
@@ -40,7 +41,7 @@ navigateur :
 
 ## Le site
 
-- [Accueil](https://bodyroro.github.io/) : présentation des dix applications : trois jeux, cinq apps iPhone, deux utilitaires Mac.
+- [Accueil](https://bodyroro.github.io/) : présentation des onze applications : trois jeux, six apps iPhone (dont Telora, bientôt disponible), deux utilitaires Mac.
 - [À propos](https://bodyroro.github.io/about.html) : la démarche, les sources de données, le modèle économique.
 - [Contact](https://bodyroro.github.io/contact.html) : signaler une anomalie, proposer une correction, poser une question.
 - [Mentions légales](https://bodyroro.github.io/about.html#mentions) : éditeur, directeur de la publication, hébergeur.
@@ -52,6 +53,7 @@ navigateur :
 - [Confidentialité ToiletteFrance](https://bodyroro.github.io/toilettefrance-privacy.html) · [Support](https://bodyroro.github.io/toilettefrance-support.html)
 - [Confidentialité DefibFrance](https://bodyroro.github.io/defibfrance-privacy.html) · [Support](https://bodyroro.github.io/defibfrance-support.html)
 - [Confidentialité DVFFrance](https://bodyroro.github.io/dvffrance-privacy.html) · [Support](https://bodyroro.github.io/dvffrance-support.html)
+- [Confidentialité Telora](https://bodyroro.github.io/telora-privacy.html) · [Support](https://bodyroro.github.io/telora-support.html)
 - [Confidentialité Trou Chromatique](https://bodyroro.github.io/trouchromatique-privacy.html) · [Support](https://bodyroro.github.io/trouchromatique-support.html)
 - [Confidentialité Mon Gloup](https://bodyroro.github.io/mongloup-privacy.html) · [Support](https://bodyroro.github.io/mongloup-support.html)
 - [Confidentialité ChromaFight](https://bodyroro.github.io/chromafight-privacy.html) · [Support](https://bodyroro.github.io/chromafight-support.html)

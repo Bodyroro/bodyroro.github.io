@@ -739,16 +739,26 @@ body.menu-open { overflow: hidden; }
     .app-tiles.is-three > :last-child { grid-column: 1 / -1; }
 }
 
+/* Les six applications iPhone : deux rangees de trois, puis trois rangees de deux. */
+.app-tiles.is-six { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+@media (max-width: 760px) {
+    .app-tiles.is-six { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
 /* Les sept applications de la page Contact tiennent sur une rangee des qu'il y a
    la place : cinq puis deux laissaient une rangee a moitie vide. */
 .app-tiles.is-seven { grid-template-columns: repeat(auto-fit, minmax(146px, 1fr)); }
 
-/* Dix applications, depuis l'arrivee du troisieme jeu : deux rangees de cinq,
-   puis deux colonnes de cinq rangees, jamais une tuile seule a cote d'un vide. */
-.app-tiles.is-ten { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+/* Onze applications, depuis l'arrivee de Telora : trois rangees de quatre, puis
+   deux colonnes ; la derniere tuile s'elargit pour fermer la rangee, jamais une
+   tuile seule a cote d'un vide. */
+.app-tiles.is-eleven { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.app-tiles.is-eleven > :last-child { grid-column: span 2; }
 
 @media (max-width: 1100px) {
-    .app-tiles.is-ten { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .app-tiles.is-eleven { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .app-tiles.is-eleven > :last-child { grid-column: 1 / -1; }
 }
 
 .app-tile {
@@ -1719,17 +1729,36 @@ html:has(body[data-page="v2-app"]) { scroll-padding-top: 112px; }
 
 .shot:has(.tablet) figcaption { max-width: 340px; }
 
+/* Ecran d'Apple TV : 16:9 a bords arrondis, sans cadre d'appareil. */
+.tv-screen {
+    width: clamp(320px, 44vw, 640px);
+    aspect-ratio: 1920 / 1080;
+    border-radius: 18px;
+    overflow: hidden;
+    background: #000;
+    box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.1),
+        0 50px 90px -30px rgba(0, 0, 0, 0.55),
+        0 12px 24px -12px rgba(0, 0, 0, 0.35);
+}
+
+.tv-screen img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+.shot:has(.tv-screen) figcaption { max-width: 520px; }
+
 @media (max-width: 560px) {
     .gallery.is-rail .phone, .store-shot { width: 62vw; }
     .tablet { width: 80vw; padding: 9px; border-radius: 26px; }
     .tablet-screen { border-radius: 17px; }
+    .tv-screen { width: 86vw; border-radius: 12px; }
 }
 
 /* Chaque capture pivote selon sa place dans la bande, de face au centre. */
 @supports (animation-timeline: view()) {
     .gallery.is-rail .phone,
     .gallery.is-rail .store-shot,
-    .gallery.is-rail .tablet {
+    .gallery.is-rail .tablet,
+    .gallery.is-rail .tv-screen {
         animation: couverture-bande linear both;
         animation-timeline: view(inline);
     }
@@ -1984,7 +2013,7 @@ html:has(body[data-page="v2-app"]) { scroll-padding-top: 112px; }
 
 @media (max-width: 360px) {
     .btn { padding: 0 20px; font-size: 16px; }
-    .app-tiles, .app-tiles.is-two, .app-tiles.is-seven, .app-tiles.is-ten { grid-template-columns: minmax(0, 1fr); }
+    .app-tiles, .app-tiles.is-two, .app-tiles.is-six, .app-tiles.is-seven, .app-tiles.is-eleven { grid-template-columns: minmax(0, 1fr); }
 }
 
 /* Grands ecrans : la colonne s'elargit et les objets grandissent avec elle,

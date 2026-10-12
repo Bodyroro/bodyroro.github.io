@@ -100,23 +100,37 @@
             captureJeu(cle, n, alt, paresseux, sizes) + '</div></div>';
     }
 
-    /* L'écran réel d'une app, sans titre de fiche : le téléphone d'une page d'app montre l'app elle-même, pas
-       un visuel App Store qui contient déjà son propre téléphone. */
-    function telephoneApp(cle, alt, paresseux, sizes, classe) {
+    /* L'écran réel d'une app (`n` vaut 'ecran', ou le rang d'un écran brut), sans titre de fiche : le téléphone
+       d'une page d'app montre l'app elle-même, pas un visuel App Store qui contient déjà son propre téléphone. */
+    function telephoneApp(cle, n, alt, paresseux, sizes, classe) {
         return '<div class="phone' + (classe ? ' ' + classe : '') + '"><div class="phone-screen">' +
-            captureJeu(cle, 'ecran', alt, paresseux, sizes) + '</div></div>';
+            captureJeu(cle, n, alt, paresseux, sizes) + '</div></div>';
     }
 
     /* Les captures iPad (2064 x 2752, sans îlot à éviter) existent en 480 et 960
        pixels de large, plus un JPEG de 720 : un iPad s'affiche plus large qu'un iPhone. */
     function tabletteJeu(cle, n, alt, sizes) {
         return '<div class="tablet"><div class="tablet-screen">' +
-            captureJeu(cle, n, alt, true, sizes, true) + '</div></div>';
+            captureJeu(cle, n, alt, true, sizes, 'ipad') + '</div></div>';
     }
 
-    function captureJeu(cle, n, alt, paresseux, sizes, ipad) {
-        var base = './assets/img/shots/' + cle + (ipad ? '-ipad-' : '-') + lang + '-' + n;
-        var t = ipad ? [480, 960, 720, 2064, 2752] : [360, 720, 540, 1320, 2868];
+    /* L'écran d'Apple TV (1920 x 1080), sans cadre d'appareil : un écran 16:9 à bords arrondis, en 640 et 1280
+       pixels de large, plus un JPEG de 960. */
+    function ecranTV(cle, n, alt, sizes) {
+        return '<div class="tv-screen">' + captureJeu(cle, n, alt, true, sizes, 'tv') + '</div>';
+    }
+
+    /* Largeurs [petite, grande, JPEG] et taille d'origine des captures de chaque appareil. */
+    var FORMATS_CAPTURES = {
+        iphone: ['-', [360, 720, 540, 1320, 2868]],
+        ipad: ['-ipad-', [480, 960, 720, 2064, 2752]],
+        tv: ['-tv-', [640, 1280, 960, 1920, 1080]]
+    };
+
+    function captureJeu(cle, n, alt, paresseux, sizes, appareil) {
+        var f = FORMATS_CAPTURES[appareil || 'iphone'];
+        var base = './assets/img/shots/' + cle + f[0] + lang + '-' + n;
+        var t = f[1];
         function jeu(ext) { return base + '-' + t[0] + '.' + ext + ' ' + t[0] + 'w, ' + base + '-' + t[1] + '.' + ext + ' ' + t[1] + 'w'; }
         return '<picture>' +
             '<source type="image/avif" srcset="' + jeu('avif') + '" sizes="' + sizes + '">' +
@@ -662,6 +676,52 @@
                 en: ['Property prices near you', 'Every sale in detail', 'Your town’s market', 'Your area at a glance', 'Everything around you']
             }
         },
+        /* Pas encore en vente : `store: ''` affiche « Bientôt disponible ». Ni données publiques ni publicité, d'où
+           `chips` et `on` propres. Sans visuels Premium, la galerie montre ses écrans bruts dans le téléphone
+           (`rawShots`), avec ceux de l'iPad et de l'Apple TV (`devices`, mêmes légendes), produits par
+           CapturesAppStore.mjs depuis Docs/Telora/Screenshots/<appareil>(-en). */
+        telora: {
+            name: 'Telora', platform: 'ios', accent: '#8b5cf6',
+            store: '',
+            on: { fr: 'iPhone, iPad et Apple TV', en: 'iPhone, iPad and Apple TV' },
+            tag: { fr: 'Lecteur multimédia', en: 'Media player' },
+            desc: {
+                fr: 'Lecteur multimédia pour iPhone, iPad et Apple TV : vos films, séries et chaînes, depuis vos propres sources (liste de lecture, Plex, Jellyfin, Emby, NAS, fichiers). Telora ne fournit aucun contenu.',
+                en: 'Media player for iPhone, iPad and Apple TV: your movies, shows and channels, from your own sources (playlist, Plex, Jellyfin, Emby, NAS, files). Telora provides no content.'
+            },
+            chips: {
+                fr: ['Abonnement Telora+', 'Sans publicité', 'Sans compte'],
+                en: ['Telora+ subscription', 'No ads', 'No account']
+            },
+            features: {
+                fr: [
+                    'Vos sources, réunies : liste de lecture (lien M3U ou accès par identifiant), Plex, Jellyfin, Emby, NAS (WebDAV, SMB via Fichiers) et fichiers de l’appareil.',
+                    'Une seule bibliothèque pour toutes vos sources : les doublons sont réunis, une fiche par film ou série avec toutes ses versions.',
+                    'La meilleure source choisie dans votre langue, jusqu’en 4K, avec ses vraies caractéristiques (résolution, codec, HDR, audio).',
+                    'Le direct en bouquets numérotés, programme en cours et à suivre, logos officiels des chaînes.',
+                    'Sagas, studios, plateformes et acteurs, logos des titres, listes personnelles, profils et contrôle parental.',
+                    'Lecteur d’Apple (image dans l’image, AirPlay, HDR) et VLC intégré pour tous les autres formats.',
+                    'DNS chiffré, aucune publicité, aucun pistage. Abonnement Telora+ au mois ou à l’année, essai gratuit de 7 jours.'
+                ],
+                en: [
+                    'Your sources, together: playlist (M3U link or account login), Plex, Jellyfin, Emby, NAS (WebDAV, SMB via Files) and files on the device.',
+                    'One library for all your sources: duplicates merged, one page per movie or show with every version.',
+                    'The best source picked in your language, up to 4K, with its real details (resolution, codec, HDR, audio).',
+                    'Live TV in numbered lineups, now and next, official channel logos.',
+                    'Collections, studios, platforms and cast, title logos, personal lists, profiles and parental controls.',
+                    'Apple’s player (Picture in Picture, AirPlay, HDR) and built-in VLC for every other format.',
+                    'Encrypted DNS, no ads, no tracking. Telora+ subscription, monthly or yearly, with a 7-day free trial.'
+                ]
+            },
+            sources: { fr: 'Telora ne fournit aucun contenu : films, séries et chaînes viennent uniquement des sources que vous connectez. Logos, affiches de secours, photos des acteurs, sagas et studios proviennent de bases ouvertes : Wikidata (CC0), Wikimedia Commons et Wikipédia (licences libres), TVmaze (CC BY-SA).', en: 'Telora provides no content: movies, shows and channels come only from the sources you connect. Logos, fallback artwork, cast photos, collections and studios come from open databases: Wikidata (CC0), Wikimedia Commons and Wikipedia (free licenses), TVmaze (CC BY-SA).' },
+            business: { fr: 'Aucune publicité, aucun pistage. Telora s’utilise avec l’abonnement Telora+, au mois ou à l’année, après un essai gratuit de 7 jours. L’abonnement est géré par StoreKit et votre compte Apple : l’application ne reçoit aucune donnée bancaire.', en: 'No ads, no tracking. Telora is used with the Telora+ subscription, monthly or yearly, after a 7-day free trial. The subscription is handled by StoreKit and your Apple account: the app never receives payment card data.' },
+            rawShots: true,
+            devices: ['iphone', 'ipad', 'tv'],
+            storeShots: {
+                fr: ['L’accueil', 'Les films, nouveautés en tête', 'La fiche d’un film', 'La fiche d’une série', 'La recherche dans vos sources', 'Une interface à votre goût'],
+                en: ['The home screen', 'Movies, newest first', 'A movie page', 'A show page', 'Search across your sources', 'An interface your way']
+            }
+        },
         mactuner: {
             name: 'MacTuner', platform: 'mac', accent: '#8eb8ff',
             store: GITHUB_MACTUNER,
@@ -834,7 +894,8 @@
             }
         }
     };
-    var IOS_ORDER = ['carbufrance', 'irvefrance', 'toilettefrance', 'defibfrance', 'dvffrance'];
+    var NOMS_APPAREILS = { iphone: 'iPhone', ipad: 'iPad', tv: 'Apple TV' };
+    var IOS_ORDER = ['carbufrance', 'irvefrance', 'toilettefrance', 'defibfrance', 'dvffrance', 'telora'];
     /* Les jeux forment leur propre gamme : ni données publiques, ni utilitaire. */
     var GAME_ORDER = ['trouchromatique', 'mongloup', 'chromafight'];
 
@@ -939,17 +1000,17 @@
            n'est affirmé ici qui ne soit dit sur la page d'une application. */
         faq: {
             fr: [
-                ['Les applications sont-elles gratuites ?', 'Oui. Les cinq applications iPhone et les trois jeux se téléchargent gratuitement et sont financés par une publicité discrète. ChromaFight est gratuit lui aussi, avec des achats intégrés facultatifs. IRVEFrance propose des outils Premium facultatifs, DefibFrance un don facultatif qui retire la publicité. Les deux utilitaires Mac sont libres et open source, sans publicité ni achat.'],
+                ['Les applications sont-elles gratuites ?', 'Oui. Les cinq applications iPhone et les trois jeux se téléchargent gratuitement et sont financés par une publicité discrète. ChromaFight est gratuit lui aussi, avec des achats intégrés facultatifs. IRVEFrance propose des outils Premium facultatifs, DefibFrance un don facultatif qui retire la publicité. Les deux utilitaires Mac sont libres et open source, sans publicité ni achat. Telora, bientôt disponible, sera sans publicité et s’utilisera avec l’abonnement Telora+, au mois ou à l’année, après un essai gratuit de 7 jours.'],
                 ['Faut-il créer un compte ?', 'Non. Aucune application ne demande de compte ni d’inscription. Favoris et réglages restent sur votre appareil.'],
-                ['Fonctionnent-elles sans connexion ?', 'Les applications iPhone mettent en cache les données publiques pour rester utilisables hors connexion. Les trois jeux se jouent hors connexion ; seuls la publicité et, pour ChromaFight, les achats et la copie iCloud de la sauvegarde utilisent le réseau.'],
-                ['Sur quels appareils ?', 'iPhone et iPad sous iOS 18 ou plus pour les applications et les jeux. Mac Apple Silicon sous macOS 26 ou 27 pour MacTuner et DNSTuner.'],
+                ['Fonctionnent-elles sans connexion ?', 'Les applications de données publiques les mettent en cache pour rester utilisables hors connexion ; Telora lit vos propres sources et a donc besoin du réseau. Les trois jeux se jouent hors connexion ; seuls la publicité et, pour ChromaFight, les achats et la copie iCloud de la sauvegarde utilisent le réseau.'],
+                ['Sur quels appareils ?', 'iPhone et iPad sous iOS 18 ou plus pour les applications et les jeux. Telora aussi sur Apple TV (tvOS 18 ou plus). Mac Apple Silicon sous macOS 26 ou 27 pour MacTuner et DNSTuner.'],
                 ['Où trouver de l’aide ?', 'Chaque application a sa page d’assistance. Je réponds moi-même à chaque message, en général sous 24 à 48 heures.']
             ],
             en: [
-                ['Are the apps free?', 'Yes. The five iPhone apps and the three games are free to download and funded by discreet advertising. ChromaFight is free too, with optional in-app purchases. IRVEFrance offers optional Premium tools, DefibFrance an optional donation that removes ads. The two Mac utilities are free and open source, with no ads and no purchases.'],
+                ['Are the apps free?', 'Yes. The five iPhone apps and the three games are free to download and funded by discreet advertising. ChromaFight is free too, with optional in-app purchases. IRVEFrance offers optional Premium tools, DefibFrance an optional donation that removes ads. The two Mac utilities are free and open source, with no ads and no purchases. Telora, coming soon, will have no ads and will be used with the Telora+ subscription, monthly or yearly, after a 7-day free trial.'],
                 ['Do I need an account?', 'No. None of the apps asks for an account or a sign-up. Favorites and settings stay on your device.'],
-                ['Do they work offline?', 'The iPhone apps cache public data so they keep working offline. The three games play offline; only advertising and, for ChromaFight, purchases and the iCloud copy of the save use the network.'],
-                ['Which devices?', 'iPhone and iPad on iOS 18 or later for the apps and games. Apple Silicon Macs on macOS 26 or 27 for MacTuner and DNSTuner.'],
+                ['Do they work offline?', 'The public data apps cache it so they keep working offline; Telora plays your own sources and therefore needs the network. The three games play offline; only advertising and, for ChromaFight, purchases and the iCloud copy of the save use the network.'],
+                ['Which devices?', 'iPhone and iPad on iOS 18 or later for the apps and games. Telora on Apple TV too (tvOS 18 or later). Apple Silicon Macs on macOS 26 or 27 for MacTuner and DNSTuner.'],
                 ['Where can I get help?', 'Each app has its own support page. I answer every message myself, usually within 24 to 48 hours.']
             ]
         }
@@ -1100,7 +1161,7 @@
                 '</div></div>';
         } else if (app.storeShots) {
             interieur = '<div class="device-3d is-phone"><div class="tilt">' +
-                (app.game ? telephoneJeu : function (c, n, alt, p, s, k) { return telephoneApp(c, alt, p, s, k); })(
+                (app.game ? telephoneJeu : function (c, n, alt, p, s, k) { return telephoneApp(c, 'ecran', alt, p, s, k); })(
                     cle, 1, app.name + ', ' + pick(app.storeShots)[0], !charger, '(max-width: 560px) 70vw, 300px', 'float') +
                 '</div></div>';
         } else {
@@ -1255,7 +1316,7 @@
        Accueil
        --------------------------------------------------------------------- */
 
-    /* Les icônes des dix applications sur leur anneau. L'anneau double l'index qui suit : il est
+    /* Les icônes des applications sur leur anneau. L'anneau double l'index qui suit : il est
        décoratif pour les lecteurs d'écran, et ses liens sortent de l'ordre de
        tabulation. */
     function anneau() {
@@ -1275,7 +1336,7 @@
         var app = APPS[cle];
         var mac = app.platform === 'mac';
         var classes = 'scene is-screen' + (mac ? ' theme-dark' : (index % 2 ? ' alt' : ''));
-        var plateforme = mac ? pick(V.onMac) : pick(app.game ? V.onGame : V.onIPhone);
+        var plateforme = pick(app.on || (mac ? V.onMac : (app.game ? V.onGame : V.onIPhone)));
 
         return '<section class="' + classes + '" id="' + cle + '" style="--accent:' + app.accent + '">' +
             '<span class="glow" aria-hidden="true"></span>' +
@@ -1382,7 +1443,7 @@
                 '</div></div>') +
             rise('<div class="app-index">' +
                 groupe(pick(V.navGames), GAME_ORDER, pick(V.gamesSub), 'is-three', 'games') +
-                groupe(pick(T.navIOS), IOS_ORDER, pick(V.onIPhone), '', 'ios') +
+                groupe(pick(T.navIOS), IOS_ORDER, pick(V.onIPhone), 'is-six', 'ios') +
                 groupe(pick(T.navMac), MAC_ORDER, pick(V.onMac), 'is-two', 'mac') +
                 '</div>', 80) +
             '</div></section>';
@@ -1448,7 +1509,7 @@
     function renderApp(cle) {
         var app = APPS[cle];
         var mac = app.platform === 'mac';
-        var plateforme = mac ? pick(V.onMac) : pick(app.game ? V.onGame : V.onIPhone);
+        var plateforme = pick(app.on || (mac ? V.onMac : (app.game ? V.onGame : V.onIPhone)));
         var liens = mac ? '' :
             '<a class="btn btn-quiet" href="' + withLang('./' + cle + '-support.html') + '">' +
             esc(pick(T.supportLink)) + '</a>' +
@@ -1513,11 +1574,14 @@
             var legendes = pick(app.storeShots);
             /* Une bande par appareil, iPhone d'abord ; le sélecteur montre l'une ou
                l'autre. Les images de la bande cachée, différées, ne se chargent pas.
-               Les applications n'ont que l'iPhone : ni sélecteur ni bande d'iPad. */
+               Les jeux ont l'iPhone et l'iPad, les apps l'iPhone seul (ni sélecteur ni autre
+               bande), sauf celles qui listent leurs appareils (`devices`). */
             var ipad = !!app.game;
+            var appareils = app.devices || (ipad ? ['iphone', 'ipad'] : ['iphone']);
             var bande = function (appareil, figure) {
-                return '<div class="gallery is-rail" data-device="' + appareil + '"' + (appareil === 'ipad' ? ' hidden' : '') +
-                    ' tabindex="0" role="region" aria-label="' + esc(pick(V.galleryLabel) + ', ' + (appareil === 'ipad' ? 'iPad' : 'iPhone')) + '">' +
+                return '<div class="gallery is-rail" data-device="' + appareil + '"' +
+                    (appareil !== 'iphone' ? ' hidden' : '') +
+                    ' tabindex="0" role="region" aria-label="' + esc(pick(V.galleryLabel) + ', ' + NOMS_APPAREILS[appareil]) + '">' +
                     legendes.map(function (legende, i) {
                         return '<figure class="shot">' + figure(i + 1, app.name + ', ' + legende) +
                             '<figcaption>' + esc(legende) + '</figcaption></figure>';
@@ -1528,20 +1592,26 @@
                 '<div class="wrap rail-head">' +
                 rise(eyebrow(pick(T.shotsEyebrow)) + '<h2 class="small">' + esc(pick(ipad ? V.storeShotsTitle : V.shotsTitle)) + '</h2>') +
                 '<div class="rail-tools">' +
-                (ipad ? '<div class="segmented" role="group" aria-label="' + esc(pick(V.deviceLabel)) + '">' +
-                '<button type="button" data-device="iphone" aria-pressed="true">iPhone</button>' +
-                '<button type="button" data-device="ipad" aria-pressed="false">iPad</button></div>' : '') +
+                (appareils.length > 1 ? '<div class="segmented" role="group" aria-label="' + esc(pick(V.deviceLabel)) + '">' +
+                appareils.map(function (a, i) {
+                    return '<button type="button" data-device="' + a + '" aria-pressed="' + (i === 0) + '">' + NOMS_APPAREILS[a] + '</button>';
+                }).join('') + '</div>' : '') +
                 '<div class="rail-nav">' +
                 '<button class="rail-btn" type="button" data-dir="-1" aria-label="' + esc(pick(V.prev)) + '">' + CHEVRON + '</button>' +
                 '<button class="rail-btn" type="button" data-dir="1" aria-label="' + esc(pick(V.next)) + '">' + CHEVRON + '</button>' +
                 '</div></div></div>' +
-                /* Les visuels des apps ont leur propre téléphone : posés à plat, comme sur l'App Store. */
+                /* Les visuels des apps ont leur propre téléphone : posés à plat, comme sur l'App Store. Les écrans
+                   bruts (`rawShots`) prennent celui du site. */
                 bande('iphone', function (n, alt) {
                     return ipad ? telephoneJeu(cle, n, alt, true, '(max-width: 560px) 62vw, 280px')
+                        : app.rawShots ? telephoneApp(cle, n, alt, true, '(max-width: 560px) 62vw, 280px')
                         : '<div class="store-shot">' + captureJeu(cle, n, alt, true, '(max-width: 560px) 62vw, 280px') + '</div>';
                 }) +
-                (ipad ? bande('ipad', function (n, alt) {
+                (appareils.indexOf('ipad') !== -1 ? bande('ipad', function (n, alt) {
                     return tabletteJeu(cle, n, alt, '(max-width: 560px) 80vw, 440px');
+                }) : '') +
+                (appareils.indexOf('tv') !== -1 ? bande('tv', function (n, alt) {
+                    return ecranTV(cle, n, alt, '(max-width: 560px) 86vw, 640px');
                 }) : '') +
                 '</section>';
         }
@@ -1649,7 +1719,7 @@
             '<div class="wrap">' +
             rise('<h2 class="small">' + esc(pick(V.contactPerApp)) + '</h2>' +
                 '<p class="lead wide">' + esc(pick(V.contactPerAppLead)) + '</p>') +
-            rise('<div class="app-tiles is-ten" style="margin-top:48px">' + sujets + '</div>', 80) +
+            rise('<div class="app-tiles is-eleven" style="margin-top:48px">' + sujets + '</div>', 80) +
             '</div></section>';
 
         return navHTML('v2-contact') + '<main>' + hero + parApp + '</main>' + footerHTML();
@@ -1892,12 +1962,21 @@
                     });
                 });
             });
-            appareils.forEach(function (b) {
+            appareils.forEach(function (b, i) {
                 b.addEventListener('click', function () {
                     var choix = b.getAttribute('data-device');
                     appareils.forEach(function (o) { o.setAttribute('aria-pressed', String(o === b)); });
                     bandes.forEach(function (g) { g.hidden = g.getAttribute('data-device') !== choix; });
                     maj();
+                });
+                /* Les flèches passent d'un appareil à l'autre, comme dans un contrôle segmenté natif. */
+                b.addEventListener('keydown', function (e) {
+                    var pas = e.key === 'ArrowRight' ? 1 : (e.key === 'ArrowLeft' ? -1 : 0);
+                    if (!pas) { return; }
+                    e.preventDefault();
+                    var cible = appareils[(i + pas + appareils.length) % appareils.length];
+                    cible.focus();
+                    cible.click();
                 });
             });
             bandes.forEach(function (bande) {

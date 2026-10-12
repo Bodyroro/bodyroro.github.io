@@ -101,6 +101,21 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://bodyroro.github.io/telora.html</loc>
+    <lastmod>2026-10-11</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://bodyroro.github.io/telora-privacy.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://bodyroro.github.io/telora-support.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://bodyroro.github.io/trouchromatique.html</loc>
     <lastmod>2026-10-05</lastmod>
     <priority>0.8</priority>
