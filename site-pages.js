@@ -59,7 +59,7 @@
 
     var apps = {
         carbufrance: {
-            name: 'CarbuFrance', icon: 'carbufrance.png', type: 'fuel', status: 'available', store: appStore + 'carbufrance/id6760407573', premium: false,
+            name: 'CarbuFrance', icon: 'carbufrance.png', type: 'fuel', status: 'available', store: appStore + 'carbufrance/id6760407573', premium: false, adFree: true,
             description: {
                 fr: 'Prix des carburants en France, carte, liste, favoris, carnet de bord, widget et CarPlay. 100 % gratuit.',
                 en: 'French fuel prices, map, list, favorites, logbook, widget and CarPlay. 100% free.',
@@ -70,7 +70,7 @@
             }
         },
         irvefrance: {
-            name: 'IRVEFrance', icon: 'irvefrance.png', type: 'ev', status: 'available', store: appStore + 'irvefrance/id6760716931', premium: false,
+            name: 'IRVEFrance', icon: 'irvefrance.png', type: 'ev', status: 'available', store: appStore + 'irvefrance/id6760716931', premium: false, adFree: true,
             description: {
                 fr: 'Bornes de recharge électriques, réseaux, connecteurs, puissance réelle et guidage. 100 % gratuit.',
                 en: 'EV charging stations, networks, connectors, real power and directions. 100% free.',
@@ -81,7 +81,7 @@
             }
         },
         toilettefrance: {
-            name: 'ToiletteFrance', icon: 'toilettefrance.png', type: 'toilet', status: 'available', store: appStore + 'toilettefrance/id6760978805', premium: false,
+            name: 'ToiletteFrance', icon: 'toilettefrance.png', type: 'toilet', status: 'available', store: appStore + 'toilettefrance/id6760978805', premium: false, adFree: true,
             description: {
                 fr: 'Toilettes publiques en France, carte, filtres utiles, accessibilité, horaires et guidage.',
                 en: 'Public toilets in France, map, useful filters, accessibility, opening hours and directions.',
@@ -95,7 +95,7 @@
             }
         },
         defibfrance: {
-            name: 'DefibFrance', icon: 'defibfrance.png', type: 'defib', status: 'available', store: appStore + 'defibfrance/id6761717722', premium: false,
+            name: 'DefibFrance', icon: 'defibfrance.png', type: 'defib', status: 'available', store: appStore + 'defibfrance/id6761717722', premium: false, adFree: true,
             description: {
                 fr: 'Défibrillateurs automatisés externes, disponibilité, accessibilité et guidage d’urgence.',
                 en: 'Automated external defibrillators, availability, accessibility and emergency directions.',
@@ -796,6 +796,20 @@
             ko: app.name + '은(는) 앱 내 구매나 후원을 제공하지 않습니다. 보상형 동영상으로 6시간 광고 없이 이용할 수 있습니다. 앱은 결제 정보를 받지 않습니다.',
             ar: app.name + ' لا يقدّم أي شراء داخل التطبيق ولا تبرعات. مقطع بمكافأة يمنح 6 ساعات بلا إعلانات. لا يستقبل التطبيق أي بيانات بنكية.'
         };
+        // Abonnement « Sans pub » (`adFree`, 12 octobre 2026) : 0,99 € par mois ou 8,99 € par an, sans aucune pub.
+        var adFree = {
+            fr: 'Un abonnement « Sans pub » (0,99 € par mois ou 8,99 € par an) retire toute publicité tant qu’il est actif ; une vidéo récompensée offre aussi 6 h sans publicité. L’abonnement est géré par StoreKit et votre compte Apple, se renouvelle automatiquement sauf résiliation au moins 24 heures avant la fin de la période et se gère dans les réglages de votre compte Apple. Aucune donnée bancaire n’est reçue par l’application.',
+            en: 'An “Ad-Free” subscription (€0.99 per month or €8.99 per year) removes every ad while it is active; a rewarded video also gives 6 hours ad-free. The subscription is handled by StoreKit and your Apple account, renews automatically unless cancelled at least 24 hours before the end of the period, and is managed in your Apple Account settings. The app never receives payment card data.',
+            es: 'Una suscripción «Sin anuncios» (0,99 € al mes o 8,99 € al año) retira todos los anuncios mientras está activa; un vídeo recompensado también da 6 h sin anuncios. La gestionan StoreKit y tu cuenta Apple, se renueva automáticamente salvo cancelación al menos 24 horas antes del final del periodo y se gestiona en los ajustes de tu cuenta Apple. La app no recibe datos bancarios.',
+            it: 'Un abbonamento «Senza pubblicità» (0,99 € al mese o 8,99 € all’anno) rimuove ogni annuncio finché è attivo; un video premiato offre anche 6 h senza annunci. È gestito da StoreKit e dal tuo account Apple, si rinnova automaticamente salvo disdetta almeno 24 ore prima della fine del periodo e si gestisce nelle impostazioni del tuo account Apple. L’app non riceve dati bancari.',
+            de: 'Ein „Werbefrei“-Abo (0,99 € pro Monat oder 8,99 € pro Jahr) entfernt jede Werbung, solange es aktiv ist; ein belohntes Video schenkt außerdem 6 h ohne Werbung. Es wird von StoreKit und deinem Apple-Konto verwaltet, verlängert sich automatisch, sofern es nicht mindestens 24 Stunden vor Ablauf gekündigt wird, und lässt sich in den Einstellungen deines Apple Accounts verwalten. Die App erhält keine Zahlungsdaten.',
+            ja: '「広告なし」サブスクリプション（月額0.99ユーロまたは年額8.99ユーロ）が有効な間はすべての広告が非表示になります。リワード動画でも6時間広告なしになります。StoreKitとAppleアカウントで管理され、期間終了の24時間前までに解約しない限り自動更新されます。管理はAppleアカウントの設定から行えます。アプリが決済情報を受け取ることはありません。',
+            'zh-Hans': '“无广告”订阅（每月 0.99 欧元或每年 8.99 欧元）在有效期内移除所有广告；观看激励视频也可获得 6 小时无广告。订阅由 StoreKit 和你的 Apple 账户处理，除非在周期结束前至少 24 小时取消，否则将自动续订，可在 Apple 账户设置中管理。应用不会接收任何支付信息。',
+            ko: '‘광고 제거’ 구독(월 0.99유로 또는 연 8.99유로)이 활성화된 동안 모든 광고가 사라집니다. 보상형 동영상으로도 6시간 광고 없이 이용할 수 있습니다. 구독은 StoreKit과 Apple 계정으로 처리되며, 기간 종료 최소 24시간 전에 해지하지 않으면 자동 갱신되고 Apple 계정 설정에서 관리할 수 있습니다. 앱은 결제 정보를 받지 않습니다.',
+            uk: 'Підписка «Без реклами» (0,99 € на місяць або 8,99 € на рік) прибирає всю рекламу, поки вона активна; відео з винагородою також дає 6 год без реклами. Підпискою керують StoreKit і ваш Apple-акаунт, вона поновлюється автоматично, якщо не скасувати її щонайменше за 24 години до кінця періоду, і керується в налаштуваннях Apple-акаунта. Застосунок не отримує платіжних даних.',
+            ru: 'Подписка «Без рекламы» (0,99 € в месяц или 8,99 € в год) убирает всю рекламу, пока она активна; видео с наградой также дает 6 ч без рекламы. Подпиской управляют StoreKit и ваш Apple ID, она продлевается автоматически, если не отменить ее не позднее чем за 24 часа до конца периода, и управляется в настройках Apple ID. Приложение не получает платежных данных.',
+            ar: 'يزيل اشتراك «بدون إعلانات» (0.99 يورو شهريًا أو 8.99 يورو سنويًا) جميع الإعلانات ما دام نشطًا، ويمنح مقطع الفيديو بمكافأة أيضًا 6 ساعات بلا إعلانات. يُدار الاشتراك عبر StoreKit وحساب Apple الخاص بك، ويتجدد تلقائيًا ما لم يُلغَ قبل 24 ساعة على الأقل من نهاية الفترة، ويمكن إدارته من إعدادات حساب Apple. لا يستقبل التطبيق أي بيانات بنكية.'
+        };
         // **Le texte suit `premium`, pas le type d'app.** Le branchement portait sur le
         // domaine (toilettes, défibrillateurs, le reste) et rangeait donc CarbuFrance,
         // IRVEFrance et DVFFrance dans « le reste », à qui il faisait déclarer des achats
@@ -804,6 +818,7 @@
         // confidentialité qui décrit un traitement inexistant est fausse, et c'est le
         // document que l'App Store publie.
         if (app.adText) return localized(app.adText, lang);
+        if (app.adFree) return ads[lang] + ' ' + (adFree[lang] || adFree.en);
         if (!app.premium) return ads[lang] + ' ' + donations[lang];
         if (app.type === 'toilet') return ads[lang] + ' ' + (lang === 'fr' ? 'Aucun achat Premium n’est utilisé.' : lang === 'en' ? 'No Premium purchase is used.' : lang === 'es' ? 'No se usa compra Premium.' : lang === 'it' ? 'Non viene usato alcun acquisto Premium.' : lang === 'de' ? 'Es wird kein Premium-Kauf verwendet.' : lang === 'ja' ? 'Premium購入は使用していません。' : lang === 'zh-Hans' ? '未使用Premium购买。' : lang === 'ko' ? 'Premium 구매는 사용하지 않습니다.' : lang === 'uk' ? 'Покупка Premium не використовується.' : lang === 'ru' ? 'Покупка Premium не используется.' : 'لا تُستخدم أي عملية شراء Premium.');
         if (app.type === 'sos' || app.type === 'defib') return ads[lang] + ' ' + donations[lang];
