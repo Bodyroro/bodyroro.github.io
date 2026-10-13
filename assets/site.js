@@ -168,8 +168,8 @@
            descendue dans la section iPhone, à laquelle elle appartient. Ce qui
            reste ici doit valoir pour les deux, sans en avantager aucune. */
         heroTitle: {
-            fr: 'Deux gammes, <em>un seul principe</em>.',
-            en: 'Two ranges, <em>one principle</em>.'
+            fr: 'Des jeux, des apps, <em>un seul principe</em>.',
+            en: 'Games and apps, <em>one principle</em>.'
         },
         heroLead: {
             fr: 'Des applications natives qui font une chose et la font bien, sans compte, sans traceur et sans dépendance. Sur iPhone, les services publics français du quotidien. Sur Mac, des utilitaires libres dont le code est entièrement ouvert.',
@@ -196,7 +196,7 @@
             ]
         },
 
-        iosTitle: { fr: 'Cinq applications conçues pour la France.', en: 'Five apps built for France.' },
+        iosTitle: { fr: 'Des applications utiles au quotidien.', en: 'Apps for everyday life.' },
         iosLead: {
             fr: 'Les données publiques françaises, sur la carte et hors connexion : les services du quotidien, et les prix que l’administration enregistre. Interface native SwiftUI, sources officielles, résultats géolocalisés. Aucun compte, aucune inscription.',
             en: 'French public data, on the map and offline: everyday services, and the prices the administration records. Native SwiftUI interface, official sources, geolocated results. No account, no sign-up.'
@@ -219,7 +219,7 @@
                 ['DVFFrance', 'Property prices from the sales actually recorded.']
             ]
         },
-        iosCTA: { fr: 'Les cinq applications', en: 'The five apps' },
+        iosCTA: { fr: 'Les applications iPhone', en: 'The iPhone apps' },
         iosMore: { fr: 'Voir l’interface', en: 'See the interface' },
         iosRequires: { fr: 'Gratuit · iPhone et iPad · iOS 18 et plus', en: 'Free · iPhone and iPad · iOS 18 and later' },
         iosStore: { fr: 'Sur l’App Store', en: 'On the App Store' },
@@ -240,7 +240,7 @@
         },
         rigLabels: { fr: ['APPLE SILICON', 'MÉMOIRE', 'RÉSEAU', 'STOCKAGE'],
                      en: ['APPLE SILICON', 'MEMORY', 'NETWORK', 'STORAGE'] },
-        macTitle: { fr: 'Deux utilitaires pour votre Mac Apple Silicon.', en: 'Two utilities for your Apple Silicon Mac.' },
+        macTitle: { fr: 'Des utilitaires pour votre Mac Apple Silicon.', en: 'Utilities for your Apple Silicon Mac.' },
         macLead: {
             fr: 'Contrairement aux apps iPhone, celles-ci ne sont pas limitées à la France : elles fonctionnent sur tous les Mac Apple Silicon. Applications natives, libres et open source, chacune sur un sujet précis, sans compte, sans publicité et sans dépendance.',
             en: 'Unlike the iPhone apps, these are not tied to France: they run on any Apple Silicon Mac. Native, free and open source apps, each on one precise subject, with no account, no ads and no dependency.'
@@ -257,7 +257,7 @@
                 ['What they share', 'Nothing irreversible, nothing hidden, and the full code on GitHub.']
             ]
         },
-        macCTA: { fr: 'Les deux utilitaires', en: 'The two utilities' },
+        macCTA: { fr: 'Les utilitaires Mac', en: 'The Mac utilities' },
         macMore: { fr: 'Voir l’interface', en: 'See the interface' },
         macStore: { fr: 'Sur GitHub', en: 'On GitHub' },
         macPage: { fr: 'Ouvrir la page', en: 'Open the page' },
@@ -309,7 +309,7 @@
         profileCTA: { fr: 'Me contacter', en: 'Get in touch' },
         profileMore: { fr: 'En savoir plus', en: 'Learn more' },
 
-        footerLine: { fr: 'Sur iPhone et iPad, trois jeux avec Gloup et les services publics français du quotidien. Sur Mac, des utilitaires libres qui font une chose et la font bien.', en: 'On iPhone and iPad, three games starring Gloup and everyday French public services. On Mac, free utilities that do one thing and do it well.' },
+        footerLine: { fr: 'Sur iPhone et iPad, des jeux avec Gloup et les services publics français du quotidien. Sur Mac, des utilitaires libres qui font une chose et la font bien.', en: 'On iPhone and iPad, games starring Gloup and everyday French public services. On Mac, free utilities that do one thing and do it well.' },
         footerSite: { fr: 'Site', en: 'Site' },
         footerApps: { fr: 'Apps iPhone', en: 'iPhone apps' },
         footerTagline: { fr: 'Conçu et développé en France.', en: 'Designed and built in France.' },
@@ -433,15 +433,15 @@
         aboutLines: {
             fr: [
                 ['phone', 'iPhone, pour la France',
-                 'Cinq applications gratuites bâties sur les jeux de données publics français : carburants, bornes de recharge, toilettes, défibrillateurs et prix de l’immobilier. Distribuées sur l’App Store, financées par une publicité discrète, sans compte ni inscription.'],
+                 'Des applications gratuites, dont des services bâtis sur les jeux de données publics français : carburants, bornes de recharge, toilettes, défibrillateurs et prix de l’immobilier. Distribuées sur l’App Store, financées par une publicité discrète, sans compte ni inscription.'],
                 ['laptop', 'Mac, en open source',
-                 'Deux utilitaires natifs pour Mac Apple Silicon, chacun sur un sujet précis. Publiés sous licence MIT sur GitHub, code complet consultable, sans publicité ni dépendance tierce.']
+                 'Des utilitaires natifs pour Mac Apple Silicon, chacun sur un sujet précis. Publiés sous licence MIT sur GitHub, code complet consultable, sans publicité ni dépendance tierce.']
             ],
             en: [
                 ['phone', 'iPhone, built for France',
-                 'Five free apps built on French public datasets: fuel prices, EV chargers, public toilets, defibrillators and property prices. Shipped on the App Store, funded by discreet advertising, with no account or sign-up.'],
+                 'Free apps, including services built on French public datasets: fuel prices, EV chargers, public toilets, defibrillators and property prices. Shipped on the App Store, funded by discreet advertising, with no account or sign-up.'],
                 ['laptop', 'Mac, open source',
-                 'Two native utilities for Apple Silicon Macs, each on one precise subject. Published under the MIT licence on GitHub, full source readable, with no ads and no third-party dependency.']
+                 'Native utilities for Apple Silicon Macs, each on one precise subject. Published under the MIT licence on GitHub, full source readable, with no ads and no third-party dependency.']
             ]
         },
 
@@ -794,7 +794,8 @@
         },
         trouchromatique: {
             name: 'Trou Chromatique', platform: 'ios', game: true, accent: '#f26b3a', accent2: '#c2185b',
-            store: STORE_TC,
+            /* Pas encore en vente (première version en revue, fiche 404) : remettre STORE_TC à sa sortie. */
+            store: '',
             tag: { fr: 'Jeu d’aventure', en: 'Adventure game' },
             desc: {
                 fr: 'Gloup attrape tout ce qui a sa couleur : dix îles flottantes, cent niveaux et une vraie histoire pour rendre ses couleurs à Chromaterre. Gratuit, sans achat intégré.',
@@ -948,8 +949,8 @@
     var V = {
         heroKicker: { fr: 'Développeur indépendant · France', en: 'Independent developer · France' },
         heroLead: {
-            fr: 'Des applications natives qui font une chose et la font bien. Sur iPhone et iPad, trois jeux avec Gloup, la petite créature aux grands yeux, et les données publiques françaises du quotidien. Sur Mac, des utilitaires libres au code entièrement ouvert.',
-            en: 'Native apps that do one thing and do it well. On iPhone and iPad, three games starring Gloup, the little creature with big eyes, and everyday French public data. On Mac, free utilities with fully open source code.'
+            fr: 'Des applications natives qui font une chose et la font bien. Sur iPhone et iPad, des jeux avec Gloup, la petite créature aux grands yeux, et les données publiques françaises du quotidien. Sur Mac, des utilitaires libres au code entièrement ouvert.',
+            en: 'Native apps that do one thing and do it well. On iPhone and iPad, games starring Gloup, the little creature with big eyes, and everyday French public data. On Mac, free utilities with fully open source code.'
         },
         seeGames: { fr: 'Voir les jeux', en: 'See the games' },
         seeApps: { fr: 'Les applications', en: 'The apps' },
@@ -997,16 +998,17 @@
         gamesSub: { fr: 'iPhone et iPad · iOS 18 ou plus', en: 'iPhone and iPad · iOS 18 or later' },
 
         /* Textes ajoutés par la refonte de septembre 2026. */
-        /* Refonte du 5 octobre 2026 : trois jeux, ils passent en tête de l'accueil. */
+        /* Refonte du 5 octobre 2026 : les jeux passent en tête de l'accueil. Textes sans nombre d'apps (13 octobre
+           2026) : ils restent justes quand une app ou un jeu s'ajoute ; les compteurs viennent de `APPS` ({n}, {ios}). */
         heroTitleHTML: {
             fr: 'Des jeux, des apps, <br><span class="grad">un seul principe.</span>',
             en: 'Games and apps, <br><span class="grad">one principle.</span>'
         },
         heroShort: {
-            fr: 'Trois jeux pour iPhone et iPad avec Gloup, la petite créature aux grands yeux. Cinq services publics du quotidien, natifs, gratuits et sans compte. Et deux utilitaires libres pour Mac.',
-            en: 'Three games for iPhone and iPad starring Gloup, the little creature with big eyes. Five everyday public services, native, free and with no account. Plus two free utilities for Mac.'
+            fr: 'Des jeux pour iPhone et iPad avec Gloup, la petite créature aux grands yeux. Des applications du quotidien, natives, gratuites et sans compte. Et des utilitaires libres pour Mac.',
+            en: 'Games for iPhone and iPad starring Gloup, the little creature with big eyes. Everyday apps, native, free and with no account. Plus free utilities for Mac.'
         },
-        heroGamesLabel: { fr: 'Les trois jeux', en: 'The three games' },
+        heroGamesLabel: { fr: 'Les jeux', en: 'The games' },
         onStore: { fr: 'Sur l’App Store', en: 'On the App Store' },
         soonStore: { fr: 'Bientôt sur l’App Store', en: 'Coming soon to the App Store' },
         indexTitle: { fr: 'Toutes les applications.', en: 'All the apps.' },
@@ -1019,7 +1021,7 @@
         /* Refonte du 30 septembre 2026 : jeux publiés, filtre, questions, sous-barre. */
         badgeAlt: { fr: 'Télécharger {app} dans l’App Store', en: 'Download {app} on the App Store' },
         newEyebrow: { fr: 'Jeux · iPhone et iPad', en: 'Games · iPhone and iPad' },
-        newTitle: { fr: 'Trois jeux avec Gloup.', en: 'Three games starring Gloup.' },
+        newTitle: { fr: 'Les jeux avec Gloup.', en: 'Games starring Gloup.' },
         learnMore: { fr: 'En savoir plus', en: 'Learn more' },
         get: { fr: 'Obtenir', en: 'Get' },
         getAria: { fr: 'Obtenir {app} sur l’App Store', en: 'Get {app} on the App Store' },
@@ -1040,16 +1042,16 @@
            n'est affirmé ici qui ne soit dit sur la page d'une application. */
         faq: {
             fr: [
-                ['Les applications sont-elles gratuites ?', 'Oui. Les applications iPhone et les trois jeux se téléchargent gratuitement et sont financés par une publicité discrète. ChromaFight est gratuit lui aussi, avec des achats intégrés facultatifs. CarbuFrance, IRVEFrance, ToiletteFrance et DefibFrance proposent un abonnement facultatif « Sans pub » (0,99 € par mois ou 8,99 € par an) qui retire toute publicité ; une vidéo facultative y offre aussi 6 h sans publicité. Telzo, bientôt disponible, proposera le sien à 0,99 € par mois ou 4,99 € par an. Les deux utilitaires Mac sont libres et open source, sans publicité ni achat. Telora, bientôt disponible, sera sans publicité et s’utilisera avec l’abonnement Telora+, au mois ou à l’année, après un essai gratuit de 7 jours.'],
+                ['Les applications sont-elles gratuites ?', 'Oui. Les applications iPhone et les jeux se téléchargent gratuitement et sont financés par une publicité discrète. ChromaFight est gratuit lui aussi, avec des achats intégrés facultatifs. CarbuFrance, IRVEFrance, ToiletteFrance et DefibFrance proposent un abonnement facultatif « Sans pub » (0,99 € par mois ou 8,99 € par an) qui retire toute publicité ; une vidéo facultative y offre aussi 6 h sans publicité. Telzo, bientôt disponible, proposera le sien à 0,99 € par mois ou 4,99 € par an. Les deux utilitaires Mac sont libres et open source, sans publicité ni achat. Telora, bientôt disponible, sera sans publicité et s’utilisera avec l’abonnement Telora+, au mois ou à l’année, après un essai gratuit de 7 jours.'],
                 ['Faut-il créer un compte ?', 'Non. Aucune application ne demande de compte ni d’inscription. Favoris et réglages restent sur votre appareil.'],
-                ['Fonctionnent-elles sans connexion ?', 'Les applications de données publiques les mettent en cache pour rester utilisables hors connexion ; Telora lit vos propres sources et a donc besoin du réseau. Les trois jeux se jouent hors connexion ; seuls la publicité et, pour ChromaFight, les achats et la copie iCloud de la sauvegarde utilisent le réseau.'],
+                ['Fonctionnent-elles sans connexion ?', 'Les applications de données publiques les mettent en cache pour rester utilisables hors connexion ; Telora lit vos propres sources et a donc besoin du réseau. Les jeux se jouent hors connexion ; seuls la publicité et, pour ChromaFight, les achats et la copie iCloud de la sauvegarde utilisent le réseau.'],
                 ['Sur quels appareils ?', 'iPhone et iPad sous iOS 18 ou plus pour les applications et les jeux. Telora aussi sur Apple TV (tvOS 18 ou plus). Mac Apple Silicon sous macOS 26 ou 27 pour MacTuner et DNSTuner.'],
                 ['Où trouver de l’aide ?', 'Chaque application a sa page d’assistance. Je réponds moi-même à chaque message, en général sous 24 à 48 heures.']
             ],
             en: [
-                ['Are the apps free?', 'Yes. The iPhone apps and the three games are free to download and funded by discreet advertising. ChromaFight is free too, with optional in-app purchases. CarbuFrance, IRVEFrance, ToiletteFrance and DefibFrance offer an optional “Ad-Free” subscription (€0.99 per month or €8.99 per year) that removes every ad; an optional video also gives 6 hours ad-free. Telzo, coming soon, will offer its own at €0.99 per month or €4.99 per year. The two Mac utilities are free and open source, with no ads and no purchases. Telora, coming soon, will have no ads and will be used with the Telora+ subscription, monthly or yearly, after a 7-day free trial.'],
+                ['Are the apps free?', 'Yes. The iPhone apps and the games are free to download and funded by discreet advertising. ChromaFight is free too, with optional in-app purchases. CarbuFrance, IRVEFrance, ToiletteFrance and DefibFrance offer an optional “Ad-Free” subscription (€0.99 per month or €8.99 per year) that removes every ad; an optional video also gives 6 hours ad-free. Telzo, coming soon, will offer its own at €0.99 per month or €4.99 per year. The two Mac utilities are free and open source, with no ads and no purchases. Telora, coming soon, will have no ads and will be used with the Telora+ subscription, monthly or yearly, after a 7-day free trial.'],
                 ['Do I need an account?', 'No. None of the apps asks for an account or a sign-up. Favorites and settings stay on your device.'],
-                ['Do they work offline?', 'The public data apps cache it so they keep working offline; Telora plays your own sources and therefore needs the network. The three games play offline; only advertising and, for ChromaFight, purchases and the iCloud copy of the save use the network.'],
+                ['Do they work offline?', 'The public data apps cache it so they keep working offline; Telora plays your own sources and therefore needs the network. The games play offline; only advertising and, for ChromaFight, purchases and the iCloud copy of the save use the network.'],
                 ['Which devices?', 'iPhone and iPad on iOS 18 or later for the apps and games. Telora on Apple TV too (tvOS 18 or later). Apple Silicon Macs on macOS 26 or 27 for MacTuner and DNSTuner.'],
                 ['Where can I get help?', 'Each app has its own support page. I answer every message myself, usually within 24 to 48 hours.']
             ]

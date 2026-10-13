@@ -146,7 +146,7 @@
         // Onze langues, les neuf autres que le français et l'anglais plus bas. `adText` remplace le texte
         // publicitaire commun, qui promet une vidéo de 6 h sans publicité que le jeu n'offre pas.
         trouchromatique: {
-            name: 'Trou Chromatique', icon: 'trouchromatique.png', type: 'game', status: 'available', store: appStore + 'trou-chromatique/id6816639945', premium: false,
+            name: 'Trou Chromatique', icon: 'trouchromatique.png', type: 'game', status: 'soon', store: '', premium: false,
             updated: '2026-09-27',
             description: {
                 fr: 'Jeu d’aventure pour iPhone et iPad : Gloup attrape les objets de sa couleur pour rendre ses couleurs à dix îles. Gratuit, sans achat intégré.',
@@ -1938,7 +1938,7 @@
         ];
         return '<footer class="page-footer"><nav class="page-footer-links" aria-label="' + escapeHTML(app.name) + '">' +
             liens.map(function (l) { return '<a href="' + escapeHTML(l[0]) + '">' + escapeHTML(l[1]) + '</a>'; }).join('') +
-            '</nav><p>&copy; 2026 ' + escapeHTML(app.name) + ' · ' + escapeHTML(app.publisher || 'Rodolphe Vandaele') + '</p></footer>';
+            '</nav><p>' + escapeHTML(app.name) + ' · &copy; 2026 BodyCorp</p></footer>';
     }
 
     function renderSections(sections) {
