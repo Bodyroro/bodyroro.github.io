@@ -185,13 +185,13 @@
             fr: [
                 ['{n}', 'applications publiées', '{ios} sur iPhone via l’App Store, {mac} sur Mac en open source sur GitHub.'],
                 ['2', 'plateformes natives', 'iPhone et Mac, développées en SwiftUI, sans framework tiers.'],
-                ['11', 'langues traduites', 'Interfaces entièrement localisées, du français à l’arabe.'],
+                ['45', 'langues au maximum', 'Jusqu’à 45 langues selon l’application, du français à l’arabe.'],
                 ['0', 'compte requis', 'Aucune inscription ni donnée personnelle collectée.']
             ],
             en: [
                 ['{n}', 'published apps', '{ios} on iPhone via the App Store, {mac} on Mac as open source on GitHub.'],
                 ['2', 'native platforms', 'iPhone and Mac, built in SwiftUI, no third-party frameworks.'],
-                ['11', 'translated languages', 'Fully localized interfaces, from French to Arabic.'],
+                ['45', 'languages at most', 'Up to 45 languages depending on the app, from French to Arabic.'],
                 ['0', 'accounts required', 'No sign-up and no personal data collected.']
             ]
         },
@@ -285,8 +285,8 @@
         },
         supportCTA: { fr: 'Faire un don libre', en: 'Donate freely' },
         supportNote: {
-            fr: 'Un don web ne débloque aucune fonction Premium. Les achats intégrés restent gérés par StoreKit dans les apps.',
-            en: 'A web donation unlocks no Premium features. In app purchases remain handled by StoreKit inside the apps.'
+            fr: 'Un don web ne débloque aucune fonction ni l’abonnement « Sans pub ». Les achats intégrés restent gérés par StoreKit dans les apps.',
+            en: 'A web donation unlocks no feature and no “Ad-Free” subscription. In app purchases remain handled by StoreKit inside the apps.'
         },
         supportWays: {
             fr: [
@@ -479,8 +479,8 @@
             store: STORE + 'carbufrance/id6760407573',
             tag: { fr: 'Prix des carburants', en: 'Fuel prices' },
             desc: {
-                fr: 'Prix des carburants en France : carte, liste, favoris, widget station la moins chère, carnet de bord avec CO₂ et consommation, observatoire des marchés et CarPlay. 100 % gratuit.',
-                en: 'French fuel prices: map, list, favorites, cheapest station widget, logbook with CO₂ and fuel economy, market observatory and CarPlay. 100% free.'
+                fr: 'Prix des carburants en France : carte, liste, favoris, widget station la moins chère, carnet de bord avec CO₂ et consommation, observatoire des marchés et CarPlay. Toutes les fonctions sont gratuites ; un abonnement facultatif retire la publicité.',
+                en: 'French fuel prices: map, list, favorites, cheapest station widget, logbook with CO₂ and fuel economy, market observatory and CarPlay. Every feature is free; an optional subscription removes ads.'
             },
             features: {
                 fr: [
@@ -489,7 +489,7 @@
                     'Carnet de bord : consommation et autonomie calculées depuis vos pleins, CO₂ émis (facteurs ADEME) et écart de prix payé face à la moyenne nationale du mois.',
                     'Véhicules et entretien : motorisation thermique, hybride ou hybride rechargeable, capacité du réservoir, dépenses par catégorie et budget.',
                     'Analyse du marché : baril de Brent, euro/dollar, stations les moins chères et ruptures par carburant, plus les actualités du secteur.',
-                    'Widget station la moins chère, CarPlay et Contrôle rapide. Aucun abonnement : la vidéo récompensée offre 6 h sans publicité.'
+                    'Widget station la moins chère, CarPlay et Contrôle rapide. Abonnement facultatif « Sans pub », et vidéo récompensée pour 6 h sans publicité.'
                 ],
                 en: [
                     'Map and list of French fuel stations with prices, sorted by price or distance, favorites, hidden stations and offline cache.',
@@ -497,11 +497,11 @@
                     'Logbook: fuel economy and range computed from your fill-ups, CO₂ emitted (ADEME factors) and how the price you paid compares to the national monthly average.',
                     'Vehicles and maintenance: combustion, hybrid or plug-in hybrid powertrain, tank capacity, spending by category and budget.',
                     'Market analysis: Brent crude, EUR/USD, cheapest stations and out-of-stock counts per fuel, plus sector news.',
-                    'Cheapest station widget, CarPlay and Control Center widget. No subscription: a rewarded video grants 6 ad-free hours.'
+                    'Cheapest station widget, CarPlay and Control Center widget. Optional “Ad-Free” subscription, and a rewarded video for 6 ad-free hours.'
                 ]
             },
             sources: { fr: 'Prix publics officiels des carburants en France, mis en cache localement. Historique des prix, cours du Brent et taux de change issus de sources publiques ; facteurs CO₂ de l’ADEME.', en: 'Official public French fuel prices, cached locally. Price history, Brent crude and exchange rates from public sources; CO₂ factors from ADEME.' },
-            business: { fr: 'Application 100 % gratuite, financée par la publicité. Aucun achat intégré, aucune donnée bancaire dans l’app.', en: 'Fully free app, funded by ads. No in-app purchases, no payment card data in the app.' },
+            business: { fr: 'Application gratuite, financée par la publicité. Un abonnement facultatif « Sans pub » (0,99 € par mois ou 8,99 € par an) retire toute publicité tant qu’il est actif ; une vidéo récompensée offre aussi 6 h sans publicité. Géré par StoreKit et votre compte Apple : aucune donnée bancaire dans l’app.', en: 'Free app, funded by ads. An optional “Ad-Free” subscription (€0.99 per month or €8.99 per year) removes every ad while it is active; a rewarded video also gives 6 hours ad-free. Handled by StoreKit and your Apple account: no payment card data in the app.' },
             demo: {
                 title: { fr: 'Stations', en: 'Stations' },
                 kind: 'badge',
@@ -532,11 +532,11 @@
                 en: 'EV charging stations: networks, connectors, power, availability, directions and a charging calculator.'
             },
             features: {
-                fr: ['Carte des bornes avec connecteurs, puissance, opérateur et disponibilité.', 'Filtres CCS2, CHAdeMO, Type 2, puissance minimale et rayon 5 à 50 km.', 'Look Around, vue 3D, favoris, hors-ligne, Siri et calculateur de recharge.', 'Premium : prix spot, coût avec tarif saisi, conseils et actualités mobilité électrique.'],
-                en: ['Charger map with connectors, power, operator and availability.', 'CCS2, CHAdeMO, Type 2, minimum power and 5 to 50 km radius filters.', 'Look Around, 3D map, favorites, offline mode, Siri and charging calculator.', 'Premium: spot price, cost with your tariff, advice and EV news.']
+                fr: ['Carte des bornes avec connecteurs, puissance, opérateur et disponibilité.', 'Filtres CCS2, CHAdeMO, Type 2, puissance minimale et rayon 5 à 50 km.', 'Look Around, vue 3D, favoris, hors-ligne, Siri et calculateur de recharge.', 'Prix spot, coût avec tarif saisi, conseils et actualités de la mobilité électrique. Abonnement facultatif « Sans pub ».'],
+                en: ['Charger map with connectors, power, operator and availability.', 'CCS2, CHAdeMO, Type 2, minimum power and 5 to 50 km radius filters.', 'Look Around, 3D map, favorites, offline mode, Siri and charging calculator.', 'Spot price, cost with your tariff, advice and EV news. Optional “Ad-Free” subscription.']
             },
             sources: { fr: 'Données ouvertes des infrastructures de recharge (IRVE), mises en cache localement.', en: 'Open data on French charging infrastructure (IRVE), cached locally.' },
-            business: { fr: 'Outils Premium optionnels gérés par StoreKit. Aucune donnée bancaire dans l’app.', en: 'Optional Premium tools handled by StoreKit. No payment card data in the app.' },
+            business: { fr: 'Application gratuite, financée par la publicité. Un abonnement facultatif « Sans pub » (0,99 € par mois ou 8,99 € par an) retire toute publicité tant qu’il est actif ; une vidéo récompensée offre aussi 6 h sans publicité. Géré par StoreKit et votre compte Apple : aucune donnée bancaire dans l’app.', en: 'Free app, funded by ads. An optional “Ad-Free” subscription (€0.99 per month or €8.99 per year) removes every ad while it is active; a rewarded video also gives 6 hours ad-free. Handled by StoreKit and your Apple account: no payment card data in the app.' },
             demo: {
                 title: { fr: 'Bornes', en: 'Chargers' },
                 icon: 'evstation',
@@ -566,11 +566,11 @@
                 en: 'Public toilets in France: map, useful filters, accessibility, opening hours and directions.'
             },
             features: {
-                fr: ['Carte des toilettes publiques en France avec distance et guidage.', 'Filtres d’accessibilité, horaires et informations selon les données ouvertes.', 'Favoris, préférences et données locales sans compte utilisateur.', 'Application gratuite financée par publicité AdMob.'],
-                en: ['Map of public toilets in France with distance and directions.', 'Accessibility filters, opening hours and details from open data.', 'Favorites, preferences and local data with no user account.', 'Free app funded by AdMob ads.']
+                fr: ['Carte des toilettes publiques en France avec distance et guidage.', 'Filtres d’accessibilité, horaires et informations selon les données ouvertes.', 'Favoris, préférences et données locales sans compte utilisateur.', 'Application gratuite financée par publicité AdMob, abonnement facultatif « Sans pub ».'],
+                en: ['Map of public toilets in France with distance and directions.', 'Accessibility filters, opening hours and details from open data.', 'Favorites, preferences and local data with no user account.', 'Free app funded by AdMob ads, optional “Ad-Free” subscription.']
             },
             sources: { fr: 'Données ouvertes françaises sur les toilettes publiques, mises en cache localement.', en: 'French open data on public toilets, cached locally.' },
-            business: { fr: 'Publicités AdMob avec consentement. Aucun achat intégré.', en: 'AdMob ads with consent. No in app purchases.' },
+            business: { fr: 'Application gratuite, financée par la publicité. Un abonnement facultatif « Sans pub » (0,99 € par mois ou 8,99 € par an) retire toute publicité tant qu’il est actif ; une vidéo récompensée offre aussi 6 h sans publicité. Géré par StoreKit et votre compte Apple : aucune donnée bancaire dans l’app.', en: 'Free app, funded by ads. An optional “Ad-Free” subscription (€0.99 per month or €8.99 per year) removes every ad while it is active; a rewarded video also gives 6 hours ad-free. Handled by StoreKit and your Apple account: no payment card data in the app.' },
             demo: {
                 title: { fr: 'Toilettes', en: 'Toilets' },
                 icon: 'toilet',
@@ -599,11 +599,11 @@
                 en: 'AEDs: availability, accessibility, Emergency mode, SAMU 15 call and CPR guide with haptic metronome.'
             },
             features: {
-                fr: ['Carte des DAE proches avec code couleur par accessibilité.', 'Filtres accès public, 24h/24, intérieur/extérieur et rayon 500 m à 10 km.', 'Mode Urgence, appel SAMU 15 avec confirmation et guide RCP avec métronome haptique.', 'Vidéo récompensée 1 h sans pub et don StoreKit pour retirer les publicités.'],
-                en: ['Nearby AED map with color coding by accessibility.', 'Public access, 24/7, indoor/outdoor and 500 m to 10 km radius filters.', 'Emergency mode, confirmed SAMU 15 call and CPR guide with haptic metronome.', 'Rewarded video gives 1 h ad free; a StoreKit donation removes ads for good.']
+                fr: ['Carte des DAE proches avec code couleur par accessibilité.', 'Filtres accès public, 24h/24, intérieur/extérieur et rayon 500 m à 10 km.', 'Mode Urgence, appel SAMU 15 avec confirmation et guide RCP avec métronome haptique.', 'Abonnement facultatif « Sans pub » pour retirer toute publicité, et vidéo récompensée pour 6 h sans publicité.'],
+                en: ['Nearby AED map with color coding by accessibility.', 'Public access, 24/7, indoor/outdoor and 500 m to 10 km radius filters.', 'Emergency mode, confirmed SAMU 15 call and CPR guide with haptic metronome.', 'Optional “Ad-Free” subscription removes every ad; a rewarded video gives 6 ad-free hours.']
             },
             sources: { fr: 'Base nationale des défibrillateurs, mise en cache localement.', en: 'The national defibrillator database, cached locally.' },
-            business: { fr: 'Publicités avec consentement ; don StoreKit optionnel pour les retirer définitivement.', en: 'Ads with consent; optional StoreKit donation removes them permanently.' },
+            business: { fr: 'Application gratuite, financée par la publicité. Un abonnement facultatif « Sans pub » (0,99 € par mois ou 8,99 € par an) retire toute publicité tant qu’il est actif ; une vidéo récompensée offre aussi 6 h sans publicité. Géré par StoreKit et votre compte Apple : aucune donnée bancaire dans l’app.', en: 'Free app, funded by ads. An optional “Ad-Free” subscription (€0.99 per month or €8.99 per year) removes every ad while it is active; a rewarded video also gives 6 hours ad-free. Handled by StoreKit and your Apple account: no payment card data in the app.' },
             demo: {
                 title: { fr: 'Défibrillateurs', en: 'Defibrillators' },
                 icon: 'heartbolt',
@@ -801,7 +801,7 @@
                     'Une histoire complète : cinématiques, dialogues parlés, dix amis et le Baron Grisaille, qui a volé les couleurs de l’archipel.',
                     'Un défi du jour, le même pour tous, un cadeau quotidien et un bonus au choix avant chaque niveau.',
                     'Des looks pour Gloup, des quêtes annexes et une collection, tout se gagne en jouant.',
-                    '34 langues, iPhone et iPad, portrait et paysage. Le jeu se joue hors connexion, sans compte.'
+                    '45 langues, iPhone et iPad, portrait et paysage. Le jeu se joue hors connexion, sans compte.'
                 ],
                 en: [
                     'Slide your finger to move Gloup: he only catches objects of his color, grows with every catch, and switches color when he grabs a gem.',
@@ -809,7 +809,7 @@
                     'A full story: cutscenes, voiced dialogue, ten friends and Baron Grisaille, who stole the archipelago’s colors.',
                     'A daily challenge, the same for everyone, a daily gift and a booster of your choice before each level.',
                     'Looks for Gloup, side quests and a collection, all earned by playing.',
-                    '34 languages, iPhone and iPad, portrait and landscape. The game plays offline, with no account.'
+                    '45 languages, iPhone and iPad, portrait and landscape. The game plays offline, with no account.'
                 ]
             },
             sources: { fr: 'Aucune donnée externe : les îles, les niveaux, les musiques et les textes sont intégrés au jeu, qui se joue hors connexion. Seule la publicité utilise le réseau.', en: 'No external data: the islands, levels, music and texts are built into the game, which plays offline. Only advertising uses the network.' },
@@ -819,8 +819,8 @@
                 en: 'Catch everything of your color. Ten islands, a hundred levels and a real story.'
             },
             stats: {
-                fr: [['10', 'îles flottantes'], ['100', 'niveaux'], ['34', 'langues'], ['0', 'achat intégré']],
-                en: [['10', 'floating islands'], ['100', 'levels'], ['34', 'languages'], ['0', 'in-app purchases']]
+                fr: [['10', 'îles flottantes'], ['100', 'niveaux'], ['45', 'langues'], ['0', 'achat intégré']],
+                en: [['10', 'floating islands'], ['100', 'levels'], ['45', 'languages'], ['0', 'in-app purchases']]
             },
             /* Les huit captures App Store V0.1 (docs/screenshots du projet), dans
                l'ordre de la fiche. Légendes tirées du README des captures. */
@@ -846,7 +846,7 @@
                     'Il grandit de bébé à adulte sur 60 niveaux et se forge un caractère parmi cinq traits : gourmand, joueur, coquet, rêveur ou jardinier.',
                     '33 aliments, 20 chapeaux, 14 looks, 24 couleurs, et des papiers peints, sols et meubles pour décorer chaque pièce.',
                     '9 mini-jeux, 18 activités, des quêtes du jour et de la semaine, un album de souvenirs, un ami en visite chaque jour et 20 trophées, aussi dans Game Center.',
-                    '34 langues, iPhone et iPad. Le jeu se joue hors connexion, sans compte, avec des rappels facultatifs quand Gloup a besoin de vous.'
+                    '45 langues, iPhone et iPad. Le jeu se joue hors connexion, sans compte, avec des rappels facultatifs quand Gloup a besoin de vous.'
                 ],
                 en: [
                     'A cutaway house with a bedroom, living room, kitchen and bathroom: Gloup eats what you slide to his mouth, cooks 14 recipes with you, takes a bubble bath and goes to bed after an evening ritual.',
@@ -855,7 +855,7 @@
                     'He grows from baby to adult over 60 levels and builds a personality from five traits: foodie, playful, stylish, dreamer or gardener.',
                     '33 foods, 20 hats, 14 looks, 24 colors, and wallpapers, floors and furniture to decorate every room.',
                     '9 mini-games, 18 activities, daily and weekly quests, a memory album, a friend visiting each day and 20 trophies, also in Game Center.',
-                    '34 languages, iPhone and iPad. The game plays offline, with no account, with optional reminders when Gloup needs you.'
+                    '45 languages, iPhone and iPad. The game plays offline, with no account, with optional reminders when Gloup needs you.'
                 ]
             },
             sources: { fr: 'Aucune donnée externe : la maison, le jardin, les aliments, les looks, les mini-jeux, les musiques et les textes sont intégrés au jeu, qui se joue hors connexion. Les rappels sont programmés sur l’appareil, sans serveur.', en: 'No external data: the house, garden, foods, looks, mini-games, music and texts are built into the game, which plays offline. Reminders are scheduled on the device, with no server.' },
@@ -865,8 +865,8 @@
                 en: 'Gloup moves in with you. Feed him, bathe him, tuck him in and watch him grow.'
             },
             stats: {
-                fr: [['60', 'niveaux, de bébé à adulte'], ['9', 'mini-jeux'], ['33', 'aliments'], ['34', 'langues']],
-                en: [['60', 'levels, from baby to adult'], ['9', 'mini-games'], ['33', 'foods'], ['34', 'languages']]
+                fr: [['60', 'niveaux, de bébé à adulte'], ['9', 'mini-jeux'], ['33', 'aliments'], ['45', 'langues']],
+                en: [['60', 'levels, from baby to adult'], ['9', 'mini-games'], ['33', 'foods'], ['45', 'languages']]
             },
             shotTops: ['#6cbfff', '#feb045', '#7bd4ff', '#674acc', '#8add69', '#ff8fc8', '#fb87d9', '#39c16c'],
             storeShots: {
@@ -1034,14 +1034,14 @@
            n'est affirmé ici qui ne soit dit sur la page d'une application. */
         faq: {
             fr: [
-                ['Les applications sont-elles gratuites ?', 'Oui. Les cinq applications iPhone et les trois jeux se téléchargent gratuitement et sont financés par une publicité discrète. ChromaFight est gratuit lui aussi, avec des achats intégrés facultatifs. IRVEFrance propose des outils Premium facultatifs, DefibFrance un don facultatif qui retire la publicité. Les deux utilitaires Mac sont libres et open source, sans publicité ni achat. Telora, bientôt disponible, sera sans publicité et s’utilisera avec l’abonnement Telora+, au mois ou à l’année, après un essai gratuit de 7 jours.'],
+                ['Les applications sont-elles gratuites ?', 'Oui. Les applications iPhone et les trois jeux se téléchargent gratuitement et sont financés par une publicité discrète. ChromaFight est gratuit lui aussi, avec des achats intégrés facultatifs. CarbuFrance, IRVEFrance, ToiletteFrance et DefibFrance proposent un abonnement facultatif « Sans pub » (0,99 € par mois ou 8,99 € par an) qui retire toute publicité ; une vidéo facultative y offre aussi 6 h sans publicité. Telzo, bientôt disponible, proposera le sien à 0,99 € par mois ou 4,99 € par an. Les deux utilitaires Mac sont libres et open source, sans publicité ni achat. Telora, bientôt disponible, sera sans publicité et s’utilisera avec l’abonnement Telora+, au mois ou à l’année, après un essai gratuit de 7 jours.'],
                 ['Faut-il créer un compte ?', 'Non. Aucune application ne demande de compte ni d’inscription. Favoris et réglages restent sur votre appareil.'],
                 ['Fonctionnent-elles sans connexion ?', 'Les applications de données publiques les mettent en cache pour rester utilisables hors connexion ; Telora lit vos propres sources et a donc besoin du réseau. Les trois jeux se jouent hors connexion ; seuls la publicité et, pour ChromaFight, les achats et la copie iCloud de la sauvegarde utilisent le réseau.'],
                 ['Sur quels appareils ?', 'iPhone et iPad sous iOS 18 ou plus pour les applications et les jeux. Telora aussi sur Apple TV (tvOS 18 ou plus). Mac Apple Silicon sous macOS 26 ou 27 pour MacTuner et DNSTuner.'],
                 ['Où trouver de l’aide ?', 'Chaque application a sa page d’assistance. Je réponds moi-même à chaque message, en général sous 24 à 48 heures.']
             ],
             en: [
-                ['Are the apps free?', 'Yes. The five iPhone apps and the three games are free to download and funded by discreet advertising. ChromaFight is free too, with optional in-app purchases. IRVEFrance offers optional Premium tools, DefibFrance an optional donation that removes ads. The two Mac utilities are free and open source, with no ads and no purchases. Telora, coming soon, will have no ads and will be used with the Telora+ subscription, monthly or yearly, after a 7-day free trial.'],
+                ['Are the apps free?', 'Yes. The iPhone apps and the three games are free to download and funded by discreet advertising. ChromaFight is free too, with optional in-app purchases. CarbuFrance, IRVEFrance, ToiletteFrance and DefibFrance offer an optional “Ad-Free” subscription (€0.99 per month or €8.99 per year) that removes every ad; an optional video also gives 6 hours ad-free. Telzo, coming soon, will offer its own at €0.99 per month or €4.99 per year. The two Mac utilities are free and open source, with no ads and no purchases. Telora, coming soon, will have no ads and will be used with the Telora+ subscription, monthly or yearly, after a 7-day free trial.'],
                 ['Do I need an account?', 'No. None of the apps asks for an account or a sign-up. Favorites and settings stay on your device.'],
                 ['Do they work offline?', 'The public data apps cache it so they keep working offline; Telora plays your own sources and therefore needs the network. The three games play offline; only advertising and, for ChromaFight, purchases and the iCloud copy of the save use the network.'],
                 ['Which devices?', 'iPhone and iPad on iOS 18 or later for the apps and games. Telora on Apple TV too (tvOS 18 or later). Apple Silicon Macs on macOS 26 or 27 for MacTuner and DNSTuner.'],
