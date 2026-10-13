@@ -722,6 +722,40 @@
                 en: ['The home screen', 'Movies, newest first', 'A movie page', 'A show page', 'Search across your sources', 'An interface your way']
             }
         },
+        telzo: {
+            name: 'Telzo', platform: 'ios', accent: '#3b5bdb',
+            store: '',
+            on: { fr: 'iPhone et iPad', en: 'iPhone and iPad' },
+            tag: { fr: 'Télécommande TV', en: 'TV remote' },
+            desc: {
+                fr: 'Télécommande universelle par Wi-Fi pour iPhone et iPad : téléviseurs connectés, Chromecast et box TV, avec clavier, pavé tactile et applications. Aucun compte, rien ne quitte votre domicile.',
+                en: 'Universal Wi-Fi remote for iPhone and iPad: smart TVs, Chromecast and TV boxes, with keyboard, touchpad and apps. No account, nothing leaves your home.'
+            },
+            chips: {
+                fr: ['Gratuite', 'Sans compte', '7 jours d’essai Sans pub'],
+                en: ['Free', 'No account', '7-day Ad-Free trial']
+            },
+            features: {
+                fr: [
+                    'Pavé directionnel ou pavé tactile, volume, chaînes, lecture et alimentation, avec retour haptique.',
+                    'Le clavier de l’iPhone pour écrire vos recherches sur la télévision, et vos applications (Netflix, YouTube…) en un geste.',
+                    'Téléviseurs Samsung, LG, Google TV et Android TV (Sony, TCL, Philips, Xiaomi, Hisense…), Roku et Sony Bravia, Chromecast, box Orange, Freebox, Sky Q, TiVo et DirecTV.',
+                    'Recherche automatique sur le Wi-Fi, plusieurs appareils associés et bascule rapide.',
+                    'Siri, widget et commande du Centre de contrôle.',
+                    'Aucun compte, aucun serveur : les commandes vont directement de l’iPhone au téléviseur.'
+                ],
+                en: [
+                    'D-pad or touchpad, volume, channels, playback and power, with haptic feedback.',
+                    'The iPhone keyboard to type searches on your TV, and your apps (Netflix, YouTube…) in one tap.',
+                    'Samsung, LG, Google TV and Android TV (Sony, TCL, Philips, Xiaomi, Hisense…), Roku and Sony Bravia TVs, Chromecast, Orange, Freebox, Sky Q, TiVo and DirecTV boxes.',
+                    'Automatic search on your Wi-Fi, several paired devices with quick switching.',
+                    'Siri, a widget and a Control Center control.',
+                    'No account, no server: commands go straight from the iPhone to the TV.'
+                ]
+            },
+            sources: { fr: 'Aucune source de données externe : Telzo ne communique qu’avec les appareils de votre réseau local. Telzo n’est affilié à aucun fabricant de téléviseurs ; les marques citées appartiennent à leurs propriétaires.', en: 'No external data source: Telzo only talks to devices on your local network. Telzo is not affiliated with any TV manufacturer; the brands mentioned belong to their owners.' },
+            business: { fr: 'Gratuite, toutes les touches comprises, financée par la publicité. Abonnement facultatif « Sans pub » à 0,99 € par mois ou 4,99 € par an, avec 7 jours d’essai gratuit, géré par StoreKit et votre compte Apple.', en: 'Free, every button included, funded by advertising. Optional “Ad-Free” subscription at €0.99 per month or €4.99 per year, with a 7-day free trial, handled by StoreKit and your Apple account.' }
+        },
         mactuner: {
             name: 'MacTuner', platform: 'mac', accent: '#8eb8ff',
             store: GITHUB_MACTUNER,
@@ -895,7 +929,7 @@
         }
     };
     var NOMS_APPAREILS = { iphone: 'iPhone', ipad: 'iPad', tv: 'Apple TV' };
-    var IOS_ORDER = ['carbufrance', 'irvefrance', 'toilettefrance', 'defibfrance', 'dvffrance', 'telora'];
+    var IOS_ORDER = ['carbufrance', 'irvefrance', 'toilettefrance', 'defibfrance', 'dvffrance', 'telora', 'telzo'];
     /* Les jeux forment leur propre gamme : ni données publiques, ni utilitaire. */
     var GAME_ORDER = ['trouchromatique', 'mongloup', 'chromafight'];
 

@@ -25,6 +25,7 @@ Mon Gloup et ChromaFight et de Telora en français et en anglais.
 - [DefibFrance](https://bodyroro.github.io/defibfrance.html) : défibrillateurs automatisés externes. Disponibilité, accessibilité, mode Urgence, appel du SAMU 15, guide de réanimation cardio-pulmonaire avec métronome haptique. Abonnement facultatif « Sans pub » : 0,99 € par mois ou 8,99 € par an.
 - [DVFFrance](https://bodyroro.github.io/dvffrance.html) : prix de l'immobilier d'après les ventes réellement enregistrées (base DVF). Carte, médianes par commune, plan cadastral, fiche de quartier, fourchette d'estimation. Gratuite, sur l'App Store.
 - [Telora](https://bodyroro.github.io/telora.html) : lecteur multimédia pour iPhone, iPad et Apple TV (iOS, iPadOS et tvOS 18 ou plus), bientôt disponible. Lit les films, séries et chaînes des sources de l'utilisateur : liste de lecture (lien M3U ou accès par identifiant), Plex, Jellyfin, Emby, NAS (WebDAV, SMB), fichiers de l'appareil. Telora ne fournit aucun contenu. Bibliothèque sans doublons, meilleure source dans votre langue jusqu'en 4K, direct en bouquets numérotés, profils, contrôle parental, lecteur d'Apple et VLC intégré. Sans publicité ni pistage, abonnement Telora+ au mois ou à l'année avec essai gratuit de 7 jours.
+- [Telzo](https://bodyroro.github.io/telzo.html) : télécommande universelle par Wi-Fi pour iPhone et iPad (iOS et iPadOS 18 ou plus), bientôt disponible. Pilote les téléviseurs Samsung, LG, Google TV et Android TV, Roku, Sony Bravia, Chromecast et les box Orange, Freebox, Sky Q, TiVo et DirecTV : pavé directionnel ou tactile, clavier, applications, Siri, widget. Sans compte ni serveur. Gratuite avec publicité, abonnement Sans pub à 0,99 € par mois ou 4,99 € par an avec 7 jours d'essai.
 
 ## Utilitaires macOS
 
@@ -54,6 +55,7 @@ navigateur :
 - [Confidentialité DefibFrance](https://bodyroro.github.io/defibfrance-privacy.html) · [Support](https://bodyroro.github.io/defibfrance-support.html)
 - [Confidentialité DVFFrance](https://bodyroro.github.io/dvffrance-privacy.html) · [Support](https://bodyroro.github.io/dvffrance-support.html)
 - [Confidentialité Telora](https://bodyroro.github.io/telora-privacy.html) · [Support](https://bodyroro.github.io/telora-support.html)
+- [Confidentialité Telzo](https://bodyroro.github.io/telzo-privacy.html) · [Support](https://bodyroro.github.io/telzo-support.html)
 - [Confidentialité Trou Chromatique](https://bodyroro.github.io/trouchromatique-privacy.html) · [Support](https://bodyroro.github.io/trouchromatique-support.html)
 - [Confidentialité Mon Gloup](https://bodyroro.github.io/mongloup-privacy.html) · [Support](https://bodyroro.github.io/mongloup-support.html)
 - [Confidentialité ChromaFight](https://bodyroro.github.io/chromafight-privacy.html) · [Support](https://bodyroro.github.io/chromafight-support.html)

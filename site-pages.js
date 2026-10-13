@@ -131,6 +131,20 @@
         // Textes en français et en anglais seulement, `languages` ramène toute autre langue à
         // l'anglais. `adText` remplace le texte publicitaire commun, qui promet une
         // vidéo de 6 h sans publicité que le jeu n'offre pas.
+        // Télécommande TV Wi-Fi (iPhone, iPad), 13 octobre 2026. Pub AdMob et abonnement « Sans pub » propres :
+        // 0,99 € par mois, 4,99 € par an, essai gratuit de 7 jours ; textes dans `adText` et `appTypeText`.
+        telzo: {
+            name: 'Telzo', publisher: 'BodyCorp', icon: 'telzo.png', type: 'remote', status: 'soon', store: '', premium: false, webp: false, platform: 'iOS 18+ · iPadOS 18+',
+            languages: ['fr', 'en'], updated: '2026-10-13',
+            description: {
+                fr: 'Télécommande universelle par Wi-Fi pour iPhone et iPad : téléviseurs connectés, Chromecast et box TV, avec clavier, pavé tactile et applications. Aucun compte, rien ne quitte votre domicile.',
+                en: 'Universal Wi-Fi remote for iPhone and iPad: smart TVs, Chromecast and TV boxes, with keyboard, touchpad and apps. No account, nothing leaves your home.'
+            },
+            adText: {
+                fr: 'Telzo est gratuit et toutes ses touches le restent. Il est financé par la publicité Google AdMob : un bandeau en bas de l’écran, une annonce à l’ouverture de l’application, et parfois une courte annonce plein écran, jamais pendant que vous utilisez une touche. Une vidéo facultative offre 6 h sans publicité. L’abonnement facultatif « Sans pub » (0,99 € par mois ou 4,99 € par an, avec 7 jours d’essai gratuit) retire toute publicité tant qu’il est actif ; il est géré par StoreKit et votre compte Apple, se renouvelle automatiquement sauf résiliation au moins 24 heures avant la fin de la période et se gère dans les réglages de votre compte Apple. Aucune donnée bancaire n’est reçue par l’application. Au premier lancement dans l’Espace économique européen et au Royaume-Uni, un formulaire de Google (UMP) recueille votre consentement, modifiable dans Réglages › Choix publicitaires ; l’autorisation de suivi d’Apple (App Tracking Transparency) est demandée ensuite et peut être refusée.',
+                en: 'Telzo is free and every button stays free. It is funded by Google AdMob advertising: a banner at the bottom of the screen, an ad when the app opens, and occasionally a short full-screen ad, never while you are pressing a button. An optional video gives 6 hours ad-free. The optional “Ad-Free” subscription (€0.99 per month or €4.99 per year, with a 7-day free trial) removes every ad while it is active; it is handled by StoreKit and your Apple account, renews automatically unless cancelled at least 24 hours before the end of the period, and is managed in your Apple Account settings. The app never receives payment card data. On first launch in the European Economic Area and the United Kingdom, a Google form (UMP) asks for your consent, which you can change in Settings › Ad Choices; Apple’s tracking permission (App Tracking Transparency) is requested next and can be declined.'
+            }
+        },
         trouchromatique: {
             name: 'Trou Chromatique', icon: 'trouchromatique.png', type: 'game', status: 'available', store: appStore + 'trou-chromatique/id6816639945', premium: false,
             languages: ['fr', 'en'], updated: '2026-09-27',
@@ -270,6 +284,10 @@
             fr: ['Une maison de poupée en coupe, chambre, salon, cuisine et salle de bain, et son jardin : Gloup mange ce que vous lui glissez jusqu’à la bouche, cuisine 14 recettes avec vous, prend son bain moussant et se couche au terme d’un rituel du soir.', 'Un potager à semer, arroser et récolter, un pommier, une balançoire, une mare et des cachettes à fouiller.', 'Quatre besoins, faim, joie, propreté et énergie, suivent le temps réel. À l’adoption, vous choisissez : Sans mort, Gloup ne tombe jamais malade ; Avec mort, longtemps négligé, il tombe malade et peut partir, toujours après des avertissements.', 'Il grandit de bébé à adulte sur 60 niveaux et se forge un caractère parmi cinq traits : 33 aliments, 20 chapeaux, 14 looks, 24 couleurs, et des papiers peints, sols et meubles pour décorer la maison.', '9 mini-jeux, 18 activités, des quêtes du jour et de la semaine, un album de souvenirs, la visite d’un des dix amis chaque jour et 20 trophées, aussi dans Game Center.', '34 langues, iPhone et iPad. Le jeu se joue hors connexion, sans compte, avec des rappels facultatifs quand Gloup a besoin de vous.'],
             en: ['A cutaway dollhouse with a bedroom, living room, kitchen and bathroom, and its garden: Gloup eats what you slide to his mouth, cooks 14 recipes with you, takes a bubble bath and goes to bed after an evening ritual.', 'A vegetable patch to sow, water and harvest, an apple tree, a swing, a pond and hiding spots to search.', 'Four needs, hunger, joy, cleanliness and energy, follow real time. At adoption you choose: Never dies, Gloup never gets sick; Can pass away, neglected for too long he gets sick and may leave, always after warnings.', 'He grows from baby to adult over 60 levels and builds a personality from five traits: 33 foods, 20 hats, 14 looks, 24 colors, and wallpapers, floors and furniture to decorate the house.', '9 mini-games, 18 activities, daily and weekly quests, a memory album, a visit from one of ten friends each day and 20 trophies, also in Game Center.', '34 languages, iPhone and iPad. The game plays offline, with no account, with optional reminders when Gloup needs you.']
         },
+        telzo: {
+            fr: ['Votre iPhone devient la télécommande : pavé directionnel ou pavé tactile, volume, chaînes, lecture, alimentation, avec retour haptique.', 'Le clavier de l’iPhone pour écrire vos recherches sur la télévision, et vos applications (Netflix, YouTube…) en un geste.', 'Téléviseurs Samsung, LG, Google TV et Android TV (Sony, TCL, Philips, Xiaomi, Hisense…), Roku, Sony Bravia, Chromecast, et les box Orange, Freebox, Sky Q, TiVo et DirecTV.', 'Recherche automatique sur le Wi-Fi, plusieurs appareils associés et bascule rapide, Siri, widget et commande du Centre de contrôle.', 'Aucun compte, aucun serveur : les commandes vont directement de l’iPhone au téléviseur. Telzo n’est affilié à aucun fabricant.'],
+            en: ['Your iPhone becomes the remote: D-pad or touchpad, volume, channels, playback and power, with haptic feedback.', 'The iPhone keyboard to type searches on your TV, and your apps (Netflix, YouTube…) in one tap.', 'Samsung, LG, Google TV and Android TV (Sony, TCL, Philips, Xiaomi, Hisense…), Roku and Sony Bravia TVs, Chromecast, and Orange, Freebox, Sky Q, TiVo and DirecTV boxes.', 'Automatic search on your Wi-Fi, several paired devices with quick switching, Siri, a widget and a Control Center control.', 'No account, no server: commands go straight from the iPhone to the TV. Telzo is not affiliated with any manufacturer.']
+        },
         telora: {
             fr: ['Une seule bibliothèque pour toutes vos sources : les doublons sont réunis, une fiche par film ou série avec toutes ses versions.', 'La meilleure source choisie dans votre langue, jusqu’en 4K, avec ses vraies caractéristiques (résolution, codec, HDR, audio).', 'Le direct en bouquets numérotés, programme en cours et à suivre, logos officiels des chaînes.', 'Sagas, studios, plateformes et acteurs, logos des titres, listes personnelles, profils et contrôle parental.', 'Lecteur d’Apple (image dans l’image, AirPlay, HDR) et VLC intégré pour tous les autres formats.'],
             en: ['One library for all your sources: duplicates merged, one page per movie or show with every version.', 'The best source picked in your language, up to 4K, with its real details (resolution, codec, HDR, audio).', 'Live TV in numbered lineups, now and next, official channel logos.', 'Collections, studios, platforms and cast, title logos, personal lists, profiles and parental controls.', 'Apple’s player (Picture in Picture, AirPlay, HDR) and built-in VLC for every other format.']
@@ -280,7 +298,7 @@
         },
     };
 
-    var appOrder = ['carbufrance', 'irvefrance', 'toilettefrance', 'defibfrance', 'dvffrance', 'trouchromatique', 'mongloup', 'chromafight', 'mactuner'];
+    var appOrder = ['carbufrance', 'irvefrance', 'toilettefrance', 'defibfrance', 'dvffrance', 'telzo', 'trouchromatique', 'mongloup', 'chromafight', 'mactuner'];
 
     var typeText = {
         fuel: {
@@ -344,6 +362,34 @@
     // Faits relevés dans le code du jeu le 29 septembre 2026 (PrivacyInfo.xcprivacy,
     // AdBridge, NotifyBridge, GameCenterBridge, ui.js, life.js, economy.js).
     var appTypeText = {
+        telzo: {
+            fr: {
+                data: 'Telzo ne crée aucun compte et n’envoie au développeur aucune donnée personnelle. L’application cherche vos téléviseurs et boîtiers sur le réseau Wi-Fi local (autorisation « Réseau local » d’iOS) et leur envoie les commandes directement, sans passer par aucun serveur. Les appareils associés et leurs autorisations (jetons, codes, certificats) restent sur l’appareil, dans le Trousseau, sans synchronisation. Telzo ne demande ni la localisation, ni les contacts, ni les photos, ni le micro.',
+                source: 'Aucune source de données externe : Telzo ne communique qu’avec les appareils de votre réseau local. Le développeur n’ajoute aucun outil de mesure d’audience : les seuls kits tiers sont Google Mobile Ads et Google User Messaging Platform, pour la publicité et le consentement.',
+                retention: 'Les données restent sur l’appareil tant que l’application est installée. Oublier un appareil (glisser dans la liste) efface son association ; supprimer l’application efface tout, Trousseau compris.',
+                deletion: 'Telzo ne crée aucun compte. Glissez un appareil dans « Mes téléviseurs » pour l’oublier ; supprimer l’application efface toutes les données, Trousseau compris.',
+                support: [
+                    ['Mon téléviseur n’apparaît pas ?', 'L’iPhone et le téléviseur doivent être sur le même réseau Wi-Fi, et le téléviseur allumé. Vérifiez que Telzo a l’autorisation Réseau local (Réglages de l’iPhone › Confidentialité et sécurité › Réseau local). Vous pouvez aussi ajouter l’appareil par son adresse IP.'],
+                    ['Comment associer mon téléviseur ?', 'La première fois, le téléviseur affiche une demande à accepter (Samsung, LG) ou un code à saisir dans Telzo (Google TV, Android TV). Sony Bravia demande une clé définie dans Réglages › Réseau › Contrôle IP ; la Freebox, le code télécommande réseau de ses réglages.'],
+                    ['Et mon Apple TV ?', 'Apple réserve le pilotage de l’Apple TV à sa télécommande intégrée à iOS : ajoutez « Télécommande Apple TV » dans Réglages › Centre de contrôle.'],
+                    ['Comment gérer l’abonnement ?', 'Réglages de Telzo › Sans publicité, ou Réglages de l’iPhone › votre nom › Abonnements. L’essai gratuit de 7 jours n’est proposé qu’une fois par identifiant Apple.'],
+                    ['Toujours un problème ?', 'Écrivez au support avec le bouton ci-dessous, en précisant votre appareil, sa version et la marque du téléviseur. Le développeur répond personnellement à chaque message.']
+                ]
+            },
+            en: {
+                data: 'Telzo creates no account and sends the developer no personal data. The app looks for your TVs and boxes on the local Wi-Fi network (iOS Local Network permission) and sends them commands directly, without any server. Paired devices and their authorizations (tokens, codes, certificates) stay on the device, in the Keychain, without syncing. Telzo asks for neither location, contacts, photos nor the microphone.',
+                source: 'No external data source: Telzo only talks to devices on your local network. The developer adds no analytics tool: the only third-party kits are Google Mobile Ads and Google User Messaging Platform, for advertising and consent.',
+                retention: 'Data stays on the device as long as the app is installed. Forgetting a device (swipe in the list) erases its pairing; deleting the app erases everything, Keychain included.',
+                deletion: 'Telzo creates no account. Swipe a device in “My TVs” to forget it; deleting the app erases all data, Keychain included.',
+                support: [
+                    ['My TV does not show up?', 'The iPhone and the TV must be on the same Wi-Fi network, and the TV switched on. Check that Telzo has the Local Network permission (iPhone Settings › Privacy & Security › Local Network). You can also add the device by its IP address.'],
+                    ['How do I pair my TV?', 'The first time, the TV shows a request to accept (Samsung, LG) or a code to enter in Telzo (Google TV, Android TV). Sony Bravia asks for a key set in Settings › Network › IP control; Freebox, the network remote code from its settings.'],
+                    ['What about my Apple TV?', 'Apple keeps Apple TV control for its remote built into iOS: add “Apple TV Remote” in Settings › Control Center.'],
+                    ['How do I manage the subscription?', 'Telzo Settings › Ad-Free, or iPhone Settings › your name › Subscriptions. The 7-day free trial is offered once per Apple Account.'],
+                    ['Still having a problem?', 'Write to support with the button below, stating your device, its version and the TV brand. The developer answers every message personally.']
+                ]
+            }
+        },
         telora: {
             fr: {
                 data: 'Telora ne crée aucun compte et n’envoie au développeur aucune donnée personnelle. Les adresses de vos sources et vos identifiants restent sur l’appareil, dans le Trousseau (mots de passe et liens chiffrés) ; le catalogue, les favoris, les listes, la reprise de lecture et les réglages sont enregistrés sur l’appareil. L’application se connecte directement aux serveurs que vous ajoutez (votre fournisseur, votre serveur Plex, Jellyfin ou Emby, votre NAS) : ces services reçoivent votre adresse IP selon leurs propres règles. Le réseau local n’est utilisé que pour vos serveurs du domicile. Aucune publicité, aucun outil de mesure d’audience.',
