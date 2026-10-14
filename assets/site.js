@@ -949,7 +949,7 @@
                 fr: [
                     'Sur chaque île de Chromaterre, un Grison invisible se cache dans une grille de cases. Posez un ami pour écouter : il annonce le nombre de pas jusqu’au voleur, murs contournés, ou « … » s’il est trop loin. Puis fouillez la bonne case.',
                     'Le voleur bouge après chacune de vos actions, d’une case ou pas du tout, jamais à travers un mur ni dans la lumière : à vous de déduire où il peut être. L’aide « Déduction » montre les cases où il peut se cacher.',
-                    'Six îles de dix niveaux, du Jardin des Tournesols à l’Observatoire, chacune avec sa mécanique : lampes, farine qui garde les empreintes, portes à grelots, voleur furtif, souris mécanique qui fait diversion, deux voleurs à la fois. Un chef au dixième niveau.',
+                    'Six îles de dix niveaux, de la Ferme des Tournesols à la Base lunaire, chacune avec sa mécanique : lampes, farine qui garde les empreintes, portes à grelots, voleur furtif, souris mécanique qui fait diversion, deux voleurs à la fois. Un chef au dixième niveau.',
                     'Des pièces à chaque victoire, à dépenser au marché pour six gadgets : sonar, lampe, porte, miel, jumelles et sablier.',
                     'Un défi du jour, le même pour tous, une traque sans fin ouverte après la troisième île, une histoire avec le Baron Grisaille et 21 trophées, aussi dans Game Center.',
                     'Aucune pub pendant un niveau : les vidéos « +3 tours » et « Pièces ×2 » sont facultatives. Aucun achat intégré : tout se gagne en jouant.',
@@ -958,7 +958,7 @@
                 en: [
                     'On each island of Chromaterre, an invisible Greyling hides in a grid of squares. Place a friend to listen: they call out the number of steps to the thief, going around walls, or “…” if it is too far. Then search the right square.',
                     'The thief moves after each of your actions, one square or not at all, never through a wall or into the light: it is up to you to work out where it can be. The “Deduction” aid shows the squares where it may be hiding.',
-                    'Six islands of ten levels, from the Sunflower Garden to the Observatory, each with its own mechanic: lamps, flour that keeps footprints, belled doors, a stealthy thief, a clockwork mouse as a decoy, two thieves at once. A boss on the tenth level.',
+                    'Six islands of ten levels, from the Sunflower Farm to the Moon Base, each with its own mechanic: lamps, flour that keeps footprints, belled doors, a stealthy thief, a clockwork mouse as a decoy, two thieves at once. A boss on the tenth level.',
                     'Coins for every win, to spend at the market on six gadgets: sonar, lamp, door, honey, binoculars and hourglass.',
                     'A daily challenge, the same for everyone, an endless hunt unlocked after the third island, a story with Baron Grisaille and 21 trophies, also in Game Center.',
                     'No ads during a level: the “+3 turns” and “Coins ×2” videos are optional. No in-app purchases: everything is earned by playing.',
