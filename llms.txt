@@ -8,14 +8,14 @@
 
 Le site est bilingue français / anglais : ajouter `?lang=en` à n'importe quelle
 adresse en donne la version anglaise. Les pages de confidentialité et de support
-des applications iPhone et des jeux Trou Chromatique, Mon Gloup et ChromaFight existent
-en onze langues.
+des applications iPhone et des jeux existent en onze langues.
 
 ## Jeux iPhone et iPad
 
 - [Trou Chromatique](https://bodyroro.github.io/trouchromatique.html) : jeu d'aventure. Gloup attrape les objets de sa couleur pour rendre ses couleurs à dix îles flottantes : cent niveaux, une histoire, défi du jour, 45 langues. Gratuit, sans achat intégré, financé par la publicité. Bientôt sur l'App Store.
 - [Mon Gloup](https://bodyroro.github.io/mongloup.html) : jeu de compagnon virtuel. Gloup, la petite créature aux grands yeux, vit dans une maison de poupée et son jardin : on le nourrit, cuisine avec lui, le lave, le couche, cultive le potager et joue avec lui. De bébé à adulte sur 60 niveaux, deux modes choisis à l'adoption (Sans mort, Avec mort), maison à décorer, neuf mini-jeux, 45 langues. Gratuit, sans achat intégré, financé par la publicité. Sur l'App Store : https://apps.apple.com/app/id6817347087
 - [ChromaFight](https://bodyroro.github.io/chromafight.html) : jeu de combat, sur l'App Store. Gloup, la petite créature aux grands yeux, recrache les objets de son ventre, rangés en grille, sur les Grisons, nés de la Grisaille : fusion sur quatre niveaux, accords de couleur, onze îles et 105 niveaux, onze amis, atelier. Gratuit, financé par la publicité et des achats intégrés facultatifs.
+- [ChromaTraque](https://bodyroro.github.io/chromatraque.html) : jeu de déduction, bientôt sur l'App Store. Un Grison invisible vole les gâteaux de Chromaterre : Gloup, la petite créature aux grands yeux, et ses amis l'écoutent, devinent sa cachette et fouillent la bonne case avant la fin des tours. Six îles de dix niveaux, six gadgets, défi du jour, traque sans fin, 45 langues. Gratuit, sans achat intégré, financé par la publicité.
 
 ## Applications iPhone
 
@@ -59,4 +59,5 @@ navigateur :
 - [Confidentialité Trou Chromatique](https://bodyroro.github.io/trouchromatique-privacy.html) · [Support](https://bodyroro.github.io/trouchromatique-support.html)
 - [Confidentialité Mon Gloup](https://bodyroro.github.io/mongloup-privacy.html) · [Support](https://bodyroro.github.io/mongloup-support.html)
 - [Confidentialité ChromaFight](https://bodyroro.github.io/chromafight-privacy.html) · [Support](https://bodyroro.github.io/chromafight-support.html)
+- [Confidentialité ChromaTraque](https://bodyroro.github.io/chromatraque-privacy.html) · [Support](https://bodyroro.github.io/chromatraque-support.html)
 - [Plan du site](https://bodyroro.github.io/sitemap.xml)

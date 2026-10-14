@@ -933,12 +933,54 @@
                 fr: ['L’accueil et la carte de l’île aux pirates', 'Gloup recrache les objets de son ventre', 'Fusionne et accorde les couleurs', 'Des boss géants', 'Onze îles à libérer', 'Onze amis à tes côtés', '44 Grisons à découvrir', 'Améliore ton atelier'],
                 en: ['The home screen and the Pirate Island map', 'Gloup spits the objects from his tummy', 'Merge and match colors', 'Giant bosses', 'Eleven islands to free', 'Eleven friends by your side', '44 Greylings to discover', 'Upgrade your workshop']
             }
+        },
+        /* Pas encore sur l'App Store (`store: ''`) : pastille « Bientôt disponible » et « Bientôt sur l'App Store ».
+           Sans captures (aucune dans Docs/ChromaTraque) : ni galerie ni éventail, l'icône les remplace. Ni achat
+           intégré ni abonnement : les pastilles communes des jeux (`chipsGame`) sont justes. */
+        chromatraque: {
+            name: 'ChromaTraque', platform: 'ios', game: true, accent: '#7b4dff', accent2: '#f4a300',
+            store: '',
+            tag: { fr: 'Jeu de déduction', en: 'Deduction game' },
+            desc: {
+                fr: 'Un Grison invisible vole les gâteaux de Chromaterre. Gloup, la petite créature aux grands yeux, et ses amis l’écoutent, devinent sa cachette et fouillent la bonne case avant la fin des tours. Six îles, un défi du jour et une traque sans fin. Gratuit, sans achat intégré.',
+                en: 'An invisible Greyling is stealing the cakes of Chromaterre. Gloup, the little creature with big eyes, and his friends listen for it, work out its hiding place and search the right square before the turns run out. Six islands, a daily challenge and an endless hunt. Free, no in-app purchases.'
+            },
+            features: {
+                fr: [
+                    'Sur chaque île de Chromaterre, un Grison invisible se cache dans une grille de cases. Posez un ami pour écouter : il annonce le nombre de pas jusqu’au voleur, murs contournés, ou « … » s’il est trop loin. Puis fouillez la bonne case.',
+                    'Le voleur bouge après chacune de vos actions, d’une case ou pas du tout, jamais à travers un mur ni dans la lumière : à vous de déduire où il peut être. L’aide « Déduction » montre les cases où il peut se cacher.',
+                    'Six îles de dix niveaux, du Jardin des Tournesols à l’Observatoire, chacune avec sa mécanique : lampes, farine qui garde les empreintes, portes à grelots, voleur furtif, souris mécanique qui fait diversion, deux voleurs à la fois. Un chef au dixième niveau.',
+                    'Des pièces à chaque victoire, à dépenser au marché pour six gadgets : sonar, lampe, porte, miel, jumelles et sablier.',
+                    'Un défi du jour, le même pour tous, une traque sans fin ouverte après la troisième île, une histoire avec le Baron Grisaille et 21 trophées, aussi dans Game Center.',
+                    'Aucune pub pendant un niveau : les vidéos « +3 tours » et « Pièces ×2 » sont facultatives. Aucun achat intégré : tout se gagne en jouant.',
+                    '45 langues, iPhone et iPad, portrait et paysage. Sans compte : la progression reste sur l’appareil et dans votre iCloud, avec des rappels facultatifs.'
+                ],
+                en: [
+                    'On each island of Chromaterre, an invisible Greyling hides in a grid of squares. Place a friend to listen: they call out the number of steps to the thief, going around walls, or “…” if it is too far. Then search the right square.',
+                    'The thief moves after each of your actions, one square or not at all, never through a wall or into the light: it is up to you to work out where it can be. The “Deduction” aid shows the squares where it may be hiding.',
+                    'Six islands of ten levels, from the Sunflower Garden to the Observatory, each with its own mechanic: lamps, flour that keeps footprints, belled doors, a stealthy thief, a clockwork mouse as a decoy, two thieves at once. A boss on the tenth level.',
+                    'Coins for every win, to spend at the market on six gadgets: sonar, lamp, door, honey, binoculars and hourglass.',
+                    'A daily challenge, the same for everyone, an endless hunt unlocked after the third island, a story with Baron Grisaille and 21 trophies, also in Game Center.',
+                    'No ads during a level: the “+3 turns” and “Coins ×2” videos are optional. No in-app purchases: everything is earned by playing.',
+                    '45 languages, iPhone and iPad, portrait and landscape. No account: progress stays on the device and in your iCloud, with optional reminders.'
+                ]
+            },
+            sources: { fr: 'Aucune donnée externe : les îles, les niveaux, les voleurs, les gadgets, les musiques et les textes sont intégrés au jeu, qui se joue hors connexion. Seules la publicité, Game Center et la copie iCloud de la sauvegarde utilisent le réseau. Les rappels sont programmés sur l’appareil, sans serveur.', en: 'No external data: the islands, levels, thieves, gadgets, music and texts are built into the game, which plays offline. Only advertising, Game Center and the iCloud copy of the save use the network. Reminders are scheduled on the device, with no server.' },
+            business: { fr: 'Jeu 100 % gratuit, financé par la publicité Google AdMob : vidéos facultatives (« +3 tours » une fois par niveau, « Pièces ×2 » 10 fois par jour au plus), et courte publicité entre deux niveaux, jamais pendant un niveau ni avant 10 niveaux réussis. Aucun achat intégré ni abonnement, aucune donnée bancaire dans l’app.', en: 'Fully free game, funded by Google AdMob ads: optional videos (“+3 turns” once per level, “Coins ×2” 10 times a day at most), and a short ad between two levels, never during a level or before 10 levels completed. No in-app purchase or subscription, no payment card data in the app.' },
+            promo: {
+                fr: 'Un voleur invisible rôde sur les îles de Chromaterre. Écoute, déduis, fouille la bonne case avant la fin des tours.',
+                en: 'An invisible thief prowls the islands of Chromaterre. Listen, deduce, search the right square before the turns run out.'
+            },
+            stats: {
+                fr: [['6', 'îles'], ['60', 'niveaux'], ['6', 'gadgets'], ['45', 'langues']],
+                en: [['6', 'islands'], ['60', 'levels'], ['6', 'gadgets'], ['45', 'languages']]
+            }
         }
     };
     var NOMS_APPAREILS = { iphone: 'iPhone', ipad: 'iPad', tv: 'Apple TV' };
     var IOS_ORDER = ['carbufrance', 'irvefrance', 'toilettefrance', 'defibfrance', 'dvffrance', 'telora', 'telzo'];
     /* Les jeux forment leur propre gamme : ni données publiques, ni utilitaire. */
-    var GAME_ORDER = ['trouchromatique', 'mongloup', 'chromafight'];
+    var GAME_ORDER = ['trouchromatique', 'mongloup', 'chromafight', 'chromatraque'];
 
     var MAC_ORDER = ['mactuner', 'dnstuner'];
     /* ---------------------------------------------------------------------
@@ -1396,7 +1438,7 @@
     }
 
     function renderHome() {
-        /* Les trois jeux dès le premier écran : icône, nom, statut. Un jeu à venir
+        /* Les jeux dès le premier écran : icône, nom, statut. Un jeu à venir
            le dit ici plutôt que de promettre une fiche App Store. */
         var jeuxHero = '<nav class="hero-games" aria-label="' + esc(pick(V.heroGamesLabel)) + '">' +
             GAME_ORDER.map(function (k) {
@@ -1424,18 +1466,19 @@
             '</div>' + anneau() + '</section>';
 
         /*
-         * Les trois jeux, en tuiles côte à côte comme les nouveautés d'une page
+         * Les jeux, en tuiles côte à côte comme les nouveautés d'une page
          * d'accueil de constructeur : un nom, une phrase, le badge (ou « Bientôt
          * sur l'App Store »), et trois captures en éventail qui s'écartent au survol.
          */
         function promo(cle) {
             var app = APPS[cle];
-            var legendes = pick(app.storeShots);
-            var eventail = [3, 1, 5].map(function (n, i) {
+            /* Un jeu sans captures montre son icône en grand à la place de l'éventail. */
+            var legendes = app.storeShots && pick(app.storeShots);
+            var eventail = legendes ? [3, 1, 5].map(function (n, i) {
                 return '<div class="promo-shot" style="--k:' + (i - 1) + '">' +
                     telephoneJeu(cle, n, i === 1 ? app.name + ', ' + legendes[n - 1] : '', true,
                         '(max-width: 560px) 34vw, 220px') + '</div>';
-            }).join('');
+            }).join('') : picture('./assets/img/' + cle + '.png', ' class="promo-solo" width="256" height="256" alt="" loading="lazy" decoding="async"');
             return '<article class="promo" style="--accent:' + app.accent + ';--accent-2:' + app.accent2 + '">' +
                 '<div class="promo-copy">' +
                 picture('./assets/img/' + cle + '.png', ' class="promo-icon" width="76" height="76" alt="" loading="lazy" decoding="async"') +
@@ -1463,7 +1506,7 @@
             '</section>';
 
         /*
-         * L'index des applications, rangé par gamme : trois jeux, cinq apps sur
+         * L'index des applications, rangé par gamme : quatre jeux, cinq apps sur
          * iPhone, deux sur Mac. Trois publics, et le site les sépare partout ailleurs.
          */
         function groupe(titre, cles, sousTitre, classe, filtre) {
@@ -1484,7 +1527,7 @@
                     }).join('') +
                 '</div></div>') +
             rise('<div class="app-index">' +
-                groupe(pick(V.navGames), GAME_ORDER, pick(V.gamesSub), 'is-three', 'games') +
+                groupe(pick(V.navGames), GAME_ORDER, pick(V.gamesSub), 'is-four', 'games') +
                 groupe(pick(T.navIOS), IOS_ORDER, pick(V.onIPhone), 'is-six', 'ios') +
                 groupe(pick(T.navMac), MAC_ORDER, pick(V.onMac), 'is-two', 'mac') +
                 '</div>', 80) +
@@ -1761,7 +1804,7 @@
             '<div class="wrap">' +
             rise('<h2 class="small">' + esc(pick(V.contactPerApp)) + '</h2>' +
                 '<p class="lead wide">' + esc(pick(V.contactPerAppLead)) + '</p>') +
-            rise('<div class="app-tiles is-eleven" style="margin-top:48px">' + sujets + '</div>', 80) +
+            rise('<div class="app-tiles is-thirteen" style="margin-top:48px">' + sujets + '</div>', 80) +
             '</div></section>';
 
         return navHTML('v2-contact') + '<main>' + hero + parApp + '</main>' + footerHTML();

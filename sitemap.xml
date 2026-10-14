@@ -175,4 +175,19 @@
     <lastmod>2026-10-13</lastmod>
     <priority>0.4</priority>
   </url>
+  <url>
+    <loc>https://bodyroro.github.io/chromatraque.html</loc>
+    <lastmod>2026-10-14</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://bodyroro.github.io/chromatraque-privacy.html</loc>
+    <lastmod>2026-10-14</lastmod>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://bodyroro.github.io/chromatraque-support.html</loc>
+    <lastmod>2026-10-14</lastmod>
+    <priority>0.4</priority>
+  </url>
 </urlset>

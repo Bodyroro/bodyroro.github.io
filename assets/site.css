@@ -540,10 +540,11 @@ body.menu-open { overflow: hidden; }
 
 /* ================================================ Jeux du premier ecran */
 
-/* Les trois jeux sous les boutons : icone, nom et statut, avant l'anneau. */
+/* Les quatre jeux sous les boutons : icone, nom et statut, avant l'anneau. Une rangee de quatre, puis deux
+   sur deux. */
 .hero-games {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 268px));
+    grid-template-columns: repeat(4, minmax(0, 252px));
     justify-content: center;
     gap: 14px;
     margin-top: 40px;
@@ -579,8 +580,12 @@ body.menu-open { overflow: hidden; }
 .hero-game small { font-size: 13px; color: var(--ink-2); }
 .hero-game small.is-soon { color: color-mix(in srgb, var(--accent) 75%, var(--ink)); font-weight: 600; }
 
+@media (max-width: 1120px) {
+    .hero-games { grid-template-columns: repeat(2, minmax(0, 268px)); }
+}
+
 @media (max-width: 760px) {
-    .hero-games { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+    .hero-games { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
     .hero-game {
         flex-direction: column;
         gap: 8px;
@@ -739,6 +744,13 @@ body.menu-open { overflow: hidden; }
     .app-tiles.is-three > :last-child { grid-column: 1 / -1; }
 }
 
+/* Les quatre jeux : une rangee de quatre, puis deux sur deux. */
+.app-tiles.is-four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+@media (max-width: 1000px) {
+    .app-tiles.is-four { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
 /* Les six applications iPhone : deux rangees de trois, puis trois rangees de deux. */
 .app-tiles.is-six { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 
@@ -759,6 +771,15 @@ body.menu-open { overflow: hidden; }
 @media (max-width: 1100px) {
     .app-tiles.is-eleven { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .app-tiles.is-eleven > :last-child { grid-column: 1 / -1; }
+}
+
+/* Treize, page Contact depuis ChromaTraque : trois rangees de quatre puis deux colonnes, la derniere tuile
+   seule prend toute la largeur. */
+.app-tiles.is-thirteen { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.app-tiles.is-thirteen > :last-child { grid-column: 1 / -1; }
+
+@media (max-width: 1100px) {
+    .app-tiles.is-thirteen { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 .app-tile {
@@ -1342,6 +1363,14 @@ body.menu-open { overflow: hidden; }
     height: clamp(300px, 30vw, 400px);
 }
 
+.promo-solo {
+    align-self: center;
+    width: clamp(150px, 16vw, 220px);
+    height: auto;
+    border-radius: 23%;
+    box-shadow: 0 30px 60px -24px rgba(0, 0, 0, 0.5);
+}
+
 .promo-shot {
     --k: 0;
     position: absolute;
@@ -1793,6 +1822,7 @@ html:has(body[data-page="v2-app"]) { scroll-padding-top: 112px; }
 .app-hero-icon img { width: 100%; height: 100%; }
 
 .hero-device { margin-top: clamp(56px, 8vw, 96px); }
+.hero-device:empty { display: none; }
 
 .portrait-wrap { display: inline-block; margin-bottom: 30px; perspective: 900px; }
 
@@ -2013,7 +2043,7 @@ html:has(body[data-page="v2-app"]) { scroll-padding-top: 112px; }
 
 @media (max-width: 360px) {
     .btn { padding: 0 20px; font-size: 16px; }
-    .app-tiles, .app-tiles.is-two, .app-tiles.is-six, .app-tiles.is-seven, .app-tiles.is-eleven { grid-template-columns: minmax(0, 1fr); }
+    .app-tiles, .app-tiles.is-two, .app-tiles.is-four, .app-tiles.is-six, .app-tiles.is-seven, .app-tiles.is-eleven, .app-tiles.is-thirteen { grid-template-columns: minmax(0, 1fr); }
 }
 
 /* Grands ecrans : la colonne s'elargit et les objets grandissent avec elle,
