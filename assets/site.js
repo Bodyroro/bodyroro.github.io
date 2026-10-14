@@ -771,8 +771,8 @@
                 en: 'Free macOS app: real time dashboard, reversible system tweaks, cleanup, residue free uninstall, maintenance and fan control.'
             },
             features: {
-                fr: ['Tableau de bord : CPU par cœur, mémoire, disque, réseau, température, batterie et ventilation en temps réel.', '34 réglages système désactivables et 100 % réversibles : Siri, Apple Intelligence, télémétrie, iCloud…', 'Nettoyage sur 18 catégories et désinstallation sans résidu, protégées par un garde-fou central.', 'Contrôle du ventilateur borné au min/max constructeur, presets et réapplication au démarrage.'],
-                en: ['Dashboard: per core CPU, memory, disk, network, temperature, battery and fans in real time.', '34 fully reversible system tweaks: Siri, Apple Intelligence, telemetry, iCloud…', 'Cleanup across 18 categories and residue free uninstall, protected by a central safety guard.', 'Fan control capped to maker min/max, presets and reapply at startup.']
+                fr: ['Tableau de bord : CPU par cœur, mémoire, disque, réseau, température, batterie et ventilation en temps réel.', '34 réglages système désactivables et 100 % réversibles : Siri, Apple Intelligence, télémétrie, iCloud…', 'Nettoyage sur 34 catégories et désinstallation sans résidu, protégées par un garde-fou central.', 'Contrôle du ventilateur borné au min/max constructeur, presets et réapplication au démarrage.'],
+                en: ['Dashboard: per core CPU, memory, disk, network, temperature, battery and fans in real time.', '34 fully reversible system tweaks: Siri, Apple Intelligence, telemetry, iCloud…', 'Cleanup across 34 categories and residue free uninstall, protected by a central safety guard.', 'Fan control capped to maker min/max, presets and reapply at startup.']
             },
             sources: { fr: 'Mécanismes documentés d’Apple uniquement : launchctl, defaults, IOKit SMC. Aucun fichier système modifié.', en: 'Documented Apple mechanisms only: launchctl, defaults, IOKit SMC. No system file is ever modified.' },
             business: { fr: 'Gratuit et open source (MIT) : ni publicité, ni achat, ni compte.', en: 'Free and open source (MIT): no ads, purchases or accounts.' }
@@ -935,38 +935,42 @@
             }
         },
         /* Pas encore sur l'App Store (`store: ''`) : pastille « Bientôt disponible » et « Bientôt sur l'App Store ».
-           Sans captures (aucune dans Docs/ChromaTraque) : ni galerie ni éventail, l'icône les remplace. Ni achat
-           intégré ni abonnement : les pastilles communes des jeux (`chipsGame`) sont justes. */
+           Captures App Store (`assets/img/shots/chromatraque-*`, iPhone et iPad), mêmes noms que ChromaFight, avec
+           `shotTops` et `storeShots`. Achats intégrés facultatifs et énergie, aucun abonnement. */
         chromatraque: {
             name: 'ChromaTraque', platform: 'ios', game: true, accent: '#7b4dff', accent2: '#f4a300',
             store: '',
             tag: { fr: 'Jeu de déduction', en: 'Deduction game' },
             desc: {
-                fr: 'Un Grison invisible vole les gâteaux de Chromaterre. Gloup, la petite créature aux grands yeux, et ses amis l’écoutent, devinent sa cachette et fouillent la bonne case avant la fin des tours. Six îles, un défi du jour et une traque sans fin. Gratuit, sans achat intégré.',
-                en: 'An invisible Greyling is stealing the cakes of Chromaterre. Gloup, the little creature with big eyes, and his friends listen for it, work out its hiding place and search the right square before the turns run out. Six islands, a daily challenge and an endless hunt. Free, no in-app purchases.'
+                fr: 'Un Grison invisible vole les gâteaux de Chromaterre. Gloup, la petite créature aux grands yeux, et ses amis l’écoutent, devinent sa cachette et fouillent la bonne case avant la fin des tours. Six îles, un défi du jour et une traque sans fin. Gratuit, avec achats intégrés facultatifs.',
+                en: 'An invisible Greyling is stealing the cakes of Chromaterre. Gloup, the little creature with big eyes, and his friends listen for it, work out its hiding place and search the right square before the turns run out. Six islands, a daily challenge and an endless hunt. Free, with optional in-app purchases.'
+            },
+            chips: {
+                fr: ['Gratuit', 'Achats facultatifs', 'Sans compte'],
+                en: ['Free', 'Optional purchases', 'No account']
             },
             features: {
                 fr: [
                     'Sur chaque île de Chromaterre, un Grison invisible se cache dans une grille de cases. Posez un ami pour écouter : il annonce le nombre de pas jusqu’au voleur, murs contournés, ou « … » s’il est trop loin. Puis fouillez la bonne case.',
                     'Le voleur bouge après chacune de vos actions, d’une case ou pas du tout, jamais à travers un mur ni dans la lumière : à vous de déduire où il peut être. L’aide « Déduction » montre les cases où il peut se cacher.',
-                    'Six îles de dix niveaux, de la Ferme des Tournesols à la Base lunaire, chacune avec sa mécanique : lampes, farine qui garde les empreintes, portes à grelots, voleur furtif, souris mécanique qui fait diversion, deux voleurs à la fois. Un chef au dixième niveau.',
-                    'Des pièces à chaque victoire, à dépenser au marché pour six gadgets : sonar, lampe, porte, miel, jumelles et sablier.',
-                    'Un défi du jour, le même pour tous, une traque sans fin ouverte après la troisième île, une histoire avec le Baron Grisaille et 21 trophées, aussi dans Game Center.',
-                    'Aucune pub pendant un niveau : les vidéos « +3 tours » et « Pièces ×2 » sont facultatives. Aucun achat intégré : tout se gagne en jouant.',
+                    'Six îles de dix niveaux, de la Ferme des Tournesols à la Base lunaire, en passant par la Cuisine, le Manoir hanté, la Ville et le Château, chacune avec sa mécanique : lampes, farine qui garde les empreintes, portes à grelots, voleur furtif, souris mécanique qui fait diversion, deux voleurs à la fois. Un chef au dixième niveau.',
+                    'Des pièces à chaque victoire, à dépenser à la Boutique : six gadgets (sonar, lampe, porte, miel, jumelles et sablier), des looks pour Gloup et des offres.',
+                    'Un défi du jour, le même pour tous, des cadeaux sur sept jours, une traque sans fin ouverte après la troisième île, une histoire avec le Baron Grisaille et 21 trophées, aussi dans Game Center.',
+                    'Gratuit, avec des achats intégrés facultatifs : rien d’exclusif, tout se gagne en jouant. Aucune pub pendant un niveau : les vidéos sont facultatives, et « Sans pub » supprime la petite pub entre deux niveaux. Une énergie s’active après 10 niveaux réussis (6 au plus, 1 de plus toutes les 15 minutes) ; le défi du jour reste gratuit.',
                     '45 langues, iPhone et iPad, portrait et paysage. Sans compte : la progression reste sur l’appareil et dans votre iCloud, avec des rappels facultatifs.'
                 ],
                 en: [
                     'On each island of Chromaterre, an invisible Greyling hides in a grid of squares. Place a friend to listen: they call out the number of steps to the thief, going around walls, or “…” if it is too far. Then search the right square.',
                     'The thief moves after each of your actions, one square or not at all, never through a wall or into the light: it is up to you to work out where it can be. The “Deduction” aid shows the squares where it may be hiding.',
-                    'Six islands of ten levels, from the Sunflower Farm to the Moon Base, each with its own mechanic: lamps, flour that keeps footprints, belled doors, a stealthy thief, a clockwork mouse as a decoy, two thieves at once. A boss on the tenth level.',
-                    'Coins for every win, to spend at the market on six gadgets: sonar, lamp, door, honey, binoculars and hourglass.',
-                    'A daily challenge, the same for everyone, an endless hunt unlocked after the third island, a story with Baron Grisaille and 21 trophies, also in Game Center.',
-                    'No ads during a level: the “+3 turns” and “Coins ×2” videos are optional. No in-app purchases: everything is earned by playing.',
+                    'Six islands of ten levels, from the Sunflower Farm to the Moon Base, by way of the Kitchen, the Haunted Manor, the Town and the Castle, each with its own mechanic: lamps, flour that keeps footprints, belled doors, a stealthy thief, a clockwork mouse as a decoy, two thieves at once. A boss on the tenth level.',
+                    'Coins for every win, to spend in the Shop: six gadgets (sonar, lamp, door, honey, binoculars and hourglass), looks for Gloup and offers.',
+                    'A daily challenge, the same for everyone, gifts over seven days, an endless hunt unlocked after the third island, a story with Baron Grisaille and 21 trophies, also in Game Center.',
+                    'Free, with optional in-app purchases: nothing is exclusive, everything is earned by playing. No ads during a level: videos are optional, and “No ads” removes the short ad between two levels. Energy turns on after 10 levels completed (6 at most, 1 more every 15 minutes); the daily challenge stays free.',
                     '45 languages, iPhone and iPad, portrait and landscape. No account: progress stays on the device and in your iCloud, with optional reminders.'
                 ]
             },
-            sources: { fr: 'Aucune donnée externe : les îles, les niveaux, les voleurs, les gadgets, les musiques et les textes sont intégrés au jeu, qui se joue hors connexion. Seules la publicité, Game Center et la copie iCloud de la sauvegarde utilisent le réseau. Les rappels sont programmés sur l’appareil, sans serveur.', en: 'No external data: the islands, levels, thieves, gadgets, music and texts are built into the game, which plays offline. Only advertising, Game Center and the iCloud copy of the save use the network. Reminders are scheduled on the device, with no server.' },
-            business: { fr: 'Jeu 100 % gratuit, financé par la publicité Google AdMob : vidéos facultatives (« +3 tours » une fois par niveau, « Pièces ×2 » 10 fois par jour au plus), et courte publicité entre deux niveaux, jamais pendant un niveau ni avant 10 niveaux réussis. Aucun achat intégré ni abonnement, aucune donnée bancaire dans l’app.', en: 'Fully free game, funded by Google AdMob ads: optional videos (“+3 turns” once per level, “Coins ×2” 10 times a day at most), and a short ad between two levels, never during a level or before 10 levels completed. No in-app purchase or subscription, no payment card data in the app.' },
+            sources: { fr: 'Aucune donnée externe : les îles, les niveaux, les voleurs, les gadgets, les musiques et les textes sont intégrés au jeu, qui se joue hors connexion. Seules la publicité, les achats (App Store), Game Center et la copie iCloud de la sauvegarde utilisent le réseau. Les rappels sont programmés sur l’appareil, sans serveur.', en: 'No external data: the islands, levels, thieves, gadgets, music and texts are built into the game, which plays offline. Only advertising, purchases (App Store), Game Center and the iCloud copy of the save use the network. Reminders are scheduled on the device, with no server.' },
+            business: { fr: 'Jeu gratuit, financé par la publicité Google AdMob (vidéos facultatives, et courte publicité entre deux niveaux, jamais pendant un niveau ni avant 10 niveaux réussis) et par des achats intégrés facultatifs : Pack de départ, « Sans pub » (suppression de la petite publicité) et pièces. Rien d’exclusif, aucun abonnement, aucune donnée bancaire dans l’app.', en: 'Free game, funded by Google AdMob ads (optional videos, and a short ad between two levels, never during a level or before 10 levels completed) and by optional in-app purchases: Starter Pack, “No ads” (removal of the short ad) and coins. Nothing is exclusive, no subscription, no payment card data in the app.' },
             promo: {
                 fr: 'Un voleur invisible rôde sur les îles de Chromaterre. Écoute, déduis, fouille la bonne case avant la fin des tours.',
                 en: 'An invisible thief prowls the islands of Chromaterre. Listen, deduce, search the right square before the turns run out.'
@@ -974,6 +978,11 @@
             stats: {
                 fr: [['6', 'îles'], ['60', 'niveaux'], ['6', 'gadgets'], ['45', 'langues']],
                 en: [['6', 'islands'], ['60', 'levels'], ['6', 'gadgets'], ['45', 'languages']]
+            },
+            shotTops: ['#8cceff', '#fecb57', '#ae87fd', '#7bdd87', '#fc8696', '#fdacdd', '#98e2fe', '#fed465'],
+            storeShots: {
+                fr: ['L’accueil de ChromaTraque', 'Écoute et déduis', 'L’aide Déduction', 'Six îles à protéger', 'Le Baron Grisaille', 'Des gadgets malins', 'Des looks pour Gloup', 'Des cadeaux chaque jour'],
+                en: ['The ChromaTraque home screen', 'Listen and deduce', 'The Deduction aid', 'Six islands to protect', 'Baron Grisaille', 'Clever gadgets', 'Cool looks for Gloup', 'Daily gifts']
             }
         }
     };
@@ -1084,16 +1093,16 @@
            n'est affirmé ici qui ne soit dit sur la page d'une application. */
         faq: {
             fr: [
-                ['Les applications sont-elles gratuites ?', 'Oui. Les applications iPhone et les jeux se téléchargent gratuitement et sont financés par une publicité discrète. ChromaFight est gratuit lui aussi, avec des achats intégrés facultatifs. CarbuFrance, IRVEFrance, ToiletteFrance et DefibFrance proposent un abonnement facultatif « Sans pub » (0,99 € par mois ou 8,99 € par an) qui retire toute publicité ; une vidéo facultative y offre aussi 6 h sans publicité. Telzo, bientôt disponible, proposera le sien à 0,99 € par mois ou 4,99 € par an. Les deux utilitaires Mac sont libres et open source, sans publicité ni achat. Telora, bientôt disponible, sera sans publicité et s’utilisera avec l’abonnement Telora+, au mois ou à l’année, après un essai gratuit de 7 jours.'],
+                ['Les applications sont-elles gratuites ?', 'Oui. Les applications iPhone et les jeux se téléchargent gratuitement et sont financés par une publicité discrète. ChromaFight et ChromaTraque sont gratuits eux aussi, avec des achats intégrés facultatifs. CarbuFrance, IRVEFrance, ToiletteFrance et DefibFrance proposent un abonnement facultatif « Sans pub » (0,99 € par mois ou 8,99 € par an) qui retire toute publicité ; une vidéo facultative y offre aussi 6 h sans publicité. Telzo, bientôt disponible, proposera le sien à 0,99 € par mois ou 4,99 € par an. Les deux utilitaires Mac sont libres et open source, sans publicité ni achat. Telora, bientôt disponible, sera sans publicité et s’utilisera avec l’abonnement Telora+, au mois ou à l’année, après un essai gratuit de 7 jours.'],
                 ['Faut-il créer un compte ?', 'Non. Aucune application ne demande de compte ni d’inscription. Favoris et réglages restent sur votre appareil.'],
-                ['Fonctionnent-elles sans connexion ?', 'Les applications de données publiques les mettent en cache pour rester utilisables hors connexion ; Telora lit vos propres sources et a donc besoin du réseau. Les jeux se jouent hors connexion ; seuls la publicité et, pour ChromaFight, les achats et la copie iCloud de la sauvegarde utilisent le réseau.'],
+                ['Fonctionnent-elles sans connexion ?', 'Les applications de données publiques les mettent en cache pour rester utilisables hors connexion ; Telora lit vos propres sources et a donc besoin du réseau. Les jeux se jouent hors connexion ; seuls la publicité et, pour ChromaFight et ChromaTraque, les achats et la copie iCloud de la sauvegarde utilisent le réseau.'],
                 ['Sur quels appareils ?', 'iPhone et iPad sous iOS 18 ou plus pour les applications et les jeux. Telora aussi sur Apple TV (tvOS 18 ou plus). Mac Apple Silicon sous macOS 26 ou 27 pour MacTuner et DNSTuner.'],
                 ['Où trouver de l’aide ?', 'Chaque application a sa page d’assistance. Je réponds moi-même à chaque message, en général sous 24 à 48 heures.']
             ],
             en: [
-                ['Are the apps free?', 'Yes. The iPhone apps and the games are free to download and funded by discreet advertising. ChromaFight is free too, with optional in-app purchases. CarbuFrance, IRVEFrance, ToiletteFrance and DefibFrance offer an optional “Ad-Free” subscription (€0.99 per month or €8.99 per year) that removes every ad; an optional video also gives 6 hours ad-free. Telzo, coming soon, will offer its own at €0.99 per month or €4.99 per year. The two Mac utilities are free and open source, with no ads and no purchases. Telora, coming soon, will have no ads and will be used with the Telora+ subscription, monthly or yearly, after a 7-day free trial.'],
+                ['Are the apps free?', 'Yes. The iPhone apps and the games are free to download and funded by discreet advertising. ChromaFight and ChromaTraque are free too, with optional in-app purchases. CarbuFrance, IRVEFrance, ToiletteFrance and DefibFrance offer an optional “Ad-Free” subscription (€0.99 per month or €8.99 per year) that removes every ad; an optional video also gives 6 hours ad-free. Telzo, coming soon, will offer its own at €0.99 per month or €4.99 per year. The two Mac utilities are free and open source, with no ads and no purchases. Telora, coming soon, will have no ads and will be used with the Telora+ subscription, monthly or yearly, after a 7-day free trial.'],
                 ['Do I need an account?', 'No. None of the apps asks for an account or a sign-up. Favorites and settings stay on your device.'],
-                ['Do they work offline?', 'The public data apps cache it so they keep working offline; Telora plays your own sources and therefore needs the network. The games play offline; only advertising and, for ChromaFight, purchases and the iCloud copy of the save use the network.'],
+                ['Do they work offline?', 'The public data apps cache it so they keep working offline; Telora plays your own sources and therefore needs the network. The games play offline; only advertising and, for ChromaFight and ChromaTraque, purchases and the iCloud copy of the save use the network.'],
                 ['Which devices?', 'iPhone and iPad on iOS 18 or later for the apps and games. Telora on Apple TV too (tvOS 18 or later). Apple Silicon Macs on macOS 26 or 27 for MacTuner and DNSTuner.'],
                 ['Where can I get help?', 'Each app has its own support page. I answer every message myself, usually within 24 to 48 hours.']
             ]
@@ -1113,11 +1122,11 @@
         mactuner: {
             fr: [['Tableau de bord', 'CPU, mémoire, disque, réseau'],
                  ['Réglages système', '34 bascules réversibles'],
-                 ['Nettoyage', '18 catégories'],
+                 ['Nettoyage', '34 catégories'],
                  ['Ventilation', 'bornée au min/max constructeur']],
             en: [['Dashboard', 'CPU, memory, disk, network'],
                  ['System tweaks', '34 reversible switches'],
-                 ['Cleanup', '18 categories'],
+                 ['Cleanup', '34 categories'],
                  ['Fans', 'capped to maker min/max']]
         },
         dnstuner: {
