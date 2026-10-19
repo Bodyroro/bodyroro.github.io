@@ -20,11 +20,12 @@
     /* Page développeur : elle réunit les cinq applications iPhone. Le badge
        d'Apple doit conduire à l'App Store, pas à une section de ce site. */
     var STORE_DEV = 'https://apps.apple.com/fr/developer/rodolphe-vandaele/id1884012478';
-    /* Fiches des deux jeux, sous la forme courte sans pays : l'App Store ouvre
+    /* Fiches des jeux, sous la forme courte sans pays : l'App Store ouvre
        la vitrine du pays du visiteur. */
     var STORE_TC = 'https://apps.apple.com/app/id6816639945';
     var STORE_MG = 'https://apps.apple.com/app/id6817347087';
     var STORE_CF = 'https://apps.apple.com/app/id6819280350';
+    var STORE_CT = 'https://apps.apple.com/app/id6822791450';
     /* Les applications qui ont aussi un site : le bouton « version web » n'apparaît
        que pour celles-là. */
     var SITES_WEB = {
@@ -107,8 +108,8 @@
             captureJeu(cle, n, alt, paresseux, sizes) + '</div></div>';
     }
 
-    /* Les captures iPad (2064 x 2752, sans îlot à éviter) existent en 480 et 960
-       pixels de large, plus un JPEG de 720 : un iPad s'affiche plus large qu'un iPhone. */
+    /* Les captures iPad (2752 x 2064, en paysage, sans îlot à éviter) existent en 640 et 1280
+       pixels de large, plus un JPEG de 960 : un iPad s'affiche plus large qu'un iPhone. */
     function tabletteJeu(cle, n, alt, sizes) {
         return '<div class="tablet"><div class="tablet-screen">' +
             captureJeu(cle, n, alt, true, sizes, 'ipad') + '</div></div>';
@@ -123,7 +124,7 @@
     /* Largeurs [petite, grande, JPEG] et taille d'origine des captures de chaque appareil. */
     var FORMATS_CAPTURES = {
         iphone: ['-', [360, 720, 540, 1320, 2868]],
-        ipad: ['-ipad-', [480, 960, 720, 2064, 2752]],
+        ipad: ['-ipad-', [640, 1280, 960, 2752, 2064]],
         tv: ['-tv-', [640, 1280, 960, 1920, 1080]]
     };
 
@@ -794,8 +795,7 @@
         },
         trouchromatique: {
             name: 'Trou Chromatique', platform: 'ios', game: true, accent: '#f26b3a', accent2: '#c2185b',
-            /* Pas encore en vente (première version en revue, fiche 404) : remettre STORE_TC à sa sortie. */
-            store: '',
+            store: STORE_TC,
             tag: { fr: 'Jeu d’aventure', en: 'Adventure game' },
             desc: {
                 fr: 'Gloup attrape tout ce qui a sa couleur : dix îles flottantes, cent niveaux et une vraie histoire pour rendre ses couleurs à Chromaterre. Gratuit, sans achat intégré.',
@@ -934,12 +934,12 @@
                 en: ['The home screen and the Pirate Island map', 'Gloup spits the objects from his tummy', 'Merge and match colors', 'Giant bosses', 'Eleven islands to free', 'Eleven friends by your side', '44 Greylings to discover', 'Upgrade your workshop']
             }
         },
-        /* Pas encore sur l'App Store (`store: ''`) : pastille « Bientôt disponible » et « Bientôt sur l'App Store ».
-           Captures App Store (`assets/img/shots/chromatraque-*`, iPhone et iPad), mêmes noms que ChromaFight, avec
-           `shotTops` et `storeShots`. Achats intégrés facultatifs et énergie, aucun abonnement. */
+        /* En vente depuis octobre 2026 (STORE_CT). Captures App Store (`assets/img/shots/chromatraque-*`, iPhone et
+           iPad), mêmes noms que ChromaFight, avec `shotTops` et `storeShots`. Achats intégrés facultatifs et énergie,
+           aucun abonnement. */
         chromatraque: {
             name: 'ChromaTraque', platform: 'ios', game: true, accent: '#7b4dff', accent2: '#f4a300',
-            store: '',
+            store: STORE_CT,
             tag: { fr: 'Jeu de déduction', en: 'Deduction game' },
             desc: {
                 fr: 'Un Grison invisible vole les gâteaux de Chromaterre. Gloup, la petite créature aux grands yeux, et ses amis l’écoutent, devinent sa cachette et fouillent la bonne case avant la fin des tours. Six îles, un défi du jour et une traque sans fin. Gratuit, avec achats intégrés facultatifs.',
@@ -1702,7 +1702,7 @@
                         : '<div class="store-shot">' + captureJeu(cle, n, alt, true, '(max-width: 560px) 62vw, 280px') + '</div>';
                 }) +
                 (appareils.indexOf('ipad') !== -1 ? bande('ipad', function (n, alt) {
-                    return tabletteJeu(cle, n, alt, '(max-width: 560px) 80vw, 440px');
+                    return tabletteJeu(cle, n, alt, '(max-width: 560px) 86vw, 620px');
                 }) : '') +
                 (appareils.indexOf('tv') !== -1 ? bande('tv', function (n, alt) {
                     return ecranTV(cle, n, alt, '(max-width: 560px) 86vw, 640px');

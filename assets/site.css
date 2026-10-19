@@ -1720,11 +1720,11 @@ html:has(body[data-page="v2-app"]) { scroll-padding-top: 112px; }
 
 .store-shot img { display: block; width: 100%; height: 100%; object-fit: cover; }
 
-/* Cadre d'iPad dessine en CSS, de la meme matiere que l'iPhone : ecran 3:4,
-   bord regulier, camera au centre du bord haut. */
+/* Cadre d'iPad dessine en CSS, de la meme matiere que l'iPhone : ecran 4:3 en
+   paysage, bord regulier, camera au centre du bord haut. */
 .tablet {
     position: relative;
-    width: clamp(300px, 31vw, 440px);
+    width: clamp(320px, 44vw, 620px);
     padding: 12px;
     border-radius: 34px;
     background: linear-gradient(150deg, #4a4a4e, #1c1c1e 38%, #0b0b0c 70%, #2c2c2e);
@@ -1748,7 +1748,7 @@ html:has(body[data-page="v2-app"]) { scroll-padding-top: 112px; }
 }
 
 .tablet-screen {
-    aspect-ratio: 2064 / 2752;
+    aspect-ratio: 2752 / 2064;
     border-radius: 22px;
     overflow: hidden;
     background: #000;
@@ -1756,7 +1756,7 @@ html:has(body[data-page="v2-app"]) { scroll-padding-top: 112px; }
 
 .tablet-screen img { width: 100%; height: 100%; object-fit: cover; }
 
-.shot:has(.tablet) figcaption { max-width: 340px; }
+.shot:has(.tablet) figcaption { max-width: 520px; }
 
 /* Ecran d'Apple TV : 16:9 a bords arrondis, sans cadre d'appareil. */
 .tv-screen {
@@ -1777,8 +1777,8 @@ html:has(body[data-page="v2-app"]) { scroll-padding-top: 112px; }
 
 @media (max-width: 560px) {
     .gallery.is-rail .phone, .store-shot { width: 62vw; }
-    .tablet { width: 80vw; padding: 9px; border-radius: 26px; }
-    .tablet-screen { border-radius: 17px; }
+    .tablet { width: 86vw; padding: 8px; border-radius: 22px; }
+    .tablet-screen { border-radius: 14px; }
     .tv-screen { width: 86vw; border-radius: 12px; }
 }
 
