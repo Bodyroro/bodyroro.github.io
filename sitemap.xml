@@ -190,4 +190,19 @@
     <lastmod>2026-10-14</lastmod>
     <priority>0.4</priority>
   </url>
+  <url>
+    <loc>https://bodyroro.github.io/chromaferme.html</loc>
+    <lastmod>2026-10-20</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://bodyroro.github.io/chromaferme-privacy.html</loc>
+    <lastmod>2026-10-20</lastmod>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://bodyroro.github.io/chromaferme-support.html</loc>
+    <lastmod>2026-10-20</lastmod>
+    <priority>0.4</priority>
+  </url>
 </urlset>

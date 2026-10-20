@@ -683,7 +683,7 @@
            CapturesAppStore.mjs depuis Docs/Telora/Screenshots/<appareil>(-en). */
         telora: {
             name: 'Telora', platform: 'ios', accent: '#8b5cf6',
-            store: '',
+            store: 'https://apps.apple.com/app/id6821877987',
             on: { fr: 'iPhone, iPad et Apple TV', en: 'iPhone, iPad and Apple TV' },
             tag: { fr: 'Lecteur multimédia', en: 'Media player' },
             desc: {
@@ -725,7 +725,7 @@
         },
         telzo: {
             name: 'Telzo', platform: 'ios', accent: '#3b5bdb',
-            store: '',
+            store: 'https://apps.apple.com/app/id6822364165',
             on: { fr: 'iPhone et iPad', en: 'iPhone and iPad' },
             tag: { fr: 'Télécommande TV', en: 'TV remote' },
             desc: {
@@ -984,12 +984,65 @@
                 fr: ['L’accueil de ChromaTraque', 'Écoute et déduis', 'L’aide Déduction', 'Six îles à protéger', 'Le Baron Grisaille', 'Des gadgets malins', 'Des looks pour Gloup', 'Des cadeaux chaque jour'],
                 en: ['The ChromaTraque home screen', 'Listen and deduce', 'The Deduction aid', 'Six islands to protect', 'Baron Grisaille', 'Clever gadgets', 'Cool looks for Gloup', 'Daily gifts']
             }
+        },
+        /* Pas encore sur l'App Store (`store: ''`, app 6824902491 sur App Store Connect). Captures App Store
+           (`assets/img/shots/chromaferme-*`, iPhone et iPad, `Outils/Parc/Marque/CapturesSite.mjs`). Faits relevés dans
+           le code du jeu le 20 octobre 2026. Une fois la fiche en ligne : `store` et replis HTML. */
+        chromaferme: {
+            name: 'ChromaFerme', platform: 'ios', game: true, accent: '#3a9b4f', accent2: '#f2b632',
+            store: '',
+            tag: { fr: 'Jeu de ferme', en: 'Farming game' },
+            desc: {
+                fr: 'Le Baron Grisaille a délavé la ferme de Gloup, la petite créature aux grands yeux. Semez, récoltez, élevez, transformez et livrez les commandes de ses amis : chaque récolte, chaque produit et chaque bâtiment rend sa couleur à l’île. Gratuit, avec achats intégrés facultatifs.',
+                en: 'Baron Grisaille has washed out the farm of Gloup, the little creature with big eyes. Sow, harvest, raise animals, process goods and deliver his friends’ orders: every harvest, product and building brings color back to the island. Free, with optional in-app purchases.'
+            },
+            chips: {
+                fr: ['Gratuit', 'Achats facultatifs', 'Sans compte'],
+                en: ['Free', 'Optional purchases', 'No account']
+            },
+            features: {
+                fr: [
+                    'Semez en glissant une semence sur les parcelles vides, récoltez d’un seul glissé sur les parcelles mûres : vingt cultures à faire pousser.',
+                    'Quatre animaux (poule, vache, mouton, cochon) à loger et à nourrir avec ce que fait le moulin, pour récolter œufs, lait, laine et truffes.',
+                    'Neuf ateliers avec leur file de production : moulin, boulangerie, laiterie, teinturerie (qui mélange les couleurs), filature, cuisine, pressoir, parfumerie et chocolaterie.',
+                    'Les commandes de vos amis au tableau, livrées par la charrette ; dès le niveau 9, le bateau emporte des caisses vers sept ports de l’archipel de Chromaterre.',
+                    'Soixante niveaux, un terrain à agrandir lot par lot (trente lots), des décorations et des chemins à poser, et une couleur rendue qui gagne l’île peu à peu.',
+                    'Une histoire avec le Baron Grisaille, huit actes récompensés, des tâches du jour, un défi de la semaine, des cadeaux sur sept jours et 66 trophées, aussi dans Game Center.',
+                    'Gratuit, avec des achats intégrés facultatifs. Aucune publicité pendant l’action : les vidéos récompensées sont facultatives. Aucun achat n’est nécessaire pour progresser ; les éclats servent seulement à gagner du temps, dans la limite du jour.',
+                    'iPhone et iPad. Sans compte : la progression reste sur l’appareil et dans votre iCloud, avec des rappels facultatifs.'
+                ],
+                en: [
+                    'Sow by dragging a seed over the empty plots, harvest with a single swipe over the ripe ones: twenty crops to grow.',
+                    'Four animals (hen, cow, sheep, pig) to house and feed with what the mill makes, for eggs, milk, wool and truffles.',
+                    'Nine workshops, each with its production queue: mill, bakery, dairy, dye works (which mixes colors), spinning mill, kitchen, press, perfumery and chocolate factory.',
+                    'Your friends’ orders on the board, delivered by the cart; from level 9, the boat carries crates to seven ports of the Chromaterre archipelago.',
+                    'Sixty levels, land to expand lot by lot (thirty lots), decorations and paths to lay, and restored color that spreads across the island little by little.',
+                    'A story with Baron Grisaille, eight rewarded acts, daily tasks, a weekly challenge, gifts over seven days and 66 trophies, also in Game Center.',
+                    'Free, with optional in-app purchases. No ads during the action: rewarded videos are optional. No purchase is needed to progress; gems only save time, within the daily limit.',
+                    'iPhone and iPad. No account: progress stays on the device and in your iCloud, with optional reminders.'
+                ]
+            },
+            sources: { fr: 'Aucune donnée externe : les cultures, les animaux, les ateliers, les commandes, les décors, les musiques et les textes sont intégrés au jeu, qui se joue hors connexion. Seules la publicité, les achats (App Store), Game Center et la copie iCloud de la sauvegarde utilisent le réseau. Les rappels sont programmés sur l’appareil, sans serveur.', en: 'No external data: the crops, animals, workshops, orders, decorations, music and texts are built into the game, which plays offline. Only advertising, purchases (App Store), Game Center and the iCloud copy of the save use the network. Reminders are scheduled on the device, with no server.' },
+            business: { fr: 'Jeu gratuit, financé par la publicité Google AdMob (vidéos récompensées facultatives seulement, jamais pendant l’action, aucune publicité intercalée) et par des achats intégrés facultatifs : Pack de départ, « Sans pub » (saute le visionnage des vidéos facultatives, mêmes effets et mêmes limites), Pack Arc-en-ciel (six décors) et éclats. Aucun abonnement, aucune donnée bancaire dans l’app.', en: 'Free game, funded by Google AdMob ads (optional rewarded videos only, never during the action, no interstitial ads) and by optional in-app purchases: Starter Pack, “No ads” (skips the watching of the optional videos, same effects and same limits), Rainbow Pack (six decorations) and gems. No subscription, no payment card data in the app.' },
+            promo: {
+                fr: 'Le Baron Grisaille a délavé la ferme de Gloup. Sème, récolte, livre : chaque geste lui rend sa couleur.',
+                en: 'Baron Grisaille has washed out Gloup’s farm. Sow, harvest, deliver: every move brings its color back.'
+            },
+            stats: {
+                fr: [['20', 'cultures'], ['9', 'ateliers'], ['60', 'niveaux'], ['66', 'trophées']],
+                en: [['20', 'crops'], ['9', 'workshops'], ['60', 'levels'], ['66', 'trophies']]
+            },
+            shotTops: ['#8add87', '#fed565', '#feaf75', '#99e1ff', '#fecb57', '#8bceff', '#fdacdd', '#ae87fe'],
+            storeShots: {
+                fr: ['Ta ferme en couleurs', 'Sème et récolte', 'Les ateliers', 'Des animaux adorables', 'Les commandes', 'Le bateau', 'Décore ta ferme', 'L’accueil de ChromaFerme'],
+                en: ['Your farm in color', 'Sow and harvest', 'The workshops', 'Adorable animals', 'The orders', 'The boat', 'Decorate your farm', 'The ChromaFerme home screen']
+            }
         }
     };
     var NOMS_APPAREILS = { iphone: 'iPhone', ipad: 'iPad', tv: 'Apple TV' };
     var IOS_ORDER = ['carbufrance', 'irvefrance', 'toilettefrance', 'defibfrance', 'dvffrance', 'telora', 'telzo'];
     /* Les jeux forment leur propre gamme : ni données publiques, ni utilitaire. */
-    var GAME_ORDER = ['trouchromatique', 'mongloup', 'chromafight', 'chromatraque'];
+    var GAME_ORDER = ['trouchromatique', 'mongloup', 'chromafight', 'chromatraque', 'chromaferme'];
 
     var MAC_ORDER = ['mactuner', 'dnstuner'];
     /* ---------------------------------------------------------------------
@@ -1093,16 +1146,16 @@
            n'est affirmé ici qui ne soit dit sur la page d'une application. */
         faq: {
             fr: [
-                ['Les applications sont-elles gratuites ?', 'Oui. Les applications iPhone et les jeux se téléchargent gratuitement et sont financés par une publicité discrète. ChromaFight et ChromaTraque sont gratuits eux aussi, avec des achats intégrés facultatifs. CarbuFrance, IRVEFrance, ToiletteFrance et DefibFrance proposent un abonnement facultatif « Sans pub » (0,99 € par mois ou 8,99 € par an) qui retire toute publicité ; une vidéo facultative y offre aussi 6 h sans publicité. Telzo, bientôt disponible, proposera le sien à 0,99 € par mois ou 4,99 € par an. Les deux utilitaires Mac sont libres et open source, sans publicité ni achat. Telora, bientôt disponible, sera sans publicité et s’utilisera avec l’abonnement Telora+, au mois ou à l’année, après un essai gratuit de 7 jours.'],
+                ['Les applications sont-elles gratuites ?', 'Oui. Les applications iPhone et les jeux se téléchargent gratuitement et sont financés par une publicité discrète. ChromaFight, ChromaTraque et ChromaFerme sont gratuits eux aussi, avec des achats intégrés facultatifs. CarbuFrance, IRVEFrance, ToiletteFrance et DefibFrance proposent un abonnement facultatif « Sans pub » (0,99 € par mois ou 8,99 € par an) qui retire toute publicité ; une vidéo facultative y offre aussi 6 h sans publicité. Telzo, bientôt disponible, proposera le sien à 0,99 € par mois ou 4,99 € par an. Les deux utilitaires Mac sont libres et open source, sans publicité ni achat. Telora, bientôt disponible, sera sans publicité et s’utilisera avec l’abonnement Telora+, au mois ou à l’année, après un essai gratuit de 7 jours.'],
                 ['Faut-il créer un compte ?', 'Non. Aucune application ne demande de compte ni d’inscription. Favoris et réglages restent sur votre appareil.'],
-                ['Fonctionnent-elles sans connexion ?', 'Les applications de données publiques les mettent en cache pour rester utilisables hors connexion ; Telora lit vos propres sources et a donc besoin du réseau. Les jeux se jouent hors connexion ; seuls la publicité et, pour ChromaFight et ChromaTraque, les achats et la copie iCloud de la sauvegarde utilisent le réseau.'],
+                ['Fonctionnent-elles sans connexion ?', 'Les applications de données publiques les mettent en cache pour rester utilisables hors connexion ; Telora lit vos propres sources et a donc besoin du réseau. Les jeux se jouent hors connexion ; seuls la publicité et, pour ChromaFight, ChromaTraque et ChromaFerme, les achats et la copie iCloud de la sauvegarde utilisent le réseau.'],
                 ['Sur quels appareils ?', 'iPhone et iPad sous iOS 18 ou plus pour les applications et les jeux. Telora aussi sur Apple TV (tvOS 18 ou plus). Mac Apple Silicon sous macOS 26 ou 27 pour MacTuner et DNSTuner.'],
                 ['Où trouver de l’aide ?', 'Chaque application a sa page d’assistance. Je réponds moi-même à chaque message, en général sous 24 à 48 heures.']
             ],
             en: [
-                ['Are the apps free?', 'Yes. The iPhone apps and the games are free to download and funded by discreet advertising. ChromaFight and ChromaTraque are free too, with optional in-app purchases. CarbuFrance, IRVEFrance, ToiletteFrance and DefibFrance offer an optional “Ad-Free” subscription (€0.99 per month or €8.99 per year) that removes every ad; an optional video also gives 6 hours ad-free. Telzo, coming soon, will offer its own at €0.99 per month or €4.99 per year. The two Mac utilities are free and open source, with no ads and no purchases. Telora, coming soon, will have no ads and will be used with the Telora+ subscription, monthly or yearly, after a 7-day free trial.'],
+                ['Are the apps free?', 'Yes. The iPhone apps and the games are free to download and funded by discreet advertising. ChromaFight, ChromaTraque and ChromaFerme are free too, with optional in-app purchases. CarbuFrance, IRVEFrance, ToiletteFrance and DefibFrance offer an optional “Ad-Free” subscription (€0.99 per month or €8.99 per year) that removes every ad; an optional video also gives 6 hours ad-free. Telzo, coming soon, will offer its own at €0.99 per month or €4.99 per year. The two Mac utilities are free and open source, with no ads and no purchases. Telora, coming soon, will have no ads and will be used with the Telora+ subscription, monthly or yearly, after a 7-day free trial.'],
                 ['Do I need an account?', 'No. None of the apps asks for an account or a sign-up. Favorites and settings stay on your device.'],
-                ['Do they work offline?', 'The public data apps cache it so they keep working offline; Telora plays your own sources and therefore needs the network. The games play offline; only advertising and, for ChromaFight and ChromaTraque, purchases and the iCloud copy of the save use the network.'],
+                ['Do they work offline?', 'The public data apps cache it so they keep working offline; Telora plays your own sources and therefore needs the network. The games play offline; only advertising and, for ChromaFight, ChromaTraque and ChromaFerme, purchases and the iCloud copy of the save use the network.'],
                 ['Which devices?', 'iPhone and iPad on iOS 18 or later for the apps and games. Telora on Apple TV too (tvOS 18 or later). Apple Silicon Macs on macOS 26 or 27 for MacTuner and DNSTuner.'],
                 ['Where can I get help?', 'Each app has its own support page. I answer every message myself, usually within 24 to 48 hours.']
             ]
@@ -1515,7 +1568,7 @@
             '</section>';
 
         /*
-         * L'index des applications, rangé par gamme : quatre jeux, cinq apps sur
+         * L'index des applications, rangé par gamme : cinq jeux, cinq apps sur
          * iPhone, deux sur Mac. Trois publics, et le site les sépare partout ailleurs.
          */
         function groupe(titre, cles, sousTitre, classe, filtre) {
@@ -1536,7 +1589,7 @@
                     }).join('') +
                 '</div></div>') +
             rise('<div class="app-index">' +
-                groupe(pick(V.navGames), GAME_ORDER, pick(V.gamesSub), 'is-four', 'games') +
+                groupe(pick(V.navGames), GAME_ORDER, pick(V.gamesSub), 'is-five', 'games') +
                 groupe(pick(T.navIOS), IOS_ORDER, pick(V.onIPhone), 'is-six', 'ios') +
                 groupe(pick(T.navMac), MAC_ORDER, pick(V.onMac), 'is-two', 'mac') +
                 '</div>', 80) +
@@ -1813,7 +1866,7 @@
             '<div class="wrap">' +
             rise('<h2 class="small">' + esc(pick(V.contactPerApp)) + '</h2>' +
                 '<p class="lead wide">' + esc(pick(V.contactPerAppLead)) + '</p>') +
-            rise('<div class="app-tiles is-thirteen" style="margin-top:48px">' + sujets + '</div>', 80) +
+            rise('<div class="app-tiles is-fourteen" style="margin-top:48px">' + sujets + '</div>', 80) +
             '</div></section>';
 
         return navHTML('v2-contact') + '<main>' + hero + parApp + '</main>' + footerHTML();
