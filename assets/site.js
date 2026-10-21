@@ -110,9 +110,9 @@
 
     /* Les captures iPad (2752 x 2064, en paysage, sans îlot à éviter) existent en 640 et 1280
        pixels de large, plus un JPEG de 960 : un iPad s'affiche plus large qu'un iPhone. */
-    function tabletteJeu(cle, n, alt, sizes) {
-        return '<div class="tablet"><div class="tablet-screen">' +
-            captureJeu(cle, n, alt, true, sizes, 'ipad') + '</div></div>';
+    function tabletteJeu(cle, n, alt, sizes, appareil) {
+        return '<div class="tablet' + (appareil === 'paysage' ? ' is-wide' : '') + '"><div class="tablet-screen">' +
+            captureJeu(cle, n, alt, true, sizes, appareil || 'ipad') + '</div></div>';
     }
 
     /* L'écran d'Apple TV (1920 x 1080), sans cadre d'appareil : un écran 16:9 à bords arrondis, en 640 et 1280
@@ -125,6 +125,7 @@
     var FORMATS_CAPTURES = {
         iphone: ['-', [360, 720, 540, 1320, 2868]],
         ipad: ['-ipad-', [640, 1280, 960, 2752, 2064]],
+        paysage: ['-', [640, 1280, 960, 2868, 1320]],
         tv: ['-tv-', [640, 1280, 960, 1920, 1080]]
     };
 
@@ -1037,12 +1038,65 @@
                 fr: ['Ta ferme en couleurs', 'Sème et récolte', 'Les ateliers', 'Des animaux adorables', 'Les commandes', 'Le bateau', 'Décore ta ferme', 'L’accueil de ChromaFerme'],
                 en: ['Your farm in color', 'Sow and harvest', 'The workshops', 'Adorable animals', 'The orders', 'The boat', 'Decorate your farm', 'The ChromaFerme home screen']
             }
+        },
+        /* Pas encore sur l'App Store (`store: ''`). Jeu en paysage seul (`paysage`) : captures App Store
+           `assets/img/shots/chromaciel-*` (iPhone 2868 x 1320 par `PAYSAGE=1`, iPad, `Outils/Parc/Marque/CapturesSite.mjs`)
+           montrées dans le cadre large de la galerie ; l'icône en grand tient lieu de téléphone dans l'en-tête et
+           d'éventail dans la tuile (`promo-solo`), sans `shotTops`. Faits fournis par le titulaire le 22 octobre 2026. */
+        chromaciel: {
+            name: 'ChromaCiel', platform: 'ios', game: true, paysage: true, accent: '#3f9be0', accent2: '#ff9f43',
+            store: '',
+            tag: { fr: 'RPG d’action', en: 'Action RPG' },
+            desc: {
+                fr: 'Le Baron Grisaille a délavé le ciel : les îles flottantes ont perdu leurs couleurs et leurs habitants sont devenus des monstres gris. Gloup, petite flaque vivante aux grands yeux, rend ses couleurs au monde. Gratuit, avec achats intégrés facultatifs.',
+                en: 'Baron Grisaille has washed out the sky: the floating islands have lost their colors and their inhabitants have turned into gray monsters. Gloup, a little living puddle with big eyes, brings the world’s colors back. Free, with optional in-app purchases.'
+            },
+            chips: {
+                fr: ['Gratuit', 'Achats facultatifs', 'Sans compte'],
+                en: ['Free', 'Optional purchases', 'No account']
+            },
+            features: {
+                fr: [
+                    'Huit grandes îles flottantes et 24 régions reliées sans coupure, un cycle du jour et de la nuit, et le vol pour passer d’une île à l’autre.',
+                    'Des combats en temps réel : plus de 200 espèces de monstres, des élites, des seigneurs de famille et 8 Gardiens à plusieurs phases.',
+                    'Trois styles de combat, Pinceau, Prisme et Aquarelle, et 12 compétences.',
+                    'Huit emplacements d’équipement, cinq raretés, huit panoplies, des gemmes et une forge ; sept familiers.',
+                    '80 quêtes principales, plus de 140 quêtes secondaires, des quêtes du jour et 7 donjons en normal et en difficile.',
+                    'Des anneaux de vol, des taches de grisaille, un bestiaire, 60 niveaux et 48 trophées, aussi dans Game Center.',
+                    'Gratuit, avec des achats intégrés facultatifs. Aucune bannière ni publicité intercalée : seules des vidéos récompensées facultatives sont proposées. Rien de ce qui s’achète ne donne de niveau, de statistique, d’objet, de pièces ni d’expérience.',
+                    'iPhone et iPad, en paysage. Sans compte : la sauvegarde reste sur l’appareil et dans votre iCloud.'
+                ],
+                en: [
+                    'Eight large floating islands and 24 seamlessly connected regions, a day and night cycle, and flight to travel from island to island.',
+                    'Real-time combat: over 200 monster species, elites, family lords and 8 multi-phase Guardians.',
+                    'Three combat styles, Brush, Prism and Watercolor, and 12 skills.',
+                    'Eight equipment slots, five rarities, eight sets, gems and a forge; seven companions.',
+                    '80 main quests, over 140 side quests, daily quests and 7 dungeons in normal and hard.',
+                    'Flight rings, gray stains, a bestiary, 60 levels and 48 trophies, also in Game Center.',
+                    'Free, with optional in-app purchases. No banners and no interstitial ads: only optional rewarded videos are offered. Nothing you can buy gives a level, a stat, an item, coins or experience.',
+                    'iPhone and iPad, in landscape. No account: the save stays on the device and in your iCloud.'
+                ]
+            },
+            sources: { fr: 'Aucun compte : la sauvegarde reste sur l’appareil et dans votre iCloud. Le réseau ne sert que pour la publicité, les achats (App Store), Game Center et iCloud.', en: 'No account: the save stays on the device and in your iCloud. The network is only used for advertising, purchases (App Store), Game Center and iCloud.' },
+            business: { fr: 'Jeu gratuit, financé par la publicité Google AdMob (vidéos récompensées facultatives seulement : un coffre bonus de donjon, 2 par jour, et un sachet de matériaux, 1 par jour ; aucune bannière ni publicité intercalée) et par des achats intégrés facultatifs : Pack de départ, « Sans vidéos » (saute le visionnage, mêmes récompenses et mêmes limites), Garde-robe Arc-en-ciel (cinq apparences) et gouttes de Prisme en quatre paliers (apparences, places de sac, coffret de matériaux limité à deux par semaine). Rien n’achète de niveau, de statistique, d’objet, de pièces ni d’expérience.', en: 'Free game, funded by Google AdMob ads (optional rewarded videos only: a bonus dungeon chest, 2 a day, and a materials pouch, 1 a day; no banners and no interstitial ads) and by optional in-app purchases: Starter Pack, “No videos” (skips the watching, same rewards and same limits), Rainbow Wardrobe (five looks) and Prism drops in four tiers (looks, bag slots, a materials chest limited to two per week). Nothing buys a level, a stat, an item, coins or experience.' },
+            promo: {
+                fr: 'Le Baron Grisaille a délavé le ciel. Gloup vole d’île en île pour rendre ses couleurs au monde.',
+                en: 'Baron Grisaille has washed out the sky. Gloup flies from island to island to bring the world’s colors back.'
+            },
+            stats: {
+                fr: [['8', 'îles'], ['24', 'régions'], ['60', 'niveaux'], ['48', 'trophées']],
+                en: [['8', 'islands'], ['24', 'regions'], ['60', 'levels'], ['48', 'trophies']]
+            },
+            storeShots: {
+                fr: ['Rends ses couleurs au ciel !', 'Des combats en temps réel !', 'Vole entre les îles !', 'Équipe-toi en légende !', 'Forge ton équipement !', 'Quêtes et donjons !', 'Jusqu’au niveau 60 !', 'Des villes pleines de vie !'],
+                en: ['Bring color back to the sky!', 'Real-time combat!', 'Fly between islands!', 'Gear up like a legend!', 'Forge your gear!', 'Quests and dungeons!', 'Level up to 60!', 'Towns full of life!']
+            }
         }
     };
     var NOMS_APPAREILS = { iphone: 'iPhone', ipad: 'iPad', tv: 'Apple TV' };
     var IOS_ORDER = ['carbufrance', 'irvefrance', 'toilettefrance', 'defibfrance', 'dvffrance', 'telora', 'telzo'];
     /* Les jeux forment leur propre gamme : ni données publiques, ni utilitaire. */
-    var GAME_ORDER = ['trouchromatique', 'mongloup', 'chromafight', 'chromatraque', 'chromaferme'];
+    var GAME_ORDER = ['trouchromatique', 'mongloup', 'chromafight', 'chromatraque', 'chromaferme', 'chromaciel'];
 
     var MAC_ORDER = ['mactuner', 'dnstuner'];
     /* ---------------------------------------------------------------------
@@ -1146,16 +1200,16 @@
            n'est affirmé ici qui ne soit dit sur la page d'une application. */
         faq: {
             fr: [
-                ['Les applications sont-elles gratuites ?', 'Oui. Les applications iPhone et les jeux se téléchargent gratuitement et sont financés par une publicité discrète. ChromaFight, ChromaTraque et ChromaFerme sont gratuits eux aussi, avec des achats intégrés facultatifs. CarbuFrance, IRVEFrance, ToiletteFrance et DefibFrance proposent un abonnement facultatif « Sans pub » (0,99 € par mois ou 8,99 € par an) qui retire toute publicité ; une vidéo facultative y offre aussi 6 h sans publicité. Telzo, bientôt disponible, proposera le sien à 0,99 € par mois ou 4,99 € par an. Les deux utilitaires Mac sont libres et open source, sans publicité ni achat. Telora, bientôt disponible, sera sans publicité et s’utilisera avec l’abonnement Telora+, au mois ou à l’année, après un essai gratuit de 7 jours.'],
+                ['Les applications sont-elles gratuites ?', 'Oui. Les applications iPhone et les jeux se téléchargent gratuitement et sont financés par une publicité discrète. ChromaFight, ChromaTraque, ChromaFerme et ChromaCiel sont gratuits eux aussi, avec des achats intégrés facultatifs. CarbuFrance, IRVEFrance, ToiletteFrance et DefibFrance proposent un abonnement facultatif « Sans pub » (0,99 € par mois ou 8,99 € par an) qui retire toute publicité ; une vidéo facultative y offre aussi 6 h sans publicité. Telzo, bientôt disponible, proposera le sien à 0,99 € par mois ou 4,99 € par an. Les deux utilitaires Mac sont libres et open source, sans publicité ni achat. Telora, bientôt disponible, sera sans publicité et s’utilisera avec l’abonnement Telora+, au mois ou à l’année, après un essai gratuit de 7 jours.'],
                 ['Faut-il créer un compte ?', 'Non. Aucune application ne demande de compte ni d’inscription. Favoris et réglages restent sur votre appareil.'],
-                ['Fonctionnent-elles sans connexion ?', 'Les applications de données publiques les mettent en cache pour rester utilisables hors connexion ; Telora lit vos propres sources et a donc besoin du réseau. Les jeux se jouent hors connexion ; seuls la publicité et, pour ChromaFight, ChromaTraque et ChromaFerme, les achats et la copie iCloud de la sauvegarde utilisent le réseau.'],
+                ['Fonctionnent-elles sans connexion ?', 'Les applications de données publiques les mettent en cache pour rester utilisables hors connexion ; Telora lit vos propres sources et a donc besoin du réseau. Les jeux se jouent hors connexion ; seuls la publicité et, pour ChromaFight, ChromaTraque, ChromaFerme et ChromaCiel, les achats et la copie iCloud de la sauvegarde utilisent le réseau.'],
                 ['Sur quels appareils ?', 'iPhone et iPad sous iOS 18 ou plus pour les applications et les jeux. Telora aussi sur Apple TV (tvOS 18 ou plus). Mac Apple Silicon sous macOS 26 ou 27 pour MacTuner et DNSTuner.'],
                 ['Où trouver de l’aide ?', 'Chaque application a sa page d’assistance. Je réponds moi-même à chaque message, en général sous 24 à 48 heures.']
             ],
             en: [
-                ['Are the apps free?', 'Yes. The iPhone apps and the games are free to download and funded by discreet advertising. ChromaFight, ChromaTraque and ChromaFerme are free too, with optional in-app purchases. CarbuFrance, IRVEFrance, ToiletteFrance and DefibFrance offer an optional “Ad-Free” subscription (€0.99 per month or €8.99 per year) that removes every ad; an optional video also gives 6 hours ad-free. Telzo, coming soon, will offer its own at €0.99 per month or €4.99 per year. The two Mac utilities are free and open source, with no ads and no purchases. Telora, coming soon, will have no ads and will be used with the Telora+ subscription, monthly or yearly, after a 7-day free trial.'],
+                ['Are the apps free?', 'Yes. The iPhone apps and the games are free to download and funded by discreet advertising. ChromaFight, ChromaTraque, ChromaFerme and ChromaCiel are free too, with optional in-app purchases. CarbuFrance, IRVEFrance, ToiletteFrance and DefibFrance offer an optional “Ad-Free” subscription (€0.99 per month or €8.99 per year) that removes every ad; an optional video also gives 6 hours ad-free. Telzo, coming soon, will offer its own at €0.99 per month or €4.99 per year. The two Mac utilities are free and open source, with no ads and no purchases. Telora, coming soon, will have no ads and will be used with the Telora+ subscription, monthly or yearly, after a 7-day free trial.'],
                 ['Do I need an account?', 'No. None of the apps asks for an account or a sign-up. Favorites and settings stay on your device.'],
-                ['Do they work offline?', 'The public data apps cache it so they keep working offline; Telora plays your own sources and therefore needs the network. The games play offline; only advertising and, for ChromaFight, ChromaTraque and ChromaFerme, purchases and the iCloud copy of the save use the network.'],
+                ['Do they work offline?', 'The public data apps cache it so they keep working offline; Telora plays your own sources and therefore needs the network. The games play offline; only advertising and, for ChromaFight, ChromaTraque, ChromaFerme and ChromaCiel, purchases and the iCloud copy of the save use the network.'],
                 ['Which devices?', 'iPhone and iPad on iOS 18 or later for the apps and games. Telora on Apple TV too (tvOS 18 or later). Apple Silicon Macs on macOS 26 or 27 for MacTuner and DNSTuner.'],
                 ['Where can I get help?', 'Each app has its own support page. I answer every message myself, usually within 24 to 48 hours.']
             ]
@@ -1305,7 +1359,7 @@
                 '<div><b>' + esc(app.name) + '</b><span>' + esc(pick(app.tag)) + '</span></div></div>' +
                 '<div class="macwin-rows">' + lignes + '</div></div></div>' +
                 '</div></div>';
-        } else if (app.storeShots) {
+        } else if (app.storeShots && !app.paysage) {
             interieur = '<div class="device-3d is-phone"><div class="tilt">' +
                 (app.game ? telephoneJeu : function (c, n, alt, p, s, k) { return telephoneApp(c, 'ecran', alt, p, s, k); })(
                     cle, 1, app.name + ', ' + pick(app.storeShots)[0], !charger, '(max-width: 560px) 70vw, 300px', 'float') +
@@ -1535,7 +1589,7 @@
         function promo(cle) {
             var app = APPS[cle];
             /* Un jeu sans captures montre son icône en grand à la place de l'éventail. */
-            var legendes = app.storeShots && pick(app.storeShots);
+            var legendes = app.storeShots && !app.paysage && pick(app.storeShots);
             var eventail = legendes ? [3, 1, 5].map(function (n, i) {
                 return '<div class="promo-shot" style="--k:' + (i - 1) + '">' +
                     telephoneJeu(cle, n, i === 1 ? app.name + ', ' + legendes[n - 1] : '', true,
@@ -1589,7 +1643,7 @@
                     }).join('') +
                 '</div></div>') +
             rise('<div class="app-index">' +
-                groupe(pick(V.navGames), GAME_ORDER, pick(V.gamesSub), 'is-five', 'games') +
+                groupe(pick(V.navGames), GAME_ORDER, pick(V.gamesSub), 'is-six', 'games') +
                 groupe(pick(T.navIOS), IOS_ORDER, pick(V.onIPhone), 'is-six', 'ios') +
                 groupe(pick(T.navMac), MAC_ORDER, pick(V.onMac), 'is-two', 'mac') +
                 '</div>', 80) +
@@ -1750,7 +1804,8 @@
                 /* Les visuels des apps ont leur propre téléphone : posés à plat, comme sur l'App Store. Les écrans
                    bruts (`rawShots`) prennent celui du site. */
                 bande('iphone', function (n, alt) {
-                    return ipad ? telephoneJeu(cle, n, alt, true, '(max-width: 560px) 62vw, 280px')
+                    return app.paysage ? tabletteJeu(cle, n, alt, '(max-width: 560px) 86vw, 620px', 'paysage')
+                        : ipad ? telephoneJeu(cle, n, alt, true, '(max-width: 560px) 62vw, 280px')
                         : app.rawShots ? telephoneApp(cle, n, alt, true, '(max-width: 560px) 62vw, 280px')
                         : '<div class="store-shot">' + captureJeu(cle, n, alt, true, '(max-width: 560px) 62vw, 280px') + '</div>';
                 }) +
@@ -1866,7 +1921,7 @@
             '<div class="wrap">' +
             rise('<h2 class="small">' + esc(pick(V.contactPerApp)) + '</h2>' +
                 '<p class="lead wide">' + esc(pick(V.contactPerAppLead)) + '</p>') +
-            rise('<div class="app-tiles is-fourteen" style="margin-top:48px">' + sujets + '</div>', 80) +
+            rise('<div class="app-tiles is-fifteen" style="margin-top:48px">' + sujets + '</div>', 80) +
             '</div></section>';
 
         return navHTML('v2-contact') + '<main>' + hero + parApp + '</main>' + footerHTML();

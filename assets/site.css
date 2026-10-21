@@ -758,18 +758,7 @@ body.menu-open { overflow: hidden; }
     .app-tiles.is-four { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
-/* Les cinq jeux : trois, puis deux plus larges ; deux colonnes dont la derniere tuile prend la largeur. */
-.app-tiles.is-five { grid-template-columns: repeat(6, minmax(0, 1fr)); }
-.app-tiles.is-five > * { grid-column: span 2; }
-.app-tiles.is-five > :nth-child(n+4) { grid-column: span 3; }
-
-@media (max-width: 1000px) {
-    .app-tiles.is-five { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .app-tiles.is-five > *, .app-tiles.is-five > :nth-child(n+4) { grid-column: auto; }
-    .app-tiles.is-five > :last-child { grid-column: 1 / -1; }
-}
-
-/* Les six applications iPhone : deux rangees de trois, puis trois rangees de deux. */
+/* Les six jeux et les six applications iPhone : deux rangees de trois, puis trois rangees de deux. */
 .app-tiles.is-six { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 
 @media (max-width: 760px) {
@@ -800,14 +789,13 @@ body.menu-open { overflow: hidden; }
     .app-tiles.is-thirteen { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
-/* Quatorze, page Contact depuis ChromaFerme : trois rangees de quatre, puis deux tuiles qui se partagent la
-   derniere rangee. */
-.app-tiles.is-fourteen { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-.app-tiles.is-fourteen > :nth-last-child(-n+2) { grid-column: span 2; }
+/* Quinze, page Contact depuis ChromaCiel : trois rangees de cinq, puis deux colonnes dont la derniere tuile prend
+   toute la largeur. */
+.app-tiles.is-fifteen { grid-template-columns: repeat(5, minmax(0, 1fr)); }
 
 @media (max-width: 1100px) {
-    .app-tiles.is-fourteen { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .app-tiles.is-fourteen > :nth-last-child(-n+2) { grid-column: auto; }
+    .app-tiles.is-fifteen { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .app-tiles.is-fifteen > :last-child { grid-column: 1 / -1; }
 }
 
 .app-tile {
@@ -1787,6 +1775,10 @@ html:has(body[data-page="v2-app"]) { scroll-padding-top: 112px; }
 
 .tablet-screen img { width: 100%; height: 100%; object-fit: cover; }
 
+/* Jeu en paysage seul : captures iPhone 2868 x 1320, cadre plus large que celui de l'iPad. */
+.tablet.is-wide { width: clamp(360px, 56vw, 760px); }
+.tablet.is-wide .tablet-screen { aspect-ratio: 2868 / 1320; }
+
 .shot:has(.tablet) figcaption { max-width: 520px; }
 
 /* Ecran d'Apple TV : 16:9 a bords arrondis, sans cadre d'appareil. */
@@ -1808,7 +1800,7 @@ html:has(body[data-page="v2-app"]) { scroll-padding-top: 112px; }
 
 @media (max-width: 560px) {
     .gallery.is-rail .phone, .store-shot { width: 62vw; }
-    .tablet { width: 86vw; padding: 8px; border-radius: 22px; }
+    .tablet, .tablet.is-wide { width: 86vw; padding: 8px; border-radius: 22px; }
     .tablet-screen { border-radius: 14px; }
     .tv-screen { width: 86vw; border-radius: 12px; }
 }
@@ -2074,7 +2066,7 @@ html:has(body[data-page="v2-app"]) { scroll-padding-top: 112px; }
 
 @media (max-width: 360px) {
     .btn { padding: 0 20px; font-size: 16px; }
-    .app-tiles, .app-tiles.is-two, .app-tiles.is-four, .app-tiles.is-five, .app-tiles.is-six, .app-tiles.is-seven, .app-tiles.is-eleven, .app-tiles.is-thirteen, .app-tiles.is-fourteen { grid-template-columns: minmax(0, 1fr); }
+    .app-tiles, .app-tiles.is-two, .app-tiles.is-four, .app-tiles.is-six, .app-tiles.is-seven, .app-tiles.is-eleven, .app-tiles.is-thirteen, .app-tiles.is-fifteen { grid-template-columns: minmax(0, 1fr); }
 }
 
 /* Grands ecrans : la colonne s'elargit et les objets grandissent avec elle,

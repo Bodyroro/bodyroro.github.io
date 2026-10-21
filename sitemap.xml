@@ -205,4 +205,19 @@
     <lastmod>2026-10-20</lastmod>
     <priority>0.4</priority>
   </url>
+  <url>
+    <loc>https://bodyroro.github.io/chromaciel.html</loc>
+    <lastmod>2026-10-22</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://bodyroro.github.io/chromaciel-privacy.html</loc>
+    <lastmod>2026-10-22</lastmod>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://bodyroro.github.io/chromaciel-support.html</loc>
+    <lastmod>2026-10-22</lastmod>
+    <priority>0.4</priority>
+  </url>
 </urlset>

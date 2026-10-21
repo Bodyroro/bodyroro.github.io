@@ -8,7 +8,7 @@
 
 Le site est bilingue français / anglais : ajouter `?lang=en` à n'importe quelle
 adresse en donne la version anglaise. Les pages de confidentialité et de support
-des applications iPhone et des jeux existent en onze langues (français et anglais seulement pour ChromaFerme).
+des applications iPhone et des jeux existent en onze langues (français et anglais seulement pour ChromaFerme et ChromaCiel).
 
 ## Jeux iPhone et iPad
 
@@ -17,6 +17,7 @@ des applications iPhone et des jeux existent en onze langues (français et angla
 - [ChromaFight](https://bodyroro.github.io/chromafight.html) : jeu de combat, sur l'App Store. Gloup, la petite créature aux grands yeux, recrache les objets de son ventre, rangés en grille, sur les Grisons, nés de la Grisaille : fusion sur quatre niveaux, accords de couleur, onze îles et 105 niveaux, onze amis, atelier. Gratuit, financé par la publicité et des achats intégrés facultatifs.
 - [ChromaTraque](https://bodyroro.github.io/chromatraque.html) : jeu de déduction, sur l'App Store (https://apps.apple.com/app/id6822791450). Un Grison invisible vole les gâteaux de Chromaterre : Gloup, la petite créature aux grands yeux, et ses amis l'écoutent, devinent sa cachette et fouillent la bonne case avant la fin des tours. Six îles de dix niveaux, six gadgets, défi du jour, traque sans fin, 45 langues. Gratuit, achats intégrés facultatifs (Pack de départ, Sans pub, pièces), aucun abonnement, financé par la publicité.
 - [ChromaFerme](https://bodyroro.github.io/chromaferme.html) : jeu de ferme en temps réel, bientôt sur l'App Store. Le Baron Grisaille a délavé la ferme de Gloup, la petite créature aux grands yeux : on sème, récolte, élève, transforme et livre, et chaque geste rend sa couleur à l'île. Vingt cultures, quatre animaux, neuf ateliers, soixante niveaux, un bateau vers sept ports, 66 trophées. Gratuit, achats intégrés facultatifs (Pack de départ, Sans pub, Pack Arc-en-ciel, éclats), aucun abonnement, vidéos récompensées facultatives seulement, aucune publicité pendant l'action.
+- [ChromaCiel](https://bodyroro.github.io/chromaciel.html) : RPG d'action en paysage, bientôt sur l'App Store. Le Baron Grisaille a délavé le ciel : les îles flottantes ont perdu leurs couleurs et leurs habitants sont devenus des monstres gris ; Gloup, petite flaque vivante aux grands yeux, rend ses couleurs au monde. Huit grandes îles flottantes, 24 régions reliées sans coupure, cycle du jour et de la nuit, vol entre les îles, combats en temps réel, plus de 200 espèces de monstres, huit Gardiens, trois styles de combat (Pinceau, Prisme, Aquarelle), 12 compétences, sept familiers, 80 quêtes principales et plus de 140 secondaires, sept donjons, 60 niveaux, 48 trophées. Gratuit, achats intégrés facultatifs (Pack de départ, Sans vidéos, Garde-robe Arc-en-ciel, gouttes de Prisme), vidéos récompensées facultatives seulement, aucune bannière ni publicité intercalée.
 
 ## Applications iPhone
 
@@ -62,4 +63,5 @@ navigateur :
 - [Confidentialité ChromaFight](https://bodyroro.github.io/chromafight-privacy.html) · [Support](https://bodyroro.github.io/chromafight-support.html)
 - [Confidentialité ChromaTraque](https://bodyroro.github.io/chromatraque-privacy.html) · [Support](https://bodyroro.github.io/chromatraque-support.html)
 - [Confidentialité ChromaFerme](https://bodyroro.github.io/chromaferme-privacy.html) · [Support](https://bodyroro.github.io/chromaferme-support.html)
+- [Confidentialité ChromaCiel](https://bodyroro.github.io/chromaciel-privacy.html) · [Support](https://bodyroro.github.io/chromaciel-support.html)
 - [Plan du site](https://bodyroro.github.io/sitemap.xml)
