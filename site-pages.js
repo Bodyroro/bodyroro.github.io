@@ -216,12 +216,12 @@
                 en: 'ChromaTraque is free and offers optional in-app purchases, described below: they go through the App Store and your Apple account, and the app never receives payment card data. There is no subscription. Its advertising is Google AdMob, in two forms. First, optional videos, which you choose to watch: “+3 turns”, offered once per level when you run out of turns, before the thief escapes; “Coins ×2”, which doubles the coins of a won level, 10 times a day at most; and, among the Shop offers, “+100 coins” (3 times a day), a surprise gadget (once a day) and “+1 energy” (3 times a day), as well as doubling the daily gift. Second, a short ad between two campaign levels, never during a level: never before 10 levels completed or before the third launch, at most one every three wins, at least three minutes after the previous one and after a watched video, and 8 a day at most; buying “No ads” or the Starter Pack removes it, and the optional videos remain available with their reward. On first launch in the European Economic Area and the United Kingdom, a Google form (UMP) asks for your consent; where it applies, you can change it at any time in Settings › Game › Ad choices. Apple’s tracking permission (App Tracking Transparency) is requested next: you can decline it in the iOS prompt or later in iOS Settings › Privacy & Security › Tracking. Without it, the device’s advertising identifier (IDFA) is not shared. Your choice removes no feature from the game.'
             }
         },
-        // Pas encore sur l'App Store (`status: 'soon'`, `store: ''`, app 6824902491 sur App Store Connect). Français et
+        // Sur l'App Store depuis octobre 2026 (app 6824902491 sur App Store Connect). Français et
         // anglais seulement (`languages`) : les neuf autres langues des jeux sont à écrire. Faits relevés dans le code du
         // jeu le 20 octobre 2026 (data.js, main.js, premium.js, socle web) : vidéos récompensées facultatives seulement,
         // achats intégrés facultatifs (Pack de départ, Sans pub, Pack Arc-en-ciel, éclats), aucun abonnement.
         chromaferme: {
-            name: 'ChromaFerme', icon: 'chromaferme.png', type: 'game', status: 'soon', store: '', premium: false, languages: ['fr', 'en'],
+            name: 'ChromaFerme', icon: 'chromaferme.png', type: 'game', status: 'available', store: appStore + 'chromaferme/id6824902491', premium: false, languages: ['fr', 'en'],
             updated: '2026-10-20',
             description: {
                 fr: 'Jeu de ferme en temps réel pour iPhone et iPad : le Baron Grisaille a délavé la ferme de Gloup, la petite créature aux grands yeux. Semez, récoltez, élevez, transformez et livrez les commandes de ses amis : chaque récolte, chaque produit et chaque bâtiment rend sa couleur à l’île. Gratuit, avec achats intégrés facultatifs.',

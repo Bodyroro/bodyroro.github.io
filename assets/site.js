@@ -26,6 +26,7 @@
     var STORE_MG = 'https://apps.apple.com/app/id6817347087';
     var STORE_CF = 'https://apps.apple.com/app/id6819280350';
     var STORE_CT = 'https://apps.apple.com/app/id6822791450';
+    var STORE_CFM = 'https://apps.apple.com/app/id6824902491';
     /* Les applications qui ont aussi un site : le bouton « version web » n'apparaît
        que pour celles-là. */
     var SITES_WEB = {
@@ -809,7 +810,7 @@
                     'Une histoire complète : cinématiques, dialogues parlés, dix amis et le Baron Grisaille, qui a volé les couleurs de l’archipel.',
                     'Un défi du jour, le même pour tous, un cadeau quotidien et un bonus au choix avant chaque niveau.',
                     'Des looks pour Gloup, des quêtes annexes et une collection, tout se gagne en jouant.',
-                    '45 langues, iPhone et iPad, portrait et paysage. Le jeu se joue hors connexion, sans compte.'
+                    '45 langues, iPhone et iPad, portrait et paysage. Qualité graphique réglée automatiquement selon l’appareil. Le jeu se joue hors connexion, sans compte.'
                 ],
                 en: [
                     'Slide your finger to move Gloup: he only catches objects of his color, grows with every catch, and switches color when he grabs a gem.',
@@ -817,11 +818,11 @@
                     'A full story: cutscenes, voiced dialogue, ten friends and Baron Grisaille, who stole the archipelago’s colors.',
                     'A daily challenge, the same for everyone, a daily gift and a booster of your choice before each level.',
                     'Looks for Gloup, side quests and a collection, all earned by playing.',
-                    '45 languages, iPhone and iPad, portrait and landscape. The game plays offline, with no account.'
+                    '45 languages, iPhone and iPad, portrait and landscape. Graphics quality adjusts automatically to the device. The game plays offline, with no account.'
                 ]
             },
             sources: { fr: 'Aucune donnée externe : les îles, les niveaux, les musiques et les textes sont intégrés au jeu, qui se joue hors connexion. Seule la publicité utilise le réseau.', en: 'No external data: the islands, levels, music and texts are built into the game, which plays offline. Only advertising uses the network.' },
-            business: { fr: 'Jeu 100 % gratuit, financé par la publicité Google AdMob : vidéos facultatives pour un bonus, et courte publicité entre deux niveaux. Aucun achat intégré, aucune donnée bancaire dans l’app.', en: 'Fully free game, funded by Google AdMob ads: optional videos for a bonus, and a short ad between two levels. No in-app purchases, no payment card data in the app.' },
+            business: { fr: 'Jeu 100 % gratuit, financé par la publicité Google AdMob : vidéos facultatives pour un bonus, et courte publicité entre deux niveaux. Hors connexion, les vidéos facultatives sont désactivées et ne rapportent rien. Aucun achat intégré, aucune donnée bancaire dans l’app.', en: 'Fully free game, funded by Google AdMob ads: optional videos for a bonus, and a short ad between two levels. Offline, optional videos are disabled and give no reward. No in-app purchases, no payment card data in the app.' },
             promo: {
                 fr: 'Attrape tout ce qui a ta couleur. Dix îles, cent niveaux et une vraie histoire.',
                 en: 'Catch everything of your color. Ten islands, a hundred levels and a real story.'
@@ -832,7 +833,7 @@
             },
             /* Les huit captures App Store V0.1 (docs/screenshots du projet), dans
                l'ordre de la fiche. Légendes tirées du README des captures. */
-            shotTops: ['#feaf46', '#794bfd', '#3e83fc', '#546ff2', '#582c9c', '#2b86ff', '#be51ee', '#ff8a3d'],
+            shotTops: ['#feaf46', '#794bfd', '#3e83fc', '#546ff2', '#582c9c', '#2b86ff', '#be51ed', '#ff893d'],
             storeShots: {
                 fr: ['L’accueil et le logo du jeu', 'Une partie sur la base lunaire', 'Le boss du village de Noël', 'Dix îles à explorer', 'Le Baron Grisaille, qui a volé les couleurs', 'Les dix amis de Gloup', 'Des looks pour Gloup', 'Victoire et cadeau du jour'],
                 en: ['The home screen and the game logo', 'A level on the moon base', 'The Christmas village boss', 'Ten islands to explore', 'Baron Grisaille, who stole the colors', 'Gloup’s ten friends', 'Looks for Gloup', 'Victory and daily gift']
@@ -854,7 +855,7 @@
                     'Il grandit de bébé à adulte sur 60 niveaux et se forge un caractère parmi cinq traits : gourmand, joueur, coquet, rêveur ou jardinier.',
                     '33 aliments, 20 chapeaux, 14 looks, 24 couleurs, et des papiers peints, sols et meubles pour décorer chaque pièce.',
                     '9 mini-jeux, 18 activités, des quêtes du jour et de la semaine, un album de souvenirs, un ami en visite chaque jour et 20 trophées, aussi dans Game Center.',
-                    '45 langues, iPhone et iPad. Le jeu se joue hors connexion, sans compte, avec des rappels facultatifs quand Gloup a besoin de vous.'
+                    '45 langues, iPhone et iPad, qualité graphique réglée automatiquement selon l’appareil. Le jeu se joue hors connexion, sans compte, avec des rappels facultatifs quand Gloup a besoin de vous.'
                 ],
                 en: [
                     'A cutaway house with a bedroom, living room, kitchen and bathroom: Gloup eats what you slide to his mouth, cooks 14 recipes with you, takes a bubble bath and goes to bed after an evening ritual.',
@@ -863,11 +864,11 @@
                     'He grows from baby to adult over 60 levels and builds a personality from five traits: foodie, playful, stylish, dreamer or gardener.',
                     '33 foods, 20 hats, 14 looks, 24 colors, and wallpapers, floors and furniture to decorate every room.',
                     '9 mini-games, 18 activities, daily and weekly quests, a memory album, a friend visiting each day and 20 trophies, also in Game Center.',
-                    '45 languages, iPhone and iPad. The game plays offline, with no account, with optional reminders when Gloup needs you.'
+                    '45 languages, iPhone and iPad, with graphics quality adjusting automatically to the device. The game plays offline, with no account, with optional reminders when Gloup needs you.'
                 ]
             },
             sources: { fr: 'Aucune donnée externe : la maison, le jardin, les aliments, les looks, les mini-jeux, les musiques et les textes sont intégrés au jeu, qui se joue hors connexion. Les rappels sont programmés sur l’appareil, sans serveur.', en: 'No external data: the house, garden, foods, looks, mini-games, music and texts are built into the game, which plays offline. Reminders are scheduled on the device, with no server.' },
-            business: { fr: 'Jeu 100 % gratuit, financé par la publicité Google AdMob : vidéos facultatives pour un coup de pouce, 12 par jour au plus, et courte publicité possible après un mini-jeu. Aucun achat intégré, aucune donnée bancaire dans l’app.', en: 'Fully free game, funded by Google AdMob ads: optional videos for a small boost, 12 a day at most, and a short ad that may appear after a mini-game. No in-app purchases, no payment card data in the app.' },
+            business: { fr: 'Jeu 100 % gratuit, financé par la publicité Google AdMob : vidéos facultatives pour un coup de pouce, 12 par jour au plus, et courte publicité possible après un mini-jeu. Hors connexion, les vidéos facultatives sont désactivées et ne rapportent rien. Aucun achat intégré, aucune donnée bancaire dans l’app.', en: 'Fully free game, funded by Google AdMob ads: optional videos for a small boost, 12 a day at most, and a short ad that may appear after a mini-game. Offline, optional videos are disabled and give no reward. No in-app purchases, no payment card data in the app.' },
             promo: {
                 fr: 'Gloup emménage chez vous. Nourrissez-le, lavez-le, couchez-le et regardez-le grandir.',
                 en: 'Gloup moves in with you. Feed him, bathe him, tuck him in and watch him grow.'
@@ -876,7 +877,7 @@
                 fr: [['60', 'niveaux, de bébé à adulte'], ['9', 'mini-jeux'], ['33', 'aliments'], ['45', 'langues']],
                 en: [['60', 'levels, from baby to adult'], ['9', 'mini-games'], ['33', 'foods'], ['45', 'languages']]
             },
-            shotTops: ['#6cbfff', '#feb045', '#7bd4ff', '#674acc', '#8add69', '#ff8fc8', '#fb87d9', '#39c16c'],
+            shotTops: ['#6cbfff', '#feb045', '#7bd4ff', '#674acc', '#8add69', '#fe8ec8', '#fb87d9', '#39c06c'],
             storeShots: {
                 fr: ['La maison et son jardin', 'La cuisine, un gâteau pour Gloup', 'Le bain moussant', 'Pyjama, doudou et au lit', 'Le potager à cultiver', 'De bébé à adulte', 'La garde-robe', 'Neuf mini-jeux'],
                 en: ['The house and its garden', 'The kitchen, a cake for Gloup', 'The bubble bath', 'Pajamas, teddy and bedtime', 'The vegetable patch to grow', 'From baby to adult', 'The wardrobe', 'Nine mini-games']
@@ -906,7 +907,7 @@
                     'Onze amis à débloquer, un par île : chacun donne à Gloup un objet de départ, une forme de ventre et un pouvoir. Un atelier de huit améliorations rend Gloup plus fort au fil des parties.',
                     'Des coffres sur la barre des vagues et un coffre à la fin de chaque île, des quêtes du jour et de la semaine, des missions, un bestiaire de 44 Grisons, une piste de progression gratuite et un cadeau chaque jour.',
                     'Aucune pub pendant un niveau : les vidéos sont facultatives, et le moindre achat, comme « Sans pub », supprime la courte publicité entre deux niveaux. À chaque île, une offre d’île facultative, seulement dans la Boutique.',
-                    'iPhone et iPad, portrait et paysage. Sans compte : la progression reste sur l’appareil et dans votre iCloud, jamais chez l’éditeur.'
+                    '45 langues, iPhone et iPad, portrait et paysage, qualité graphique réglée automatiquement selon l’appareil. Le jeu se joue hors connexion. Sans compte : la progression reste sur l’appareil et dans votre iCloud, jamais chez l’éditeur.'
                 ],
                 en: [
                     'Gloup’s tummy is a grid: drag objects to arrange them. Each time one recharges, Gloup spits it at the Greylings, and you can rearrange mid-fight.',
@@ -915,11 +916,11 @@
                     'Eleven friends to unlock, one per island: each gives Gloup a starting object, a tummy shape and a power. A workshop of eight upgrades makes Gloup stronger over time.',
                     'Chests on the wave bar and a chest at the end of every island, daily and weekly quests, missions, a bestiary of 44 Greylings, a free progress track and a gift every day.',
                     'No ads during a level: videos are optional, and any purchase, such as “No ads”, removes the short ad between two levels. On each island, an optional island offer, only in the Shop.',
-                    'iPhone and iPad, portrait and landscape. No account: progress stays on the device and in your iCloud, never with the publisher.'
+                    '45 languages, iPhone and iPad, portrait and landscape, with graphics quality adjusting automatically to the device. The game plays offline. No account: progress stays on the device and in your iCloud, never with the publisher.'
                 ]
             },
             sources: { fr: 'Aucune donnée externe : les îles, les niveaux, les objets, les Grisons, les musiques et les textes sont intégrés au jeu, qui se joue hors connexion. Seules la publicité, les achats (App Store) et la copie iCloud de la sauvegarde utilisent le réseau.', en: 'No external data: the islands, levels, objects, Greylings, music and texts are built into the game, which plays offline. Only advertising, purchases (App Store) and the iCloud copy of the save use the network.' },
-            business: { fr: 'Jeu gratuit, financé par la publicité Google AdMob (vidéos facultatives, et courte publicité entre deux niveaux, jamais pendant un niveau) et par des achats intégrés facultatifs : gemmes, pack de départ, « Sans pub » (suppression de la petite publicité) et offres d’île. Aucune puissance n’est vendue, aucune donnée bancaire dans l’app.', en: 'Free game, funded by Google AdMob ads (optional videos, and a short ad between two levels, never during a level) and by optional in-app purchases: gems, a starter pack, “No ads” (removal of the short ad) and island offers. No power is for sale, no payment card data in the app.' },
+            business: { fr: 'Jeu gratuit, financé par la publicité Google AdMob (vidéos facultatives, et courte publicité entre deux niveaux, jamais pendant un niveau) et par des achats intégrés facultatifs : gemmes, pack de départ, « Sans pub » (suppression de la petite publicité) et offres d’île. Hors connexion, les vidéos facultatives sont désactivées et ne rapportent rien. Aucune puissance n’est vendue, aucune donnée bancaire dans l’app.', en: 'Free game, funded by Google AdMob ads (optional videos, and a short ad between two levels, never during a level) and by optional in-app purchases: gems, a starter pack, “No ads” (removal of the short ad) and island offers. Offline, optional videos are disabled and give no reward. No power is for sale, no payment card data in the app.' },
             promo: {
                 fr: 'Gloup recrache les objets de son ventre sur les Grisons. Range, fusionne, accorde les couleurs et libère onze îles.',
                 en: 'Gloup spits the objects from his tummy at the Greylings. Arrange, merge, match colors and free eleven islands.'
@@ -958,7 +959,7 @@
                     'Des pièces à chaque victoire, à dépenser à la Boutique : six gadgets (sonar, lampe, porte, miel, jumelles et sablier), des looks pour Gloup et des offres.',
                     'Un défi du jour, le même pour tous, des cadeaux sur sept jours, une traque sans fin ouverte après la troisième île, une histoire avec le Baron Grisaille et 21 trophées, aussi dans Game Center.',
                     'Gratuit, avec des achats intégrés facultatifs : rien d’exclusif, tout se gagne en jouant. Aucune pub pendant un niveau : les vidéos sont facultatives, et « Sans pub » supprime la petite pub entre deux niveaux. Une énergie s’active après 10 niveaux réussis (6 au plus, 1 de plus toutes les 15 minutes) ; le défi du jour reste gratuit.',
-                    '45 langues, iPhone et iPad, portrait et paysage. Sans compte : la progression reste sur l’appareil et dans votre iCloud, avec des rappels facultatifs.'
+                    '45 langues, iPhone et iPad, portrait et paysage, qualité graphique réglée automatiquement selon l’appareil. Le jeu se joue hors connexion. Sans compte : la progression reste sur l’appareil et dans votre iCloud, avec des rappels facultatifs.'
                 ],
                 en: [
                     'On each island of Chromaterre, an invisible Greyling hides in a grid of squares. Place a friend to listen: they call out the number of steps to the thief, going around walls, or “…” if it is too far. Then search the right square.',
@@ -967,11 +968,11 @@
                     'Coins for every win, to spend in the Shop: six gadgets (sonar, lamp, door, honey, binoculars and hourglass), looks for Gloup and offers.',
                     'A daily challenge, the same for everyone, gifts over seven days, an endless hunt unlocked after the third island, a story with Baron Grisaille and 21 trophies, also in Game Center.',
                     'Free, with optional in-app purchases: nothing is exclusive, everything is earned by playing. No ads during a level: videos are optional, and “No ads” removes the short ad between two levels. Energy turns on after 10 levels completed (6 at most, 1 more every 15 minutes); the daily challenge stays free.',
-                    '45 languages, iPhone and iPad, portrait and landscape. No account: progress stays on the device and in your iCloud, with optional reminders.'
+                    '45 languages, iPhone and iPad, portrait and landscape, with graphics quality adjusting automatically to the device. The game plays offline. No account: progress stays on the device and in your iCloud, with optional reminders.'
                 ]
             },
             sources: { fr: 'Aucune donnée externe : les îles, les niveaux, les voleurs, les gadgets, les musiques et les textes sont intégrés au jeu, qui se joue hors connexion. Seules la publicité, les achats (App Store), Game Center et la copie iCloud de la sauvegarde utilisent le réseau. Les rappels sont programmés sur l’appareil, sans serveur.', en: 'No external data: the islands, levels, thieves, gadgets, music and texts are built into the game, which plays offline. Only advertising, purchases (App Store), Game Center and the iCloud copy of the save use the network. Reminders are scheduled on the device, with no server.' },
-            business: { fr: 'Jeu gratuit, financé par la publicité Google AdMob (vidéos facultatives, et courte publicité entre deux niveaux, jamais pendant un niveau ni avant 10 niveaux réussis) et par des achats intégrés facultatifs : Pack de départ, « Sans pub » (suppression de la petite publicité) et pièces. Rien d’exclusif, aucun abonnement, aucune donnée bancaire dans l’app.', en: 'Free game, funded by Google AdMob ads (optional videos, and a short ad between two levels, never during a level or before 10 levels completed) and by optional in-app purchases: Starter Pack, “No ads” (removal of the short ad) and coins. Nothing is exclusive, no subscription, no payment card data in the app.' },
+            business: { fr: 'Jeu gratuit, financé par la publicité Google AdMob (vidéos facultatives, et courte publicité entre deux niveaux, jamais pendant un niveau ni avant 10 niveaux réussis) et par des achats intégrés facultatifs : Pack de départ (1 500 pièces, un de chaque gadget, un look et l’énergie pleine), « Sans pub » (suppression de la petite publicité) et pièces. Hors connexion, les vidéos facultatives sont désactivées et ne rapportent rien. Rien d’exclusif, aucun abonnement, aucune donnée bancaire dans l’app.', en: 'Free game, funded by Google AdMob ads (optional videos, and a short ad between two levels, never during a level or before 10 levels completed) and by optional in-app purchases: Starter Pack (1,500 coins, one of each gadget, a look and full energy), “No ads” (removal of the short ad) and coins. Offline, optional videos are disabled and give no reward. Nothing is exclusive, no subscription, no payment card data in the app.' },
             promo: {
                 fr: 'Un voleur invisible rôde sur les îles de Chromaterre. Écoute, déduis, fouille la bonne case avant la fin des tours.',
                 en: 'An invisible thief prowls the islands of Chromaterre. Listen, deduce, search the right square before the turns run out.'
@@ -980,18 +981,18 @@
                 fr: [['6', 'îles'], ['60', 'niveaux'], ['6', 'gadgets'], ['45', 'langues']],
                 en: [['6', 'islands'], ['60', 'levels'], ['6', 'gadgets'], ['45', 'languages']]
             },
-            shotTops: ['#8cceff', '#fecb57', '#ae87fd', '#7bdd87', '#fc8696', '#fdacdd', '#98e2fe', '#fed465'],
+            shotTops: ['#8bceff', '#fecb57', '#ae87fe', '#7bdd87', '#fd8697', '#fdacdd', '#99e1ff', '#fed565'],
             storeShots: {
                 fr: ['L’accueil de ChromaTraque', 'Écoute et déduis', 'L’aide Déduction', 'Six îles à protéger', 'Le Baron Grisaille', 'Des gadgets malins', 'Des looks pour Gloup', 'Des cadeaux chaque jour'],
                 en: ['The ChromaTraque home screen', 'Listen and deduce', 'The Deduction aid', 'Six islands to protect', 'Baron Grisaille', 'Clever gadgets', 'Cool looks for Gloup', 'Daily gifts']
             }
         },
-        /* Pas encore sur l'App Store (`store: ''`, app 6824902491 sur App Store Connect). Captures App Store
+        /* En vente depuis octobre 2026 (STORE_CFM, app 6824902491 sur App Store Connect). Captures App Store
            (`assets/img/shots/chromaferme-*`, iPhone et iPad, `Outils/Parc/Marque/CapturesSite.mjs`). Faits relevés dans
-           le code du jeu le 20 octobre 2026. Une fois la fiche en ligne : `store` et replis HTML. */
+           le code du jeu le 20 octobre 2026. */
         chromaferme: {
             name: 'ChromaFerme', platform: 'ios', game: true, accent: '#3a9b4f', accent2: '#f2b632',
-            store: '',
+            store: STORE_CFM,
             tag: { fr: 'Jeu de ferme', en: 'Farming game' },
             desc: {
                 fr: 'Le Baron Grisaille a délavé la ferme de Gloup, la petite créature aux grands yeux. Semez, récoltez, élevez, transformez et livrez les commandes de ses amis : chaque récolte, chaque produit et chaque bâtiment rend sa couleur à l’île. Gratuit, avec achats intégrés facultatifs.',
@@ -1010,7 +1011,7 @@
                     'Soixante niveaux, un terrain à agrandir lot par lot (trente lots), des décorations et des chemins à poser, et une couleur rendue qui gagne l’île peu à peu.',
                     'Une histoire avec le Baron Grisaille, huit actes récompensés, des tâches du jour, un défi de la semaine, des cadeaux sur sept jours et 66 trophées, aussi dans Game Center.',
                     'Gratuit, avec des achats intégrés facultatifs. Aucune publicité pendant l’action : les vidéos récompensées sont facultatives. Aucun achat n’est nécessaire pour progresser ; les éclats servent seulement à gagner du temps, dans la limite du jour.',
-                    'iPhone et iPad. Sans compte : la progression reste sur l’appareil et dans votre iCloud, avec des rappels facultatifs.'
+                    '45 langues, iPhone et iPad, qualité graphique réglée automatiquement selon l’appareil. Le jeu se joue hors connexion. Sans compte : la progression reste sur l’appareil et dans votre iCloud, avec des rappels facultatifs.'
                 ],
                 en: [
                     'Sow by dragging a seed over the empty plots, harvest with a single swipe over the ripe ones: twenty crops to grow.',
@@ -1020,11 +1021,11 @@
                     'Sixty levels, land to expand lot by lot (thirty lots), decorations and paths to lay, and restored color that spreads across the island little by little.',
                     'A story with Baron Grisaille, eight rewarded acts, daily tasks, a weekly challenge, gifts over seven days and 66 trophies, also in Game Center.',
                     'Free, with optional in-app purchases. No ads during the action: rewarded videos are optional. No purchase is needed to progress; gems only save time, within the daily limit.',
-                    'iPhone and iPad. No account: progress stays on the device and in your iCloud, with optional reminders.'
+                    '45 languages, iPhone and iPad, with graphics quality adjusting automatically to the device. The game plays offline. No account: progress stays on the device and in your iCloud, with optional reminders.'
                 ]
             },
             sources: { fr: 'Aucune donnée externe : les cultures, les animaux, les ateliers, les commandes, les décors, les musiques et les textes sont intégrés au jeu, qui se joue hors connexion. Seules la publicité, les achats (App Store), Game Center et la copie iCloud de la sauvegarde utilisent le réseau. Les rappels sont programmés sur l’appareil, sans serveur.', en: 'No external data: the crops, animals, workshops, orders, decorations, music and texts are built into the game, which plays offline. Only advertising, purchases (App Store), Game Center and the iCloud copy of the save use the network. Reminders are scheduled on the device, with no server.' },
-            business: { fr: 'Jeu gratuit, financé par la publicité Google AdMob (vidéos récompensées facultatives seulement, jamais pendant l’action, aucune publicité intercalée) et par des achats intégrés facultatifs : Pack de départ, « Sans pub » (saute le visionnage des vidéos facultatives, mêmes effets et mêmes limites), Pack Arc-en-ciel (six décors) et éclats. Aucun abonnement, aucune donnée bancaire dans l’app.', en: 'Free game, funded by Google AdMob ads (optional rewarded videos only, never during the action, no interstitial ads) and by optional in-app purchases: Starter Pack, “No ads” (skips the watching of the optional videos, same effects and same limits), Rainbow Pack (six decorations) and gems. No subscription, no payment card data in the app.' },
+            business: { fr: 'Jeu gratuit, financé par la publicité Google AdMob (vidéos récompensées facultatives seulement, jamais pendant l’action, aucune publicité intercalée) et par des achats intégrés facultatifs : Pack de départ, « Sans pub » (saute le visionnage des vidéos facultatives, mêmes effets et mêmes limites), Pack Arc-en-ciel (six décors) et éclats. Hors connexion, les vidéos facultatives sont désactivées et ne rapportent rien. Aucun abonnement, aucune donnée bancaire dans l’app.', en: 'Free game, funded by Google AdMob ads (optional rewarded videos only, never during the action, no interstitial ads) and by optional in-app purchases: Starter Pack, “No ads” (skips the watching of the optional videos, same effects and same limits), Rainbow Pack (six decorations) and gems. Offline, optional videos are disabled and give no reward. No subscription, no payment card data in the app.' },
             promo: {
                 fr: 'Le Baron Grisaille a délavé la ferme de Gloup. Sème, récolte, livre : chaque geste lui rend sa couleur.',
                 en: 'Baron Grisaille has washed out Gloup’s farm. Sow, harvest, deliver: every move brings its color back.'
@@ -1057,28 +1058,30 @@
             },
             features: {
                 fr: [
-                    'Huit grandes îles flottantes et 24 régions reliées sans coupure, un cycle du jour et de la nuit, et le vol pour passer d’une île à l’autre.',
+                    'Huit grandes îles flottantes et 24 régions reliées sans coupure, un cycle du jour et de la nuit, un paysage riche (herbe en touffes, arbres et rochers propres à chaque île) et le vol pour passer d’une île à l’autre.',
+                    'Des villes vivantes : une ville de départ fortifiée avec sa place et sa fontaine, un marché de 14 étals, 14 boutiques (banque, forge, arène, ménagerie, téléporteur…) et 48 habitants ; des hameaux, et des fermes comme le Grenier à grains, sa grange et ses meules.',
                     'Des combats en temps réel : plus de 200 espèces de monstres, des élites, des seigneurs de famille et 8 Gardiens à plusieurs phases.',
                     'Trois styles de combat, Pinceau, Prisme et Aquarelle, et 12 compétences.',
                     'Huit emplacements d’équipement, cinq raretés, huit panoplies, des gemmes et une forge ; sept familiers.',
-                    '80 quêtes principales, plus de 140 quêtes secondaires, des quêtes du jour et 7 donjons en normal et en difficile.',
+                    '80 quêtes principales, plus de 140 quêtes secondaires, des quêtes du jour et 7 donjons en normal et en difficile, aux salles détaillées et aux torches animées.',
                     'Des anneaux de vol, des taches de grisaille, un bestiaire, 60 niveaux et 48 trophées, aussi dans Game Center.',
                     'Gratuit, avec des achats intégrés facultatifs. Aucune bannière ni publicité intercalée : seules des vidéos récompensées facultatives sont proposées. Rien de ce qui s’achète ne donne de niveau, de statistique, d’objet, de pièces ni d’expérience.',
-                    'iPhone et iPad, en paysage. Sans compte : la sauvegarde reste sur l’appareil et dans votre iCloud.'
+                    'iPhone et iPad, en paysage, qualité graphique réglée automatiquement selon l’appareil. Le jeu se joue hors connexion. Sans compte : la sauvegarde reste sur l’appareil et dans votre iCloud.'
                 ],
                 en: [
-                    'Eight large floating islands and 24 seamlessly connected regions, a day and night cycle, and flight to travel from island to island.',
+                    'Eight large floating islands and 24 seamlessly connected regions, a day and night cycle, a rich landscape (tufted grass, trees and rocks of each island’s own) and flight to travel from island to island.',
+                    'Living towns: a fortified starting town with its square and fountain, a market of 14 stalls, 14 shops (bank, forge, arena, menagerie, teleporter…) and 48 residents; hamlets, and farms such as the Grain Loft, its barn and its haystacks.',
                     'Real-time combat: over 200 monster species, elites, family lords and 8 multi-phase Guardians.',
                     'Three combat styles, Brush, Prism and Watercolor, and 12 skills.',
                     'Eight equipment slots, five rarities, eight sets, gems and a forge; seven companions.',
-                    '80 main quests, over 140 side quests, daily quests and 7 dungeons in normal and hard.',
+                    '80 main quests, over 140 side quests, daily quests and 7 dungeons in normal and hard, with detailed rooms and animated torches.',
                     'Flight rings, gray stains, a bestiary, 60 levels and 48 trophies, also in Game Center.',
                     'Free, with optional in-app purchases. No banners and no interstitial ads: only optional rewarded videos are offered. Nothing you can buy gives a level, a stat, an item, coins or experience.',
-                    'iPhone and iPad, in landscape. No account: the save stays on the device and in your iCloud.'
+                    'iPhone and iPad, in landscape, with graphics quality adjusting automatically to the device. The game plays offline. No account: the save stays on the device and in your iCloud.'
                 ]
             },
-            sources: { fr: 'Aucun compte : la sauvegarde reste sur l’appareil et dans votre iCloud. Le réseau ne sert que pour la publicité, les achats (App Store), Game Center et iCloud.', en: 'No account: the save stays on the device and in your iCloud. The network is only used for advertising, purchases (App Store), Game Center and iCloud.' },
-            business: { fr: 'Jeu gratuit, financé par la publicité Google AdMob (vidéos récompensées facultatives seulement : un coffre bonus de donjon, 2 par jour, et un sachet de matériaux, 1 par jour ; aucune bannière ni publicité intercalée) et par des achats intégrés facultatifs : Pack de départ, « Sans vidéos » (saute le visionnage, mêmes récompenses et mêmes limites), Garde-robe Arc-en-ciel (cinq apparences) et gouttes de Prisme en quatre paliers (apparences, places de sac, coffret de matériaux limité à deux par semaine). Rien n’achète de niveau, de statistique, d’objet, de pièces ni d’expérience.', en: 'Free game, funded by Google AdMob ads (optional rewarded videos only: a bonus dungeon chest, 2 a day, and a materials pouch, 1 a day; no banners and no interstitial ads) and by optional in-app purchases: Starter Pack, “No videos” (skips the watching, same rewards and same limits), Rainbow Wardrobe (five looks) and Prism drops in four tiers (looks, bag slots, a materials chest limited to two per week). Nothing buys a level, a stat, an item, coins or experience.' },
+            sources: { fr: 'Aucun compte : la sauvegarde reste sur l’appareil et dans votre iCloud. Le jeu se joue hors connexion. Le réseau ne sert que pour la publicité, les achats (App Store), Game Center et iCloud.', en: 'No account: the save stays on the device and in your iCloud. The game plays offline. The network is only used for advertising, purchases (App Store), Game Center and iCloud.' },
+            business: { fr: 'Jeu gratuit, financé par la publicité Google AdMob (vidéos récompensées facultatives seulement : un coffre bonus de donjon, 2 par jour, et un sachet de matériaux, 1 par jour ; aucune bannière ni publicité intercalée) et par des achats intégrés facultatifs : Pack de départ, « Sans vidéos » (saute le visionnage, mêmes récompenses et mêmes limites), Garde-robe Arc-en-ciel (cinq apparences) et gouttes de Prisme en quatre paliers (apparences, places de sac, coffret de matériaux limité à deux par semaine). Hors connexion, les vidéos facultatives sont désactivées et ne rapportent rien. Rien n’achète de niveau, de statistique, d’objet, de pièces ni d’expérience.', en: 'Free game, funded by Google AdMob ads (optional rewarded videos only: a bonus dungeon chest, 2 a day, and a materials pouch, 1 a day; no banners and no interstitial ads) and by optional in-app purchases: Starter Pack, “No videos” (skips the watching, same rewards and same limits), Rainbow Wardrobe (five looks) and Prism drops in four tiers (looks, bag slots, a materials chest limited to two per week). Offline, optional videos are disabled and give no reward. Nothing buys a level, a stat, an item, coins or experience.' },
             promo: {
                 fr: 'Le Baron Grisaille a délavé le ciel. Gloup vole d’île en île pour rendre ses couleurs au monde.',
                 en: 'Baron Grisaille has washed out the sky. Gloup flies from island to island to bring the world’s colors back.'
