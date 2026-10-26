@@ -1,13 +1,13 @@
 {
   "ticpe": {
-    "lastUpdated": "2026-01-01",
+    "lastUpdated": "2026-10-01",
     "effectiveYear": 2026,
-    "source": "Loi de finances 2018 : taux gelés depuis mouvement des Gilets jaunes",
-    "gazole": 0.5940,
-    "sp95": 0.6829,
-    "sp98": 0.6829,
-    "e10": 0.6629,
-    "e85": 0.1249,
-    "gplc": 0.0663
+    "source": "Douanes, circulaire du 30 septembre 2026, accise sur les énergies (ex-TICPE) en vigueur au 1er octobre 2026, tarif normal hors Corse, en euros par litre. GPLc : 20,71 euros par 100 kg, converti à 11,54 euros par hectolitre (bulletin pétrolier de la Commission européenne)",
+    "gazole": 0.6075,
+    "sp95": 0.6902,
+    "sp98": 0.6902,
+    "e10": 0.6702,
+    "e85": 0.1183,
+    "gplc": 0.1154
   }
 }

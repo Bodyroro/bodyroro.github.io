@@ -1,13 +1,17 @@
 /* ==========================================================================
    site.js : moteur de la vitrine
    ==========================================================================
-   Rend l'accueil, les pages d'application, À propos et Contact, en français
-   et en anglais. Une application par écran : un titre, trois lignes, un
-   appareil qui se redresse quand on défile, un bouton.
+   Rend l'accueil (catalogue de tuiles filtrable par famille, avec recherche),
+   les pages produit, les pages Confidentialité et Assistance du site, À propos
+   et Contact, en français et en anglais. Un seul design, celui du catalogue :
+   toutes les fiches suivent le même gabarit en grilles de cartes, seules
+   l'icône et la couleur d'accent de la tuile sont propres au produit.
 
-   Les pages légales et d'assistance des applications ne passent pas par ici :
-   elles gardent styles.css et site-pages.js, parce qu'elles s'affichent dans
-   les applications elles-mêmes.
+   Les pages légales lues par les applications (<app>-privacy.html,
+   <app>-support.html) ne passent pas par ici : elles gardent styles.css et
+   site-pages.js. Les pages <app>-confidentialite.html et <app>-assistance.html
+   chargent site-pages.js, qui rend le texte (source unique, onze langues),
+   puis ce fichier, qui le replace dans la fiche du produit (`renderLegal`).
    ========================================================================== */
 (function () {
     'use strict';
@@ -59,7 +63,8 @@
         var url = new URL(location.href);
         url.searchParams.set('lang', l);
         history.replaceState(null, '', url);
-        render();
+        /* Changement de langue en place : fondu de vue là où il existe, sauf mouvement réduit. */
+        if (document.startViewTransition && !reduceMotion) { document.startViewTransition(render); } else { render(); }
     }
     function pick(o) { return o[lang] !== undefined ? o[lang] : o.fr; }
 
@@ -91,41 +96,10 @@
        AVIF et en WebP, plus un JPEG de 540 pour les navigateurs qui ne lisent ni
        l'un ni l'autre. `sizes` dit au navigateur la largeur affichée : il choisit
        le fichier selon la densité de l'écran. */
-    /* Un visuel dans le téléphone dessiné par le site. Le titre du visuel occupe
-       le haut de l'image : l'écran garde donc une barre d'état, peinte de la
-       couleur du bord supérieur de chaque visuel (`shotTops`), pour que l'îlot
-       ne recouvre pas le titre. */
-    function telephoneJeu(cle, n, alt, paresseux, sizes, classe) {
-        var fond = (APPS[cle].shotTops || [])[n - 1] || '#000';
-        return '<div class="phone' + (classe ? ' ' + classe : '') + '">' +
-            '<div class="phone-screen is-store" style="background:' + fond + '">' +
-            captureJeu(cle, n, alt, paresseux, sizes) + '</div></div>';
-    }
-
-    /* L'écran réel d'une app (`n` vaut 'ecran', ou le rang d'un écran brut), sans titre de fiche : le téléphone
-       d'une page d'app montre l'app elle-même, pas un visuel App Store qui contient déjà son propre téléphone. */
-    function telephoneApp(cle, n, alt, paresseux, sizes, classe) {
-        return '<div class="phone' + (classe ? ' ' + classe : '') + '"><div class="phone-screen">' +
-            captureJeu(cle, n, alt, paresseux, sizes) + '</div></div>';
-    }
-
-    /* Les captures iPad (2752 x 2064, en paysage, sans îlot à éviter) existent en 640 et 1280
-       pixels de large, plus un JPEG de 960 : un iPad s'affiche plus large qu'un iPhone. */
-    function tabletteJeu(cle, n, alt, sizes, appareil) {
-        return '<div class="tablet' + (appareil === 'paysage' ? ' is-wide' : '') + '"><div class="tablet-screen">' +
-            captureJeu(cle, n, alt, true, sizes, appareil || 'ipad') + '</div></div>';
-    }
-
-    /* L'écran d'Apple TV (1920 x 1080), sans cadre d'appareil : un écran 16:9 à bords arrondis, en 640 et 1280
-       pixels de large, plus un JPEG de 960. */
-    function ecranTV(cle, n, alt, sizes) {
-        return '<div class="tv-screen">' + captureJeu(cle, n, alt, true, sizes, 'tv') + '</div>';
-    }
-
-    /* Largeurs [petite, grande, JPEG] et taille d'origine des captures de chaque appareil. */
     var FORMATS_CAPTURES = {
         iphone: ['-', [360, 720, 540, 1320, 2868]],
         ipad: ['-ipad-', [640, 1280, 960, 2752, 2064]],
+        ipadv: ['-ipad-', [480, 960, 720, 1536, 2048]],
         paysage: ['-', [640, 1280, 960, 2868, 1320]],
         tv: ['-tv-', [640, 1280, 960, 1920, 1080]]
     };
@@ -139,7 +113,7 @@
             '<source type="image/avif" srcset="' + jeu('avif') + '" sizes="' + sizes + '">' +
             '<source type="image/webp" srcset="' + jeu('webp') + '" sizes="' + sizes + '">' +
             '<img src="' + base + '-' + t[2] + '.jpg" width="' + t[3] + '" height="' + t[4] + '" alt="' + esc(alt) + '"' +
-            (paresseux ? ' loading="lazy"' : ' fetchpriority="high"') + ' decoding="async">' +
+            (paresseux === true ? ' loading="lazy"' : paresseux === false ? ' fetchpriority="high"' : '') + ' decoding="async">' +
             '</picture>';
     }
 
@@ -157,115 +131,19 @@
         /* Les deux entrées nomment l'appareil, pas la plateforme : « Apps iOS »
            et « macOS » ne formaient pas une paire, et un visiteur cherche un
            iPhone ou un Mac, pas un nom de système. */
-        navIOS: { fr: 'iPhone', en: 'iPhone' },
         navMac: { fr: 'Mac', en: 'Mac' },
         navAbout: { fr: 'À propos', en: 'About' },
         navContact: { fr: 'Contact', en: 'Contact' },
-        navSupport: { fr: 'Soutenir', en: 'Support' },
-        brandSub: { fr: 'Développeur indépendant', en: 'Independent developer' },
-
-        heroChip1: { fr: '{n} apps en ligne', en: '{n} apps live' },
-        heroChip2: { fr: 'iPhone et Mac', en: 'iPhone and Mac' },
-        heroChip3: { fr: 'Fait en France', en: 'Made in France' },
-        /* Le héro n'appartient plus à une gamme : la carte de France est
-           descendue dans la section iPhone, à laquelle elle appartient. Ce qui
-           reste ici doit valoir pour les deux, sans en avantager aucune. */
-        heroTitle: {
-            fr: 'Des jeux, des apps, <em>un seul principe</em>.',
-            en: 'Games and apps, <em>one principle</em>.'
-        },
-        heroLead: {
-            fr: 'Des applications natives qui font une chose et la font bien, sans compte, sans traceur et sans dépendance. Sur iPhone, les services publics français du quotidien. Sur Mac, des utilitaires libres dont le code est entièrement ouvert.',
-            en: 'Native apps that do one thing and do it well, with no account, no tracker and no dependency. On iPhone, everyday French public services. On Mac, free utilities whose code is fully open.'
-        },
-        heroCTA1: { fr: 'Les apps iPhone', en: 'The iPhone apps' },
-        heroCTA2: { fr: 'Les apps Mac', en: 'The Mac apps' },
-        scrollHint: { fr: 'Explorer', en: 'Explore' },
         skipLink: { fr: 'Aller au contenu', en: 'Skip to content' },
 
-        statsEyebrow: { fr: 'En chiffres', en: 'By the numbers' },
-        stats: {
-            fr: [
-                ['{n}', 'applications publiées', '{ios} sur iPhone via l’App Store, {mac} sur Mac en open source sur GitHub.'],
-                ['2', 'plateformes natives', 'iPhone et Mac, développées en SwiftUI, sans framework tiers.'],
-                ['45', 'langues au maximum', 'Jusqu’à 45 langues selon l’application, du français à l’arabe.'],
-                ['0', 'compte requis', 'Aucune inscription ni donnée personnelle collectée.']
-            ],
-            en: [
-                ['{n}', 'published apps', '{ios} on iPhone via the App Store, {mac} on Mac as open source on GitHub.'],
-                ['2', 'native platforms', 'iPhone and Mac, built in SwiftUI, no third-party frameworks.'],
-                ['45', 'languages at most', 'Up to 45 languages depending on the app, from French to Arabic.'],
-                ['0', 'accounts required', 'No sign-up and no personal data collected.']
-            ]
-        },
-
         iosTitle: { fr: 'Des applications utiles au quotidien.', en: 'Apps for everyday life.' },
-        iosLead: {
-            fr: 'Les données publiques françaises, sur la carte et hors connexion : les services du quotidien, et les prix que l’administration enregistre. Interface native SwiftUI, sources officielles, résultats géolocalisés. Aucun compte, aucune inscription.',
-            en: 'French public data, on the map and offline: everyday services, and the prices the administration records. Native SwiftUI interface, official sources, geolocated results. No account, no sign-up.'
-        },
-        /* Un point par application, comme la section Mac : les deux gammes se
-           présentent exactement de la même façon. */
-        iosPoints: {
-            fr: [
-                ['CarbuFrance', 'Le prix des carburants station par station, avec carnet de bord et widget.'],
-                ['IRVEFrance', 'Les bornes de recharge, leur puissance, leurs connecteurs et leur disponibilité.'],
-                ['ToiletteFrance', 'Les toilettes publiques, leurs horaires et leur accessibilité.'],
-                ['DefibFrance', 'Les défibrillateurs, avec mode Urgence et guide de réanimation.'],
-                ['DVFFrance', 'Le prix de l’immobilier d’après les ventes réellement enregistrées.']
-            ],
-            en: [
-                ['CarbuFrance', 'Fuel prices station by station, with a logbook and a widget.'],
-                ['IRVEFrance', 'EV chargers, their power, connectors and availability.'],
-                ['ToiletteFrance', 'Public toilets, their opening hours and accessibility.'],
-                ['DefibFrance', 'Defibrillators, with an Emergency mode and a CPR guide.'],
-                ['DVFFrance', 'Property prices from the sales actually recorded.']
-            ]
-        },
-        iosCTA: { fr: 'Les applications iPhone', en: 'The iPhone apps' },
-        iosMore: { fr: 'Voir l’interface', en: 'See the interface' },
-        iosRequires: { fr: 'Gratuit · iPhone et iPad · iOS 18 et plus', en: 'Free · iPhone and iPad · iOS 18 and later' },
-        iosStore: { fr: 'Sur l’App Store', en: 'On the App Store' },
-        iosPage: { fr: 'Ouvrir la page', en: 'Open the page' },
-        showcaseEyebrow: { fr: 'Aperçu produit', en: 'Product preview' },
-        showcaseTitle: { fr: 'Un aperçu de l’interface.', en: 'A preview of the interface.' },
-        showcaseLead: {
-            fr: 'Sélectionnez une application pour voir sa carte, ses filtres et sa navigation.',
-            en: 'Select an app to see its map, filters and navigation.'
-        },
-
-        /* Blocs du circuit macOS, pendants des noms de villes de la carte. */
-        macShowEyebrow: { fr: 'Aperçu produit', en: 'Product preview' },
-        macShowTitle: { fr: 'Un aperçu de l’interface.', en: 'A preview of the interface.' },
-        macShowLead: {
-            fr: 'Sélectionnez un utilitaire pour voir son tableau de bord, ses réglages et sa navigation.',
-            en: 'Select a utility to see its dashboard, settings and navigation.'
-        },
-        rigLabels: { fr: ['APPLE SILICON', 'MÉMOIRE', 'RÉSEAU', 'STOCKAGE'],
-                     en: ['APPLE SILICON', 'MEMORY', 'NETWORK', 'STORAGE'] },
         macTitle: { fr: 'Des utilitaires pour votre Mac Apple Silicon.', en: 'Utilities for your Apple Silicon Mac.' },
         macLead: {
             fr: 'Contrairement aux apps iPhone, celles-ci ne sont pas limitées à la France : elles fonctionnent sur tous les Mac Apple Silicon. Applications natives, libres et open source, chacune sur un sujet précis, sans compte, sans publicité et sans dépendance.',
             en: 'Unlike the iPhone apps, these are not tied to France: they run on any Apple Silicon Mac. Native, free and open source apps, each on one precise subject, with no account, no ads and no dependency.'
         },
-        macPoints: {
-            fr: [
-                ['MacTuner', 'Le matériel en temps réel, 34 réglages système réversibles, nettoyage et ventilation.'],
-                ['DNSTuner', '46 résolveurs publics, DNS chiffré, et la mesure réelle de ce que chacun bloque.'],
-                ['Le point commun', 'Rien d’irréversible, rien de caché, et le code complet sur GitHub.']
-            ],
-            en: [
-                ['MacTuner', 'Hardware in real time, 34 reversible system tweaks, cleanup and fan control.'],
-                ['DNSTuner', '46 public resolvers, encrypted DNS, and a real measurement of what each one blocks.'],
-                ['What they share', 'Nothing irreversible, nothing hidden, and the full code on GitHub.']
-            ]
-        },
-        macCTA: { fr: 'Les utilitaires Mac', en: 'The Mac utilities' },
-        macMore: { fr: 'Voir l’interface', en: 'See the interface' },
         macStore: { fr: 'Sur GitHub', en: 'On GitHub' },
-        macPage: { fr: 'Ouvrir la page', en: 'Open the page' },
-        macRequires: { fr: 'Gratuit · macOS 26 et 27 · Apple Silicon', en: 'Free · macOS 26 and 27 · Apple Silicon' },
-
+        macPreview: { fr: 'La fenêtre', en: 'The window' },
         valuesEyebrow: { fr: 'Engagements', en: 'Commitments' },
         valuesTitle: { fr: 'Les mêmes principes sur iPhone et sur Mac.', en: 'The same principles on iPhone and Mac.' },
         values: {
@@ -281,131 +159,28 @@
             ]
         },
 
-        supportTitle: { fr: 'Les applications sont gratuites. Le soutien est libre.', en: 'The apps are free. Support is voluntary.' },
-        supportLead: {
-            fr: 'Les applications restent utilisables sans don. Un soutien libre via Liberapay finance les données, les tests, l’hébergement et les mises à jour.',
-            en: 'The apps stay usable without donating. Voluntary Liberapay support funds data, testing, hosting and updates.'
-        },
-        supportCTA: { fr: 'Faire un don libre', en: 'Donate freely' },
-        supportNote: {
-            fr: 'Un don web ne débloque aucune fonction ni l’abonnement « Sans pub ». Les achats intégrés restent gérés par StoreKit dans les apps.',
-            en: 'A web donation unlocks no feature and no “Ad-Free” subscription. In app purchases remain handled by StoreKit inside the apps.'
-        },
-        supportWays: {
-            fr: [
-                ['heart', 'Donner', 'Un don libre, sans contrepartie cachée dans les apps.'],
-                ['star', 'Partager', 'Un avis App Store aide chaque app à trouver ses utilisateurs.'],
-                ['mail', 'Signaler', 'Un retour précis corrige plus vite données et cas limites.']
-            ],
-            en: [
-                ['heart', 'Donate', 'A free amount donation, no hidden in app advantage.'],
-                ['star', 'Share', 'An App Store review helps each app find its users.'],
-                ['mail', 'Report', 'Precise feedback fixes data and edge cases faster.']
-            ]
-        },
-
         profileEyebrow: { fr: 'À propos', en: 'About' },
         profileBio: {
             fr: 'Développeur autodidacte basé en France, je construis des apps simples, utiles et respectueuses de la vie privée, en privilégiant SwiftUI, MapKit, StoreKit, WidgetKit et les composants natifs Apple pour une expérience cohérente.',
             en: 'Self taught developer based in France, I build simple, useful, privacy minded apps, favoring SwiftUI, MapKit, StoreKit, WidgetKit and native Apple components for a coherent experience.'
         },
         profileCTA: { fr: 'Me contacter', en: 'Get in touch' },
-        profileMore: { fr: 'En savoir plus', en: 'Learn more' },
-
         footerLine: { fr: 'Sur iPhone et iPad, des jeux avec Gloup et les services publics français du quotidien. Sur Mac, des utilitaires libres qui font une chose et la font bien.', en: 'On iPhone and iPad, games starring Gloup and everyday French public services. On Mac, free utilities that do one thing and do it well.' },
         footerSite: { fr: 'Site', en: 'Site' },
         footerApps: { fr: 'Apps iPhone', en: 'iPhone apps' },
         footerTagline: { fr: 'Conçu et développé en France.', en: 'Designed and built in France.' },
-        footerVisitors: { fr: 'visiteurs cette semaine', en: 'visitors this week' },
         footerStore: { fr: 'Toutes les applications sur l\u2019App Store', en: 'All apps on the App Store' },
         footerPartners: { fr: 'Partenaire', en: 'Partner' },
 
-        available: { fr: 'Disponible', en: 'Available' },
-        /* Une application peut être finie sans être encore en vente : la vitrine
-           doit pouvoir le dire plutôt que de promettre un lien App Store qui
-           n'existe pas. */
-        soon: { fr: 'Bientôt disponible', en: 'Coming soon' },
-        free: { fr: 'Gratuit', en: 'Free' },
-        download: { fr: 'Télécharger', en: 'Download' },
-        discover: { fr: 'Découvrir', en: 'Discover' },
         supportLink: { fr: 'Assistance', en: 'Support' },
         privacyLink: { fr: 'Confidentialité', en: 'Privacy' },
-        backHome: { fr: 'Toutes les apps', en: 'All apps' },
-
         featEyebrow: { fr: 'Fonctionnalités', en: 'Features' },
-        featTitle: { fr: 'Fonctionnalités principales.', en: 'Main features.' },
         shotsEyebrow: { fr: 'Captures réelles', en: 'Real screenshots' },
-        shotsTitle: { fr: 'L’application sur iPhone.', en: 'The app on iPhone.' },
-        shotsLead: { fr: 'Captures réelles : la carte, la liste et la fiche détaillée avec vue à 360° et guidage.', en: 'Real screenshots: the map, the list and the detailed sheet with 360° view and directions.' },
         dataEyebrow: { fr: 'Données & confidentialité', en: 'Data & privacy' },
-        dataTitle: { fr: 'Ce que l’app utilise et ce qui reste sur votre appareil.', en: 'What the app uses and what stays on your device.' },
         dataSources: { fr: 'Sources', en: 'Sources' },
-        dataLocal: { fr: 'Données locales', en: 'Local data' },
         dataBusiness: { fr: 'Publicité & achats', en: 'Ads & purchases' },
-        dataLocalText: {
-            fr: 'Aucun compte utilisateur. Favoris, réglages et cache restent sur l’appareil et disparaissent avec l’app.',
-            en: 'No user account. Favorites, settings and cache stay on the device and vanish with the app.'
-        },
-        legalEyebrow: { fr: 'Documents de l’app', en: 'App documents' },
-        legalTitle: { fr: 'Pages légales officielles.', en: 'Official legal pages.' },
-        legalNote: {
-            fr: 'La politique de confidentialité et l’assistance officielles de l’application, telles que présentées sur l’App Store.',
-            en: 'The app’s official privacy policy and support pages, exactly as presented on the App Store.'
-        },
-        productSupport: { fr: 'Un problème, une question ?', en: 'An issue or a question?' },
-        productSupportCTA: { fr: 'Écrire au support', en: 'Write to support' },
-
         contactEyebrow: { fr: 'Contact', en: 'Contact' },
-        contactTitle: { fr: 'Une réponse rapide et personnelle.', en: 'A quick, personal reply.' },
-        contactLead: {
-            fr: 'Développeur indépendant, je réponds moi-même à chaque message, en général sous 24 à 48 h. Choisissez une application : l’objet et le message sont préremplis.',
-            en: 'As an independent developer I answer every message myself, usually within 24 to 48 hours. Pick an app and the subject and message are prefilled.'
-        },
-        composerTo: { fr: 'À', en: 'To' },
-        composerSubject: { fr: 'Objet', en: 'Subject' },
-        composerBody: { fr: 'Message', en: 'Message' },
-        composerDevice: { fr: 'Appareil', en: 'Device' },
-        composerOS: { fr: 'Version du système', en: 'System version' },
-        composerAuto: { fr: 'détecté', en: 'detected' },
-        composerDevicePh: { fr: 'ex. iPhone 15 Pro', en: 'e.g. iPhone 15 Pro' },
-        composerOSPh: { fr: 'ex. iOS 18.2', en: 'e.g. iOS 18.2' },
-        composerOpen: { fr: 'Ouvrir dans Mail', en: 'Open in Mail' },
-        composerCopy: { fr: 'Copier l’adresse', en: 'Copy address' },
-        composerCopied: { fr: 'Adresse copiée ✓', en: 'Address copied ✓' },
-        composerHint: { fr: 'Si le bouton n’ouvre pas votre messagerie, copiez l’adresse.', en: 'If the button doesn’t open your mail app, copy the address.' },
         mailSubject: { fr: 'Support', en: 'Support' },
-        mailBody: {
-            fr: ['Bonjour,', '', 'Application : {app}', 'Version de l’app : ', 'Appareil : {device}', 'Version du système : {os}', 'Langue : {locale}', '', 'Description du problème : ', '', 'Étapes pour reproduire : ', '', 'Capture d’écran jointe si possible.', '', 'Merci.'],
-            en: ['Hello,', '', 'App: {app}', 'App version: ', 'Device: {device}', 'System version: {os}', 'Language: {locale}', '', 'Issue description: ', '', 'Steps to reproduce: ', '', 'Screenshot attached if possible.', '', 'Thank you.']
-        },
-        tipsEyebrow: { fr: 'Message efficace', en: 'Effective message' },
-        tipsTitle: { fr: 'Pour une réponse plus rapide.', en: 'For a faster reply.' },
-        tips: {
-            fr: [
-                ['Nommez la version', 'Celle de l’app et celle du système, visibles dans les réglages.'],
-                ['Décrivez le contexte', 'Ce que vous faisiez, ce qui s’est passé, depuis quand.'],
-                ['Joignez une capture', 'Une image permet souvent de reproduire le problème immédiatement.']
-            ],
-            en: [
-                ['Name the version', 'Both the app’s and the system’s, visible in settings.'],
-                ['Describe the context', 'What you were doing, what happened, since when.'],
-                ['Attach a screenshot', 'An image often makes the issue instantly reproducible.']
-            ]
-        },
-
-        aboutTitle: { fr: 'Rodolphe Vandaele', en: 'Rodolphe Vandaele' },
-        aboutRole: { fr: 'Développeur indépendant iPhone et Mac', en: 'Independent iPhone and Mac developer' },
-        aboutBio2: {
-            fr: 'Sur iPhone, chaque application répond à un besoin concret du quotidien en France et s’appuie sur des données publiques documentées. Sur Mac, chaque utilitaire fait une chose et la fait bien. Aucune ne demande de compte, et les données restent sur l’appareil.',
-            en: 'On iPhone, each app answers a concrete everyday need in France and builds on documented public data. On Mac, each utility does one thing and does it well. None of them requires an account, and data stays on the device.'
-        },
-        aboutAppsTitle: { fr: 'Les applications', en: 'The apps' },
-        /* Formulation précise : seules les apps macOS ont leur code publié. Le
-           code des apps iPhone n’est pas public, et rien ne doit laisser croire
-           le contraire. */
-        aboutAppsSub: { fr: 'Les apps iPhone sur l’App Store, les utilitaires Mac en open source sur GitHub.',
-                        en: 'The iPhone apps on the App Store, the Mac utilities as open source on GitHub.' },
-
         /* Mentions légales. La loi pour la confiance dans l'économie numérique
            demande l'éditeur, un moyen de le joindre, et l'hébergeur nommé avec son
            adresse. Elles tiennent en trois blocs, sur la page qui parle déjà de la
@@ -413,8 +188,8 @@
         legalTitleSite: { fr: 'Mentions légales', en: 'Legal notice' },
         legalEditor: { fr: 'Éditeur', en: 'Publisher' },
         legalEditorText: {
-            fr: 'Rodolphe Vandaele, développeur indépendant, particulier. BodyCorp n’est pas une société : c’est le nom d’éditeur sous lequel il publie les jeux Trou Chromatique, Mon Gloup et ChromaFight. Directeur de la publication : Rodolphe Vandaele.',
-            en: 'Rodolphe Vandaele, independent developer, private individual. BodyCorp is not a company: it is the publisher name under which he releases the games Trou Chromatique, Mon Gloup and ChromaFight. Publication director: Rodolphe Vandaele.'
+            fr: 'BodyCorp. BodyCorp n’est pas une société : c’est le nom d’éditeur d’un développeur indépendant, particulier, sous lequel sont publiés les jeux et les applications présentés sur ce site.',
+            en: 'BodyCorp. BodyCorp is not a company: it is the publisher name of an independent developer, a private individual, under which the games and apps shown on this site are released.'
         },
         legalHost: { fr: 'Hébergeur', en: 'Host' },
         legalHostText: {
@@ -478,9 +253,10 @@
 
     var APPS = {
         carbufrance: {
-            name: 'CarbuFrance', platform: 'ios', accent: '#4d7dff', glyph: '€',
+            name: 'CarbuFrance', platform: 'ios', accent: '#4d7dff',
             store: STORE + 'carbufrance/id6760407573',
             tag: { fr: 'Prix des carburants', en: 'Fuel prices' },
+            promo: { fr: 'Le prix des carburants station par station, avec carnet de bord et widget.', en: 'Fuel prices station by station, with a logbook and a widget.' },
             desc: {
                 fr: 'Prix des carburants en France : carte, liste, favoris, widget station la moins chère, carnet de bord avec CO₂ et consommation, observatoire des marchés et CarPlay. Toutes les fonctions sont gratuites ; un abonnement facultatif retire la publicité.',
                 en: 'French fuel prices: map, list, favorites, cheapest station widget, logbook with CO₂ and fuel economy, market observatory and CarPlay. Every feature is free; an optional subscription removes ads.'
@@ -505,20 +281,6 @@
             },
             sources: { fr: 'Prix publics officiels des carburants en France, mis en cache localement. Historique des prix, cours du Brent et taux de change issus de sources publiques ; facteurs CO₂ de l’ADEME.', en: 'Official public French fuel prices, cached locally. Price history, Brent crude and exchange rates from public sources; CO₂ factors from ADEME.' },
             business: { fr: 'Application gratuite, financée par la publicité. Un abonnement facultatif « Sans pub » (0,99 € par mois ou 8,99 € par an) retire toute publicité tant qu’il est actif ; une vidéo récompensée offre aussi 6 h sans publicité. Géré par StoreKit et votre compte Apple : aucune donnée bancaire dans l’app.', en: 'Free app, funded by ads. An optional “Ad-Free” subscription (€0.99 per month or €8.99 per year) removes every ad while it is active; a rewarded video also gives 6 hours ad-free. Handled by StoreKit and your Apple account: no payment card data in the app.' },
-            demo: {
-                title: { fr: 'Stations', en: 'Stations' },
-                kind: 'badge',
-                pins: [
-                    { top: 'TOTAL', tag: '1,990', tone: '#e01f26', x: 27, y: 38 },
-                    { top: 'AVIA', tag: '2,099', tone: '#e30613', x: 66, y: 31, main: true },
-                    { top: 'bp', tag: '2,069', tone: '#009a17', x: 45, y: 55 },
-                    { top: 'ESSO', tag: '1,975', tone: '#0057a8', x: 72, y: 64 }
-                ],
-                unit: '€',
-                selector: { fr: ['Gazole', 'SP95', 'SP98', 'E10', 'E85', 'GPLc'], en: ['Diesel', 'SP95', 'SP98', 'E10', 'E85', 'LPG'] },
-                active: 3,
-                tabs: { fr: [['pin', 'Stations'], ['list', 'Liste'], ['chart', 'Marché'], ['book', 'Carnet'], ['gear', 'Réglages']], en: [['pin', 'Stations'], ['list', 'List'], ['chart', 'Market'], ['book', 'Logbook'], ['gear', 'Settings']] }
-            },
             /* Visuels de la fiche App Store (Outils/Bodyroro.github.io/VisuelsApps.mjs puis CapturesAppStore.mjs), dans leur ordre. */
             shotTops: ['#1e336a', '#0a1a4c', '#233970', '#0b1b4d', '#20356c'],
             storeShots: {
@@ -527,9 +289,10 @@
             }
         },
         irvefrance: {
-            name: 'IRVEFrance', platform: 'ios', accent: '#6a5cff', glyph: '⚡︎',
+            name: 'IRVEFrance', platform: 'ios', accent: '#6a5cff',
             store: STORE + 'irvefrance/id6760716931',
             tag: { fr: 'Bornes de recharge', en: 'EV charging' },
+            promo: { fr: 'Les bornes de recharge, leur puissance, leurs connecteurs et leur disponibilité.', en: 'EV chargers, their power, connectors and availability.' },
             desc: {
                 fr: 'Bornes de recharge électrique : réseaux, connecteurs, puissance, disponibilité, guidage et calculateur de recharge.',
                 en: 'EV charging stations: networks, connectors, power, availability, directions and a charging calculator.'
@@ -540,19 +303,6 @@
             },
             sources: { fr: 'Données ouvertes des infrastructures de recharge (IRVE), mises en cache localement.', en: 'Open data on French charging infrastructure (IRVE), cached locally.' },
             business: { fr: 'Application gratuite, financée par la publicité. Un abonnement facultatif « Sans pub » (0,99 € par mois ou 8,99 € par an) retire toute publicité tant qu’il est actif ; une vidéo récompensée offre aussi 6 h sans publicité. Géré par StoreKit et votre compte Apple : aucune donnée bancaire dans l’app.', en: 'Free app, funded by ads. An optional “Ad-Free” subscription (€0.99 per month or €8.99 per year) removes every ad while it is active; a rewarded video also gives 6 hours ad-free. Handled by StoreKit and your Apple account: no payment card data in the app.' },
-            demo: {
-                title: { fr: 'Bornes', en: 'Chargers' },
-                icon: 'evstation',
-                pins: [
-                    { tag: '7 kW', tone: '#0e7d74', x: 27, y: 38 },
-                    { tag: '22 kW', tone: '#f28c0d', x: 45, y: 55, main: true },
-                    { tag: '22 kW', tone: '#1d6ef2', x: 66, y: 31 },
-                    { tag: '3 kW', tone: '#34c759', x: 72, y: 64 }
-                ],
-                selector: { fr: ['Toutes', '≥ 22 kW', '≥ 50 kW', '≥ 150 kW'], en: ['All', '≥ 22 kW', '≥ 50 kW', '≥ 150 kW'] },
-                active: 0,
-                tabs: { fr: [['pin', 'Bornes'], ['list', 'Liste'], ['chart', 'Marché'], ['gear', 'Réglages']], en: [['pin', 'Chargers'], ['list', 'List'], ['chart', 'Market'], ['gear', 'Settings']] }
-            },
             /* Visuels de la fiche App Store (Outils/Bodyroro.github.io/VisuelsApps.mjs puis CapturesAppStore.mjs), dans leur ordre. */
             shotTops: ['#1b5155', '#073139', '#20585c', '#08313a', '#1e5459'],
             storeShots: {
@@ -561,9 +311,10 @@
             }
         },
         toilettefrance: {
-            name: 'ToiletteFrance', platform: 'ios', accent: '#3d9bff', glyph: 'WC',
+            name: 'ToiletteFrance', platform: 'ios', accent: '#3d9bff',
             store: STORE + 'toilettefrance/id6760978805',
             tag: { fr: 'Toilettes publiques', en: 'Public toilets' },
+            promo: { fr: 'Les toilettes publiques, leurs horaires et leur accessibilité.', en: 'Public toilets, their opening hours and accessibility.' },
             desc: {
                 fr: 'Toilettes publiques en France : carte, filtres utiles, accessibilité, horaires et guidage.',
                 en: 'Public toilets in France: map, useful filters, accessibility, opening hours and directions.'
@@ -574,18 +325,6 @@
             },
             sources: { fr: 'Données ouvertes françaises sur les toilettes publiques, mises en cache localement.', en: 'French open data on public toilets, cached locally.' },
             business: { fr: 'Application gratuite, financée par la publicité. Un abonnement facultatif « Sans pub » (0,99 € par mois ou 8,99 € par an) retire toute publicité tant qu’il est actif ; une vidéo récompensée offre aussi 6 h sans publicité. Géré par StoreKit et votre compte Apple : aucune donnée bancaire dans l’app.', en: 'Free app, funded by ads. An optional “Ad-Free” subscription (€0.99 per month or €8.99 per year) removes every ad while it is active; a rewarded video also gives 6 hours ad-free. Handled by StoreKit and your Apple account: no payment card data in the app.' },
-            demo: {
-                title: { fr: 'Toilettes', en: 'Toilets' },
-                icon: 'toilet',
-                pins: [
-                    { tag: 'Gratuit', tagEn: 'Free', tone: '#34c759', x: 27, y: 38, sub: true },
-                    { tag: 'Gratuit', tagEn: 'Free', tone: '#34c759', x: 66, y: 31 },
-                    { tag: 'Gratuit', tagEn: 'Free', tone: '#34c759', x: 45, y: 55, main: true, sub: true },
-                    { tag: 'Tarif inconnu', tagEn: 'Unknown fee', tone: '#34c759', x: 72, y: 64 }
-                ],
-                cta: { label: { fr: 'Le plus Proche', en: 'Nearest' }, tone: '#ff9500', icon: 'nav' },
-                tabs: { fr: [['map', 'Toilettes'], ['list', 'Liste'], ['gear', 'Réglages']], en: [['map', 'Toilets'], ['list', 'List'], ['gear', 'Settings']] }
-            },
             /* Visuels de la fiche App Store (Outils/Bodyroro.github.io/VisuelsApps.mjs puis CapturesAppStore.mjs), dans leur ordre. */
             shotTops: ['#23547a', '#0a3760', '#285b80', '#0b3861', '#26587d'],
             storeShots: {
@@ -594,9 +333,10 @@
             }
         },
         defibfrance: {
-            name: 'DefibFrance', platform: 'ios', accent: '#17b26a', glyph: '+',
+            name: 'DefibFrance', platform: 'ios', accent: '#17b26a',
             store: STORE + 'defibfrance/id6761717722',
             tag: { fr: 'Défibrillateurs', en: 'Defibrillators' },
+            promo: { fr: 'Les défibrillateurs, avec mode Urgence et guide de réanimation.', en: 'Defibrillators, with an Emergency mode and a CPR guide.' },
             desc: {
                 fr: 'Défibrillateurs (DAE) : disponibilité, accessibilité, mode Urgence, appel SAMU 15 et guide RCP avec métronome haptique.',
                 en: 'AEDs: availability, accessibility, Emergency mode, SAMU 15 call and CPR guide with haptic metronome.'
@@ -607,18 +347,6 @@
             },
             sources: { fr: 'Base nationale des défibrillateurs, mise en cache localement.', en: 'The national defibrillator database, cached locally.' },
             business: { fr: 'Application gratuite, financée par la publicité. Un abonnement facultatif « Sans pub » (0,99 € par mois ou 8,99 € par an) retire toute publicité tant qu’il est actif ; une vidéo récompensée offre aussi 6 h sans publicité. Géré par StoreKit et votre compte Apple : aucune donnée bancaire dans l’app.', en: 'Free app, funded by ads. An optional “Ad-Free” subscription (€0.99 per month or €8.99 per year) removes every ad while it is active; a rewarded video also gives 6 hours ad-free. Handled by StoreKit and your Apple account: no payment card data in the app.' },
-            demo: {
-                title: { fr: 'Défibrillateurs', en: 'Defibrillators' },
-                icon: 'heartbolt',
-                pins: [
-                    { tag: 'Accès public', tagEn: 'Public access', tone: '#0a84ff', x: 27, y: 38 },
-                    { tag: 'Accès public', tagEn: 'Public access', tone: '#0a84ff', x: 45, y: 55, main: true },
-                    { tag: 'Clients uniquement', tagEn: 'Customers only', tone: '#ff9500', x: 66, y: 31 },
-                    { tag: 'Accès public', tagEn: 'Public access', tone: '#0a84ff', x: 72, y: 64 }
-                ],
-                cta: { label: { fr: 'URGENCE', en: 'EMERGENCY' }, tone: '#ff3b30', icon: 'heart' },
-                tabs: { fr: [['map', 'Défibrillateurs'], ['list', 'Liste'], ['gear', 'Réglages']], en: [['map', 'Defibrillators'], ['list', 'List'], ['gear', 'Settings']] }
-            },
             /* Visuels de la fiche App Store (Outils/Bodyroro.github.io/VisuelsApps.mjs puis CapturesAppStore.mjs), dans leur ordre. */
             shotTops: ['#6a212c', '#4d0914', '#712732', '#4e0a15', '#6d242f'],
             storeShots: {
@@ -627,9 +355,10 @@
             }
         },
         dvffrance: {
-            name: 'DVFFrance', platform: 'ios', accent: '#0a7d3c', glyph: '\u20ac',
+            name: 'DVFFrance', platform: 'ios', accent: '#0a7d3c',
             store: STORE + 'dvffrance/id6813079672',
             tag: { fr: 'Prix de l\u2019immobilier', en: 'Property prices' },
+            promo: { fr: 'Le prix de l’immobilier d’après les ventes réellement enregistrées.', en: 'Property prices from the sales actually recorded.' },
             desc: {
                 fr: 'Prix de l\u2019immobilier d\u2019apr\u00e8s les ventes r\u00e9ellement enregistr\u00e9es par l\u2019administration fiscale : carte, m\u00e9dianes par commune, plan cadastral, fiche de quartier et fourchette d\u2019estimation. 100 % gratuit.',
                 en: 'Property prices from sales actually recorded by the tax authority: map, medians by town, cadastral plan, neighbourhood profile and valuation range. 100% free.'
@@ -654,24 +383,6 @@
             },
             sources: { fr: 'Demandes de valeurs fonci\u00e8res de la Direction g\u00e9n\u00e9rale des finances publiques, g\u00e9olocalis\u00e9es par Etalab. Carte des loyers du minist\u00e8re du Logement, diagnostics de l\u2019ADEME, risques de G\u00e9orisques, plan cadastral de l\u2019IGN, annuaire et r\u00e9sultats de l\u2019\u00c9ducation nationale, faits enregistr\u00e9s du minist\u00e8re de l\u2019Int\u00e9rieur, d\u00e9coupage IRIS de l\u2019INSEE et OpenStreetMap.', en: 'Property transfer records from the French public finances directorate, geocoded by Etalab. Rent map from the Ministry of Housing, ADEME energy certificates, G\u00e9orisques hazards, IGN cadastral plan, schools directory and results from the Ministry of Education, recorded offences from the Interior Ministry, INSEE IRIS boundaries and OpenStreetMap.' },
             business: { fr: 'Application 100 % gratuite, financ\u00e9e par la publicit\u00e9. Aucun achat int\u00e9gr\u00e9, aucune donn\u00e9e bancaire dans l\u2019app.', en: 'Fully free app, funded by ads. No in-app purchases, no payment card data in the app.' },
-            demo: {
-                title: { fr: 'Communes', en: 'Towns' },
-                /* Pas de badge de marque : l'app ne pose pas de nom sur ses pastilles.
-                   Elle affiche le prix au mètre carré abrégé, « 2,1 k », dans une
-                   capsule dont la couleur vient de l'échelle des prix. La démo dit donc
-                   la même chose, avec les mêmes six teintes. */
-                icon: 'pin',
-                pins: [
-                    { top: '', tag: '2,1 k', tone: '#0e746b', x: 26, y: 36 },
-                    { top: '', tag: '2,5 k', tone: '#a16207', x: 64, y: 30, main: true },
-                    { top: '', tag: '2,4 k', tone: '#15803d', x: 44, y: 56 },
-                    { top: '', tag: '2,8 k', tone: '#c2410c', x: 71, y: 63 },
-                    { top: '', tag: '1,9 k', tone: '#0e746b', x: 36, y: 72 }
-                ],
-                selector: { fr: ['2025', '2024', '2023', '2022', '2021'], en: ['2025', '2024', '2023', '2022', '2021'] },
-                active: 0,
-                tabs: { fr: [['pin', 'Carte'], ['list', 'Ventes'], ['chart', 'March\u00e9'], ['book', 'Autour'], ['gear', 'R\u00e9glages']], en: [['pin', 'Map'], ['list', 'Sales'], ['chart', 'Market'], ['book', 'Around'], ['gear', 'Settings']] }
-            },
             /* Visuels de la fiche App Store (Outils/Bodyroro.github.io/VisuelsApps.mjs puis CapturesAppStore.mjs), dans leur ordre. */
             shotTops: ['#1e4d38', '#072e1e', '#23553e', '#082e1f', '#21513b'],
             storeShots: {
@@ -679,8 +390,7 @@
                 en: ['Property prices near you', 'Every sale in detail', 'Your town’s market', 'Your area at a glance', 'Everything around you']
             }
         },
-        /* Pas encore en vente : `store: ''` affiche « Bientôt disponible ». Ni données publiques ni publicité, d'où
-           `chips` et `on` propres. Sans visuels Premium, la galerie montre ses écrans bruts dans le téléphone
+        /* Ni données publiques ni publicité, d'où `chips` et `on` propres. Sans visuels Premium, la galerie montre ses écrans bruts dans le téléphone
            (`rawShots`), avec ceux de l'iPad et de l'Apple TV (`devices`, mêmes légendes), produits par
            CapturesAppStore.mjs depuis Docs/Telora/Screenshots/<appareil>(-en). */
         telora: {
@@ -688,6 +398,8 @@
             store: 'https://apps.apple.com/app/id6821877987',
             on: { fr: 'iPhone, iPad et Apple TV', en: 'iPhone, iPad and Apple TV' },
             tag: { fr: 'Lecteur multimédia', en: 'Media player' },
+            promo: { fr: 'Vos films, séries et chaînes, depuis vos propres sources, sur iPhone, iPad et Apple TV.', en: 'Your movies, shows and channels, from your own sources, on iPhone, iPad and Apple TV.' },
+            ipadPortrait: true,
             desc: {
                 fr: 'Lecteur multimédia pour iPhone, iPad et Apple TV : vos films, séries et chaînes, depuis vos propres sources (liste de lecture, Plex, Jellyfin, Emby, NAS, fichiers). Telora ne fournit aucun contenu.',
                 en: 'Media player for iPhone, iPad and Apple TV: your movies, shows and channels, from your own sources (playlist, Plex, Jellyfin, Emby, NAS, files). Telora provides no content.'
@@ -730,6 +442,7 @@
             store: 'https://apps.apple.com/app/id6822364165',
             on: { fr: 'iPhone et iPad', en: 'iPhone and iPad' },
             tag: { fr: 'Télécommande TV', en: 'TV remote' },
+            promo: { fr: 'La télécommande universelle par Wi-Fi : téléviseurs, Chromecast et box TV.', en: 'The universal Wi-Fi remote: smart TVs, Chromecast and TV boxes.' },
             desc: {
                 fr: 'Télécommande universelle par Wi-Fi pour iPhone et iPad : téléviseurs connectés, Chromecast et box TV, avec clavier, pavé tactile et applications. Aucun compte, rien ne quitte votre domicile.',
                 en: 'Universal Wi-Fi remote for iPhone and iPad: smart TVs, Chromecast and TV boxes, with keyboard, touchpad and apps. No account, nothing leaves your home.'
@@ -769,6 +482,7 @@
             name: 'MacTuner', platform: 'mac', accent: '#8eb8ff',
             store: GITHUB_MACTUNER,
             tag: { fr: 'Centre de contrôle Mac', en: 'Mac control center' },
+            promo: { fr: 'Le matériel en temps réel, 34 réglages système réversibles, nettoyage et ventilation.', en: 'Hardware in real time, 34 reversible system tweaks, cleanup and fan control.' },
             desc: {
                 fr: 'Application macOS libre : tableau de bord temps réel, réglages système réversibles, nettoyage, désinstallation sans résidu, maintenance et contrôle du ventilateur.',
                 en: 'Free macOS app: real time dashboard, reversible system tweaks, cleanup, residue free uninstall, maintenance and fan control.'
@@ -784,6 +498,7 @@
             name: 'DNSTuner', platform: 'mac', accent: '#6d5cff',
             store: GITHUB_DNSTUNER,
             tag: { fr: 'Sélecteur de DNS système', en: 'System-wide DNS switcher' },
+            promo: { fr: '46 résolveurs publics, DNS chiffré, et la mesure réelle de ce que chacun bloque.', en: '46 public resolvers, encrypted DNS, and a real measurement of what each one blocks.' },
             desc: {
                 fr: 'Application macOS libre : bascule le DNS de tout le Mac vers l’un des 46 résolveurs publics, en clair ou chiffré (DoH/DoT), et mesure vraiment ce que chacun bloque.',
                 en: 'Free macOS app: switches your whole Mac’s DNS to one of 46 public resolvers, plain or encrypted (DoH/DoT), and actually measures what each one blocks.'
@@ -1098,6 +813,8 @@
     };
     var NOMS_APPAREILS = { iphone: 'iPhone', ipad: 'iPad', tv: 'Apple TV' };
     var IOS_ORDER = ['carbufrance', 'irvefrance', 'toilettefrance', 'defibfrance', 'dvffrance', 'telora', 'telzo'];
+    var FRANCE_ORDER = IOS_ORDER.slice(0, 5);
+    var SALON_ORDER = IOS_ORDER.slice(5);
     /* Les jeux forment leur propre gamme : ni données publiques, ni utilitaire. */
     var GAME_ORDER = ['trouchromatique', 'mongloup', 'chromafight', 'chromatraque', 'chromaferme', 'chromaciel'];
 
@@ -1106,13 +823,9 @@
        Réglages propres à la vitrine
        --------------------------------------------------------------------- */
 
-    /* Textes ajoutés par la refonte. Les autres viennent de T, inchangés. */
+    /* Textes propres à la vitrine. */
     var V = {
         heroKicker: { fr: 'Développeur indépendant · France', en: 'Independent developer · France' },
-        heroLead: {
-            fr: 'Des applications natives qui font une chose et la font bien. Sur iPhone et iPad, des jeux avec Gloup, la petite créature aux grands yeux, et les données publiques françaises du quotidien. Sur Mac, des utilitaires libres au code entièrement ouvert.',
-            en: 'Native apps that do one thing and do it well. On iPhone and iPad, games starring Gloup, the little creature with big eyes, and everyday French public data. On Mac, free utilities with fully open source code.'
-        },
         seeGames: { fr: 'Voir les jeux', en: 'See the games' },
         seeApps: { fr: 'Les applications', en: 'The apps' },
         allApps: { fr: 'Toutes les applications', en: 'All the apps' },
@@ -1133,7 +846,6 @@
             en: 'Each app has its own support page: frequent questions, known limits and what to do next.'
         },
         aboutTitle: { fr: 'Rodolphe Vandaele', en: 'Rodolphe Vandaele' },
-        backAll: { fr: '← Toutes les applications', en: '← All the apps' },
         featuresTitle: { fr: 'Ce que fait l’application', en: 'What the app does' },
         featuresTitleGame: { fr: 'Ce que propose le jeu', en: 'What the game offers' },
         shotsTitle: { fr: 'À quoi elle ressemble', en: 'What it looks like' },
@@ -1155,12 +867,27 @@
             en: ['Free', 'No in-app purchase', 'Plays offline']
         },
         navGames: { fr: 'Jeux', en: 'Games' },
+        navFrance: { fr: 'Apps France', en: 'French apps' },
+        navSalon: { fr: 'Salon', en: 'Living room' },
+        chaptersLabel: { fr: 'Les familles d’applications', en: 'App families' },
+        gamesLead: {
+            fr: 'Aventure, compagnon virtuel, combat, déduction, ferme et RPG : des jeux avec la petite créature aux grands yeux. Gratuits, et jouables hors connexion.',
+            en: 'Adventure, virtual pet, battle, deduction, farming and RPG: games starring the little creature with big eyes. Free, and playable offline.'
+        },
+        reelTitle: { fr: 'Chaque jeu, son univers.', en: 'Every game, its own world.' },
+        reelLabel: { fr: 'Un écran de chaque jeu', en: 'One screen from each game' },
+        franceLead: {
+            fr: 'Carburants, bornes de recharge, toilettes, défibrillateurs et prix de l’immobilier : les données publiques françaises, sur la carte et hors connexion. Sans compte.',
+            en: 'Fuel, EV chargers, toilets, defibrillators and property prices: French public data, on the map and offline. No account.'
+        },
+        salonEyebrow: { fr: 'iPhone, iPad et Apple TV', en: 'iPhone, iPad and Apple TV' },
+        salonTitle: { fr: 'Pour le salon.', en: 'For the living room.' },
+        salonLead: {
+            fr: 'Telora lit vos films, séries et chaînes depuis vos propres sources, jusque sur l’Apple TV. Telzo fait de l’iPhone une télécommande universelle par Wi-Fi.',
+            en: 'Telora plays your movies, shows and channels from your own sources, all the way to Apple TV. Telzo turns the iPhone into a universal Wi-Fi remote.'
+        },
         onGame: { fr: 'Jeu · iPhone et iPad', en: 'Game · iPhone and iPad' },
-        gamesSub: { fr: 'iPhone et iPad · iOS 18 ou plus', en: 'iPhone and iPad · iOS 18 or later' },
-
-        /* Textes ajoutés par la refonte de septembre 2026. */
-        /* Refonte du 5 octobre 2026 : les jeux passent en tête de l'accueil. Textes sans nombre d'apps (13 octobre
-           2026) : ils restent justes quand une app ou un jeu s'ajoute ; les compteurs viennent de `APPS` ({n}, {ios}). */
+        /* Textes sans nombre d'apps : ils restent justes quand une app ou un jeu s'ajoute. */
         heroTitleHTML: {
             fr: 'Des jeux, des apps, <br><span class="grad">un seul principe.</span>',
             en: 'Games and apps, <br><span class="grad">one principle.</span>'
@@ -1169,31 +896,20 @@
             fr: 'Des jeux pour iPhone et iPad avec Gloup, la petite créature aux grands yeux. Des applications du quotidien, natives, gratuites et sans compte. Et des utilitaires libres pour Mac.',
             en: 'Games for iPhone and iPad starring Gloup, the little creature with big eyes. Everyday apps, native, free and with no account. Plus free utilities for Mac.'
         },
-        heroGamesLabel: { fr: 'Les jeux', en: 'The games' },
-        onStore: { fr: 'Sur l’App Store', en: 'On the App Store' },
         soonStore: { fr: 'Bientôt sur l’App Store', en: 'Coming soon to the App Store' },
-        indexTitle: { fr: 'Toutes les applications.', en: 'All the apps.' },
-        discover: { fr: 'Découvrir', en: 'Discover' },
         menuApps: { fr: 'Applications', en: 'Apps' },
         menuOpen: { fr: 'Ouvrir le menu', en: 'Open the menu' },
-        galleryLabel: { fr: 'Captures d’écran, défilement horizontal', en: 'Screenshots, horizontal scroll' },
         contactFinalTitle: { fr: 'Une question, une idée ?', en: 'A question, an idea?' },
 
-        /* Refonte du 30 septembre 2026 : jeux publiés, filtre, questions, sous-barre. */
         badgeAlt: { fr: 'Télécharger {app} dans l’App Store', en: 'Download {app} on the App Store' },
         newEyebrow: { fr: 'Jeux · iPhone et iPad', en: 'Games · iPhone and iPad' },
         newTitle: { fr: 'Les jeux avec Gloup.', en: 'Games starring Gloup.' },
-        learnMore: { fr: 'En savoir plus', en: 'Learn more' },
         get: { fr: 'Obtenir', en: 'Get' },
         getAria: { fr: 'Obtenir {app} sur l’App Store', en: 'Get {app} on the App Store' },
-        filterLabel: { fr: 'Filtrer les applications', en: 'Filter the apps' },
-        filterAll: { fr: 'Tout', en: 'All' },
         subOverview: { fr: 'Aperçu', en: 'Overview' },
         subFeatures: { fr: 'Fonctionnalités', en: 'Features' },
         subShots: { fr: 'Captures', en: 'Screenshots' },
         subData: { fr: 'Données', en: 'Data' },
-        prev: { fr: 'Captures précédentes', en: 'Previous screenshots' },
-        next: { fr: 'Captures suivantes', en: 'Next screenshots' },
         storeShotsTitle: { fr: 'Les huit écrans de la fiche App Store.', en: 'The eight App Store screens.' },
         deviceLabel: { fr: 'Choisir l’appareil', en: 'Choose the device' },
         statsEyebrow: { fr: 'En chiffres', en: 'By the numbers' },
@@ -1203,14 +919,14 @@
            n'est affirmé ici qui ne soit dit sur la page d'une application. */
         faq: {
             fr: [
-                ['Les applications sont-elles gratuites ?', 'Oui. Les applications iPhone et les jeux se téléchargent gratuitement et sont financés par une publicité discrète. ChromaFight, ChromaTraque, ChromaFerme et ChromaCiel sont gratuits eux aussi, avec des achats intégrés facultatifs. CarbuFrance, IRVEFrance, ToiletteFrance et DefibFrance proposent un abonnement facultatif « Sans pub » (0,99 € par mois ou 8,99 € par an) qui retire toute publicité ; une vidéo facultative y offre aussi 6 h sans publicité. Telzo, bientôt disponible, proposera le sien à 0,99 € par mois ou 4,99 € par an. Les deux utilitaires Mac sont libres et open source, sans publicité ni achat. Telora, bientôt disponible, sera sans publicité et s’utilisera avec l’abonnement Telora+, au mois ou à l’année, après un essai gratuit de 7 jours.'],
+                ['Les applications sont-elles gratuites ?', 'Oui. Les applications iPhone et les jeux se téléchargent gratuitement et sont financés par une publicité discrète. ChromaFight, ChromaTraque, ChromaFerme et ChromaCiel sont gratuits eux aussi, avec des achats intégrés facultatifs. CarbuFrance, IRVEFrance, ToiletteFrance et DefibFrance proposent un abonnement facultatif « Sans pub » (0,99 € par mois ou 8,99 € par an) qui retire toute publicité ; une vidéo facultative y offre aussi 6 h sans publicité. Telzo propose le sien à 0,99 € par mois ou 4,99 € par an. Les deux utilitaires Mac sont libres et open source, sans publicité ni achat. Telora est sans publicité et s’utilise avec l’abonnement Telora+, au mois ou à l’année, après un essai gratuit de 7 jours.'],
                 ['Faut-il créer un compte ?', 'Non. Aucune application ne demande de compte ni d’inscription. Favoris et réglages restent sur votre appareil.'],
                 ['Fonctionnent-elles sans connexion ?', 'Les applications de données publiques les mettent en cache pour rester utilisables hors connexion ; Telora lit vos propres sources et a donc besoin du réseau. Les jeux se jouent hors connexion ; seuls la publicité et, pour ChromaFight, ChromaTraque, ChromaFerme et ChromaCiel, les achats et la copie iCloud de la sauvegarde utilisent le réseau.'],
                 ['Sur quels appareils ?', 'iPhone et iPad sous iOS 18 ou plus pour les applications et les jeux. Telora aussi sur Apple TV (tvOS 18 ou plus). Mac Apple Silicon sous macOS 26 ou 27 pour MacTuner et DNSTuner.'],
                 ['Où trouver de l’aide ?', 'Chaque application a sa page d’assistance. Je réponds moi-même à chaque message, en général sous 24 à 48 heures.']
             ],
             en: [
-                ['Are the apps free?', 'Yes. The iPhone apps and the games are free to download and funded by discreet advertising. ChromaFight, ChromaTraque, ChromaFerme and ChromaCiel are free too, with optional in-app purchases. CarbuFrance, IRVEFrance, ToiletteFrance and DefibFrance offer an optional “Ad-Free” subscription (€0.99 per month or €8.99 per year) that removes every ad; an optional video also gives 6 hours ad-free. Telzo, coming soon, will offer its own at €0.99 per month or €4.99 per year. The two Mac utilities are free and open source, with no ads and no purchases. Telora, coming soon, will have no ads and will be used with the Telora+ subscription, monthly or yearly, after a 7-day free trial.'],
+                ['Are the apps free?', 'Yes. The iPhone apps and the games are free to download and funded by discreet advertising. ChromaFight, ChromaTraque, ChromaFerme and ChromaCiel are free too, with optional in-app purchases. CarbuFrance, IRVEFrance, ToiletteFrance and DefibFrance offer an optional “Ad-Free” subscription (€0.99 per month or €8.99 per year) that removes every ad; an optional video also gives 6 hours ad-free. Telzo offers its own at €0.99 per month or €4.99 per year. The two Mac utilities are free and open source, with no ads and no purchases. Telora has no ads and is used with the Telora+ subscription, monthly or yearly, after a 7-day free trial.'],
                 ['Do I need an account?', 'No. None of the apps asks for an account or a sign-up. Favorites and settings stay on your device.'],
                 ['Do they work offline?', 'The public data apps cache it so they keep working offline; Telora plays your own sources and therefore needs the network. The games play offline; only advertising and, for ChromaFight, ChromaTraque, ChromaFerme and ChromaCiel, purchases and the iCloud copy of the save use the network.'],
                 ['Which devices?', 'iPhone and iPad on iOS 18 or later for the apps and games. Telora on Apple TV too (tvOS 18 or later). Apple Silicon Macs on macOS 26 or 27 for MacTuner and DNSTuner.'],
@@ -1219,15 +935,6 @@
         }
     };
 
-    /*
-     * Panneau des utilitaires Mac.
-     *
-     * Il n'existe pas de capture d'écran pour MacTuner ni pour DNSTuner : le
-     * dossier n'en contient que pour les cinq applications iPhone. Plutôt qu'une
-     * fenêtre vide autour d'une icône, on montre ce que l'application affiche
-     * réellement à l'ouverture : ses chiffres. Le jour où des captures existent,
-     * remplacer ce panneau par le même cadre d'image que sur iPhone.
-     */
     var MAC_PANNEAU = {
         mactuner: {
             fr: [['Tableau de bord', 'CPU, mémoire, disque, réseau'],
@@ -1259,7 +966,7 @@
     function esc(s) {
         return String(s).replace(/[&<>"]/g, function (c) {
             return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
-        });
+        }).replace(/ ([?!:;»])/g, '\u00a0$1').replace(/« /g, '«\u00a0');
     }
 
     function svg(corps, classe) {
@@ -1270,7 +977,6 @@
 
     var CHEVRON = svg('<path d="m9 5 7 7-7 7"/>');
     var GLOBE = svg('<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.2 2.4 3.3 5.2 3.3 8.5s-1.1 6.1-3.3 8.5c-2.2-2.4-3.3-5.2-3.3-8.5s1.1-6.1 3.3-8.5Z"/>', 'btn-glyph');
-    var COCHE = svg('<circle cx="12" cy="12" r="9"/><path d="m8 12.4 2.6 2.6 5.4-5.8"/>');
 
     /* Les pictogrammes nommés par les contenus : [icône, titre, texte]. */
     var ICONES = {
@@ -1282,6 +988,7 @@
         mail: '<rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m3.5 7 8.5 6 8.5-6"/>',
         phone: '<rect x="6.5" y="2.5" width="11" height="19" rx="2.8"/><path d="M10.5 18.5h3"/>',
         laptop: '<rect x="4.5" y="5" width="15" height="10.5" rx="1.6"/><path d="M2.5 19h19"/>',
+        globe: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>',
         star: '<path d="m12 3.5 2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.8l-5.2 2.8 1-5.8-4.3-4.1 5.9-.9L12 3.5Z"/>'
     };
 
@@ -1289,25 +996,12 @@
         return '<span class="card-icon">' + svg(ICONES[nom] || ICONES.star) + '</span>';
     }
 
-    function eyebrow(texte) {
-        return '<p class="eyebrow"><span class="dot" aria-hidden="true"></span>' + esc(texte) + '</p>';
+    function plateforme(app) {
+        return pick(app.on || (app.platform === 'mac' ? V.onMac : (app.game ? V.onGame : V.onIPhone)));
     }
 
-    function rise(html, delai, classe) {
-        return '<div class="rise' + (classe ? ' ' + classe : '') + '"' +
-            (delai ? ' style="--d:' + delai + 'ms"' : '') + '>' + html + '</div>';
-    }
-
-    function boutonStore(cle) {
-        var app = APPS[cle];
-        if (!app.store) {
-            return '<span class="btn btn-quiet" aria-disabled="true">' + esc(pick(V.soonBadge)) + '</span>';
-        }
-        if (app.platform === 'mac') {
-            return '<a class="btn btn-primary" href="' + app.store + '" target="_blank" rel="noopener">' +
-                esc(pick(V.openSource)) + '</a>';
-        }
-        return badgeAppStore(app.store, pick(V.badgeAlt).replace('{app}', app.name)) + boutonWeb(cle);
+    function pastilleBientot(texte, petit) {
+        return '<span class="btn btn-quiet' + (petit ? ' is-small' : '') + '" aria-disabled="true">' + esc(texte) + '</span>';
     }
 
     /* Le site de l'application, à côté du badge de l'App Store. Il mène à la même
@@ -1315,149 +1009,98 @@
     function boutonWeb(cle) {
         var url = SITES_WEB[cle];
         if (!url) { return ''; }
-        return '<a class="btn btn-ghost" href="' + url + '" target="_blank" rel="noopener">' +
+        return '<a class="btn btn-secondary" href="' + url + '" target="_blank" rel="noopener">' +
             GLOBE + esc(pick(V.webVersion)) + '</a>';
     }
 
     /* Le badge officiel d'Apple (Marketing Resources), jamais redessiné : noir
        sur fond clair, blanc sur fond sombre, dans la langue de la page. Hauteur
-       48 pixels, 40 dans le pied, au-dessus du minimum de 40 que fixent ses
-       règles d'usage. Les largeurs suivent les proportions de chaque fichier. */
+       48 pixels, 40 dans les tuiles et le pied, minimum fixé par ses règles
+       d'usage. */
     var BADGE = { fr: ['app-store-fr', 152, 127], en: ['app-store-en', 144, 120] };
 
     function badgeAppStore(url, texte, petit) {
         var b = BADGE[lang] || BADGE.fr;
+        var img = '<img src="./assets/img/' + b[0] + '.svg" width="' + (petit ? b[2] : b[1]) +
+            '" height="' + (petit ? 40 : 48) + '" decoding="async" alt="' + esc(texte) + '">';
         return '<a class="store-badge' + (petit ? ' is-small' : '') + '" href="' + url + '" target="_blank" rel="noopener">' +
             '<picture><source media="(prefers-color-scheme: dark)" srcset="./assets/img/' + b[0] + '-white.svg">' +
-            '<img src="./assets/img/' + b[0] + '.svg" width="' + (petit ? b[2] : b[1]) + '" height="' + (petit ? 40 : 48) + '"' +
-            ' decoding="async" alt="' + esc(texte) + '"></picture></a>';
+                img + '</picture></a>';
     }
 
-    function lienPlus(href, texte) {
-        return '<a class="link-more" href="' + href + '">' + esc(texte) + CHEVRON + '</a>';
+    /* `cache` complète le libellé pour les lecteurs d'écran et les moteurs : quinze
+       « En savoir plus » identiques ne disent pas où ils mènent. */
+    function lienPlus(href, texte, cache) {
+        return '<a class="link-more" href="' + href + '">' + esc(texte) +
+            (cache ? '<span class="sr-only"> ' + esc(cache) + '</span>' : '') + CHEVRON + '</a>';
     }
 
-    /**
-     * L'appareil d'une application, prêt à être incliné.
-     *
-     * Trois couches, chacune avec une seule transformation : `device` porte la
-     * perspective, `device-3d` le redressement lié au défilement, `tilt`
-     * l'inclinaison vers le pointeur. Superposées sur un même élément, la
-     * dernière écraserait les deux autres.
+    /*
+     * Panneau des utilitaires Mac : sans capture d'écran, la fenêtre montre ce que
+     * l'application affiche réellement à l'ouverture, ses chiffres.
      */
-    function appareil(cle, charger) {
+    function fenetreMac(cle, charger) {
         var app = APPS[cle];
-        var chargement = charger ? '' : ' loading="lazy"';
-        var interieur;
-        if (app.platform === 'mac') {
-            var lignes = (MAC_PANNEAU[cle] ? pick(MAC_PANNEAU[cle]) : []).map(function (l) {
-                return '<div class="macwin-row"><span>' + esc(l[0]) + '</span>' +
-                    '<b>' + esc(l[1]) + '</b></div>';
-            }).join('');
-            interieur = '<div class="device-3d is-mac"><div class="tilt shine">' +
-                '<div class="macwin"><div class="macwin-bar" aria-hidden="true">' +
-                '<i></i><i></i><i></i><span class="macwin-title">' + esc(app.name) + '</span></div>' +
-                '<div class="macwin-body"><div class="macwin-head">' +
-                picture('./assets/img/' + cle + '.png', ' width="60" height="60" alt=""' + chargement + ' decoding="async"') +
-                '<div><b>' + esc(app.name) + '</b><span>' + esc(pick(app.tag)) + '</span></div></div>' +
-                '<div class="macwin-rows">' + lignes + '</div></div></div>' +
-                '</div></div>';
-        } else if (app.storeShots && !app.paysage) {
-            interieur = '<div class="device-3d is-phone"><div class="tilt">' +
-                (app.game ? telephoneJeu : function (c, n, alt, p, s, k) { return telephoneApp(c, 'ecran', alt, p, s, k); })(
-                    cle, 1, app.name + ', ' + pick(app.storeShots)[0], !charger, '(max-width: 560px) 70vw, 300px', 'float') +
-                '</div></div>';
-        } else {
-            return '';
-        }
-        return '<div class="device" data-tilt>' + interieur + '</div>';
+        var lignes = pick(MAC_PANNEAU[cle]).map(function (l) {
+            return '<div class="macwin-row"><span>' + esc(l[0]) + '</span><b>' + esc(l[1]) + '</b></div>';
+        }).join('');
+        return '<div class="macwin"><div class="macwin-bar" aria-hidden="true">' +
+            '<i></i><i></i><i></i><span class="macwin-title">' + esc(app.name) + '</span></div>' +
+            '<div class="macwin-body"><div class="macwin-head">' +
+            picture('./assets/img/' + cle + '.png', ' width="60" height="60" alt=""' + (charger ? '' : ' loading="lazy"') + ' decoding="async"') +
+            '<div><b>' + esc(app.name) + '</b><span>' + esc(pick(app.tag)) + '</span></div></div>' +
+            '<div class="macwin-rows">' + lignes + '</div></div></div>';
     }
 
-    /**
-     * Une tuile d'application : l'icône, le nom, une ligne, un appel.
-     *
-     * L'accueil et la page Contact s'en servent toutes deux : l'une pour ouvrir la
-     * page de l'application, l'autre pour ouvrir son assistance. Le libellé de la
-     * seconde ligne change donc, le reste non.
-     */
-    function tuileApp(cle, options) {
-        options = options || {};
-        var app = APPS[cle];
-        var href = options.href || withLang('./' + cle + '.html');
-        var sousTitre = options.sousTitre || pick(app.tag);
-        var externe = options.externe ? ' target="_blank" rel="noopener"' : '';
-        // Une application finie mais pas encore en vente le dit ici : sans cela, la
-        // tuile promet une fiche App Store qui n'existe pas.
-        var bientot = !app.store && !options.href
-            ? '<span class="app-tile-soon">' + esc(pick(V.soonBadge)) + '</span>'
-            : '';
 
-        return '<a class="app-tile shine" data-tilt="self" href="' + href + '"' + externe +
-            ' style="--accent:' + app.accent + '">' +
-            '<span class="app-tile-icon">' +
-            picture('./assets/img/' + cle + '.png', ' width="64" height="64" alt="" loading="lazy" decoding="async"') +
-            '</span>' +
-            '<span class="app-tile-text"><b>' + esc(app.name) + '</b>' +
-            '<span class="app-tile-tag">' + esc(sousTitre) + '</span></span>' +
-            bientot +
-            '<span class="app-tile-go" aria-hidden="true">' + esc(options.appel || pick(V.discover)) + CHEVRON + '</span>' +
-            '</a>';
+    function carte(contenu, classe) {
+        return '<article class="card' + (classe ? ' ' + classe : '') + '">' + contenu + '</article>';
     }
 
-    function pastilles(cle) {
-        var app = APPS[cle];
-        var faits = pick(app.chips || (app.platform === 'mac' ? V.chipsMac : (app.game ? V.chipsGame : V.chipsIOS))) || [];
-        return '<ul class="facts">' + faits.map(function (f) {
-            return '<li>' + esc(f) + '</li>';
-        }).join('') + '</ul>';
-    }
-
-    function listePoints(items, limite) {
-        return '<ul class="points">' + items.slice(0, limite || items.length).map(function (texte) {
-            return '<li>' + COCHE + '<span>' + esc(texte) + '</span></li>';
-        }).join('') + '</ul>';
-    }
-
-    function carte(contenu) {
-        return '<article class="card shine" data-tilt="self">' + contenu + '</article>';
+    function icones(cles, taille) {
+        return cles.map(function (k) {
+            return picture('./assets/img/' + k + '.png', ' width="' + taille + '" height="' + taille + '" alt="" decoding="async"');
+        }).join('');
     }
 
     /* ---------------------------------------------------------------------
        Barre de navigation et menu
        --------------------------------------------------------------------- */
 
+    var FAMILLES = [
+        ['jeux', V.navGames, GAME_ORDER],
+        ['france', V.navFrance, FRANCE_ORDER],
+        ['salon', V.navSalon, SALON_ORDER],
+        ['mac', T.navMac, MAC_ORDER]
+    ];
+
     function navHTML(page) {
-        function lien(href, texte, actif) {
-            return '<a href="' + withLang(href) + '"' + (actif ? ' aria-current="page"' : '') + '>' +
-                esc(texte) + '</a>';
-        }
-        var entrees = [
-            ['./index.html#jeux', pick(V.navGames), false],
-            ['./index.html#ios', pick(T.navIOS), false],
-            ['./index.html#mac', pick(T.navMac), false],
+        var entrees = FAMILLES.map(function (f) { return ['./index.html#' + f[0], pick(f[1]), false]; }).concat([
             ['./about.html', pick(T.navAbout), page === 'v2-about'],
             ['./contact.html', pick(T.navContact), page === 'v2-contact']
-        ];
+        ]);
         var menu = entrees.map(function (e, i) {
             return '<a href="' + withLang(e[0]) + '" style="--i:' + i + '">' + esc(e[1]) + '</a>';
         }).join('') +
             '<small>' + esc(pick(V.menuApps)) + '</small>' +
-            GAME_ORDER.concat(IOS_ORDER, MAC_ORDER).map(function (k, i) {
+            '<div class="nav-menu-apps">' + GAME_ORDER.concat(IOS_ORDER, MAC_ORDER).map(function (k, i) {
                 return '<a class="nav-menu-app" href="' + withLang('./' + k + '.html') + '" style="--i:' + (i + entrees.length) + '">' +
-                    esc(APPS[k].name) + '</a>';
-            }).join('');
+                    icones([k], 28) + esc(APPS[k].name) + '</a>';
+            }).join('') + '</div>';
 
         return '<a class="skip-link" href="#main">' + esc(pick(T.skipLink)) + '</a>' +
             '<header class="nav" id="nav"><div class="nav-inner">' +
             '<a class="nav-brand" href="' + withLang('./index.html') + '">' +
-            '<img src="./assets/img/favicon.svg" width="26" height="26" alt="" decoding="async">' +
+            '<img src="./assets/img/favicon.svg" width="24" height="24" alt="" decoding="async">' +
             '<span>Rodolphe Vandaele</span></a>' +
             '<nav class="nav-links" aria-label="Navigation">' +
-            entrees.map(function (e) { return lien(e[0], e[1], e[2]); }).join('') +
+            entrees.map(function (e) {
+                return '<a href="' + withLang(e[0]) + '"' + (e[2] ? ' aria-current="page"' : '') + '>' + esc(e[1]) + '</a>';
+            }).join('') + '</nav>' +
             '<span class="lang-switch">' +
             '<a href="?lang=fr" data-lang="fr" lang="fr" aria-current="' + (lang === 'fr') + '">FR</a>' +
             '<a href="?lang=en" data-lang="en" lang="en" aria-current="' + (lang === 'en') + '">EN</a>' +
-            '</span></nav>' +
+            '</span>' +
             '<button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu"' +
             ' aria-label="' + esc(pick(V.menuOpen)) + '"><span></span><span></span></button>' +
             '</div></header>' +
@@ -1469,463 +1112,495 @@
        --------------------------------------------------------------------- */
 
     function footerHTML() {
-        function colonne(titre, cles) {
-            return '<nav aria-label="' + esc(titre) + '"><h2>' + esc(titre) + '</h2>' +
-                cles.map(function (k) {
-                    return '<a href="' + withLang('./' + k + '.html') + '">' + APPS[k].name + '</a>';
-                }).join('') + '</nav>';
+        function colonne(titre, liens) {
+            return '<nav aria-label="' + esc(titre) + '"><h2>' + esc(titre) + '</h2>' + liens.join('') + '</nav>';
+        }
+        function apps(cles) {
+            return cles.map(function (k) { return '<a href="' + withLang('./' + k + '.html') + '">' + esc(APPS[k].name) + '</a>'; });
         }
         var partenaires = PARTENAIRES.map(function (p) {
             return '<a class="partner" href="' + p.url + '" target="_blank" rel="noopener">' +
-                '<img src="' + p.img + '" width="40" height="40" alt="" loading="lazy" decoding="async">' +
-                '<span><span class="partner-name">' + esc(p.nom) + '</span>' +
-                '<span class="partner-site">' + esc(p.site) + '</span></span></a>';
+                '<img src="' + p.img + '" width="36" height="36" alt="" loading="lazy" decoding="async">' +
+                '<span><b>' + esc(p.nom) + '</b><small>' + esc(p.site) + '</small></span></a>';
         }).join('');
-        /* Les pages légales de chaque application iPhone, telles que déclarées sur
-           l'App Store. Les utilitaires Mac n'en ont pas. */
-        function ligneDocs(titre, suffixe) {
-            return '<p><b>' + esc(titre) + '</b>' + IOS_ORDER.concat(GAME_ORDER).map(function (k) {
-                return '<a href="' + withLang('./' + k + '-' + suffixe + '.html') + '">' + esc(APPS[k].name) + '</a>';
-            }).join('') + '</p>';
-        }
 
         return '<footer class="footer"><div class="wrap">' +
+            '<p class="footer-line">' + esc(pick(T.footerLine)) + '</p>' +
             '<div class="footer-grid">' +
-            '<div class="footer-brand"><b>Rodolphe Vandaele</b><p>' + esc(pick(T.footerLine)) + '</p></div>' +
-            colonne(pick(T.footerApps), IOS_ORDER) +
-            colonne(pick(V.navGames), GAME_ORDER) +
-            colonne(pick(T.navMac), MAC_ORDER) +
-            '<nav aria-label="' + esc(pick(T.footerSite)) + '"><h2>' + esc(pick(T.footerSite)) + '</h2>' +
-            '<a href="' + withLang('./about.html') + '">' + esc(pick(T.navAbout)) + '</a>' +
-            '<a href="' + withLang('./contact.html') + '">' + esc(pick(T.navContact)) + '</a>' +
-            '<a href="' + withLang('./about.html') + '#mentions">' + esc(pick(T.legalTitleSite)) + '</a>' +
-            '<a href="' + LIBERAPAY + '" target="_blank" rel="noopener">Liberapay</a>' +
-            '<a href="mailto:' + MAIL + '">' + MAIL + '</a></nav>' +
+            FAMILLES.map(function (f) { return colonne(pick(f[1]), apps(f[2])); }).join('') +
+            colonne(pick(T.footerSite), [
+                '<a href="' + withLang('./about.html') + '">' + esc(pick(T.navAbout)) + '</a>',
+                '<a href="' + withLang('./contact.html') + '">' + esc(pick(T.navContact)) + '</a>',
+                '<a href="' + withLang('./about.html') + '#mentions">' + esc(pick(T.legalTitleSite)) + '</a>',
+                '<a href="' + LIBERAPAY + '" target="_blank" rel="noopener">Liberapay</a>',
+                '<a href="mailto:' + MAIL + '">' + esc(pick(V.contactWrite)) + '</a>'
+            ]) +
             '</div>' +
-            '<div class="footer-band">' +
-            badgeAppStore(STORE_DEV, pick(T.footerStore), true) +
-            (partenaires ? '<div class="footer-side">' +
-                '<span class="partner-label">' + esc(pick(T.footerPartners)) + '</span>' +
-                partenaires + '</div>' : '') +
+            '<div class="footer-band">' + badgeAppStore(STORE_DEV, pick(T.footerStore), true) +
+            (partenaires ? '<div class="footer-side"><span>' + esc(pick(T.footerPartners)) + '</span>' + partenaires + '</div>' : '') +
             '</div>' +
-            '<div class="footer-docs">' + ligneDocs(pick(T.privacyLink), 'privacy') +
-            ligneDocs(pick(T.supportLink), 'support') + '</div>' +
-            '<div class="footer-legal"><span>© 2026 Rodolphe Vandaele</span>' +
-            '<span>' + esc(pick(T.footerTagline)) + '</span></div>' +
+            '<div class="footer-legal"><span>© 2026 BodyCorp</span><span>' + esc(pick(T.footerTagline)) + '</span></div>' +
             '</div></footer>';
     }
 
     /* ---------------------------------------------------------------------
-       Accueil
+       Fragments du catalogue et des fiches
        --------------------------------------------------------------------- */
 
-    /* Les icônes des applications sur leur anneau. L'anneau double l'index qui suit : il est
-       décoratif pour les lecteurs d'écran, et ses liens sortent de l'ordre de
-       tabulation. */
-    function anneau() {
-        var cles = IOS_ORDER.concat(GAME_ORDER, MAC_ORDER);
-        return '<div class="orbit-stage" aria-hidden="true"><div class="orbit"><div class="orbit-scroll">' +
-            '<div class="orbit-ring" style="--n:' + cles.length + '">' +
-            cles.map(function (k, i) {
-                return '<div class="orbit-item" style="--i:' + i + '">' +
-                    '<a href="' + withLang('./' + k + '.html') + '" tabindex="-1">' +
-                    picture('./assets/img/' + k + '.png', ' width="118" height="118" alt="" decoding="async"') +
-                    '</a></div>';
-            }).join('') +
-            '</div></div></div></div>';
+    var TOUTES = GAME_ORDER.concat(IOS_ORDER, MAC_ORDER);
+    var CHECK = svg('<path d="m5 12.5 4.2 4.2L19 7"/>', 'check');
+    var LOUPE = svg('<circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.4-4.4"/>', 'loupe');
+
+    var FAM_TEXTES = {
+        jeux: [V.newEyebrow, V.newTitle, V.gamesLead],
+        france: [V.onIPhone, T.iosTitle, V.franceLead],
+        salon: [V.salonEyebrow, V.salonTitle, V.salonLead],
+        mac: [V.onMac, T.macTitle, T.macLead]
+    };
+
+    /* Les produits qui ont des pages légales (les utilitaires Mac n'en ont pas). */
+    var AVEC_LEGAL = GAME_ORDER.concat(IOS_ORDER);
+
+    function familleDe(cle) {
+        for (var i = 0; i < FAMILLES.length; i++) { if (FAMILLES[i][2].indexOf(cle) !== -1) { return FAMILLES[i]; } }
+        return FAMILLES[0];
     }
 
-    function sectionApp(cle, index) {
+    /* L'icône d'un produit porte le même nom de transition sur sa fiche du catalogue et en tête de sa page :
+       la transition entre pages la fait glisser de l'une à l'autre. */
+    function vt(cle) {
+        return ' style="view-transition-name:icone-' + cle + '"';
+    }
+
+    function styleAccent(app) {
+        return ' style="--accent:' + app.accent + (app.accent2 ? ';--accent-2:' + app.accent2 : '') + '"';
+    }
+
+    function faitsDe(app) {
+        return pick(app.chips || (app.platform === 'mac' ? V.chipsMac : (app.game ? V.chipsGame : V.chipsIOS)));
+    }
+
+    /* L'appel d'une fiche : badge App Store, pastille « Bientôt » ou lien GitHub. */
+    function appel(cle, petit) {
+        var app = APPS[cle];
+        if (!app.store) { return pastilleBientot(pick(app.game ? V.soonStore : V.soonBadge), petit); }
+        if (app.platform === 'mac') {
+            return '<a class="btn btn-primary' + (petit ? ' is-small' : '') + '" href="' + app.store + '" target="_blank" rel="noopener">' +
+                esc(pick(V.openSource)) + '</a>';
+        }
+        return badgeAppStore(app.store, pick(V.badgeAlt).replace('{app}', app.name), petit);
+    }
+
+    function lienLegal(cle, sorte) {
+        return withLang('./' + cle + '-' + (sorte === 'privacy' ? 'confidentialite' : 'assistance') + '.html');
+    }
+
+    /* Un visuel posé à plat : le visuel App Store porte déjà son titre et son appareil. */
+    function visuel(cle, n, alt, paresseux, sizes, appareil, classe) {
+        return '<div class="vis' + (classe ? ' ' + classe : '') + (appareil && appareil !== 'iphone' ? ' is-' + appareil : '') + '">' +
+            captureJeu(cle, n, alt, paresseux, sizes, appareil) + '</div>';
+    }
+
+    function faqHTML() {
+        return '<div class="faq">' + pick(V.faq).map(function (q) {
+            return '<details><summary>' + esc(q[0]) + '<span class="faq-sign" aria-hidden="true"></span></summary>' +
+                '<p>' + esc(q[1]) + '</p></details>';
+        }).join('') + '</div>';
+    }
+
+    /* Colonnes de la grille de captures sur grand écran : un nombre qui divise le compte, sinon le premier choix.
+       Portrait : 8 visuels en 4 colonnes, 5 en 5, 6 en 6 ; paysage : 6 en 3, 8 en 4. */
+    function colonnes(n, choix) {
+        for (var i = 0; i < choix.length; i++) { if (n % choix[i] === 0) { return choix[i]; } }
+        return choix[0];
+    }
+
+    /* Les captures en grille de cartes, une grille par appareil et le sélecteur. Les utilitaires Mac, sans captures,
+       montrent leur fenêtre dans une carte de même format. */
+    function galerie(cle, titre) {
+        var app = APPS[cle];
+        if (!app.storeShots) {
+            return '<section class="band sec-shots" id="captures"><div class="wrap"><div class="rail-head"><h2>' + esc(titre) + '</h2></div>' +
+                '<div class="shots is-wide" style="--cols:2"><div class="shot-card is-mac">' + fenetreMac(cle, true) + '</div></div></div></section>';
+        }
+        var legendes = pick(app.storeShots);
+        var appareils = app.devices || (app.game ? ['iphone', 'ipad'] : ['iphone']);
+        var formats = {
+            iphone: [app.paysage ? 'paysage' : 'iphone', app.paysage ? '(max-width: 700px) 92vw, 440px' : '(max-width: 700px) 46vw, 300px'],
+            ipad: [app.ipadPortrait ? 'ipadv' : 'ipad', app.ipadPortrait ? '(max-width: 700px) 46vw, 300px' : '(max-width: 700px) 92vw, 440px'],
+            tv: ['tv', '(max-width: 700px) 92vw, 440px']
+        };
+        var grille = function (a) {
+            var large = formats[a][0] === 'paysage' || formats[a][0] === 'ipad' || a === 'tv';
+            var n = colonnes(legendes.length, large ? [3, 4, 2] : [4, 5, 6, 3]);
+            return '<div class="shots' + (large ? ' is-wide' : '') + '" data-device="' + a + '" style="--cols:' + n + '"' + (a !== 'iphone' ? ' hidden' : '') + '>' +
+                legendes.map(function (legende, i) {
+                    return '<figure class="shot-card">' + visuel(cle, i + 1, app.name + ', ' + legende, true, formats[a][1], formats[a][0]) +
+                        '<figcaption>' + esc(legende) + '</figcaption></figure>';
+                }).join('') + '</div>';
+        };
+        return '<section class="band sec-shots" id="captures"><div class="wrap">' +
+            '<div class="rail-head"><h2>' + esc(titre) + '</h2>' +
+            (appareils.length > 1 ? '<div class="segmented" role="group" aria-label="' + esc(pick(V.deviceLabel)) + '">' +
+                appareils.map(function (a, i) {
+                    return '<button type="button" data-device="' + a + '" aria-pressed="' + (i === 0) + '">' + NOMS_APPAREILS[a] + '</button>';
+                }).join('') + '</div>' : '') +
+            '</div>' + appareils.map(grille).join('') + '</div></section>';
+    }
+
+    function statsHTML(app) {
+        if (!app.stats) { return ''; }
+        return '<dl class="p-stats">' + pick(app.stats).map(function (st) {
+            return '<div class="stat"><dt>' + esc(st[1]) + '</dt><dd data-count="' + esc(st[0]) + '">' + esc(st[0]) + '</dd></div>';
+        }).join('') + '</dl>';
+    }
+
+    /* La sous-barre d'une fiche ou d'une page légale : le nom, les sections, l'appel. */
+    function sousBarre(cle, sections) {
         var app = APPS[cle];
         var mac = app.platform === 'mac';
-        var classes = 'scene is-screen' + (mac ? ' theme-dark' : (index % 2 ? ' alt' : ''));
-        var plateforme = pick(app.on || (mac ? V.onMac : (app.game ? V.onGame : V.onIPhone)));
-
-        return '<section class="' + classes + '" id="' + cle + '" style="--accent:' + app.accent + '">' +
-            '<span class="glow" aria-hidden="true"></span>' +
-            '<div class="wrap split">' +
-            '<div class="split-copy">' +
-            rise(eyebrow(plateforme) + '<h2>' + esc(app.name) + '</h2>' +
-                '<p class="lead">' + esc(pick(app.desc)) + '</p>') +
-            rise(pastilles(cle), 80) +
-            rise(listePoints(pick(app.features) || [], 3), 140) +
-            rise('<div class="btn-row">' + boutonStore(cle) +
-                lienPlus(withLang('./' + cle + '.html'), pick(T.iosPage)) + '</div>', 200) +
-            '</div>' +
-            rise(appareil(cle), 60) +
-            '</div></section>';
+        var cta = !app.store ? '' : '<a class="subnav-cta" href="' + app.store + '" target="_blank" rel="noopener"' +
+            (mac ? '>' + esc(pick(V.openSource)) : ' aria-label="' + esc(pick(V.getAria).replace('{app}', app.name)) + '">' + esc(pick(V.get))) + '</a>';
+        return '<nav class="subnav" aria-label="' + esc(app.name) + '"><div class="subnav-inner">' +
+            '<a class="subnav-title" href="' + withLang('./' + cle + '.html') + '">' + icones([cle], 24) + esc(app.name) + '</a>' +
+            '<div class="subnav-links">' + sections.map(function (s) {
+                return '<a href="' + s[0] + '"' + (s[2] ? ' aria-current="page"' : '') + '>' + esc(s[1]) + '</a>';
+            }).join('') + '</div>' + cta + '</div></nav>';
     }
 
-    function renderHome() {
-        /* Les jeux dès le premier écran : icône, nom, statut. Un jeu à venir
-           le dit ici plutôt que de promettre une fiche App Store. */
-        var jeuxHero = '<nav class="hero-games" aria-label="' + esc(pick(V.heroGamesLabel)) + '">' +
-            GAME_ORDER.map(function (k) {
-                var app = APPS[k];
-                return '<a class="hero-game shine" data-tilt="self" href="' + withLang('./' + k + '.html') + '"' +
-                    ' style="--accent:' + app.accent + '">' +
-                    picture('./assets/img/' + k + '.png', ' width="56" height="56" alt="" decoding="async"') +
-                    '<span><b>' + esc(app.name) + '</b>' +
-                    '<small' + (app.store ? '' : ' class="is-soon"') + '>' +
-                    esc(pick(app.store ? V.onStore : V.soonStore)) + '</small></span></a>';
-            }).join('') + '</nav>';
+    /* Le fil d'Ariane : toutes les applications, la famille, puis les pages données. */
+    function filAriane(cle, suite) {
+        var f = familleDe(cle);
+        var etapes = [[withLang('./index.html'), pick(V.allApps)], [withLang('./index.html#' + f[0]), pick(f[1])]].concat(suite);
+        return '<nav class="crumbs" aria-label="' + esc(lang === 'fr' ? 'Fil d’Ariane' : 'Breadcrumb') + '"><ol>' + etapes.map(function (e, i) {
+            return '<li>' + (i ? CHEVRON : '') + (e[0] ? '<a href="' + e[0] + '">' + esc(e[1]) + '</a>' : '<span aria-current="page">' + esc(e[1]) + '</span>') + '</li>';
+        }).join('') + '</ol></nav>';
+    }
 
-        var hero = '<section class="scene is-hero center" id="main">' +
-            '<span class="glow" aria-hidden="true"></span>' +
-            '<div class="wrap">' +
-            rise(eyebrow(pick(V.heroKicker)) +
-                '<h1>' + pick(V.heroTitleHTML) + '</h1>' +
-                '<p class="lead">' + esc(pick(V.heroShort)) + '</p>') +
-            rise('<div class="btn-row">' +
-                '<a class="btn btn-primary" href="#les-jeux">' + esc(pick(V.seeGames)) + '</a>' +
-                '<a class="btn btn-ghost" href="#apps">' + esc(pick(V.seeApps)) + '</a>' +
-                badgeAppStore(STORE_DEV, pick(T.footerStore)) +
-                '</div>', 80) +
-            rise(jeuxHero, 140) +
-            '</div>' + anneau() + '</section>';
-
-        /*
-         * Les jeux, en tuiles côte à côte comme les nouveautés d'une page
-         * d'accueil de constructeur : un nom, une phrase, le badge (ou « Bientôt
-         * sur l'App Store »), et trois captures en éventail qui s'écartent au survol.
-         */
-        function promo(cle) {
-            var app = APPS[cle];
-            /* Un jeu sans captures montre son icône en grand à la place de l'éventail. */
-            var legendes = app.storeShots && !app.paysage && pick(app.storeShots);
-            var eventail = legendes ? [3, 1, 5].map(function (n, i) {
-                return '<div class="promo-shot" style="--k:' + (i - 1) + '">' +
-                    telephoneJeu(cle, n, i === 1 ? app.name + ', ' + legendes[n - 1] : '', true,
-                        '(max-width: 560px) 34vw, 220px') + '</div>';
-            }).join('') : picture('./assets/img/' + cle + '.png', ' class="promo-solo" width="256" height="256" alt="" loading="lazy" decoding="async"');
-            return '<article class="promo" style="--accent:' + app.accent + ';--accent-2:' + app.accent2 + '">' +
-                '<div class="promo-copy">' +
-                picture('./assets/img/' + cle + '.png', ' class="promo-icon" width="76" height="76" alt="" loading="lazy" decoding="async"') +
-                '<p class="promo-kicker">' + esc(pick(app.tag)) + '</p>' +
-                '<h3>' + esc(app.name) + '</h3>' +
-                '<p class="promo-line">' + esc(pick(app.promo)) + '</p>' +
-                '<div class="btn-row">' + (app.store
-                    ? badgeAppStore(app.store, pick(V.badgeAlt).replace('{app}', app.name))
-                    : '<span class="btn btn-quiet" aria-disabled="true">' + esc(pick(V.soonStore)) + '</span>') +
-                lienPlus(withLang('./' + cle + '.html'), pick(V.learnMore)) + '</div>' +
-                '</div>' +
-                '<div class="promo-fan">' + eventail + '</div>' +
-                '</article>';
-        }
-
-        var nouveautes = '<section class="scene alt is-tight" id="les-jeux" aria-labelledby="nouveau-titre">' +
-            '<div class="wrap">' +
-            rise(eyebrow(pick(V.newEyebrow)) + '<h2 class="small" id="nouveau-titre">' + esc(pick(V.newTitle)) + '</h2>') +
-            '<div class="promo-grid' + (GAME_ORDER.length === 3 ? ' is-three' : '') + '">' +
-            GAME_ORDER.map(function (k, i) { return rise(promo(k), i * 100); }).join('') +
-            '</div></div></section>';
-
-        var manifeste = '<section class="scene is-tight center">' +
-            '<div class="wrap"><p class="manifesto" style="margin-inline:auto">' + esc(pick(V.heroLead)) + '</p></div>' +
-            '</section>';
-
-        /*
-         * L'index des applications, rangé par gamme : cinq jeux, cinq apps sur
-         * iPhone, deux sur Mac. Trois publics, et le site les sépare partout ailleurs.
-         */
-        function groupe(titre, cles, sousTitre, classe, filtre) {
-            return '<section class="app-group" data-group="' + filtre + '" aria-label="' + esc(titre) + '">' +
-                '<h3 class="app-group-head">' + esc(titre) + '<span>' + esc(sousTitre) + '</span></h3>' +
-                '<div class="app-tiles' + (classe ? ' ' + classe : '') + '">' +
-                cles.map(function (k) { return tuileApp(k); }).join('') +
-                '</div></section>';
-        }
-
-        var index = '<section class="scene alt is-tight" id="apps">' +
-            '<div class="wrap">' +
-            rise('<div class="index-head"><h2 class="small">' + esc(pick(V.indexTitle)) + '</h2>' +
-                '<div class="segmented" role="group" aria-label="' + esc(pick(V.filterLabel)) + '">' +
-                [['all', pick(V.filterAll)], ['games', pick(V.navGames)], ['ios', pick(T.navIOS)], ['mac', pick(T.navMac)]]
-                    .map(function (f, i) {
-                        return '<button type="button" data-filter="' + f[0] + '" aria-pressed="' + (i === 0) + '">' + esc(f[1]) + '</button>';
-                    }).join('') +
-                '</div></div>') +
-            rise('<div class="app-index">' +
-                groupe(pick(V.navGames), GAME_ORDER, pick(V.gamesSub), 'is-six', 'games') +
-                groupe(pick(T.navIOS), IOS_ORDER, pick(V.onIPhone), 'is-six', 'ios') +
-                groupe(pick(T.navMac), MAC_ORDER, pick(V.onMac), 'is-two', 'mac') +
-                '</div>', 80) +
-            '</div></section>';
-
-        var sections = '<div id="jeux"></div>' +
-            GAME_ORDER.map(function (k, i) { return sectionApp(k, i); }).join('') +
-            '<div id="ios"></div>' +
-            IOS_ORDER.map(function (k, i) { return sectionApp(k, GAME_ORDER.length + i); }).join('') +
-            '<div id="mac"></div>' +
-            MAC_ORDER.map(function (k, i) { return sectionApp(k, i); }).join('');
-
-        var valeurs = '<section class="scene alt">' +
-            '<div class="wrap">' +
-            rise(eyebrow(pick(T.valuesEyebrow)) + '<h2 class="small">' + esc(pick(T.valuesTitle)) + '</h2>') +
-            '<div class="cards">' +
-            pick(T.values).map(function (v, i) {
-                return rise(carte(icone(v[0]) + '<h3>' + esc(v[1]) + '</h3><p>' + esc(v[2]) + '</p>'), i * 90);
-            }).join('') +
-            '</div></div></section>';
-
-        var questions = '<section class="scene" aria-labelledby="faq-titre">' +
-            '<div class="wrap narrow">' +
-            rise(eyebrow(pick(V.faqEyebrow)) + '<h2 class="small" id="faq-titre">' + esc(pick(V.faqTitle)) + '</h2>') +
-            rise('<div class="faq">' + pick(V.faq).map(function (q) {
-                return '<details><summary>' + esc(q[0]) + '<span class="faq-sign" aria-hidden="true"></span></summary>' +
-                    '<p>' + esc(q[1]) + '</p></details>';
-            }).join('') + '</div>', 80) +
-            '</div></section>';
-
-        var contact = '<section class="scene center">' +
-            '<span class="glow" aria-hidden="true"></span>' +
-            '<div class="wrap">' +
-            rise(eyebrow(pick(T.contactEyebrow)) +
-                '<h2>' + esc(pick(V.contactFinalTitle)) + '</h2>' +
-                '<p class="lead">' + esc(pick(V.contactLead)) + '</p>') +
-            rise('<div class="btn-row">' +
-                '<a class="btn btn-primary" href="' + withLang('./contact.html') + '">' + esc(pick(V.contactWrite)) + '</a>' +
-                lienPlus(withLang('./about.html'), pick(T.navAbout)) +
-                '</div>', 100) +
-            '</div></section>';
-
-        return navHTML('v2-home') + '<main>' + hero + nouveautes + manifeste + index + sections + valeurs + questions + contact + '</main>' + footerHTML();
+    /* L'identité d'une fiche : icône et nom. `titre` remplace le nom par celui d'une page légale. */
+    function identite(cle, titre, sur) {
+        var app = APPS[cle];
+        var nom = '<h1>' + esc(titre || app.name) + '</h1>';
+        return '<div class="p-id">' + picture('./assets/img/' + cle + '.png', ' class="p-icon" width="128" height="128" alt="" decoding="async"' + vt(cle)) +
+            '<div><p class="eyebrow">' + esc(sur || pick(app.tag)) + '</p>' + nom + '</div></div>';
     }
 
     /* ---------------------------------------------------------------------
-       Page d'une application
+       Accueil : le catalogue
        --------------------------------------------------------------------- */
 
-    /* La grille des fonctions : la première carte occupe deux colonnes sur trois.
-       La dernière s'élargit pour fermer la rangée, sans quoi une carte isolée
-       pendrait sous la grille. */
-    function fonctionsBento(items) {
-        var reste = (items.length + 1) % 3;
-        return items.map(function (texte, i) {
-            var classe = i === items.length - 1 && i > 0
-                ? (reste === 1 ? 'span-3' : (reste === 2 ? 'span-2' : ''))
-                : '';
-            return rise(carte('<span class="card-num">' + (i < 9 ? '0' : '') + (i + 1) + '</span><p>' + esc(texte) + '</p>'),
-                (i % 3) * 80, classe);
-        }).join('');
+    /* La tuile du catalogue : l'icône sur un fond de sa couleur, le nom et une ligne, toute la tuile en lien. Accueil,
+       produits de la même famille, assistance par application. `ligne` et `href` remplacent le genre et la fiche ;
+       `rang` : les six premières tuiles de l'accueil sont visibles dès l'arrivée et ne sont pas différées. */
+    function tuile(cle, ligne, href, rang) {
+        var app = APPS[cle];
+        var f = familleDe(cle);
+        var externe = href && href.indexOf('http') === 0;
+        var cherche = (app.name + ' ' + pick(app.tag) + ' ' + pick(app.promo) + ' ' + pick(f[1])).toLowerCase();
+        return '<article class="tile is-' + f[0] + '" data-fam="' + f[0] + '" data-search="' + esc(cherche) + '"' + styleAccent(app) + '>' +
+            '<div class="tile-art">' + picture('./assets/img/' + cle + '.png', ' width="96" height="96" alt=""' +
+                (rang < 6 ? '' : ' loading="lazy"') + ' decoding="async"' + (externe ? '' : vt(cle))) +
+            (app.store ? '' : '<span class="tile-flag">' + esc(lang === 'fr' ? 'Bientôt' : 'Soon') + '</span>') + '</div>' +
+            '<div class="tile-body"><h3><a class="tile-link" href="' + (href || withLang('./' + cle + '.html')) + '"' +
+            (externe ? ' target="_blank" rel="noopener"' : '') + '>' + esc(app.name) + '</a></h3>' +
+            '<p>' + esc(ligne || pick(app.tag)) + '</p></div></article>';
+    }
+
+    function tuiles(cles, ligne, lien) {
+        return '<div class="tiles">' + cles.map(function (k, i) { return tuile(k, ligne && ligne(k), lien && lien(k), i); }).join('') + '</div>';
+    }
+
+    function rayon(f, n) {
+        var t = FAM_TEXTES[f[0]];
+        return '<section class="shelf" id="' + f[0] + '" data-fam="' + f[0] + '" aria-labelledby="' + f[0] + '-titre">' +
+            '<header class="shelf-head is-stacked"><div><p class="eyebrow"><i class="dot is-' + f[0] + '"></i>' + esc(pick(t[0])) + '</p>' +
+            '<h2 id="' + f[0] + '-titre">' + esc(pick(f[1])) + ' <span class="count">' + f[2].length + '</span></h2></div>' +
+            '<p class="shelf-lead"><b>' + esc(pick(t[1])) + '</b> ' + esc(pick(t[2])) + '</p></header>' +
+            '<div class="tiles">' + f[2].map(function (k, i) { return tuile(k, null, null, n ? 9 : i); }).join('') + '</div></section>';
+    }
+
+    /* Une carte de lien : pictogramme, titre, une ligne. Pages légales, version web, code, mentions. */
+    function carteLien(href, icon, titre, ligne, externe) {
+        return '<a class="link-card" href="' + href + '"' + (externe ? ' target="_blank" rel="noopener"' : '') + '>' +
+            icone(icon) + '<span><b>' + esc(titre) + '</b><small>' + esc(ligne) + '</small></span>' + CHEVRON + '</a>';
+    }
+
+    /* Les cartes « Aide et informations » d'une fiche, ou du pied d'une page légale (`sauf` : la page courante). */
+    function cartesLiens(cle, sauf, avecLangue) {
+        var app = APPS[cle];
+        var fr = lang === 'fr';
+        var l = avecLangue || function (h) { return h; };
+        var c = [];
+        if (sauf) { c.push(carteLien(withLang('./' + cle + '.html'), app.platform === 'mac' ? 'laptop' : 'phone', app.name, pick(app.tag))); }
+        if (AVEC_LEGAL.indexOf(cle) !== -1) {
+            if (sauf !== 'support') { c.push(carteLien(l(lienLegal(cle, 'support')), 'mail', pick(T.supportLink), fr ? 'Questions fréquentes et contact' : 'Frequent questions and contact')); }
+            if (sauf !== 'privacy') { c.push(carteLien(l(lienLegal(cle, 'privacy')), 'shield', pick(T.privacyLink), fr ? 'Données traitées et vos droits' : 'Data processed and your rights')); }
+        }
+        if (SITES_WEB[cle] && !sauf) { c.push(carteLien(SITES_WEB[cle], 'globe', pick(V.webVersion), SITES_WEB[cle].replace('https://', ''), true)); }
+        if (app.platform === 'mac' && !sauf) { c.push(carteLien(app.store, 'book', pick(V.openSource), pick(T.macStore), true)); }
+        c.push(carteLien(withLang('./about.html') + '#mentions', 'book', pick(T.legalTitleSite), fr ? 'Éditeur, hébergement, contenus' : 'Publisher, hosting, content'));
+        return '<div class="link-cards">' + c.join('') + '</div>';
+    }
+
+    /* Le filtre par famille et la recherche. La famille choisie suit l'ancre de l'adresse (#jeux...) : un lien
+       de la barre ou du pied ouvre le catalogue sur elle. */
+    function attacheFiltres() {
+        var barre = document.querySelector('.filters');
+        if (!barre) { return; }
+        var boutons = barre.querySelectorAll('button[data-fam]');
+        var champ = document.getElementById('recherche');
+        var bilan = document.getElementById('bilan');
+        var vide = document.getElementById('catalogue-vide');
+        function appliquer() {
+            var fam = barre.querySelector('button[aria-pressed="true"]').getAttribute('data-fam');
+            var q = (champ.value || '').trim().toLowerCase();
+            var n = 0;
+            document.querySelectorAll('.shelf').forEach(function (s) {
+                var vus = 0;
+                s.querySelectorAll('.tile').forEach(function (c) {
+                    var ok = (fam === 'tout' || c.getAttribute('data-fam') === fam) && (!q || c.getAttribute('data-search').indexOf(q) !== -1);
+                    c.hidden = !ok;
+                    if (ok) { vus++; }
+                });
+                s.hidden = !vus;
+                n += vus;
+            });
+            vide.hidden = n > 0;
+            bilan.textContent = n + (lang === 'fr' ? (n > 1 ? ' applications' : ' application') : (n > 1 ? ' apps' : ' app'));
+        }
+        function choisir(fam) {
+            boutons.forEach(function (o) { o.setAttribute('aria-pressed', String(o.getAttribute('data-fam') === fam)); });
+            appliquer();
+        }
+        boutons.forEach(function (b) {
+            b.addEventListener('click', function () {
+                var fam = b.getAttribute('data-fam');
+                choisir(fam);
+                history.replaceState(null, '', fam === 'tout' ? location.pathname + location.search : '#' + fam);
+            });
+        });
+        champ.addEventListener('input', appliquer);
+        var ancre = location.hash.slice(1);
+        if (FAM_TEXTES[ancre]) { choisir(ancre); }
+    }
+
+    /* Les quinze icônes, chacune vers sa fiche : en-tête de la page À propos. */
+    function mosaique(classe, taille) {
+        return '<nav class="' + classe + '" aria-label="' + esc(pick(V.allApps)) + '"><ul>' + TOUTES.map(function (k) {
+            return '<li><a href="' + withLang('./' + k + '.html') + '" title="' + esc(APPS[k].name) + '">' + icones([k], taille) +
+                '<span class="sr-only">' + esc(APPS[k].name) + '</span></a></li>';
+        }).join('') + '</ul></nav>';
+    }
+
+    function renderHome() {
+        var intro = '<section class="intro" id="main"><div class="wrap">' +
+            '<p class="eyebrow">' + esc(pick(V.heroKicker)) + '</p>' +
+            '<h1>' + pick(V.heroTitleHTML).replace(' class="grad"', ' class="hl"').replace('<br>', ' ') + '</h1>' +
+            '<p class="intro-lead">' + esc(pick(V.heroShort)) + '</p>' +
+            '</div></section>';
+
+        var filtres = '<div class="filters-bar"><div class="wrap filters">' +
+            '<div class="chips" role="group" aria-label="' + esc(pick(V.chaptersLabel)) + '">' +
+            '<button type="button" data-fam="tout" aria-pressed="true">' + esc(lang === 'fr' ? 'Tout' : 'All') + ' <span>' + TOUTES.length + '</span></button>' +
+            FAMILLES.map(function (f) {
+                return '<button type="button" data-fam="' + f[0] + '" aria-pressed="false"><i class="dot is-' + f[0] + '"></i>' + esc(pick(f[1])) + ' <span>' + f[2].length + '</span></button>';
+            }).join('') + '</div>' +
+            '<label class="search">' + LOUPE + '<span class="sr-only">' + esc(lang === 'fr' ? 'Rechercher une application' : 'Search an app') + '</span>' +
+            '<input id="recherche" type="search" autocomplete="off" placeholder="' + esc(lang === 'fr' ? 'Rechercher' : 'Search') + '"></label>' +
+            '<p class="bilan" id="bilan" aria-live="polite">' + TOUTES.length + (lang === 'fr' ? ' applications' : ' apps') + '</p>' +
+            '</div></div>';
+
+        var catalogue = '<div class="wrap catalogue">' + FAMILLES.map(function (f, i) { return rayon(f, i); }).join('') +
+            '<p class="empty" id="catalogue-vide" hidden>' + esc(lang === 'fr' ? 'Aucune application ne correspond à cette recherche.' : 'No app matches this search.') + '</p></div>';
+
+        var valeurs = '<section class="band principles"><div class="wrap">' +
+            '<header class="shelf-head is-simple"><div><p class="eyebrow">' + esc(pick(T.valuesEyebrow)) + '</p><h2>' + esc(pick(T.valuesTitle)) + '</h2></div></header>' +
+            '<div class="cards is-three">' + pick(T.values).map(function (v) {
+                return carte(icone(v[0]) + '<h3>' + esc(v[1]) + '</h3><p>' + esc(v[2]) + '</p>');
+            }).join('') + '</div></div></section>';
+
+        var questions = '<section class="band" aria-labelledby="faq-titre"><div class="wrap faq-grid">' +
+            '<header><p class="eyebrow">' + esc(pick(V.faqEyebrow)) + '</p><h2 id="faq-titre">' + esc(pick(V.faqTitle)) + '</h2></header>' +
+            faqHTML() + '</div></section>';
+
+        return navHTML('v2-home') + '<main>' + intro + filtres + catalogue + valeurs + questions + boiteContact() + '</main>' + footerHTML();
+    }
+
+    function boiteContact() {
+        return '<section class="band"><div class="wrap"><div class="contact-box">' +
+            '<div><h2>' + esc(pick(V.contactFinalTitle)) + '</h2><p>' + esc(pick(V.contactLead)) + '</p></div>' +
+            '<div class="btn-row"><a class="btn btn-primary" href="' + withLang('./contact.html') + '">' + esc(pick(V.contactWrite)) + '</a>' +
+            lienPlus(withLang('./about.html'), pick(T.navAbout)) + '</div></div></div></section>';
+    }
+
+    /* ---------------------------------------------------------------------
+       Page produit : un seul gabarit catalogue
+       --------------------------------------------------------------------- */
+
+    /* La boîte de la fiche : téléchargement, faits, chiffres, pages légales. */
+    function boiteFiche(cle) {
+        var app = APPS[cle];
+        var f = familleDe(cle);
+        return '<aside class="p-aside" aria-label="' + esc(app.name) + '"><div class="p-box">' +
+            '<div class="btn-row">' + appel(cle) + boutonWeb(cle) + '</div>' +
+            '<dl class="p-facts"><div><dt>' + esc(lang === 'fr' ? 'Appareils' : 'Devices') + '</dt><dd>' + esc(plateforme(app)) + '</dd></div>' +
+            '<div><dt>' + esc(lang === 'fr' ? 'Catégorie' : 'Category') + '</dt><dd>' + esc(pick(f[1])) + '</dd></div></dl>' +
+            '<ul class="p-chips">' + faitsDe(app).map(function (x) { return '<li>' + CHECK + esc(x) + '</li>'; }).join('') + '</ul>' +
+            statsHTML(app) +
+            '</div></aside>';
+    }
+
+    function enveloppe(page, contenu) {
+        return navHTML(page) + '<main class="fiche">' + contenu + '</main>' + footerHTML();
     }
 
     function renderApp(cle) {
         var app = APPS[cle];
-        var mac = app.platform === 'mac';
-        var plateforme = pick(app.on || (mac ? V.onMac : (app.game ? V.onGame : V.onIPhone)));
-        var liens = mac ? '' :
-            '<a class="btn btn-quiet" href="' + withLang('./' + cle + '-support.html') + '">' +
-            esc(pick(T.supportLink)) + '</a>' +
-            '<a class="btn btn-quiet" href="' + withLang('./' + cle + '-privacy.html') + '">' +
-            esc(pick(T.privacyLink)) + '</a>';
+        var f = familleDe(cle);
+        var sections = [['#main', pick(V.subOverview)], ['#fonctions', pick(V.subFeatures)]]
+            .concat([['#captures', pick(app.storeShots ? V.subShots : T.macPreview)]]).concat([['#donnees', pick(V.subData)], ['#aide', lang === 'fr' ? 'Aide' : 'Help']]);
 
-        var hero = '<section class="scene is-hero center' + (mac ? ' theme-dark' : '') + '" id="main" style="--accent:' + app.accent + '">' +
-            '<span class="glow" aria-hidden="true"></span>' +
-            '<div class="wrap">' +
-            rise('<p>' + '<a class="link-more back" href="' + withLang('./index.html') + '">' + CHEVRON +
-                esc(pick(V.allApps)) + '</a></p>') +
-            rise('<div class="app-hero-icon" data-tilt><div class="tilt shine">' +
-                picture('./assets/img/' + cle + '.png', ' width="136" height="136" alt="" decoding="async"') +
-                '</div></div>', 40) +
-            rise(eyebrow(plateforme) + '<h1>' + esc(app.name) + '</h1>' +
-                '<p class="lead wide">' + esc(pick(app.desc)) + '</p>', 80) +
-            rise('<div class="facts-center">' + pastilles(cle) + '</div>', 120) +
-            rise('<div class="btn-row">' + boutonStore(cle) + liens + '</div>', 160) +
-            '<div class="hero-device">' + appareil(cle, true) + '</div>' +
-            '</div></section>';
+        var tete = '<section class="p-hero" id="main"><div class="wrap p-grid">' +
+            '<header class="p-head">' + filAriane(cle, [[null, app.name]]) + identite(cle) +
+            '<p class="p-promo">' + esc(pick(app.promo)) + '</p></header>' +
+            boiteFiche(cle) + '</div></section>';
 
-        /* La sous-barre des pages produit : le nom, les sections, et l'appel à
-           télécharger, toujours à portée pendant la lecture. */
-        var appel = '';
-        if (app.store) {
-            appel = mac
-                ? '<a class="subnav-cta" href="' + app.store + '" target="_blank" rel="noopener">' + esc(pick(V.openSource)) + '</a>'
-                : '<a class="subnav-cta" href="' + app.store + '" target="_blank" rel="noopener" aria-label="' +
-                  esc(pick(V.getAria).replace('{app}', app.name)) + '">' + esc(pick(V.get)) + '</a>';
-        }
-        var aCaptures = !!app.storeShots;
-        var sousBarre = '<nav class="subnav" aria-label="' + esc(app.name) + '"><div class="subnav-inner">' +
-            '<a class="subnav-title" href="#main">' + esc(app.name) + '</a>' +
-            '<div class="subnav-links">' +
-            '<a href="#main">' + esc(pick(V.subOverview)) + '</a>' +
-            '<a href="#fonctions">' + esc(pick(V.subFeatures)) + '</a>' +
-            (aCaptures ? '<a href="#captures">' + esc(pick(V.subShots)) + '</a>' : '') +
-            '<a href="#donnees">' + esc(pick(V.subData)) + '</a>' +
-            '</div>' + appel + '</div></nav>';
+        var desc = '<section class="p-sec" id="fonctions"><h2>' + esc(pick(app.game ? V.featuresTitleGame : V.featuresTitle)) + '</h2>' +
+            '<p class="p-desc">' + esc(pick(app.desc)) + '</p>' +
+            '<ul class="feat-grid" style="--cols:' + colonnes(pick(app.features).length, [3, 4, 2]) + '">' + pick(app.features).map(function (t) { return '<li class="feat">' + CHECK + '<p>' + esc(t) + '</p></li>'; }).join('') + '</ul></section>';
 
-        var chiffres = '';
-        if (app.stats) {
-            chiffres = '<section class="scene is-tight stats-band" style="--accent:' + app.accent + '" aria-label="' + esc(pick(V.statsEyebrow)) + '">' +
-                '<div class="wrap"><dl class="stats">' +
-                pick(app.stats).map(function (st, i) {
-                    return '<div class="stat rise"' + (i ? ' style="--d:' + i * 80 + 'ms"' : '') + '>' +
-                        '<dt>' + esc(st[1]) + '</dt>' +
-                        '<dd data-count="' + esc(st[0]) + '">' + esc(st[0]) + '</dd></div>';
-                }).join('') +
-                '</dl></div></section>';
-        }
+        var donnees = '<section class="p-sec" id="donnees"><h2>' + esc(pick(V.methodTitle)) + '</h2>' +
+            '<div class="cards is-two">' + carte(icone('book') + '<h3>' + esc(pick(T.dataSources)) + '</h3><p>' + esc(pick(app.sources)) + '</p>') +
+            carte(icone('shield') + '<h3>' + esc(pick(T.dataBusiness)) + '</h3><p>' + esc(pick(app.business)) + '</p>') + '</div></section>';
 
-        var fonctions = '<section class="scene alt" id="fonctions" style="--accent:' + app.accent + '">' +
-            '<div class="wrap">' +
-            rise(eyebrow(pick(T.featEyebrow)) + '<h2 class="small">' + esc(pick(app.game ? V.featuresTitleGame : V.featuresTitle)) + '</h2>') +
-            '<div class="cards bento">' +
-            fonctionsBento(pick(app.features) || []) +
-            '</div></div></section>';
+        var aide = '<section class="p-sec" id="aide"><h2>' + esc(lang === 'fr' ? 'Aide et informations' : 'Help and information') + '</h2>' +
+            cartesLiens(cle) + '</section>';
 
-        var captures = '';
-        if (app.storeShots) {
-            var legendes = pick(app.storeShots);
-            /* Une bande par appareil, iPhone d'abord ; le sélecteur montre l'une ou
-               l'autre. Les images de la bande cachée, différées, ne se chargent pas.
-               Les jeux ont l'iPhone et l'iPad, les apps l'iPhone seul (ni sélecteur ni autre
-               bande), sauf celles qui listent leurs appareils (`devices`). */
-            var ipad = !!app.game;
-            var appareils = app.devices || (ipad ? ['iphone', 'ipad'] : ['iphone']);
-            var bande = function (appareil, figure) {
-                return '<div class="gallery is-rail" data-device="' + appareil + '"' +
-                    (appareil !== 'iphone' ? ' hidden' : '') +
-                    ' tabindex="0" role="region" aria-label="' + esc(pick(V.galleryLabel) + ', ' + NOMS_APPAREILS[appareil]) + '">' +
-                    legendes.map(function (legende, i) {
-                        return '<figure class="shot">' + figure(i + 1, app.name + ', ' + legende) +
-                            '<figcaption>' + esc(legende) + '</figcaption></figure>';
-                    }).join('') + '</div>';
-            };
-            captures = '<section class="scene theme-dark" id="captures" style="--accent:' + app.accent + '">' +
-                '<span class="glow" aria-hidden="true"></span>' +
-                '<div class="wrap rail-head">' +
-                rise(eyebrow(pick(T.shotsEyebrow)) + '<h2 class="small">' + esc(pick(ipad ? V.storeShotsTitle : V.shotsTitle)) + '</h2>') +
-                '<div class="rail-tools">' +
-                (appareils.length > 1 ? '<div class="segmented" role="group" aria-label="' + esc(pick(V.deviceLabel)) + '">' +
-                appareils.map(function (a, i) {
-                    return '<button type="button" data-device="' + a + '" aria-pressed="' + (i === 0) + '">' + NOMS_APPAREILS[a] + '</button>';
-                }).join('') + '</div>' : '') +
-                '<div class="rail-nav">' +
-                '<button class="rail-btn" type="button" data-dir="-1" aria-label="' + esc(pick(V.prev)) + '">' + CHEVRON + '</button>' +
-                '<button class="rail-btn" type="button" data-dir="1" aria-label="' + esc(pick(V.next)) + '">' + CHEVRON + '</button>' +
-                '</div></div></div>' +
-                /* Les visuels des apps ont leur propre téléphone : posés à plat, comme sur l'App Store. Les écrans
-                   bruts (`rawShots`) prennent celui du site. */
-                bande('iphone', function (n, alt) {
-                    return app.paysage ? tabletteJeu(cle, n, alt, '(max-width: 560px) 86vw, 620px', 'paysage')
-                        : ipad ? telephoneJeu(cle, n, alt, true, '(max-width: 560px) 62vw, 280px')
-                        : app.rawShots ? telephoneApp(cle, n, alt, true, '(max-width: 560px) 62vw, 280px')
-                        : '<div class="store-shot">' + captureJeu(cle, n, alt, true, '(max-width: 560px) 62vw, 280px') + '</div>';
-                }) +
-                (appareils.indexOf('ipad') !== -1 ? bande('ipad', function (n, alt) {
-                    return tabletteJeu(cle, n, alt, '(max-width: 560px) 86vw, 620px');
-                }) : '') +
-                (appareils.indexOf('tv') !== -1 ? bande('tv', function (n, alt) {
-                    return ecranTV(cle, n, alt, '(max-width: 560px) 86vw, 640px');
-                }) : '') +
-                '</section>';
-        }
+        var voisins = f[2].filter(function (k) { return k !== cle; });
+        var memes = '<section class="band related"><div class="wrap"><header class="shelf-head is-simple"><div><p class="eyebrow">' + esc(pick(f[1])) + '</p>' +
+            '<h2>' + esc(lang === 'fr' ? 'Dans la même famille' : 'In the same family') + '</h2></div>' +
+            lienPlus(withLang('./index.html'), pick(V.allApps)) + '</header>' +
+            tuiles(voisins) + '</div></section>';
 
-        var methode = '<section class="scene" id="donnees" style="--accent:' + app.accent + '">' +
-            '<div class="wrap">' +
-            rise(eyebrow(pick(T.dataEyebrow)) + '<h2 class="small">' + esc(pick(V.methodTitle)) + '</h2>') +
-            '<div class="cards">' +
-            rise(carte(icone('book') + '<h3>' + esc(pick(T.dataSources)) + '</h3><p>' + esc(pick(app.sources)) + '</p>')) +
-            rise(carte(icone('shield') + '<h3>' + esc(pick(T.dataBusiness)) + '</h3><p>' + esc(pick(app.business)) + '</p>'), 90) +
-            '</div>' +
-            rise('<div class="btn-row">' + boutonStore(cle) +
-                lienPlus(withLang('./index.html'), pick(V.allApps)) + '</div>', 120) +
-            '</div></section>';
-
-        return navHTML('v2-app') + '<main>' + sousBarre + hero + chiffres + fonctions + captures + methode + '</main>' + footerHTML();
+        return enveloppe('v2-app', sousBarre(cle, sections) + tete +
+            galerie(cle, pick(app.game ? V.storeShotsTitle : (app.storeShots ? V.shotsTitle : T.macPreview))) +
+            '<div class="p-body"><div class="wrap">' + desc + donnees + aide + '</div></div>' + memes);
     }
 
     /* ---------------------------------------------------------------------
-       À propos
+       Pages Confidentialité et Assistance du site
+
+       site-pages.js a déjà rendu le texte dans #site-root, dans l'une des onze
+       langues (adresse ?lang=, sinon langue du navigateur). On garde ses
+       sections, on jette son en-tête et son pied, et on les replace dans la
+       fiche du produit. Barre et pied du site : français si le texte l'est,
+       anglais sinon.
        --------------------------------------------------------------------- */
+
+    var LANGUES_LEGALES = [['fr', 'Français'], ['en', 'English'], ['de', 'Deutsch'], ['es', 'Español'], ['it', 'Italiano'],
+        ['ja', '日本語'], ['ko', '한국어'], ['zh-Hans', '简体中文'], ['uk', 'Українська'], ['ru', 'Русский'], ['ar', 'العربية']];
+
+    function renderLegal(cle, sorte, root) {
+        var app = APPS[cle];
+        var langueTexte = document.documentElement.lang || 'fr';
+        lang = langueTexte === 'fr' ? 'fr' : 'en';
+        var titre = root.querySelector('.page-title');
+        var sous = root.querySelector('.page-subtitle');
+        var premier = root.querySelector('main .page-card:not(.premium-hero-clean) li');
+        if (sous && premier && premier.textContent.trim() === sous.textContent.trim()) { sous = null; }
+        var corps = root.querySelectorAll('main .page-card:not(.premium-hero-clean)');
+        var fragment = document.createDocumentFragment();
+        corps.forEach(function (n) { fragment.appendChild(n); });
+        var nomPage = titre ? titre.textContent : pick(sorte === 'privacy' ? T.privacyLink : T.supportLink);
+        var avecLangue = function (href) { return href.replace(/([?&])lang=[^&#]*/, '$1lang=' + langueTexte); };
+
+        var courante = LANGUES_LEGALES.filter(function (l) { return l[0] === langueTexte; })[0] || LANGUES_LEGALES[0];
+        var langues = '<details class="langs"><summary>' + svg(ICONES.globe, 'btn-glyph') + '<span lang="' + courante[0] + '">' + courante[1] + '</span>' +
+            '<span class="sr-only">' + esc(lang === 'fr' ? ', changer de langue' : ', change language') + '</span></summary><ul>' +
+            LANGUES_LEGALES.map(function (l) {
+                return '<li><a href="?lang=' + l[0] + '" lang="' + l[0] + '"' + (l[0] === langueTexte ? ' aria-current="true"' : '') + '>' + l[1] + '</a></li>';
+            }).join('') + '</ul></details>';
+
+        var sections = [[withLang('./' + cle + '.html'), app.name], [avecLangue(lienLegal(cle, 'support')), pick(T.supportLink), sorte === 'support'],
+            [avecLangue(lienLegal(cle, 'privacy')), pick(T.privacyLink), sorte === 'privacy']];
+
+        var tete = '<section class="p-hero is-legal" id="main"><div class="wrap">' +
+            '<header class="p-head">' + filAriane(cle, [[withLang('./' + cle + '.html'), app.name], [null, nomPage]]) +
+            identite(cle, nomPage, app.name) +
+            (sous ? '<p class="p-promo">' + esc(sous.textContent) + '</p>' : '') + langues + '</header></div></section>';
+
+        var pied = '<section class="band legal-next"><div class="wrap">' + cartesLiens(cle, sorte, avecLangue) + '</div></section>';
+
+        root.className = '';
+        root.innerHTML = enveloppe('v2-legal', sousBarre(cle, sections) + tete +
+            '<div class="p-body legal-body"><div class="wrap" id="legal-texte"></div></div>' + pied);
+        var texte = document.getElementById('legal-texte');
+        texte.appendChild(fragment);
+        texte.setAttribute('lang', langueTexte);
+        texte.setAttribute('dir', langueTexte === 'ar' ? 'rtl' : 'ltr');
+        document.documentElement.lang = lang;
+        document.documentElement.dir = 'ltr';
+
+        /* Le menu des langues se ferme comme un menu : Échap (le focus revient au bouton) ou clic hors de lui. */
+        var menu = root.querySelector('.langs');
+        document.addEventListener('click', function (e) { if (menu.open && !menu.contains(e.target)) { menu.open = false; } });
+        menu.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && menu.open) { menu.open = false; menu.querySelector('summary').focus(); }
+        });
+    }
+
+    /* ---------------------------------------------------------------------
+       À propos et Contact
+       --------------------------------------------------------------------- */
+
+    function introPage(sur, titre, chapo, suite) {
+        return '<section class="intro" id="main"><div class="wrap intro-page"><p class="eyebrow">' + esc(sur) + '</p><h1>' + esc(titre) + '</h1>' +
+            '<p class="intro-lead">' + esc(chapo) + '</p>' + (suite || '') + '</div></section>';
+    }
 
     function renderAbout() {
-        var hero = '<section class="scene is-hero center" id="main">' +
-            '<span class="glow" aria-hidden="true"></span>' +
-            '<div class="wrap">' +
-            rise('<div class="portrait-wrap" data-tilt><div class="tilt">' +
-                picture('./assets/img/profile.jpg',
-                    ' class="portrait" width="200" height="200" alt="Rodolphe Vandaele" decoding="async"') +
-                '</div></div>') +
-            rise(eyebrow(pick(T.profileEyebrow)) +
-                '<h1><span class="grad">' + esc(pick(V.aboutTitle)) + '</span></h1>' +
-                '<p class="lead wide">' + esc(pick(T.profileBio)) + '</p>', 80) +
-            rise('<div class="btn-row">' +
-                '<a class="btn btn-primary" href="' + withLang('./contact.html') + '">' + esc(pick(T.profileCTA)) + '</a>' +
-                lienPlus(withLang('./index.html'), pick(V.allApps)) +
-                '</div>', 140) +
-            '</div></section>';
+        var hero = '<section class="intro" id="main"><div class="wrap about-grid">' +
+            picture('./assets/img/profile.jpg', ' class="portrait" width="200" height="200" alt="Rodolphe Vandaele" decoding="async"') +
+            '<div><p class="eyebrow">' + esc(pick(T.profileEyebrow)) + '</p><h1>' + esc(pick(V.aboutTitle)) + '</h1>' +
+            '<p class="intro-lead">' + esc(pick(T.profileBio)) + '</p>' +
+            '<div class="btn-row"><a class="btn btn-primary" href="' + withLang('./contact.html') + '">' + esc(pick(T.profileCTA)) + '</a>' +
+            lienPlus(withLang('./index.html'), pick(V.allApps)) + '</div>' + mosaique('about-icons', 44) + '</div></div></section>';
 
-        var gammes = '<section class="scene alt">' +
-            '<div class="wrap">' +
-            rise(eyebrow(pick(T.aboutLinesEyebrow)) + '<h2 class="small">' + esc(pick(T.aboutLinesTitle)) + '</h2>') +
-            '<div class="cards">' +
-            pick(T.aboutLines).map(function (l, i) {
-                return rise(carte(icone(l[0]) + '<h3>' + esc(l[1]) + '</h3><p>' + esc(l[2]) + '</p>'), i * 90);
-            }).join('') +
+        function grille(sur, titre, items, colonnes) {
+            return '<section class="band"><div class="wrap"><header class="shelf-head is-simple"><div><p class="eyebrow">' + esc(sur) + '</p><h2>' + esc(titre) + '</h2></div></header>' +
+                '<div class="cards ' + colonnes + '">' + items.map(function (l) {
+                    return carte(icone(l[0]) + '<h3>' + esc(l[1]) + '</h3><p>' + esc(l[2]) + '</p>');
+                }).join('') + '</div></div></section>';
+        }
+
+        var legal = '<section class="band is-legal" id="mentions"><div class="wrap"><header class="shelf-head is-simple"><div><h2>' + esc(pick(T.legalTitleSite)) + '</h2></div></header>' +
+            '<div class="cards is-three">' +
+            carte('<h3>' + esc(pick(T.legalEditor)) + '</h3><p>' + esc(pick(T.legalEditorText)) + '<br><a class="legal-mail" href="mailto:' + MAIL + '">' + MAIL + '</a></p>') +
+            carte('<h3>' + esc(pick(T.legalHost)) + '</h3><p>' + esc(pick(T.legalHostText)) + '</p>') +
+            carte('<h3>' + esc(pick(T.legalContent)) + '</h3><p>' + esc(pick(T.legalContentText)) + '</p>') +
             '</div></div></section>';
 
-        var methode = '<section class="scene">' +
-            '<div class="wrap">' +
-            rise(eyebrow(pick(T.aboutMethodEyebrow)) + '<h2 class="small">' + esc(pick(T.aboutMethodTitle)) + '</h2>') +
-            '<div class="cards">' +
-            pick(T.aboutMethod).map(function (m, i) {
-                return rise(carte(icone(m[0]) + '<h3>' + esc(m[1]) + '</h3><p>' + esc(m[2]) + '</p>'), (i % 2) * 90);
-            }).join('') +
-            '</div></div></section>';
-
-        /* Section volontairement sobre : une mention légale n'a pas à parler
-           aussi fort qu'un titre de produit. */
-        var legal = '<section class="scene alt is-tight is-legal" id="mentions">' +
-            '<div class="wrap">' +
-            rise('<h2>' + esc(pick(T.legalTitleSite)) + '</h2>') +
-            '<div class="cards">' +
-            rise('<article class="card"><h3>' + esc(pick(T.legalEditor)) + '</h3>' +
-                '<p>' + esc(pick(T.legalEditorText)) + '<br>' +
-                '<a class="legal-mail" href="mailto:' + MAIL + '">' + MAIL + '</a></p></article>') +
-            rise('<article class="card"><h3>' + esc(pick(T.legalHost)) + '</h3>' +
-                '<p>' + esc(pick(T.legalHostText)) + '</p></article>', 80) +
-            rise('<article class="card"><h3>' + esc(pick(T.legalContent)) + '</h3>' +
-                '<p>' + esc(pick(T.legalContentText)) + '</p></article>', 160) +
-            '</div></div></section>';
-
-        return navHTML('v2-about') + '<main>' + hero + gammes + methode + legal + '</main>' + footerHTML();
+        return navHTML('v2-about') + '<main>' + hero +
+            grille(pick(T.aboutLinesEyebrow), pick(T.aboutLinesTitle), pick(T.aboutLines), 'is-two') +
+            grille(pick(T.aboutMethodEyebrow), pick(T.aboutMethodTitle), pick(T.aboutMethod), 'is-two') +
+            legal + '</main>' + footerHTML();
     }
 
-    /* ---------------------------------------------------------------------
-       Contact
-       --------------------------------------------------------------------- */
-
     function renderContact() {
-        var sujets = IOS_ORDER.concat(GAME_ORDER, MAC_ORDER).map(function (k) {
-            var app = APPS[k];
-            return tuileApp(k, {
-                href: app.platform === 'mac' ? app.store : withLang('./' + k + '-support.html'),
-                externe: app.platform === 'mac',
-                sousTitre: pick(T.supportLink),
-                appel: pick(T.iosPage)
-            });
-        }).join('');
+        var objet = encodeURIComponent(pick(T.mailSubject));
+        var hero = introPage(pick(T.contactEyebrow), pick(V.contactTitle), pick(V.contactLead),
+            '<div class="btn-row"><a class="btn btn-primary contact-mail" href="mailto:' + MAIL + '?subject=' + objet + '">' +
+            svg(ICONES.mail, 'btn-glyph') + MAIL + '</a></div>');
 
-        var objet = encodeURIComponent(pick(T.mailSubject) || 'Contact');
-        var hero = '<section class="scene is-hero center" id="main">' +
-            '<span class="glow" aria-hidden="true"></span>' +
-            '<div class="wrap">' +
-            rise(eyebrow(pick(T.contactEyebrow)) +
-                '<h1>' + esc(pick(V.contactTitle)) + '</h1>' +
-                '<p class="lead">' + esc(pick(V.contactLead)) + '</p>') +
-            rise('<div class="btn-row">' +
-                '<a class="btn btn-primary contact-mail" href="mailto:' + MAIL + '?subject=' + objet + '">' +
-                svg(ICONES.mail, 'btn-glyph') + MAIL + '</a>' +
-                '</div>', 100) +
-            '</div></section>';
-
-        var parApp = '<section class="scene alt">' +
-            '<div class="wrap">' +
-            rise('<h2 class="small">' + esc(pick(V.contactPerApp)) + '</h2>' +
-                '<p class="lead wide">' + esc(pick(V.contactPerAppLead)) + '</p>') +
-            rise('<div class="app-tiles is-fifteen" style="margin-top:48px">' + sujets + '</div>', 80) +
-            '</div></section>';
+        var parApp = '<section class="band"><div class="wrap">' +
+            '<header class="shelf-head is-stacked"><div><p class="eyebrow">' + esc(pick(T.supportLink)) + '</p><h2>' + esc(pick(V.contactPerApp)) + '</h2></div>' +
+            '<p class="shelf-lead">' + esc(pick(V.contactPerAppLead)) + '</p></header><div class="catalogue">' +
+            FAMILLES.map(function (f) {
+                return '<div class="link-group"><h3><i class="dot is-' + f[0] + '"></i>' + esc(pick(f[1])) + '</h3>' +
+                    tuiles(f[2], function (k) { return pick(APPS[k].platform === 'mac' ? T.macStore : T.supportLink); },
+                        function (k) { return APPS[k].platform === 'mac' ? APPS[k].store : lienLegal(k, 'support'); }) + '</div>';
+            }).join('') +
+            '</div></div></section>';
 
         return navHTML('v2-contact') + '<main>' + hero + parApp + '</main>' + footerHTML();
     }
@@ -1936,77 +1611,8 @@
 
     var reduceMotion = window.matchMedia
         && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var pointeurFin = window.matchMedia
-        && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
-    /* Chaque bloc marqué `rise` monte à son entrée dans le cadre. Sans
-       observateur, ou si le mouvement est réduit, tout est montré d'emblée :
-       une décoration ne doit jamais coûter le contenu. */
-    function attacheReveals() {
-        var blocs = document.querySelectorAll('.rise');
-        if (!blocs.length) { return; }
-        if (reduceMotion || !('IntersectionObserver' in window)) {
-            document.documentElement.classList.add('no-motion');
-            return;
-        }
-        var io = new IntersectionObserver(function (entrees) {
-            entrees.forEach(function (e) {
-                if (!e.isIntersecting) { return; }
-                io.unobserve(e.target);
-                e.target.classList.add('is-in');
-            });
-        }, { rootMargin: '0px 0px -8% 0px', threshold: 0.06 });
-        blocs.forEach(function (b) { io.observe(b); });
-    }
-
-    /* La barre prend les couleurs d'une section toujours sombre dès qu'elle en
-       recouvre le haut, et gagne son filet dès que la page a défilé. Les
-       écouteurs ne s'installent qu'une fois ; la barre et les sections sont
-       relues à chaque passage, parce qu'un changement de langue les reconstruit. */
-    function attacheNav() {
-        var enAttente = false;
-
-        function maj() {
-            enAttente = false;
-            var nav = document.getElementById('nav');
-            if (!nav) { return; }
-            nav.classList.toggle('is-scrolled', scrollY > 8);
-            var repere = nav.offsetHeight + 2;
-            var sections = document.querySelectorAll('.scene');
-            var sombre = false;
-            for (var i = 0; i < sections.length; i++) {
-                var r = sections[i].getBoundingClientRect();
-                if (r.top <= repere && r.bottom > repere) {
-                    sombre = sections[i].classList.contains('theme-dark');
-                    break;
-                }
-            }
-            nav.classList.toggle('on-dark', sombre);
-
-            var sous = document.querySelector('.subnav');
-            if (sous) {
-                var repereSous = nav.offsetHeight + sous.offsetHeight + 2;
-                var sousSombre = false;
-                for (var j = 0; j < sections.length; j++) {
-                    var rs = sections[j].getBoundingClientRect();
-                    if (rs.top <= repereSous && rs.bottom > repereSous) {
-                        sousSombre = sections[j].classList.contains('theme-dark');
-                        break;
-                    }
-                }
-                sous.classList.toggle('on-dark', sousSombre);
-            }
-        }
-
-        addEventListener('scroll', function () {
-            if (enAttente) { return; }
-            enAttente = true;
-            requestAnimationFrame(maj);
-        }, { passive: true });
-        addEventListener('resize', maj);
-        return maj;
-    }
-
+    /* Le chapitre de l'accueil en cours de lecture s'allume dans la barre des familles. */
     /* Le menu des écrans étroits. Fermé, il est `inert` : ses liens ne
        reçoivent ni le focus ni les lecteurs d'écran. */
     function basculerMenu(ouvrir) {
@@ -2047,134 +1653,24 @@
             var bouton = document.querySelector('.nav-toggle');
             if (bouton) { bouton.focus(); }
         });
-        var large = matchMedia('(min-width: 761px)');
+        var large = matchMedia('(min-width: 834px)');
         var fermer = function (m) { if (m.matches) { basculerMenu(false); } };
         if (large.addEventListener) { large.addEventListener('change', fermer); }
     }
 
-    /**
-     * Inclinaison vers le pointeur.
-     *
-     * Une zone `[data-tilt]` suit le curseur sur deux axes, de quelques degrés :
-     * assez pour donner du relief à une image plate, trop peu pour distraire.
-     * La cible est l'enfant `.tilt`, ou la zone elle-même si elle porte
-     * `data-tilt="self"`. Les valeurs passent par des propriétés personnalisées,
-     * et la feuille de style garde la main sur la composition. Rien ne
-     * s'installe sur un écran tactile : un doigt n'a pas de survol.
-     */
-    function attacheInclinaison() {
-        if (reduceMotion || !pointeurFin) { return; }
-
-        document.querySelectorAll('[data-tilt]').forEach(function (zone) {
-            var cible = zone.getAttribute('data-tilt') === 'self' ? zone : zone.querySelector('.tilt');
-            if (!cible) { return; }
-            var force = cible === zone ? 8 : 14;
-            var attente = false;
-            var dernier = null;
-
-            zone.addEventListener('pointermove', function (e) {
-                dernier = e;
-                if (attente) { return; }
-                attente = true;
-                requestAnimationFrame(function () {
-                    attente = false;
-                    var r = zone.getBoundingClientRect();
-                    var x = (dernier.clientX - r.left) / r.width;
-                    var y = (dernier.clientY - r.top) / r.height;
-                    cible.style.setProperty('--ry', ((x - 0.5) * force).toFixed(2) + 'deg');
-                    cible.style.setProperty('--rx', ((0.5 - y) * force * 0.75).toFixed(2) + 'deg');
-                    cible.style.setProperty('--gx', (x * 100).toFixed(1) + '%');
-                    cible.style.setProperty('--gy', (y * 100).toFixed(1) + '%');
-                    cible.style.setProperty('--lift', '1');
-                });
-            });
-
-            zone.addEventListener('pointerleave', function () {
-                cible.style.setProperty('--rx', '0deg');
-                cible.style.setProperty('--ry', '0deg');
-                cible.style.setProperty('--lift', '0');
-            });
-        });
-    }
-
-    /* L'anneau d'icônes penche vers le pointeur, sur tout le premier écran. */
-    function attacheAnneau() {
-        if (reduceMotion || !pointeurFin) { return; }
-        var anneauEl = document.querySelector('.orbit');
-        var scene = anneauEl && anneauEl.closest('.scene');
-        if (!scene) { return; }
-        var attente = false;
-        var dernier = null;
-        scene.addEventListener('pointermove', function (e) {
-            dernier = e;
-            if (attente) { return; }
-            attente = true;
-            requestAnimationFrame(function () {
-                attente = false;
-                var r = scene.getBoundingClientRect();
-                anneauEl.style.setProperty('--px', ((dernier.clientX - r.left) / r.width - 0.5).toFixed(3));
-                anneauEl.style.setProperty('--py', ((dernier.clientY - r.top) / r.height - 0.5).toFixed(3));
-            });
-        });
-        scene.addEventListener('pointerleave', function () {
-            anneauEl.style.setProperty('--px', '0');
-            anneauEl.style.setProperty('--py', '0');
-        });
-    }
-
-    /* Le filtre de l'index : un groupe à la fois, ou tous. Les groupes écartés
-       prennent `hidden`, et sortent donc aussi de la lecture d'écran. */
-    function attacheFiltre() {
-        var boutons = document.querySelectorAll('.segmented [data-filter]');
-        boutons.forEach(function (b) {
-            b.addEventListener('click', function () {
-                var f = b.getAttribute('data-filter');
-                boutons.forEach(function (o) { o.setAttribute('aria-pressed', String(o === b)); });
-                document.querySelectorAll('.app-group[data-group]').forEach(function (g) {
-                    g.hidden = f !== 'all' && g.getAttribute('data-group') !== f;
-                });
-            });
-        });
-    }
-
-    /* Les flèches de la bande de captures : un écran de défilement par clic,
-       et chacune s'éteint en butée. Elles agissent sur la bande visible, que le
-       sélecteur d'appareil choisit. */
-    function attacheBandes() {
-        document.querySelectorAll('.rail-nav').forEach(function (nav) {
-            var section = nav.closest('.scene');
-            var bandes = section.querySelectorAll('.gallery.is-rail');
-            var fleches = nav.querySelectorAll('.rail-btn');
-            var appareils = section.querySelectorAll('button[data-device]');
-            function visible() {
-                for (var i = 0; i < bandes.length; i++) { if (!bandes[i].hidden) { return bandes[i]; } }
-                return bandes[0];
-            }
-            function maj() {
-                var bande = visible();
-                var fin = bande.scrollWidth - bande.clientWidth - 2;
-                fleches.forEach(function (f) {
-                    var avant = f.getAttribute('data-dir') === '-1';
-                    f.disabled = avant ? bande.scrollLeft <= 2 : bande.scrollLeft >= fin;
-                });
-            }
-            fleches.forEach(function (f) {
-                f.addEventListener('click', function () {
-                    var bande = visible();
-                    bande.scrollBy({
-                        left: Number(f.getAttribute('data-dir')) * bande.clientWidth * 0.8,
-                        behavior: reduceMotion ? 'auto' : 'smooth'
-                    });
-                });
-            });
+    /* Le sélecteur d'appareil des captures : il montre la grille choisie. Les flèches passent d'un appareil à
+       l'autre, comme dans un contrôle segmenté natif. */
+    function attacheAppareils() {
+        document.querySelectorAll('.sec-shots .segmented').forEach(function (groupe) {
+            var section = groupe.closest('.band');
+            var grilles = section.querySelectorAll('.shots');
+            var appareils = groupe.querySelectorAll('button[data-device]');
             appareils.forEach(function (b, i) {
                 b.addEventListener('click', function () {
                     var choix = b.getAttribute('data-device');
                     appareils.forEach(function (o) { o.setAttribute('aria-pressed', String(o === b)); });
-                    bandes.forEach(function (g) { g.hidden = g.getAttribute('data-device') !== choix; });
-                    maj();
+                    grilles.forEach(function (g) { g.hidden = g.getAttribute('data-device') !== choix; });
                 });
-                /* Les flèches passent d'un appareil à l'autre, comme dans un contrôle segmenté natif. */
                 b.addEventListener('keydown', function (e) {
                     var pas = e.key === 'ArrowRight' ? 1 : (e.key === 'ArrowLeft' ? -1 : 0);
                     if (!pas) { return; }
@@ -2184,11 +1680,6 @@
                     cible.click();
                 });
             });
-            bandes.forEach(function (bande) {
-                bande.addEventListener('scroll', function () { requestAnimationFrame(maj); }, { passive: true });
-            });
-            addEventListener('resize', maj);
-            maj();
         });
     }
 
@@ -2226,45 +1717,42 @@
         });
     }
 
+
     /* ---------------------------------------------------------------------
        Rendu
        --------------------------------------------------------------------- */
 
-    var majNav = null;
+    var menuGlobal = false;
 
     function render() {
         var root = document.getElementById('site-root');
         if (!root) { return; }
         var page = document.body.getAttribute('data-page');
         var appKey = document.body.getAttribute('data-app');
-        document.documentElement.lang = lang;
+        var legale = (page === 'privacy' || page === 'support') && AVEC_LEGAL.indexOf(appKey) !== -1;
 
-        var html;
-        if (page === 'v2-home') { html = renderHome(); }
-        else if (page === 'v2-app' && APPS[appKey]) { html = renderApp(appKey); }
-        else if (page === 'v2-contact') { html = renderContact(); }
-        else if (page === 'v2-about') { html = renderAbout(); }
-        else { return; }
-
-        /* `.js` avant le contenu : les blocs à révéler naissent masqués, au lieu
-           d'apparaître puis de disparaître. */
-        document.documentElement.classList.add('js');
-        document.body.classList.remove('menu-open');
-        root.innerHTML = html;
-
-        attacheReveals();
-        if (!majNav) {
-            majNav = attacheNav();
-            attacheMenuGlobal();
+        if (legale) {
+            /* Sans le texte de site-pages.js (script absent ou en erreur), le repli HTML reste affiché. */
+            if (!root.querySelector('main .page-card')) { return; }
+            renderLegal(appKey, page, root);
+        } else {
+            var html;
+            if (page === 'v2-home') { html = renderHome(); }
+            else if (page === 'v2-app' && APPS[appKey]) { html = renderApp(appKey); }
+            else if (page === 'v2-contact') { html = renderContact(); }
+            else if (page === 'v2-about') { html = renderAbout(); }
+            else { return; }
+            document.documentElement.lang = lang;
+            document.body.classList.remove('menu-open');
+            root.innerHTML = html;
+            attacheLangue();
         }
-        majNav();
+
+        if (!menuGlobal) { menuGlobal = true; attacheMenuGlobal(); }
         attacheMenu();
-        attacheInclinaison();
-        attacheAnneau();
-        attacheFiltre();
-        attacheBandes();
+        attacheAppareils();
         attacheCompteurs();
-        attacheLangue();
+        attacheFiltres();
     }
 
     render();

@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <!-- Servi par GitHub Pages : aucun en-tête personnalisé possible, la
          politique passe donc par une balise. Elle doit précéder tout
          chargement de ressource. Le hachage sha256 autorise le seul script en
@@ -23,31 +23,39 @@
     <link rel="stylesheet" href="./assets/site.css">
     <style>
         /* Page autonome : elle ne passe pas par le moteur, pour rester lisible
-           meme si assets/site.js echoue. Elle reprend les jetons de site.css,
-           et donc le theme clair ou sombre du systeme. */
+           meme si assets/site.js echoue. Elle reprend les jetons sombres de
+           site.css (`theme-dark`) et sa lueur (`aurora`). */
         .nf {
+            position: relative;
+            overflow: clip;
+            background: var(--bg);
+            color: var(--ink);
             min-height: 100svh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             gap: 18px;
-            padding: 40px 22px;
+            padding: 40px var(--pad-r) 40px var(--pad-l);
             text-align: center;
         }
         .nf-code {
             font-family: var(--font-display);
-            font-size: clamp(88px, 22vw, 180px);
-            font-weight: 800;
+            font-size: clamp(120px, 30vw, 260px);
+            font-weight: 700;
             line-height: 0.95;
             letter-spacing: -0.05em;
         }
         .nf h1 {
             font-family: var(--font-display);
-            font-size: clamp(26px, 5vw, 40px);
-            letter-spacing: -0.025em;
+            font-size: clamp(32px, 6vw, 64px);
+            font-weight: 700;
+            line-height: 1.08;
+            letter-spacing: -0.03em;
         }
-        .nf p { max-width: 46ch; color: var(--ink-2); }
+        .nf > * { position: relative; }
+        .nf .aurora { position: absolute; --accent: #7a4cf0; --accent-2: #f26b3a; }
+        .nf p { max-width: 46ch; color: var(--ink-2); text-wrap: pretty; }
         .nf-en { font-size: 0.94em; }
         .nf-links {
             display: flex;
@@ -62,12 +70,14 @@
             align-items: center;
             min-height: 44px;
             padding: 0 18px;
-            border-radius: 100px;
+            border-radius: 980px;
             background: color-mix(in srgb, var(--ink) 7%, transparent);
             font-size: 15px;
         }
         .nf-links a:hover { background: color-mix(in srgb, var(--ink) 12%, transparent); }
         .nf-links a.is-primary { background: var(--blue); color: #fff; }
+        .nf-links a:focus-visible { outline: 3px solid var(--link); outline-offset: 3px; }
+        .nf-links a.is-primary:hover { background: var(--blue-hover); }
     </style>
     <!-- Préchargement au survol : la page cible est construite avant le clic,
          la transition de vue part alors d'un document déjà rendu.
@@ -78,7 +88,8 @@
     </script>
 </head>
 <body>
-    <main class="nf">
+    <main class="nf theme-dark">
+        <span class="aurora" aria-hidden="true"></span>
         <span class="nf-code grad" aria-hidden="true">404</span>
         <h1>Cette page n'existe pas.</h1>
         <p>Le lien est peut-être ancien, ou la page a été déplacée. Tout le reste
@@ -93,6 +104,7 @@
             <a href="/defibfrance.html">DefibFrance</a>
             <a href="/dvffrance.html">DVFFrance</a>
             <a href="/telora.html">Telora</a>
+            <a href="/telzo.html">Telzo</a>
             <a href="/trouchromatique.html">Trou Chromatique</a>
             <a href="/mongloup.html">Mon Gloup</a>
             <a href="/chromafight.html">ChromaFight</a>
