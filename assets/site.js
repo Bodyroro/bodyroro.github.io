@@ -370,7 +370,7 @@
                     'Nombre de ventes par ann\u00e9e : le volume se retourne avant le prix, et un march\u00e9 qui perd ses transactions sans baisser est un march\u00e9 bloqu\u00e9.',
                     'Comparaison \u00e0 deux \u00e9chelles : \u00e9cart au d\u00e9partement et \u00e9cart \u00e0 la France. Le premier dit ce que vaut la commune, le second ce que vaut la r\u00e9gion.',
                     'Fiche de quartier : \u00e9coles avec taux de r\u00e9ussite et valeur ajout\u00e9e, commerces nomm\u00e9s, lignes et arr\u00eats, risques d\u00e9clar\u00e9s, catastrophes reconnues, radon, air et sols.',
-                    'Loyers d\u2019annonce, raccordement \u00e0 la fibre, couverture mobile, diagnostics \u00e9nerg\u00e9tiques de l\u2019adresse exacte et rendement locatif brut. Aucun compte, aucun achat int\u00e9gr\u00e9.'
+                    'Loyers d\u2019annonce, raccordement \u00e0 la fibre, couverture mobile, diagnostics \u00e9nerg\u00e9tiques de l\u2019adresse exacte et rendement locatif brut. Aucun compte.'
                 ],
                 en: [
                     'A map at three scales: one pill per town across France, then every recorded sale at its address, then the cadastral plan with sold parcels highlighted.',
@@ -378,11 +378,11 @@
                     'Sales volume per year: volume turns before price, and a market losing transactions without falling is a stalled market.',
                     'Two benchmarks: the gap to the department and the gap to France. The first tells you what the town is worth, the second what the region is worth.',
                     'Neighbourhood profile: schools with pass rates and value added, named shops, lines and stops, declared hazards, recognised disasters, radon, air and soil.',
-                    'Advertised rents, fibre broadband and mobile coverage, energy certificates for the exact address and gross rental yield. No account, no in-app purchase.'
+                    'Advertised rents, fibre broadband and mobile coverage, energy certificates for the exact address and gross rental yield. No account.'
                 ]
             },
             sources: { fr: 'Demandes de valeurs fonci\u00e8res de la Direction g\u00e9n\u00e9rale des finances publiques, g\u00e9olocalis\u00e9es par Etalab. Carte des loyers du minist\u00e8re du Logement, diagnostics de l\u2019ADEME, risques de G\u00e9orisques, plan cadastral de l\u2019IGN, annuaire et r\u00e9sultats de l\u2019\u00c9ducation nationale, faits enregistr\u00e9s du minist\u00e8re de l\u2019Int\u00e9rieur, d\u00e9coupage IRIS de l\u2019INSEE et OpenStreetMap.', en: 'Property transfer records from the French public finances directorate, geocoded by Etalab. Rent map from the Ministry of Housing, ADEME energy certificates, G\u00e9orisques hazards, IGN cadastral plan, schools directory and results from the Ministry of Education, recorded offences from the Interior Ministry, INSEE IRIS boundaries and OpenStreetMap.' },
-            business: { fr: 'Application 100 % gratuite, financ\u00e9e par la publicit\u00e9. Aucun achat int\u00e9gr\u00e9, aucune donn\u00e9e bancaire dans l\u2019app.', en: 'Fully free app, funded by ads. No in-app purchases, no payment card data in the app.' },
+            business: { fr: 'Application gratuite, financée par la publicité. Un abonnement facultatif « Sans pub » (0,99 € par mois ou 4,99 € par an) retire toute publicité tant qu’il est actif ; une vidéo récompensée offre aussi 6 h sans publicité. Géré par StoreKit et votre compte Apple : aucune donnée bancaire dans l’app.', en: 'Free app, funded by ads. An optional “Ad-Free” subscription (€0.99 per month or €4.99 per year) removes every ad while it is active; a rewarded video also gives 6 hours ad-free. Handled by StoreKit and your Apple account: no payment card data in the app.' },
             /* Visuels de la fiche App Store (Outils/Bodyroro.github.io/VisuelsApps.mjs puis CapturesAppStore.mjs), dans leur ordre. */
             shotTops: ['#1e4d38', '#072e1e', '#23553e', '#082e1f', '#21513b'],
             storeShots: {
