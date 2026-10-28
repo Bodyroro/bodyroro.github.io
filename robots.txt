@@ -1,4 +1,4 @@
-# bodyroro.github.io — site statique, tout est public et indexable.
+# bodyroro.github.io : site statique, tout est public et indexable.
 # Aucune zone privée : la règle générale suffirait. Les robots des moteurs de
 # réponse par IA sont nommés explicitement parce que plusieurs d'entre eux
 # traitent l'absence de mention comme un refus.

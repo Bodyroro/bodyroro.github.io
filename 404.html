@@ -23,40 +23,42 @@
     <link rel="stylesheet" href="./assets/site.css">
     <style>
         /* Page autonome : elle ne passe pas par le moteur, pour rester lisible
-           meme si assets/site.js echoue. Elle reprend les jetons sombres de
-           site.css (`theme-dark`) et sa lueur (`aurora`). */
+           meme si assets/site.js echoue. Jetons sombres de site.css
+           (`is-dark-zone`), halo et trame de points des premiers ecrans. */
         .nf {
             position: relative;
+            isolation: isolate;
             overflow: clip;
-            background: var(--bg);
-            color: var(--ink);
             min-height: 100svh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             gap: 18px;
-            padding: 40px var(--pad-r) 40px var(--pad-l);
+            padding: 48px var(--gutter);
             text-align: center;
         }
+        .nf::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            background:
+                radial-gradient(50% 45% at 30% 0%, rgb(41 151 255 / .36), transparent 70%),
+                radial-gradient(40% 40% at 75% 12%, rgb(168 85 247 / .32), transparent 70%),
+                radial-gradient(45% 35% at 50% 100%, rgb(255 107 107 / .18), transparent 70%),
+                radial-gradient(rgb(255 255 255 / .1) 1px, transparent 1.4px) 0 0 / 22px 22px,
+                #000;
+        }
         .nf-code {
-            font-family: var(--font-display);
             font-size: clamp(120px, 30vw, 260px);
             font-weight: 700;
-            line-height: 0.95;
-            letter-spacing: -0.05em;
+            line-height: .95;
+            letter-spacing: -.05em;
         }
-        .nf h1 {
-            font-family: var(--font-display);
-            font-size: clamp(32px, 6vw, 64px);
-            font-weight: 700;
-            line-height: 1.08;
-            letter-spacing: -0.03em;
-        }
-        .nf > * { position: relative; }
-        .nf .aurora { position: absolute; --accent: #7a4cf0; --accent-2: #f26b3a; }
-        .nf p { max-width: 46ch; color: var(--ink-2); text-wrap: pretty; }
-        .nf-en { font-size: 0.94em; }
+        .nf h1 { font-size: clamp(32px, 6vw, 64px); }
+        .nf p { max-width: 46ch; color: var(--ink-2); }
+        .nf-en { font-size: .94em; }
         .nf-links {
             display: flex;
             flex-wrap: wrap;
@@ -70,14 +72,17 @@
             align-items: center;
             min-height: 44px;
             padding: 0 18px;
-            border-radius: 980px;
-            background: color-mix(in srgb, var(--ink) 7%, transparent);
+            border-radius: 999px;
+            background: rgb(255 255 255 / .08);
+            box-shadow: inset 0 0 0 1px rgb(255 255 255 / .1);
+            color: var(--ink);
             font-size: 15px;
+            text-decoration: none;
+            transition: background-color .2s;
         }
-        .nf-links a:hover { background: color-mix(in srgb, var(--ink) 12%, transparent); }
-        .nf-links a.is-primary { background: var(--blue); color: #fff; }
-        .nf-links a:focus-visible { outline: 3px solid var(--link); outline-offset: 3px; }
-        .nf-links a.is-primary:hover { background: var(--blue-hover); }
+        .nf-links a:hover { background: rgb(255 255 255 / .16); }
+        .nf-links a.is-primary { background: var(--cta); box-shadow: none; color: #fff; }
+        .nf-links a.is-primary:hover { background: #0077ed; }
     </style>
     <!-- Préchargement au survol : la page cible est construite avant le clic,
          la transition de vue part alors d'un document déjà rendu.
@@ -88,8 +93,7 @@
     </script>
 </head>
 <body>
-    <main class="nf theme-dark">
-        <span class="aurora" aria-hidden="true"></span>
+    <main class="nf is-dark-zone">
         <span class="nf-code grad" aria-hidden="true">404</span>
         <h1>Cette page n'existe pas.</h1>
         <p>Le lien est peut-être ancien, ou la page a été déplacée. Tout le reste

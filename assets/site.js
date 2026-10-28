@@ -1,11 +1,11 @@
 /* ==========================================================================
-   site.js : moteur de la vitrine
+   site.js : moteur de la vitrine V2
    ==========================================================================
-   Rend l'accueil (catalogue de tuiles filtrable par famille, avec recherche),
-   les pages produit, les pages Confidentialité et Assistance du site, À propos
-   et Contact, en français et en anglais. Un seul design, celui du catalogue :
-   toutes les fiches suivent le même gabarit en grilles de cartes, seules
-   l'icône et la couleur d'accent de la tuile sont propres au produit.
+   Rend l'accueil (scène 3D d'appareils, anneau d'icônes, un chapitre par
+   famille, catalogue filtrable), les pages produit (appareils mis en scène,
+   galerie par appareil : iPhone, iPad, iPhone Duo, Apple Watch, Apple TV),
+   les pages Confidentialité et Assistance du site, À propos et Contact, en
+   français et en anglais.
 
    Les pages légales lues par les applications (<app>-privacy.html,
    <app>-support.html) ne passent pas par ici : elles gardent styles.css et
@@ -21,7 +21,7 @@
     var GITHUB_MACTUNER = 'https://github.com/Bodyroro/MacTuner';
     var GITHUB_DNSTUNER = 'https://github.com/Bodyroro/DNSTuner';
     var STORE = 'https://apps.apple.com/fr/app/';
-    /* Page développeur : elle réunit les cinq applications iPhone. Le badge
+    /* Page développeur : elle réunit toutes les applications et tous les jeux. Le badge
        d'Apple doit conduire à l'App Store, pas à une section de ce site. */
     var STORE_DEV = 'https://apps.apple.com/fr/developer/rodolphe-vandaele/id1884012478';
     /* Fiches des jeux, sous la forme courte sans pays : l'App Store ouvre
@@ -31,6 +31,7 @@
     var STORE_CF = 'https://apps.apple.com/app/id6819280350';
     var STORE_CT = 'https://apps.apple.com/app/id6822791450';
     var STORE_CFM = 'https://apps.apple.com/app/id6824902491';
+    var STORE_CC = 'https://apps.apple.com/app/id6825533556';
     /* Les applications qui ont aussi un site : le bouton « version web » n'apparaît
        que pour celles-là. */
     var SITES_WEB = {
@@ -68,19 +69,14 @@
     }
     function pick(o) { return o[lang] !== undefined ? o[lang] : o.fr; }
 
+
     /* ---------------------------------------------------------------------
        Images
 
-       Chaque image du site existe en trois formats : AVIF, WebP, et l'original
-       PNG ou JPEG. Le navigateur retient le premier qu'il sait décoder, et ne
-       télécharge que celui-là. L'original reste en place : c'est le repli des
-       navigateurs anciens, et c'est lui que lisent les aperçus des réseaux
-       sociaux, qui ne négocient pas de format.
-
-       <picture> plutôt que l'attribut `srcset` d'<img> : ici les variantes sont
-       des formats, pas des tailles, et seul <source type=""> sait exprimer ça.
-       Le CSS pose `picture { display: contents }` pour que l'enveloppe ne
-       s'intercale pas dans les mises en page : l'<img> reste la boîte.
+       Les icônes existent en AVIF, WebP et dans leur format d'origine, PNG ou
+       JPEG : le navigateur retient le premier qu'il sait décoder. L'original
+       reste le repli des navigateurs anciens et des aperçus de réseaux sociaux.
+       `picture { display: contents }` : l'<img> reste la boîte.
        --------------------------------------------------------------------- */
     function picture(src, attrs) {
         var base = src.replace(/\.(png|jpe?g)$/i, '');
@@ -91,29 +87,31 @@
             '</picture>';
     }
 
-    /* Les visuels des jeux (captures App Store) et des apps (visuels de leur fiche, CapturesAppStore.mjs),
-       dans la langue de la page. Chacun existe en 360 et 720 pixels de large, en
-       AVIF et en WebP, plus un JPEG de 540 pour les navigateurs qui ne lisent ni
-       l'un ni l'autre. `sizes` dit au navigateur la largeur affichée : il choisit
-       le fichier selon la densité de l'écran. */
-    var FORMATS_CAPTURES = {
-        iphone: ['-', [360, 720, 540, 1320, 2868]],
-        ipad: ['-ipad-', [640, 1280, 960, 2752, 2064]],
-        ipadv: ['-ipad-', [480, 960, 720, 1536, 2048]],
-        paysage: ['-', [640, 1280, 960, 2868, 1320]],
-        tv: ['-tv-', [640, 1280, 960, 1920, 1080]]
+    /* Captures et écrans de assets/img/shots (CapturesAppStore.mjs pour les apps, Marque/CapturesSite.mjs pour les
+       jeux), dans la langue de la page : [préfixe, petite largeur, grande, JPEG de repli, largeur et hauteur réelles].
+       `sizes` dit la largeur affichée, le navigateur choisit le fichier selon la densité de l'écran. */
+    var FORMATS = {
+        iphone: ['-', 360, 720, 540, 1320, 2868],
+        paysage: ['-', 640, 1280, 960, 2868, 1320],
+        ipad: ['-ipad-', 480, 960, 720, 2064, 2752],
+        ipadl: ['-ipad-', 640, 1280, 960, 2752, 2064],
+        duo: ['-duo-', 360, 720, 540, 1398, 2034],
+        duoi: ['-duoi-', 480, 960, 720, 2007, 2853],
+        watch: ['-watch-', 208, 416, 312, 416, 496],
+        tv: ['-tv-', 640, 1280, 960, 1920, 1080]
     };
 
-    function captureJeu(cle, n, alt, paresseux, sizes, appareil) {
-        var f = FORMATS_CAPTURES[appareil || 'iphone'];
+    /* `n` : rang du visuel, ou 'ecran' pour l'écran brut montré dans un appareil dessiné. `charge` : true pour
+       l'image du premier écran (priorité haute), sinon chargement différé. */
+    function capture(cle, format, n, alt, sizes, charge) {
+        var f = FORMATS[format];
         var base = './assets/img/shots/' + cle + f[0] + lang + '-' + n;
-        var t = f[1];
-        function jeu(ext) { return base + '-' + t[0] + '.' + ext + ' ' + t[0] + 'w, ' + base + '-' + t[1] + '.' + ext + ' ' + t[1] + 'w'; }
+        function jeu(ext) { return base + '-' + f[1] + '.' + ext + ' ' + f[1] + 'w, ' + base + '-' + f[2] + '.' + ext + ' ' + f[2] + 'w'; }
         return '<picture>' +
             '<source type="image/avif" srcset="' + jeu('avif') + '" sizes="' + sizes + '">' +
             '<source type="image/webp" srcset="' + jeu('webp') + '" sizes="' + sizes + '">' +
-            '<img src="' + base + '-' + t[2] + '.jpg" width="' + t[3] + '" height="' + t[4] + '" alt="' + esc(alt) + '"' +
-            (paresseux === true ? ' loading="lazy"' : paresseux === false ? ' fetchpriority="high"' : '') + ' decoding="async">' +
+            '<img src="' + base + '-' + f[3] + '.jpg" width="' + f[4] + '" height="' + f[5] + '" alt="' + esc(alt) + '"' +
+            (charge ? ' fetchpriority="high"' : ' loading="lazy"') + ' decoding="async">' +
             '</picture>';
     }
 
@@ -139,21 +137,20 @@
         iosTitle: { fr: 'Des applications utiles au quotidien.', en: 'Apps for everyday life.' },
         macTitle: { fr: 'Des utilitaires pour votre Mac Apple Silicon.', en: 'Utilities for your Apple Silicon Mac.' },
         macLead: {
-            fr: 'Contrairement aux apps iPhone, celles-ci ne sont pas limitées à la France : elles fonctionnent sur tous les Mac Apple Silicon. Applications natives, libres et open source, chacune sur un sujet précis, sans compte, sans publicité et sans dépendance.',
-            en: 'Unlike the iPhone apps, these are not tied to France: they run on any Apple Silicon Mac. Native, free and open source apps, each on one precise subject, with no account, no ads and no dependency.'
+            fr: 'Elles fonctionnent sur tous les Mac Apple Silicon, sans compte ni publicité. Applications libres et open source, chacune sur un sujet précis.',
+            en: 'They run on any Apple Silicon Mac, with no account and no ads. Free, open-source apps, each on one precise subject.'
         },
         macStore: { fr: 'Sur GitHub', en: 'On GitHub' },
-        macPreview: { fr: 'La fenêtre', en: 'The window' },
         valuesEyebrow: { fr: 'Engagements', en: 'Commitments' },
         valuesTitle: { fr: 'Les mêmes principes sur iPhone et sur Mac.', en: 'The same principles on iPhone and Mac.' },
         values: {
             fr: [
-                ['shield', 'Vie privée locale', 'Aucun compte, aucun traceur. Vos favoris et réglages restent sur votre appareil.'],
+                ['shield', 'Vie privée locale', 'Aucun compte à créer. Favoris et réglages restent sur votre appareil ; seules la publicité (avec votre accord), les achats et iCloud ou Game Center utilisent le réseau.'],
                 ['map', 'Données publiques', 'Sources ouvertes et officielles, mises en cache pour fonctionner hors connexion.'],
                 ['heart', 'Support direct', 'Un développeur indépendant qui répond personnellement à chaque message.']
             ],
             en: [
-                ['shield', 'Local privacy', 'No account, no trackers. Your favorites and settings stay on your device.'],
+                ['shield', 'Local privacy', 'No account to create. Favorites and settings stay on your device; only advertising (with your consent), purchases, and iCloud or Game Center use the network.'],
                 ['map', 'Public data', 'Open, official sources, cached so everything keeps working offline.'],
                 ['heart', 'Direct support', 'An independent developer who answers every message personally.']
             ]
@@ -161,13 +158,12 @@
 
         profileEyebrow: { fr: 'À propos', en: 'About' },
         profileBio: {
-            fr: 'Développeur autodidacte basé en France, je construis des apps simples, utiles et respectueuses de la vie privée, en privilégiant SwiftUI, MapKit, StoreKit, WidgetKit et les composants natifs Apple pour une expérience cohérente.',
-            en: 'Self taught developer based in France, I build simple, useful, privacy minded apps, favoring SwiftUI, MapKit, StoreKit, WidgetKit and native Apple components for a coherent experience.'
+            fr: 'Développeur autodidacte basé en France, je construis des jeux et des apps simples, utiles et respectueuses de la vie privée, en Swift et SwiftUI, avec les frameworks d’Apple d’abord pour une expérience cohérente.',
+            en: 'Self-taught developer based in France, I build games and simple, useful, privacy-minded apps in Swift and SwiftUI, with Apple’s frameworks first for a coherent experience.'
         },
         profileCTA: { fr: 'Me contacter', en: 'Get in touch' },
-        footerLine: { fr: 'Sur iPhone et iPad, des jeux avec Gloup et les services publics français du quotidien. Sur Mac, des utilitaires libres qui font une chose et la font bien.', en: 'On iPhone and iPad, games starring Gloup and everyday French public services. On Mac, free utilities that do one thing and do it well.' },
+        footerLine: { fr: 'Des jeux avec Gloup, des apps de données publiques pour la France, des outils pour le salon (Telzo, Telora) et la photo (Netta) sur iPhone et iPad, et des utilitaires libres pour Mac.', en: 'Games starring Gloup, apps built on French public data, tools for the living room (Telzo, Telora) and photos (Netta) on iPhone and iPad, and free utilities for Mac.' },
         footerSite: { fr: 'Site', en: 'Site' },
-        footerApps: { fr: 'Apps iPhone', en: 'iPhone apps' },
         footerTagline: { fr: 'Conçu et développé en France.', en: 'Designed and built in France.' },
         footerStore: { fr: 'Toutes les applications sur l\u2019App Store', en: 'All apps on the App Store' },
         footerPartners: { fr: 'Partenaire', en: 'Partner' },
@@ -175,10 +171,9 @@
         supportLink: { fr: 'Assistance', en: 'Support' },
         privacyLink: { fr: 'Confidentialité', en: 'Privacy' },
         featEyebrow: { fr: 'Fonctionnalités', en: 'Features' },
-        shotsEyebrow: { fr: 'Captures réelles', en: 'Real screenshots' },
-        dataEyebrow: { fr: 'Données & confidentialité', en: 'Data & privacy' },
+        dataEyebrow: { fr: 'Données et confidentialité', en: 'Data & privacy' },
         dataSources: { fr: 'Sources', en: 'Sources' },
-        dataBusiness: { fr: 'Publicité & achats', en: 'Ads & purchases' },
+        dataBusiness: { fr: 'Publicité et achats', en: 'Ads & purchases' },
         contactEyebrow: { fr: 'Contact', en: 'Contact' },
         mailSubject: { fr: 'Support', en: 'Support' },
         /* Mentions légales. La loi pour la confiance dans l'économie numérique
@@ -202,24 +197,36 @@
             en: 'App screenshots and icons belong to their author. Trademarks mentioned belong to their respective owners.'
         },
 
-        /* Les deux gammes n'ont ni le même public, ni le même mode de
+        /* Les cinq familles n'ont ni le même public, ni le même mode de
            distribution. La page À propos est l'endroit où le dire une fois,
            clairement, plutôt que de le laisser deviner app par app. */
-        aboutLinesEyebrow: { fr: 'Deux gammes', en: 'Two ranges' },
-        aboutLinesTitle: { fr: 'Deux publics, deux façons de distribuer.',
-                           en: 'Two audiences, two ways of shipping.' },
+        aboutLinesEyebrow: { fr: 'Cinq familles', en: 'Five families' },
+        aboutLinesTitle: { fr: 'Jeux, données publiques, salon, photo et Mac.',
+                           en: 'Games, public data, living room, photos and Mac.' },
         aboutLines: {
             fr: [
-                ['phone', 'iPhone, pour la France',
-                 'Des applications gratuites, dont des services bâtis sur les jeux de données publics français : carburants, bornes de recharge, toilettes, défibrillateurs et prix de l’immobilier. Distribuées sur l’App Store, financées par une publicité discrète, sans compte ni inscription.'],
+                ['star', 'Jeux avec Gloup',
+                 'Six jeux pour iPhone et iPad avec Gloup, la petite créature aux grands yeux : aventure, compagnon virtuel, combat, déduction, ferme et RPG. Gratuits, financés par la publicité, avec des achats facultatifs dans quatre d’entre eux.'],
+                ['map', 'Données publiques, pour la France',
+                 'Des applications bâties sur les jeux de données publics français : carburants, bornes de recharge, toilettes, défibrillateurs et prix de l’immobilier. Distribuées sur l’App Store, financées par une publicité discrète, sans compte ni inscription.'],
+                ['phone', 'Pour le salon',
+                 'Telzo transforme l’iPhone en télécommande universelle par Wi-Fi, gratuite avec publicité. Telora lit vos films, séries et chaînes depuis vos propres sources, sur iPhone, iPad et Apple TV, avec un abonnement et sans publicité.'],
+                ['shield', 'Pour vos photos',
+                 'Netta trie et nettoie la photothèque de l’iPhone et de l’iPad : doublons, photos floues, captures d’écran. L’analyse se fait sur l’appareil, sans compte. Gratuite, financée par la publicité.'],
                 ['laptop', 'Mac, en open source',
-                 'Des utilitaires natifs pour Mac Apple Silicon, chacun sur un sujet précis. Publiés sous licence MIT sur GitHub, code complet consultable, sans publicité ni dépendance tierce.']
+                 'Des utilitaires pour Mac Apple Silicon, chacun sur un sujet précis. Publiés sous licence MIT sur GitHub, code complet consultable et à compiler soi-même, sans publicité.']
             ],
             en: [
-                ['phone', 'iPhone, built for France',
-                 'Free apps, including services built on French public datasets: fuel prices, EV chargers, public toilets, defibrillators and property prices. Shipped on the App Store, funded by discreet advertising, with no account or sign-up.'],
+                ['star', 'Games starring Gloup',
+                 'Six games for iPhone and iPad starring Gloup, the little creature with big eyes: adventure, virtual pet, battle, deduction, farming and RPG. Free, funded by advertising, with optional purchases in four of them.'],
+                ['map', 'Public data, built for France',
+                 'Apps built on French public datasets: fuel prices, EV chargers, public toilets, defibrillators and property prices. Shipped on the App Store, funded by discreet advertising, with no account or sign-up.'],
+                ['phone', 'For the living room',
+                 'Telzo turns the iPhone into a universal Wi-Fi remote, free with ads. Telora plays your movies, shows and channels from your own sources, on iPhone, iPad and Apple TV, with a subscription and no ads.'],
+                ['shield', 'For your photos',
+                 'Netta sorts and cleans the photo library of the iPhone and iPad: duplicates, blurry photos, screenshots. Analysis happens on the device, with no account. Free, funded by advertising.'],
                 ['laptop', 'Mac, open source',
-                 'Native utilities for Apple Silicon Macs, each on one precise subject. Published under the MIT licence on GitHub, full source readable, with no ads and no third-party dependency.']
+                 'Utilities for Apple Silicon Macs, each on one precise subject. Published under the MIT license on GitHub, full source readable and yours to build, with no ads.']
             ]
         },
 
@@ -229,22 +236,22 @@
         aboutMethodTitle: { fr: 'Comment tout cela est fabriqué.', en: 'How all of it is built.' },
         aboutMethod: {
             fr: [
-                ['gear', 'Natif, sans framework tiers',
-                 'Tout est écrit en Swift et SwiftUI avec les frameworks d’Apple. Moins de dépendances, et des applications prêtes dès la sortie d’une nouvelle version du système.'],
+                ['gear', 'Swift, SwiftUI et frameworks d’Apple',
+                 'Les apps sont écrites en Swift et SwiftUI, avec les frameworks d’Apple d’abord. Seules dépendances : Google AdMob pour la publicité, et VLC dans Telora. Les jeux sont des moteurs web (three.js) dans une enveloppe iOS native.'],
                 ['book', 'Des sources nommées',
-                 'Chaque donnée affichée vient d’un jeu de données officiel, cité sur la page de l’application concernée. Rien n’est recopié d’une source que je ne peux pas montrer.'],
-                ['shield', 'Rien ne quitte l’appareil',
-                 'Favoris, historique et réglages restent en local. Aucun compte à créer, aucun profil à remplir, aucun identifiant à retenir.'],
+                 'Les sources sont citées sur la page de chaque application, y compris communautaires (OpenStreetMap). Rien n’est recopié d’une source que je ne peux pas montrer.'],
+                ['shield', 'Vie privée locale',
+                 'Aucun compte à créer. Favoris, historique et réglages restent sur votre appareil ; seules la publicité (avec votre accord), les achats et iCloud ou Game Center utilisent le réseau.'],
                 ['mail', 'Une seule personne répond',
                  'Le support, c’est moi. Chaque message reçoit une réponse, et les corrections partent dans la mise à jour suivante.']
             ],
             en: [
-                ['gear', 'Native, no third-party frameworks',
-                 'Everything is written in Swift and SwiftUI using Apple frameworks. Fewer dependencies, and apps that are ready the day a new system version ships.'],
+                ['gear', 'Swift, SwiftUI and Apple frameworks',
+                 'The apps are written in Swift and SwiftUI, with Apple’s frameworks first. The only dependencies are Google AdMob for advertising and VLC in Telora. The games are web engines (three.js) in a native iOS shell.'],
                 ['book', 'Named sources',
-                 'Every piece of data comes from an official dataset, cited on the page of the app that uses it. Nothing is copied from a source I cannot show you.'],
-                ['shield', 'Nothing leaves the device',
-                 'Favorites, history and settings stay local. No account to create, no profile to fill in, no credentials to remember.'],
+                 'Sources are cited on the page of each app, community ones included (OpenStreetMap). Nothing is copied from a source I cannot show you.'],
+                ['shield', 'Local privacy',
+                 'No account to create. Favorites, history and settings stay on your device; only advertising (with your consent), purchases, and iCloud or Game Center use the network.'],
                 ['mail', 'One person answers',
                  'Support is me. Every message gets a reply, and fixes ship in the next update.']
             ]
@@ -263,12 +270,12 @@
             },
             features: {
                 fr: [
-                    'Carte et liste des stations avec prix carburants en France, tri par prix ou distance, favoris, stations masquées et cache hors-ligne.',
+                    'Carte et liste des stations avec prix carburants en France, tri par prix ou distance, favoris, stations masquées et cache hors connexion.',
                     'Évolution du prix dans la station suivie : courbe interactive des relevés quotidiens sur 45 jours.',
                     'Carnet de bord : consommation et autonomie calculées depuis vos pleins, CO₂ émis (facteurs ADEME) et écart de prix payé face à la moyenne nationale du mois.',
                     'Véhicules et entretien : motorisation thermique, hybride ou hybride rechargeable, capacité du réservoir, dépenses par catégorie et budget.',
                     'Analyse du marché : baril de Brent, euro/dollar, stations les moins chères et ruptures par carburant, plus les actualités du secteur.',
-                    'Widget station la moins chère, CarPlay et Contrôle rapide. Abonnement facultatif « Sans pub », et vidéo récompensée pour 6 h sans publicité.'
+                    'Widget station la moins chère, CarPlay et Centre de contrôle. Abonnement facultatif « Sans pub », et vidéo récompensée pour 6 h sans publicité.'
                 ],
                 en: [
                     'Map and list of French fuel stations with prices, sorted by price or distance, favorites, hidden stations and offline cache.',
@@ -279,10 +286,10 @@
                     'Cheapest station widget, CarPlay and Control Center widget. Optional “Ad-Free” subscription, and a rewarded video for 6 ad-free hours.'
                 ]
             },
-            sources: { fr: 'Prix publics officiels des carburants en France, mis en cache localement. Historique des prix, cours du Brent et taux de change issus de sources publiques ; facteurs CO₂ de l’ADEME.', en: 'Official public French fuel prices, cached locally. Price history, Brent crude and exchange rates from public sources; CO₂ factors from ADEME.' },
-            business: { fr: 'Application gratuite, financée par la publicité. Un abonnement facultatif « Sans pub » (0,99 € par mois ou 4,99 € par an) retire toute publicité tant qu’il est actif ; une vidéo récompensée offre aussi 6 h sans publicité. Géré par StoreKit et votre compte Apple : aucune donnée bancaire dans l’app.', en: 'Free app, funded by ads. An optional “Ad-Free” subscription (€0.99 per month or €4.99 per year) removes every ad while it is active; a rewarded video also gives 6 hours ad-free. Handled by StoreKit and your Apple account: no payment card data in the app.' },
-            /* Visuels de la fiche App Store (Outils/Bodyroro.github.io/VisuelsApps.mjs puis CapturesAppStore.mjs), dans leur ordre. */
-            shotTops: ['#1e336a', '#0a1a4c', '#233970', '#0b1b4d', '#20356c'],
+            sources: { fr: 'Prix publics officiels des carburants en France, mis en cache localement, stations complétées par OpenStreetMap. Historique des prix, cours du Brent (Yahoo Finance) et taux de change (Frankfurter) issus de sources publiques ; facteurs CO₂ de l’ADEME.', en: 'Official public French fuel prices, cached locally, with stations completed from OpenStreetMap. Price history, Brent crude (Yahoo Finance) and exchange rates (Frankfurter) from public sources; CO₂ factors from ADEME.' },
+            business: { fr: 'Application gratuite, financée par la publicité. Un abonnement facultatif « Sans pub » (0,99 € par mois ou 4,99 € par an) retire toute publicité tant qu’il est actif ; une vidéo récompensée offre aussi 6 h sans publicité. Géré par l’App Store et votre compte Apple : aucune donnée bancaire dans l’app.', en: 'Free app, funded by ads. An optional “Ad-Free” subscription (€0.99 per month or €4.99 per year) removes every ad while it is active; a rewarded video also gives 6 hours ad-free. Handled by the App Store and your Apple account: no payment card data in the app.' },
+            /* Galerie : visuels App Store de chaque appareil (CapturesAppStore.mjs) ; iPad et Duo reprennent les légendes de rang donné. */
+            shots: { ipad: [0, 2, 3, 4], duo: [0, 1, 2, 3, 4] },
             storeShots: {
                 fr: ['Les stations autour de vous', 'Comparez sans effort', 'Chaque station en détail', 'Votre budget carburant', 'Le marché en clair'],
                 en: ['Fuel stations near you', 'Compare effortlessly', 'Every station in detail', 'Your fuel budget', 'The market made clear']
@@ -298,13 +305,13 @@
                 en: 'EV charging stations: networks, connectors, power, availability, directions and a charging calculator.'
             },
             features: {
-                fr: ['Carte des bornes avec connecteurs, puissance, opérateur et disponibilité.', 'Filtres CCS2, CHAdeMO, Type 2, puissance minimale et rayon 5 à 50 km.', 'Look Around, vue 3D, favoris, hors-ligne, Siri et calculateur de recharge.', 'Prix spot, coût avec tarif saisi, conseils et actualités de la mobilité électrique. Abonnement facultatif « Sans pub ».'],
-                en: ['Charger map with connectors, power, operator and availability.', 'CCS2, CHAdeMO, Type 2, minimum power and 5 to 50 km radius filters.', 'Look Around, 3D map, favorites, offline mode, Siri and charging calculator.', 'Spot price, cost with your tariff, advice and EV news. Optional “Ad-Free” subscription.']
+                fr: ['Carte des bornes avec connecteurs, puissance, opérateur et disponibilité.', 'Filtres CCS2, CHAdeMO, Type 2, puissance minimale et rayon 5 à 50 km.', 'Look Around, vue 3D, favoris, hors connexion, CarPlay, Siri et calculateur de recharge.', 'Prix spot, coût avec tarif saisi, conseils et actualités de la mobilité électrique. Abonnement facultatif « Sans pub ».'],
+                en: ['Charger map with connectors, power, operator and availability.', 'CCS2, CHAdeMO, Type 2, minimum power and 5 to 50 km radius filters.', 'Look Around, 3D map, favorites, offline mode, CarPlay, Siri and charging calculator.', 'Spot price, cost with your tariff, advice and EV news. Optional “Ad-Free” subscription.']
             },
-            sources: { fr: 'Données ouvertes des infrastructures de recharge (IRVE), mises en cache localement.', en: 'Open data on French charging infrastructure (IRVE), cached locally.' },
-            business: { fr: 'Application gratuite, financée par la publicité. Un abonnement facultatif « Sans pub » (0,99 € par mois ou 4,99 € par an) retire toute publicité tant qu’il est actif ; une vidéo récompensée offre aussi 6 h sans publicité. Géré par StoreKit et votre compte Apple : aucune donnée bancaire dans l’app.', en: 'Free app, funded by ads. An optional “Ad-Free” subscription (€0.99 per month or €4.99 per year) removes every ad while it is active; a rewarded video also gives 6 hours ad-free. Handled by StoreKit and your Apple account: no payment card data in the app.' },
-            /* Visuels de la fiche App Store (Outils/Bodyroro.github.io/VisuelsApps.mjs puis CapturesAppStore.mjs), dans leur ordre. */
-            shotTops: ['#1b5155', '#073139', '#20585c', '#08313a', '#1e5459'],
+            sources: { fr: 'Données ouvertes des infrastructures de recharge (IRVE), mises en cache localement. Autres sources : Open Charge Map, Energy-Charts (prix spot) et OpenStreetMap.', en: 'Open data on French charging infrastructure (IRVE), cached locally. Other sources: Open Charge Map, Energy-Charts (spot prices) and OpenStreetMap.' },
+            business: { fr: 'Application gratuite, financée par la publicité. Un abonnement facultatif « Sans pub » (0,99 € par mois ou 4,99 € par an) retire toute publicité tant qu’il est actif ; une vidéo récompensée offre aussi 6 h sans publicité. Géré par l’App Store et votre compte Apple : aucune donnée bancaire dans l’app.', en: 'Free app, funded by ads. An optional “Ad-Free” subscription (€0.99 per month or €4.99 per year) removes every ad while it is active; a rewarded video also gives 6 hours ad-free. Handled by the App Store and your Apple account: no payment card data in the app.' },
+            /* Galerie : visuels App Store de chaque appareil (CapturesAppStore.mjs) ; iPad et Duo reprennent les légendes de rang donné. */
+            shots: { ipad: [0, 2, 3, 4], duo: [0, 1, 2, 3, 4] },
             storeShots: {
                 fr: ['Les bornes autour de vous', 'Comparez les bornes', 'Le détail de la borne', 'Calculez votre recharge', 'Suivez vos recharges'],
                 en: ['Chargers near you', 'Compare chargers', 'Every charger in detail', 'Plan your charge', 'Track your charging']
@@ -313,6 +320,7 @@
         toilettefrance: {
             name: 'ToiletteFrance', platform: 'ios', accent: '#3d9bff',
             store: STORE + 'toilettefrance/id6760978805',
+            on: { fr: 'iPhone, iPad et Apple Watch · iOS 18 et watchOS 11 ou plus', en: 'iPhone, iPad and Apple Watch · iOS 18 and watchOS 11 or later' },
             tag: { fr: 'Toilettes publiques', en: 'Public toilets' },
             promo: { fr: 'Les toilettes publiques, leurs horaires et leur accessibilité.', en: 'Public toilets, their opening hours and accessibility.' },
             desc: {
@@ -323,10 +331,13 @@
                 fr: ['Carte des toilettes publiques en France avec distance et guidage.', 'Filtres d’accessibilité, horaires et informations selon les données ouvertes.', 'Favoris, préférences et données locales sans compte utilisateur.', 'Application gratuite financée par publicité AdMob, abonnement facultatif « Sans pub ».'],
                 en: ['Map of public toilets in France with distance and directions.', 'Accessibility filters, opening hours and details from open data.', 'Favorites, preferences and local data with no user account.', 'Free app funded by AdMob ads, optional “Ad-Free” subscription.']
             },
-            sources: { fr: 'Données ouvertes françaises sur les toilettes publiques, mises en cache localement.', en: 'French open data on public toilets, cached locally.' },
-            business: { fr: 'Application gratuite, financée par la publicité. Un abonnement facultatif « Sans pub » (0,99 € par mois ou 4,99 € par an) retire toute publicité tant qu’il est actif ; une vidéo récompensée offre aussi 6 h sans publicité. Géré par StoreKit et votre compte Apple : aucune donnée bancaire dans l’app.', en: 'Free app, funded by ads. An optional “Ad-Free” subscription (€0.99 per month or €4.99 per year) removes every ad while it is active; a rewarded video also gives 6 hours ad-free. Handled by StoreKit and your Apple account: no payment card data in the app.' },
-            /* Visuels de la fiche App Store (Outils/Bodyroro.github.io/VisuelsApps.mjs puis CapturesAppStore.mjs), dans leur ordre. */
-            shotTops: ['#23547a', '#0a3760', '#285b80', '#0b3861', '#26587d'],
+            sources: { fr: 'Données ouvertes françaises sur les toilettes publiques, mises en cache localement. Autres sources : geodatamine (dérivé d’OpenStreetMap) et Wikimedia Commons.', en: 'French open data on public toilets, cached locally. Other sources: geodatamine (derived from OpenStreetMap) and Wikimedia Commons.' },
+            business: { fr: 'Application gratuite, financée par la publicité. Un abonnement facultatif « Sans pub » (0,99 € par mois ou 4,99 € par an) retire toute publicité tant qu’il est actif ; une vidéo récompensée offre aussi 6 h sans publicité. Géré par l’App Store et votre compte Apple : aucune donnée bancaire dans l’app.', en: 'Free app, funded by ads. An optional “Ad-Free” subscription (€0.99 per month or €4.99 per year) removes every ad while it is active; a rewarded video also gives 6 hours ad-free. Handled by the App Store and your Apple account: no payment card data in the app.' },
+            /* Galerie : visuels App Store de chaque appareil (CapturesAppStore.mjs) ; iPad et Duo reprennent les légendes de rang donné. */
+            shots: {
+                ipad: [0, 2, 4], duo: [0, 1, 2, 4, 3],
+                watch: [{ fr: 'Les toilettes à votre poignet', en: 'Toilets on your wrist' }, { fr: 'Distance et tarif d’un regard', en: 'Distance and price at a glance' }, { fr: 'Y aller en un geste', en: 'Get there in one tap' }]
+            },
             storeShots: {
                 fr: ['Les toilettes autour de vous', 'La plus proche, tout de suite', 'Le détail utile', 'Gratuites, ouvertes, accessibles', 'Toutes les toilettes à proximité'],
                 en: ['Public toilets near you', 'The nearest one, right now', 'Useful details', 'Free, open, accessible', 'Every toilet nearby']
@@ -342,13 +353,13 @@
                 en: 'AEDs: availability, accessibility, Emergency mode, SAMU 15 call and CPR guide with haptic metronome.'
             },
             features: {
-                fr: ['Carte des DAE proches avec code couleur par accessibilité.', 'Filtres accès public, 24h/24, intérieur/extérieur et rayon 500 m à 10 km.', 'Mode Urgence, appel SAMU 15 avec confirmation et guide RCP avec métronome haptique.', 'Abonnement facultatif « Sans pub » pour retirer toute publicité, et vidéo récompensée pour 6 h sans publicité.'],
+                fr: ['Carte des DAE proches avec code couleur par accessibilité.', 'Filtres accès public, 24 h/24, intérieur/extérieur et rayon 500 m à 10 km.', 'Mode Urgence, appel SAMU 15 avec confirmation et guide RCP avec métronome haptique.', 'Abonnement facultatif « Sans pub » pour retirer toute publicité, et vidéo récompensée pour 6 h sans publicité.'],
                 en: ['Nearby AED map with color coding by accessibility.', 'Public access, 24/7, indoor/outdoor and 500 m to 10 km radius filters.', 'Emergency mode, confirmed SAMU 15 call and CPR guide with haptic metronome.', 'Optional “Ad-Free” subscription removes every ad; a rewarded video gives 6 ad-free hours.']
             },
-            sources: { fr: 'Base nationale des défibrillateurs, mise en cache localement.', en: 'The national defibrillator database, cached locally.' },
-            business: { fr: 'Application gratuite, financée par la publicité. Un abonnement facultatif « Sans pub » (0,99 € par mois ou 4,99 € par an) retire toute publicité tant qu’il est actif ; une vidéo récompensée offre aussi 6 h sans publicité. Géré par StoreKit et votre compte Apple : aucune donnée bancaire dans l’app.', en: 'Free app, funded by ads. An optional “Ad-Free” subscription (€0.99 per month or €4.99 per year) removes every ad while it is active; a rewarded video also gives 6 hours ad-free. Handled by StoreKit and your Apple account: no payment card data in the app.' },
-            /* Visuels de la fiche App Store (Outils/Bodyroro.github.io/VisuelsApps.mjs puis CapturesAppStore.mjs), dans leur ordre. */
-            shotTops: ['#6a212c', '#4d0914', '#712732', '#4e0a15', '#6d242f'],
+            sources: { fr: 'Base nationale des défibrillateurs (GeoDAE), mise en cache localement. Autres sources : OpenStreetMap, openAEDmap et, pour les photos, Wikimedia Commons.', en: 'The national defibrillator database (GeoDAE), cached locally. Other sources: OpenStreetMap, openAEDmap and, for photos, Wikimedia Commons.' },
+            business: { fr: 'Application gratuite, financée par la publicité. Un abonnement facultatif « Sans pub » (0,99 € par mois ou 4,99 € par an) retire toute publicité tant qu’il est actif ; une vidéo récompensée offre aussi 6 h sans publicité. Géré par l’App Store et votre compte Apple : aucune donnée bancaire dans l’app.', en: 'Free app, funded by ads. An optional “Ad-Free” subscription (€0.99 per month or €4.99 per year) removes every ad while it is active; a rewarded video also gives 6 hours ad-free. Handled by the App Store and your Apple account: no payment card data in the app.' },
+            /* Galerie : visuels App Store de chaque appareil (CapturesAppStore.mjs) ; iPad et Duo reprennent les légendes de rang donné. */
+            shots: { ipad: [0, 2, 3], duo: [0, 4, 2, 1, 3] },
             storeShots: {
                 fr: ['Les défibrillateurs autour de vous', 'Chaque seconde compte', 'Le détail précis', 'Les gestes qui sauvent', 'Tous les DAE à portée de main'],
                 en: ['Defibrillators near you', 'Every second counts', 'Precise details', 'Life-saving actions', 'Every AED at hand']
@@ -360,8 +371,8 @@
             tag: { fr: 'Prix de l\u2019immobilier', en: 'Property prices' },
             promo: { fr: 'Le prix de l’immobilier d’après les ventes réellement enregistrées.', en: 'Property prices from the sales actually recorded.' },
             desc: {
-                fr: 'Prix de l\u2019immobilier d\u2019apr\u00e8s les ventes r\u00e9ellement enregistr\u00e9es par l\u2019administration fiscale : carte, m\u00e9dianes par commune, plan cadastral, fiche de quartier et fourchette d\u2019estimation. 100 % gratuit.',
-                en: 'Property prices from sales actually recorded by the tax authority: map, medians by town, cadastral plan, neighbourhood profile and valuation range. 100% free.'
+                fr: 'Prix de l\u2019immobilier d\u2019apr\u00e8s les ventes r\u00e9ellement enregistr\u00e9es par l\u2019administration fiscale : carte, m\u00e9dianes par commune, plan cadastral, fiche de quartier et fourchette d\u2019estimation. Gratuit, financé par la publicité.',
+                en: 'Property prices from sales actually recorded by the tax authority: map, medians by town, cadastral plan, neighborhood profile and valuation range. Free, funded by ads.'
             },
             features: {
                 fr: [
@@ -377,29 +388,26 @@
                     'Median prices by property type and year, with first and third quartiles, sale counts and median floor area. Never an average: a single exceptional sale would carry it away.',
                     'Sales volume per year: volume turns before price, and a market losing transactions without falling is a stalled market.',
                     'Two benchmarks: the gap to the department and the gap to France. The first tells you what the town is worth, the second what the region is worth.',
-                    'Neighbourhood profile: schools with pass rates and value added, named shops, lines and stops, declared hazards, recognised disasters, radon, air and soil.',
-                    'Advertised rents, fibre broadband and mobile coverage, energy certificates for the exact address and gross rental yield. No account.'
+                    'Neighborhood profile: schools with pass rates and value added, named shops, lines and stops, declared hazards, recognized disasters, radon, air and soil.',
+                    'Advertised rents, fiber broadband and mobile coverage, energy certificates for the exact address and gross rental yield. No account.'
                 ]
             },
             sources: { fr: 'Demandes de valeurs fonci\u00e8res de la Direction g\u00e9n\u00e9rale des finances publiques, g\u00e9olocalis\u00e9es par Etalab. Carte des loyers du minist\u00e8re du Logement, diagnostics de l\u2019ADEME, risques de G\u00e9orisques, plan cadastral de l\u2019IGN, annuaire et r\u00e9sultats de l\u2019\u00c9ducation nationale, faits enregistr\u00e9s du minist\u00e8re de l\u2019Int\u00e9rieur, d\u00e9coupage IRIS de l\u2019INSEE et OpenStreetMap.', en: 'Property transfer records from the French public finances directorate, geocoded by Etalab. Rent map from the Ministry of Housing, ADEME energy certificates, G\u00e9orisques hazards, IGN cadastral plan, schools directory and results from the Ministry of Education, recorded offences from the Interior Ministry, INSEE IRIS boundaries and OpenStreetMap.' },
-            business: { fr: 'Application gratuite, financée par la publicité. Un abonnement facultatif « Sans pub » (0,99 € par mois ou 4,99 € par an) retire toute publicité tant qu’il est actif ; une vidéo récompensée offre aussi 6 h sans publicité. Géré par StoreKit et votre compte Apple : aucune donnée bancaire dans l’app.', en: 'Free app, funded by ads. An optional “Ad-Free” subscription (€0.99 per month or €4.99 per year) removes every ad while it is active; a rewarded video also gives 6 hours ad-free. Handled by StoreKit and your Apple account: no payment card data in the app.' },
-            /* Visuels de la fiche App Store (Outils/Bodyroro.github.io/VisuelsApps.mjs puis CapturesAppStore.mjs), dans leur ordre. */
-            shotTops: ['#1e4d38', '#072e1e', '#23553e', '#082e1f', '#21513b'],
+            business: { fr: 'Application gratuite, financée par la publicité ; une vidéo récompensée offre 6 h sans publicité. Aucune donnée bancaire dans l’app.', en: 'Free app, funded by ads; a rewarded video gives 6 hours ad-free. No payment card data in the app.' },
+            /* Galerie : visuels App Store de chaque appareil (CapturesAppStore.mjs) ; iPad et Duo reprennent les légendes de rang donné. */
+            shots: { ipad: [0, 1, 2, 3], duo: [0, { fr: 'Chaque vente de la commune', en: 'Every sale in town' }, 1, 2, 3] },
             storeShots: {
                 fr: ['Les prix autour de vous', 'Le détail d’une vente', 'Le marché de votre commune', 'Votre quartier en un coup d’œil', 'Tout ce qui vous entoure'],
                 en: ['Property prices near you', 'Every sale in detail', 'Your town’s market', 'Your area at a glance', 'Everything around you']
             }
         },
-        /* Ni données publiques ni publicité, d'où `chips` et `on` propres. Sans visuels Premium, la galerie montre ses écrans bruts dans le téléphone
-           (`rawShots`), avec ceux de l'iPad et de l'Apple TV (`devices`, mêmes légendes), produits par
-           CapturesAppStore.mjs depuis Docs/Telora/Screenshots/<appareil>(-en). */
+        /* Ni données publiques ni publicité, d'où `chips` et `on` propres. */
         telora: {
             name: 'Telora', platform: 'ios', accent: '#8b5cf6',
             store: 'https://apps.apple.com/app/id6821877987',
             on: { fr: 'iPhone, iPad et Apple TV', en: 'iPhone, iPad and Apple TV' },
             tag: { fr: 'Lecteur multimédia', en: 'Media player' },
             promo: { fr: 'Vos films, séries et chaînes, depuis vos propres sources, sur iPhone, iPad et Apple TV.', en: 'Your movies, shows and channels, from your own sources, on iPhone, iPad and Apple TV.' },
-            ipadPortrait: true,
             desc: {
                 fr: 'Lecteur multimédia pour iPhone, iPad et Apple TV : vos films, séries et chaînes, depuis vos propres sources (liste de lecture, Plex, Jellyfin, Emby, NAS, fichiers). Telora ne fournit aucun contenu.',
                 en: 'Media player for iPhone, iPad and Apple TV: your movies, shows and channels, from your own sources (playlist, Plex, Jellyfin, Emby, NAS, files). Telora provides no content.'
@@ -429,12 +437,11 @@
                 ]
             },
             sources: { fr: 'Telora ne fournit aucun contenu : films, séries et chaînes viennent uniquement des sources que vous connectez. Logos, affiches de secours, photos des acteurs, sagas et studios proviennent de bases ouvertes : Wikidata (CC0), Wikimedia Commons et Wikipédia (licences libres), TVmaze (CC BY-SA).', en: 'Telora provides no content: movies, shows and channels come only from the sources you connect. Logos, fallback artwork, cast photos, collections and studios come from open databases: Wikidata (CC0), Wikimedia Commons and Wikipedia (free licenses), TVmaze (CC BY-SA).' },
-            business: { fr: 'Aucune publicité, aucun pistage. Telora s’utilise avec l’abonnement Telora+, au mois ou à l’année, après un essai gratuit de 7 jours. L’abonnement est géré par StoreKit et votre compte Apple : l’application ne reçoit aucune donnée bancaire.', en: 'No ads, no tracking. Telora is used with the Telora+ subscription, monthly or yearly, after a 7-day free trial. The subscription is handled by StoreKit and your Apple account: the app never receives payment card data.' },
-            rawShots: true,
-            devices: ['iphone', 'ipad', 'tv'],
+            business: { fr: 'Aucune publicité, aucun pistage. Telora s’utilise avec l’abonnement Telora+, au mois ou à l’année, après un essai gratuit de 7 jours. L’abonnement est géré par l’App Store et votre compte Apple : l’application ne reçoit aucune donnée bancaire.', en: 'No ads, no tracking. Telora is used with the Telora+ subscription, monthly or yearly, after a 7-day free trial. The subscription is handled by the App Store and your Apple account: the app never receives payment card data.' },
+            shots: { ipad: [0, 1, 2, 3, 4], duo: [0, 1, 2, 3, 4], tv: [{ fr: 'Votre vidéothèque sur grand écran', en: 'Your library on the big screen' }, 2, 3, 4] },
             storeShots: {
-                fr: ['L’accueil', 'Les films, nouveautés en tête', 'La fiche d’un film', 'La fiche d’une série', 'La recherche dans vos sources', 'Une interface à votre goût'],
-                en: ['The home screen', 'Movies, newest first', 'A movie page', 'A show page', 'Search across your sources', 'An interface your way']
+                fr: ['Votre vidéothèque réunie', 'Vos films à l’affiche', 'Chaque titre en détail', 'Trouvez en un instant', 'Une interface à votre goût'],
+                en: ['Your media library, all in one place', 'Your movies in the spotlight', 'Every title in detail', 'Find it in an instant', 'Make it your own']
             }
         },
         telzo: {
@@ -444,8 +451,8 @@
             tag: { fr: 'Télécommande TV', en: 'TV remote' },
             promo: { fr: 'La télécommande universelle par Wi-Fi : téléviseurs, Chromecast et box TV.', en: 'The universal Wi-Fi remote: smart TVs, Chromecast and TV boxes.' },
             desc: {
-                fr: 'Télécommande universelle par Wi-Fi pour iPhone et iPad : téléviseurs connectés, Chromecast et box TV, avec clavier, pavé tactile et applications. Aucun compte, rien ne quitte votre domicile.',
-                en: 'Universal Wi-Fi remote for iPhone and iPad: smart TVs, Chromecast and TV boxes, with keyboard, touchpad and apps. No account, nothing leaves your home.'
+                fr: 'Télécommande universelle par Wi-Fi pour iPhone et iPad : téléviseurs connectés, Chromecast et box TV, avec clavier, pavé tactile et applications. Aucun compte : les commandes vont directement de l’iPhone au téléviseur, sur votre réseau local.',
+                en: 'Universal Wi-Fi remote for iPhone and iPad: smart TVs, Chromecast and TV boxes, with keyboard, touchpad and apps. No account: commands go straight from the iPhone to the TV, over your local network.'
             },
             chips: {
                 fr: ['Gratuite', 'Sans compte', '7 jours d’essai Sans pub'],
@@ -455,31 +462,30 @@
                 fr: [
                     'Pavé directionnel ou pavé tactile, volume, chaînes, lecture et alimentation, avec retour haptique.',
                     'Le clavier de l’iPhone pour écrire vos recherches sur la télévision, et vos applications (Netflix, YouTube…) en un geste.',
-                    'Téléviseurs Samsung, LG, Google TV et Android TV (Sony, TCL, Philips, Xiaomi, Hisense…), Roku et Sony Bravia, Chromecast, box Orange, Freebox, Sky Q, TiVo et DirecTV ; aussi Vizio, Panasonic Viera, LG NetCast, Philips non Android et les enceintes Sonos.',
+                    'Téléviseurs Samsung, LG, Google TV et Android TV (Sony, TCL, Philips, Xiaomi, Hisense…), Roku et Sony Bravia, Chromecast, box Orange, Freebox, Sky Q, TiVo et DirecTV ; aussi Vizio, Panasonic Viera, LG NetCast, Philips non Android, Kodi, les amplificateurs Denon et Marantz, Yamaha MusicCast, les projecteurs PJLink et les enceintes Sonos.',
                     'Recherche automatique sur le Wi-Fi, plusieurs appareils associés et bascule rapide.',
                     'Siri, widget et commande du Centre de contrôle.',
-                    'Aucun compte, aucun serveur : les commandes vont directement de l’iPhone au téléviseur.'
+                    'Aucun compte : les commandes vont directement de l’iPhone au téléviseur, sur votre réseau local.'
                 ],
                 en: [
                     'D-pad or touchpad, volume, channels, playback and power, with haptic feedback.',
                     'The iPhone keyboard to type searches on your TV, and your apps (Netflix, YouTube…) in one tap.',
-                    'Samsung, LG, Google TV and Android TV (Sony, TCL, Philips, Xiaomi, Hisense…), Roku and Sony Bravia TVs, Chromecast, Orange, Freebox, Sky Q, TiVo and DirecTV boxes; also Vizio, Panasonic Viera, LG NetCast, non-Android Philips and Sonos speakers.',
+                    'Samsung, LG, Google TV and Android TV (Sony, TCL, Philips, Xiaomi, Hisense…), Roku and Sony Bravia TVs, Chromecast, Orange, Freebox, Sky Q, TiVo and DirecTV boxes; also Vizio, Panasonic Viera, LG NetCast, non-Android Philips, Kodi, Denon and Marantz receivers, Yamaha MusicCast, PJLink projectors and Sonos speakers.',
                     'Automatic search on your Wi-Fi, several paired devices with quick switching.',
                     'Siri, a widget and a Control Center control.',
-                    'No account, no server: commands go straight from the iPhone to the TV.'
+                    'No account: commands go straight from the iPhone to the TV, over your local network.'
                 ]
             },
             sources: { fr: 'Aucune source de données externe : Telzo ne communique qu’avec les appareils de votre réseau local. Telzo n’est affilié à aucun fabricant de téléviseurs ; les marques citées appartiennent à leurs propriétaires.', en: 'No external data source: Telzo only talks to devices on your local network. Telzo is not affiliated with any TV manufacturer; the brands mentioned belong to their owners.' },
-            business: { fr: 'Gratuite, toutes les touches comprises, financée par la publicité. Abonnement facultatif « Sans pub » à 0,99 € par mois ou 4,99 € par an, avec 7 jours d’essai gratuit, géré par StoreKit et votre compte Apple.', en: 'Free, every button included, funded by advertising. Optional “Ad-Free” subscription at €0.99 per month or €4.99 per year, with a 7-day free trial, handled by StoreKit and your Apple account.' },
-            /* Visuels de la fiche App Store (Outils/Bodyroro.github.io/VisuelsApps.mjs puis CapturesAppStore.mjs), dans leur ordre. */
-            shotTops: ['#293160', '#0f1640', '#2f3767', '#101741', '#2c3463'],
+            business: { fr: 'Gratuite, toutes les touches comprises, financée par la publicité ; une vidéo facultative offre 6 h sans publicité. Abonnement facultatif « Sans pub » à 0,99 € par mois ou 4,99 € par an, avec 7 jours d’essai gratuit, géré par l’App Store et votre compte Apple.', en: 'Free, every button included, funded by advertising; an optional video gives 6 hours ad-free. Optional “Ad-Free” subscription at €0.99 per month or €4.99 per year, with a 7-day free trial, handled by the App Store and your Apple account.' },
+            /* Galerie : visuels App Store de chaque appareil (CapturesAppStore.mjs) ; iPad et Duo reprennent les légendes de rang donné. */
+            shots: { ipad: [0, 2, 1, 4], duo: [0, 1, 2, 3, 4] },
             storeShots: {
                 fr: ['La télécommande dans votre poche', 'Naviguez du bout du doigt', 'Tous vos écrans en un geste', 'Écrivez sur la TV', 'Une aide pour chaque marque'],
                 en: ['Your TV remote in your pocket', 'Navigate with a swipe', 'All your screens one tap away', 'Type on your TV', 'Step-by-step help for every brand']
             }
         },
-        /* Pas encore sur l'App Store (`store: ''` : pastille « Bientôt disponible »), sans visuels App Store ni capture
-           (`storeShots` absent : pas de galerie, `galerie` et la sous-barre l'omettent pour une app iOS). */
+        /* Pas encore sur l'App Store (`store: ''` : pastille « Bientôt disponible »). */
         netta: {
             name: 'Netta', platform: 'ios', accent: '#0d9488', accent2: '#ccfbf1',
             store: '',
@@ -487,12 +493,12 @@
             tag: { fr: 'Tri de la photothèque', en: 'Photo library cleanup' },
             promo: { fr: 'Triez et nettoyez votre photothèque, et retrouvez les photos de ce jour-là, année après année.', en: 'Sort and clean your photo library, and revisit the photos from this day, year after year.' },
             desc: {
-                fr: 'Tri et nettoyage de la photothèque de l’iPhone : doublons, photos similaires et floues, captures d’écran, vidéos lourdes, et « Ce jour-là », vos photos du même jour les années passées. Tout se fait sur l’iPhone, aucun compte.',
-                en: 'Photo library sorting and cleanup for iPhone: duplicates, similar and blurry photos, screenshots, heavy videos, and “On This Day”, your photos from the same day in past years. Everything happens on the iPhone, no account.'
+                fr: 'Tri et nettoyage de la photothèque de l’iPhone et de l’iPad : doublons, photos similaires et floues, captures d’écran, vidéos lourdes, et « Ce jour-là », vos photos du même jour les années passées. Tout se fait sur l’iPhone et l’iPad, aucun compte.',
+                en: 'Photo library sorting and cleanup for iPhone and iPad: duplicates, similar and blurry photos, screenshots, heavy videos, and “On This Day”, your photos from the same day in past years. Everything happens on the iPhone and iPad, no account.'
             },
             chips: {
-                fr: ['Gratuite', 'Sans compte', 'Analyse sur l’iPhone'],
-                en: ['Free', 'No account', 'Analysis on the iPhone']
+                fr: ['Gratuite', 'Sans compte', 'Analyse sur l’appareil'],
+                en: ['Free', 'No account', 'Analysis on the device']
             },
             features: {
                 fr: [
@@ -501,7 +507,7 @@
                     'Le tri du jour par glissement : à gauche la corbeille, à droite on garde.',
                     'La corbeille de Netta se relit avant toute suppression ; iOS demande ensuite confirmation et les éléments restent 30 jours dans « Supprimés récemment ».',
                     'Widget Ce jour-là et raccourcis Siri.',
-                    'Toute l’analyse se fait sur l’iPhone : aucune photo envoyée, aucun compte, aucun serveur.'
+                    'Toute l’analyse se fait sur l’iPhone ou l’iPad : aucune photo envoyée, aucun compte, aucun serveur.'
                 ],
                 en: [
                     'Duplicates, similar photos and bursts (Netta keeps the best one), blurry photos, screenshots and heavy videos: everything cluttering your library is spotted.',
@@ -509,11 +515,16 @@
                     'Daily sorting by swiping: left for the trash, right to keep.',
                     'Netta’s trash is reviewed before anything is deleted; iOS then asks for confirmation and items stay 30 days in “Recently Deleted”.',
                     'An On This Day widget and Siri shortcuts.',
-                    'All analysis happens on the iPhone: no photo sent, no account, no server.'
+                    'All analysis happens on the iPhone or iPad: no photo sent, no account, no server.'
                 ]
             },
-            sources: { fr: 'Aucune source de données externe : Netta analyse vos photos sur l’iPhone et ne communique avec aucun serveur du développeur. Photos, vignettes et décisions restent sur l’appareil.', en: 'No external data source: Netta analyzes your photos on the iPhone and talks to no server of the developer. Photos, thumbnails and decisions stay on the device.' },
-            business: { fr: 'Gratuite, toutes les fonctions comprises, financée par la publicité (une bannière discrète, jamais pendant le tri). Abonnement annuel facultatif « Sans pub » à 4,99 € par an, géré par StoreKit et votre compte Apple.', en: 'Free, every feature included, funded by advertising (a discreet banner, never while sorting). Optional yearly “Ad-Free” subscription at €4.99 per year, handled by StoreKit and your Apple account.' }
+            sources: { fr: 'Aucune source de données externe : Netta analyse vos photos sur l’appareil et ne communique avec aucun serveur du développeur. Photos, vignettes et décisions restent sur l’appareil.', en: 'No external data source: Netta analyzes your photos on the device and talks to no server of the developer. Photos, thumbnails and decisions stay on the device.' },
+            business: { fr: 'Gratuite, toutes les fonctions comprises, financée par la publicité (une bannière discrète, jamais pendant le tri) ; une vidéo facultative offre 6 h sans publicité. Abonnement annuel facultatif « Sans pub » à 4,99 € par an, géré par l’App Store et votre compte Apple.', en: 'Free, every feature included, funded by advertising (a discreet banner, never while sorting); an optional video gives 6 hours ad-free. Optional yearly “Ad-Free” subscription at €4.99 per year, handled by the App Store and your Apple account.' },
+            shots: { ipad: [0, 2, 1, 3], duo: [0, 1, 2, 3, 4] },
+            storeShots: {
+                fr: ['Libérez de la place', 'Gardez ou jetez d’un geste', 'Vos souvenirs de ce jour', 'La meilleure de chaque série', 'Rien ne part sans vous'],
+                en: ['Free up space', 'Keep or toss with a swipe', 'Your memories of this day', 'The best shot of every set', 'Nothing goes without you']
+            }
         },
         mactuner: {
             name: 'MacTuner', platform: 'mac', accent: '#8eb8ff',
@@ -522,11 +533,11 @@
             promo: { fr: 'Le matériel en temps réel, 34 réglages système réversibles, nettoyage et ventilation.', en: 'Hardware in real time, 34 reversible system tweaks, cleanup and fan control.' },
             desc: {
                 fr: 'Application macOS libre : tableau de bord temps réel, réglages système réversibles, nettoyage, désinstallation sans résidu, maintenance et contrôle du ventilateur.',
-                en: 'Free macOS app: real time dashboard, reversible system tweaks, cleanup, residue free uninstall, maintenance and fan control.'
+                en: 'Free macOS app: real-time dashboard, reversible system tweaks, cleanup, residue-free uninstall, maintenance and fan control.'
             },
             features: {
-                fr: ['Tableau de bord : CPU par cœur, mémoire, disque, réseau, température, batterie et ventilation en temps réel.', '34 réglages système désactivables et 100 % réversibles : Siri, Apple Intelligence, télémétrie, iCloud…', 'Nettoyage sur 34 catégories et désinstallation sans résidu, protégées par un garde-fou central.', 'Contrôle du ventilateur borné au min/max constructeur, presets et réapplication au démarrage.'],
-                en: ['Dashboard: per core CPU, memory, disk, network, temperature, battery and fans in real time.', '34 fully reversible system tweaks: Siri, Apple Intelligence, telemetry, iCloud…', 'Cleanup across 34 categories and residue free uninstall, protected by a central safety guard.', 'Fan control capped to maker min/max, presets and reapply at startup.']
+                fr: ['Tableau de bord : CPU par cœur, mémoire, disque, réseau, température, batterie et ventilation en temps réel.', '34 réglages système réversibles (ceux qui touchent Siri, Apple Intelligence, la télémétrie et iCloud exigent SIP désactivé).', 'Nettoyage sur 34 catégories et désinstallation sans résidu, protégées par un garde-fou central.', 'Contrôle du ventilateur borné au min/max constructeur, préréglages et réapplication au démarrage.'],
+                en: ['Dashboard: per-core CPU, memory, disk, network, temperature, battery and fans in real time.', '34 reversible system tweaks (those touching Siri, Apple Intelligence, telemetry and iCloud require SIP to be disabled).', 'Cleanup across 34 categories and residue-free uninstall, protected by a central safety guard.', 'Fan control capped to maker min/max, presets and reapply at startup.']
             },
             sources: { fr: 'Mécanismes documentés d’Apple uniquement : launchctl, defaults, IOKit SMC. Aucun fichier système modifié.', en: 'Documented Apple mechanisms only: launchctl, defaults, IOKit SMC. No system file is ever modified.' },
             business: { fr: 'Gratuit et open source (MIT) : ni publicité, ni achat, ni compte.', en: 'Free and open source (MIT): no ads, purchases or accounts.' }
@@ -573,7 +584,7 @@
                     '45 languages, iPhone and iPad, portrait and landscape. Graphics quality adjusts automatically to the device. The game plays offline, with no account.'
                 ]
             },
-            sources: { fr: 'Aucune donnée externe : les îles, les niveaux, les musiques et les textes sont intégrés au jeu, qui se joue hors connexion. Seule la publicité utilise le réseau.', en: 'No external data: the islands, levels, music and texts are built into the game, which plays offline. Only advertising uses the network.' },
+            sources: { fr: 'Aucune donnée externe : les îles, les niveaux, les musiques et les textes sont intégrés au jeu, qui se joue hors connexion. Seules la publicité, iCloud (sauvegarde) et Game Center utilisent le réseau.', en: 'No external data: the islands, levels, music and texts are built into the game, which plays offline. Only advertising, iCloud (the save) and Game Center use the network.' },
             business: { fr: 'Jeu 100 % gratuit, financé par la publicité Google AdMob : vidéos facultatives pour un bonus, et courte publicité entre deux niveaux. Hors connexion, les vidéos facultatives sont désactivées et ne rapportent rien. Aucun achat intégré, aucune donnée bancaire dans l’app.', en: 'Fully free game, funded by Google AdMob ads: optional videos for a bonus, and a short ad between two levels. Offline, optional videos are disabled and give no reward. No in-app purchases, no payment card data in the app.' },
             promo: {
                 fr: 'Attrape tout ce qui a ta couleur. Dix îles, cent niveaux et une vraie histoire.',
@@ -585,7 +596,6 @@
             },
             /* Les huit captures App Store V0.1 (docs/screenshots du projet), dans
                l'ordre de la fiche. Légendes tirées du README des captures. */
-            shotTops: ['#feaf46', '#794bfd', '#3e83fc', '#546ff2', '#582c9c', '#2b86ff', '#be51ed', '#ff893d'],
             storeShots: {
                 fr: ['L’accueil et le logo du jeu', 'Une partie sur la base lunaire', 'Le boss du village de Noël', 'Dix îles à explorer', 'Le Baron Grisaille, qui a volé les couleurs', 'Les dix amis de Gloup', 'Des looks pour Gloup', 'Victoire et cadeau du jour'],
                 en: ['The home screen and the game logo', 'A level on the moon base', 'The Christmas village boss', 'Ten islands to explore', 'Baron Grisaille, who stole the colors', 'Gloup’s ten friends', 'Looks for Gloup', 'Victory and daily gift']
@@ -619,7 +629,7 @@
                     '45 languages, iPhone and iPad, with graphics quality adjusting automatically to the device. The game plays offline, with no account, with optional reminders when Gloup needs you.'
                 ]
             },
-            sources: { fr: 'Aucune donnée externe : la maison, le jardin, les aliments, les looks, les mini-jeux, les musiques et les textes sont intégrés au jeu, qui se joue hors connexion. Les rappels sont programmés sur l’appareil, sans serveur.', en: 'No external data: the house, garden, foods, looks, mini-games, music and texts are built into the game, which plays offline. Reminders are scheduled on the device, with no server.' },
+            sources: { fr: 'Aucune donnée externe : la maison, le jardin, les aliments, les looks, les mini-jeux, les musiques et les textes sont intégrés au jeu, qui se joue hors connexion. Les rappels sont programmés sur l’appareil, sans serveur. Seules la publicité, iCloud (sauvegarde) et Game Center utilisent le réseau.', en: 'No external data: the house, garden, foods, looks, mini-games, music and texts are built into the game, which plays offline. Reminders are scheduled on the device, with no server. Only advertising, iCloud (the save) and Game Center use the network.' },
             business: { fr: 'Jeu 100 % gratuit, financé par la publicité Google AdMob : vidéos facultatives pour un coup de pouce, 12 par jour au plus, et courte publicité possible après un mini-jeu. Hors connexion, les vidéos facultatives sont désactivées et ne rapportent rien. Aucun achat intégré, aucune donnée bancaire dans l’app.', en: 'Fully free game, funded by Google AdMob ads: optional videos for a small boost, 12 a day at most, and a short ad that may appear after a mini-game. Offline, optional videos are disabled and give no reward. No in-app purchases, no payment card data in the app.' },
             promo: {
                 fr: 'Gloup emménage chez vous. Nourrissez-le, lavez-le, couchez-le et regardez-le grandir.',
@@ -629,7 +639,6 @@
                 fr: [['60', 'niveaux, de bébé à adulte'], ['9', 'mini-jeux'], ['33', 'aliments'], ['45', 'langues']],
                 en: [['60', 'levels, from baby to adult'], ['9', 'mini-games'], ['33', 'foods'], ['45', 'languages']]
             },
-            shotTops: ['#6cbfff', '#feb045', '#7bd4ff', '#674acc', '#8add69', '#fe8ec8', '#fb87d9', '#39c06c'],
             storeShots: {
                 fr: ['La maison et son jardin', 'La cuisine, un gâteau pour Gloup', 'Le bain moussant', 'Pyjama, doudou et au lit', 'Le potager à cultiver', 'De bébé à adulte', 'La garde-robe', 'Neuf mini-jeux'],
                 en: ['The house and its garden', 'The kitchen, a cake for Gloup', 'The bubble bath', 'Pajamas, teddy and bedtime', 'The vegetable patch to grow', 'From baby to adult', 'The wardrobe', 'Nine mini-games']
@@ -638,7 +647,7 @@
         /* En vente depuis octobre 2026 (STORE_CF). Un jeu sans fiche reprend `store: ''` : pastille « Bientôt
            disponible » et, dans le premier écran et la section des jeux, « Bientôt sur l'App Store ». Les captures
            (`assets/img/shots/chromafight-*`, issues de `Docs/ChromaFight/Screenshots`, iPhone et iPad) se régénèrent
-           par `Outils/Parc/Marque/CapturesSite.mjs`, mêmes noms, en recalant `shotTops` et `storeShots`. */
+           par `Outils/Parc/Marque/CapturesSite.mjs`, mêmes noms, en recalant `storeShots`. */
         chromafight: {
             name: 'ChromaFight', platform: 'ios', game: true, accent: '#ff7a3d', accent2: '#2d2366',
             store: STORE_CF,
@@ -655,7 +664,7 @@
                 fr: [
                     'Le ventre de Gloup est une grille : faites glisser les objets pour les ranger. À chaque recharge, Gloup recrache chacun d’eux sur les Grisons, et vous pouvez réorganiser en plein combat.',
                     'Deux objets identiques glissés l’un sur l’autre fusionnent, sur quatre niveaux. Trois objets de même couleur qui se touchent forment un accord, cinq un grand accord : huit couleurs en jeu.',
-                    'Onze îles et 105 niveaux, de la cuisine à la base lunaire, puis une île secrète. Chacune a ses quatre Grisons, un mini-boss au niveau 5 et un boss au niveau 10.',
+                    'Onze îles et 105 niveaux, de la cuisine à la base lunaire, dont l’île secrète du volcan. Chacune a ses quatre Grisons, un mini-boss au niveau 5 et un boss au niveau 10.',
                     'Onze amis à débloquer, un par île : chacun donne à Gloup un objet de départ, une forme de ventre et un pouvoir. Un atelier de huit améliorations rend Gloup plus fort au fil des parties.',
                     'Des coffres sur la barre des vagues et un coffre à la fin de chaque île, des quêtes du jour et de la semaine, des missions, un bestiaire de 44 Grisons, une piste de progression gratuite et un cadeau chaque jour.',
                     'Aucune pub pendant un niveau : les vidéos sont facultatives, et le moindre achat, comme « Sans pub », supprime la courte publicité entre deux niveaux. À chaque île, une offre d’île facultative, seulement dans la Boutique.',
@@ -664,14 +673,14 @@
                 en: [
                     'Gloup’s tummy is a grid: drag objects to arrange them. Each time one recharges, Gloup spits it at the Greylings, and you can rearrange mid-fight.',
                     'Two identical objects dragged onto each other merge, over four levels. Three objects of the same color that touch form a chord, five a grand chord: eight colors in play.',
-                    'Eleven islands and 105 levels, from the kitchen to the moon base, then a secret island. Each has its four Greylings, a mini-boss on level 5 and a boss on level 10.',
+                    'Eleven islands and 105 levels, from the kitchen to the moon base, including the secret volcano island. Each has its four Greylings, a mini-boss on level 5 and a boss on level 10.',
                     'Eleven friends to unlock, one per island: each gives Gloup a starting object, a tummy shape and a power. A workshop of eight upgrades makes Gloup stronger over time.',
                     'Chests on the wave bar and a chest at the end of every island, daily and weekly quests, missions, a bestiary of 44 Greylings, a free progress track and a gift every day.',
                     'No ads during a level: videos are optional, and any purchase, such as “No ads”, removes the short ad between two levels. On each island, an optional island offer, only in the Shop.',
                     '45 languages, iPhone and iPad, portrait and landscape, with graphics quality adjusting automatically to the device. The game plays offline. No account: progress stays on the device and in your iCloud, never with the publisher.'
                 ]
             },
-            sources: { fr: 'Aucune donnée externe : les îles, les niveaux, les objets, les Grisons, les musiques et les textes sont intégrés au jeu, qui se joue hors connexion. Seules la publicité, les achats (App Store) et la copie iCloud de la sauvegarde utilisent le réseau.', en: 'No external data: the islands, levels, objects, Greylings, music and texts are built into the game, which plays offline. Only advertising, purchases (App Store) and the iCloud copy of the save use the network.' },
+            sources: { fr: 'Aucune donnée externe : les îles, les niveaux, les objets, les Grisons, les musiques et les textes sont intégrés au jeu, qui se joue hors connexion. Seules la publicité, les achats (App Store), Game Center et la copie iCloud de la sauvegarde utilisent le réseau.', en: 'No external data: the islands, levels, objects, Greylings, music and texts are built into the game, which plays offline. Only advertising, purchases (App Store), Game Center and the iCloud copy of the save use the network.' },
             business: { fr: 'Jeu gratuit, financé par la publicité Google AdMob (vidéos facultatives, et courte publicité entre deux niveaux, jamais pendant un niveau) et par des achats intégrés facultatifs : gemmes, pack de départ, « Sans pub » (suppression de la petite publicité) et offres d’île. Hors connexion, les vidéos facultatives sont désactivées et ne rapportent rien. Aucune puissance n’est vendue, aucune donnée bancaire dans l’app.', en: 'Free game, funded by Google AdMob ads (optional videos, and a short ad between two levels, never during a level) and by optional in-app purchases: gems, a starter pack, “No ads” (removal of the short ad) and island offers. Offline, optional videos are disabled and give no reward. No power is for sale, no payment card data in the app.' },
             promo: {
                 fr: 'Gloup recrache les objets de son ventre sur les Grisons. Range, fusionne, accorde les couleurs et libère onze îles.',
@@ -682,14 +691,13 @@
                 en: [['11', 'islands'], ['105', 'levels'], ['44', 'Greylings'], ['4', 'merge levels']]
             },
             /* Captures App Store du 8 octobre 2026 (CapturesSite.mjs), ordre des fiches. */
-            shotTops: ['#6cbfff', '#fecf47', '#8add69', '#fc7677', '#674acc', '#fb87d9', '#7bd4ff', '#feb045'],
             storeShots: {
                 fr: ['L’accueil et la carte de l’île aux pirates', 'Gloup recrache les objets de son ventre', 'Fusionne et accorde les couleurs', 'Des boss géants', 'Onze îles à libérer', 'Onze amis à tes côtés', '44 Grisons à découvrir', 'Améliore ton atelier'],
                 en: ['The home screen and the Pirate Island map', 'Gloup spits the objects from his tummy', 'Merge and match colors', 'Giant bosses', 'Eleven islands to free', 'Eleven friends by your side', '44 Greylings to discover', 'Upgrade your workshop']
             }
         },
         /* En vente depuis octobre 2026 (STORE_CT). Captures App Store (`assets/img/shots/chromatraque-*`, iPhone et
-           iPad), mêmes noms que ChromaFight, avec `shotTops` et `storeShots`. Achats intégrés facultatifs et énergie,
+           iPad), mêmes noms que ChromaFight, avec `storeShots`. Achats intégrés facultatifs et énergie,
            aucun abonnement. */
         chromatraque: {
             name: 'ChromaTraque', platform: 'ios', game: true, accent: '#7b4dff', accent2: '#f4a300',
@@ -733,7 +741,6 @@
                 fr: [['6', 'îles'], ['60', 'niveaux'], ['6', 'gadgets'], ['45', 'langues']],
                 en: [['6', 'islands'], ['60', 'levels'], ['6', 'gadgets'], ['45', 'languages']]
             },
-            shotTops: ['#8bceff', '#fecb57', '#ae87fe', '#7bdd87', '#fd8697', '#fdacdd', '#99e1ff', '#fed565'],
             storeShots: {
                 fr: ['L’accueil de ChromaTraque', 'Écoute et déduis', 'L’aide Déduction', 'Six îles à protéger', 'Le Baron Grisaille', 'Des gadgets malins', 'Des looks pour Gloup', 'Des cadeaux chaque jour'],
                 en: ['The ChromaTraque home screen', 'Listen and deduce', 'The Deduction aid', 'Six islands to protect', 'Baron Grisaille', 'Clever gadgets', 'Cool looks for Gloup', 'Daily gifts']
@@ -786,19 +793,17 @@
                 fr: [['20', 'cultures'], ['9', 'ateliers'], ['60', 'niveaux'], ['66', 'trophées']],
                 en: [['20', 'crops'], ['9', 'workshops'], ['60', 'levels'], ['66', 'trophies']]
             },
-            shotTops: ['#8add87', '#fed565', '#feaf75', '#99e1ff', '#fecb57', '#8bceff', '#fdacdd', '#ae87fe'],
             storeShots: {
                 fr: ['Ta ferme en couleurs', 'Sème et récolte', 'Les ateliers', 'Des animaux adorables', 'Les commandes', 'Le bateau', 'Décore ta ferme', 'L’accueil de ChromaFerme'],
                 en: ['Your farm in color', 'Sow and harvest', 'The workshops', 'Adorable animals', 'The orders', 'The boat', 'Decorate your farm', 'The ChromaFerme home screen']
             }
         },
-        /* Pas encore sur l'App Store (`store: ''`). Jeu en paysage seul (`paysage`) : captures App Store
+        /* En vente depuis octobre 2026 (STORE_CC). Jeu en paysage seul (`paysage`) : captures App Store
            `assets/img/shots/chromaciel-*` (iPhone 2868 x 1320 par `PAYSAGE=1`, iPad, `Outils/Parc/Marque/CapturesSite.mjs`)
-           montrées dans le cadre large de la galerie ; l'icône en grand tient lieu de téléphone dans l'en-tête et
-           d'éventail dans la tuile (`promo-solo`), sans `shotTops`. Faits fournis par le titulaire le 22 octobre 2026. */
+           montrées en paysage. Faits fournis par le titulaire le 22 octobre 2026. */
         chromaciel: {
-            name: 'ChromaCiel', platform: 'ios', game: true, paysage: true, accent: '#3f9be0', accent2: '#ff9f43',
-            store: '',
+            name: 'ChromaCiel', platform: 'ios', game: true, paysage: true, ecran: true, accent: '#3f9be0', accent2: '#ff9f43',
+            store: STORE_CC,
             tag: { fr: 'RPG d’action', en: 'Action RPG' },
             desc: {
                 fr: 'Le Baron Grisaille a délavé le ciel : les îles flottantes ont perdu leurs couleurs et leurs habitants sont devenus des monstres gris. Gloup, petite flaque vivante aux grands yeux, rend ses couleurs au monde. Gratuit, avec achats intégrés facultatifs.',
@@ -817,7 +822,7 @@
                     'Huit emplacements d’équipement, cinq raretés, huit panoplies, des gemmes et une forge ; sept familiers.',
                     '80 quêtes principales, plus de 140 quêtes secondaires, des quêtes du jour et 7 donjons en normal et en difficile, aux salles détaillées et aux torches animées.',
                     'Des anneaux de vol, des taches de grisaille, un bestiaire, 60 niveaux et 48 trophées, aussi dans Game Center.',
-                    'Gratuit, avec des achats intégrés facultatifs. Aucune bannière ni publicité intercalée : seules des vidéos récompensées facultatives sont proposées. Rien de ce qui s’achète ne donne de niveau, de statistique, d’objet, de pièces ni d’expérience.',
+                    'Gratuit, avec des achats intégrés facultatifs. Aucune bannière ni publicité intercalée : seules des vidéos récompensées facultatives sont proposées. Rien de ce qui s’achète ne donne de niveau, de statistique ni de pièces ; seul un bonus temporaire d’expérience, aussi gagné en jeu, existe.',
                     'iPhone et iPad, en paysage, qualité graphique réglée automatiquement selon l’appareil. Le jeu se joue hors connexion. Sans compte : la sauvegarde reste sur l’appareil et dans votre iCloud.'
                 ],
                 en: [
@@ -828,12 +833,12 @@
                     'Eight equipment slots, five rarities, eight sets, gems and a forge; seven companions.',
                     '80 main quests, over 140 side quests, daily quests and 7 dungeons in normal and hard, with detailed rooms and animated torches.',
                     'Flight rings, gray stains, a bestiary, 60 levels and 48 trophies, also in Game Center.',
-                    'Free, with optional in-app purchases. No banners and no interstitial ads: only optional rewarded videos are offered. Nothing you can buy gives a level, a stat, an item, coins or experience.',
+                    'Free, with optional in-app purchases. No banners and no interstitial ads: only optional rewarded videos are offered. Nothing you can buy gives a level, a stat or coins; only a temporary experience bonus, also earned in play, exists.',
                     'iPhone and iPad, in landscape, with graphics quality adjusting automatically to the device. The game plays offline. No account: the save stays on the device and in your iCloud.'
                 ]
             },
-            sources: { fr: 'Aucun compte : la sauvegarde reste sur l’appareil et dans votre iCloud. Le jeu se joue hors connexion. Le réseau ne sert que pour la publicité, les achats (App Store), Game Center et iCloud.', en: 'No account: the save stays on the device and in your iCloud. The game plays offline. The network is only used for advertising, purchases (App Store), Game Center and iCloud.' },
-            business: { fr: 'Jeu gratuit, financé par la publicité Google AdMob (vidéos récompensées facultatives seulement : un coffre bonus de donjon, 2 par jour, et un sachet de matériaux, 1 par jour ; aucune bannière ni publicité intercalée) et par des achats intégrés facultatifs : Pack de départ, « Sans vidéos » (saute le visionnage, mêmes récompenses et mêmes limites), Garde-robe Arc-en-ciel (cinq apparences) et gouttes de Prisme en quatre paliers (apparences, places de sac, coffret de matériaux limité à deux par semaine). Hors connexion, les vidéos facultatives sont désactivées et ne rapportent rien. Rien n’achète de niveau, de statistique, d’objet, de pièces ni d’expérience.', en: 'Free game, funded by Google AdMob ads (optional rewarded videos only: a bonus dungeon chest, 2 a day, and a materials pouch, 1 a day; no banners and no interstitial ads) and by optional in-app purchases: Starter Pack, “No videos” (skips the watching, same rewards and same limits), Rainbow Wardrobe (five looks) and Prism drops in four tiers (looks, bag slots, a materials chest limited to two per week). Offline, optional videos are disabled and give no reward. Nothing buys a level, a stat, an item, coins or experience.' },
+            sources: { fr: 'Aucune donnée externe : les îles, les villes, les monstres, les quêtes, les musiques et les textes sont intégrés au jeu, qui se joue hors connexion. Aucun compte : la sauvegarde reste sur l’appareil et dans votre iCloud. Le réseau ne sert que pour la publicité, les achats (App Store), Game Center et iCloud.', en: 'No external data: the islands, towns, monsters, quests, music and texts are built into the game, which plays offline. No account: the save stays on the device and in your iCloud. The network is only used for advertising, purchases (App Store), Game Center and iCloud.' },
+            business: { fr: 'Jeu gratuit, financé par la publicité Google AdMob (vidéos récompensées facultatives seulement : un coffre bonus de donjon (3 par jour), un butin doublé (2 par jour) et des sachets du jour ; aucune bannière ni publicité intercalée) et par des achats intégrés facultatifs : Pack de départ, « Sans vidéos » (saute le visionnage, mêmes récompenses et mêmes limites), Garde-robe Arc-en-ciel (cinq apparences) et gouttes de Prisme en quatre paliers (apparences, places de sac, coffret de matériaux limité à deux par semaine). Hors connexion, les vidéos facultatives sont désactivées et ne rapportent rien. Rien de ce qui s’achète ne donne de niveau, de statistique ni de pièces ; seul un bonus temporaire d’expérience, aussi gagné en jeu, existe.', en: 'Free game, funded by Google AdMob ads (optional rewarded videos only: a bonus dungeon chest (3 a day), a doubled loot (2 a day) and daily pouches; no banners and no interstitial ads) and by optional in-app purchases: Starter Pack, “No videos” (skips the watching, same rewards and same limits), Rainbow Wardrobe (five looks) and Prism drops in four tiers (looks, bag slots, a materials chest limited to two per week). Offline, optional videos are disabled and give no reward. Nothing you can buy gives a level, a stat or coins; only a temporary experience bonus, also earned in play, exists.' },
             promo: {
                 fr: 'Le Baron Grisaille a délavé le ciel. Gloup vole d’île en île pour rendre ses couleurs au monde.',
                 en: 'Baron Grisaille has washed out the sky. Gloup flies from island to island to bring the world’s colors back.'
@@ -848,7 +853,6 @@
             }
         }
     };
-    var NOMS_APPAREILS = { iphone: 'iPhone', ipad: 'iPad', tv: 'Apple TV' };
     var IOS_ORDER = ['carbufrance', 'irvefrance', 'toilettefrance', 'defibfrance', 'dvffrance', 'telora', 'telzo', 'netta'];
     var FRANCE_ORDER = IOS_ORDER.slice(0, 5);
     var SALON_ORDER = IOS_ORDER.slice(5, 7);
@@ -867,7 +871,7 @@
         seeGames: { fr: 'Voir les jeux', en: 'See the games' },
         seeApps: { fr: 'Les applications', en: 'The apps' },
         allApps: { fr: 'Toutes les applications', en: 'All the apps' },
-        onIPhone: { fr: 'iPhone · iOS 18 ou plus', en: 'iPhone · iOS 18 or later' },
+        onIPhone: { fr: 'iPhone et iPad · iOS 18 ou plus', en: 'iPhone and iPad · iOS 18 or later' },
         onMac: { fr: 'macOS · Apple Silicon', en: 'macOS · Apple Silicon' },
         soonBadge: { fr: 'Bientôt disponible', en: 'Coming soon' },
         openSource: { fr: 'Voir le code', en: 'View the code' },
@@ -881,7 +885,7 @@
         contactPerApp: { fr: 'Assistance par application', en: 'Per-app support' },
         contactPerAppLead: {
             fr: 'Chaque application a sa page d’assistance : questions fréquentes, limites connues et marche à suivre.',
-            en: 'Each app has its own support page: frequent questions, known limits and what to do next.'
+            en: 'Each app has its own support page: frequently asked questions, known limits and what to do next.'
         },
         aboutTitle: { fr: 'Rodolphe Vandaele', en: 'Rodolphe Vandaele' },
         featuresTitle: { fr: 'Ce que fait l’application', en: 'What the app does' },
@@ -928,8 +932,8 @@
         photoEyebrow: { fr: 'iPhone et iPad', en: 'iPhone and iPad' },
         photoTitle: { fr: 'Pour vos photos.', en: 'For your photos.' },
         photoLead: {
-            fr: 'Netta trie et nettoie la photothèque de l’iPhone : doublons, photos floues, captures d’écran et vidéos lourdes, et « Ce jour-là », les photos du même jour les années passées. Tout se fait sur l’iPhone.',
-            en: 'Netta sorts and cleans the iPhone photo library: duplicates, blurry photos, screenshots and heavy videos, and “On This Day”, the photos from the same day in past years. Everything happens on the iPhone.'
+            fr: 'Netta trie et nettoie la photothèque de l’iPhone et de l’iPad : doublons, photos floues, captures d’écran et vidéos lourdes, et « Ce jour-là », les photos du même jour les années passées. Tout se fait sur l’appareil.',
+            en: 'Netta sorts and cleans the iPhone and iPad photo library: duplicates, blurry photos, screenshots and heavy videos, and “On This Day”, the photos from the same day in past years. Everything happens on the device.'
         },
         onGame: { fr: 'Jeu · iPhone et iPad', en: 'Game · iPhone and iPad' },
         /* Textes sans nombre d'apps : ils restent justes quand une app ou un jeu s'ajoute. */
@@ -938,8 +942,8 @@
             en: 'Games and apps, <br><span class="grad">one principle.</span>'
         },
         heroShort: {
-            fr: 'Des jeux pour iPhone et iPad avec Gloup, la petite créature aux grands yeux. Des applications du quotidien, natives, gratuites et sans compte. Et des utilitaires libres pour Mac.',
-            en: 'Games for iPhone and iPad starring Gloup, the little creature with big eyes. Everyday apps, native, free and with no account. Plus free utilities for Mac.'
+            fr: 'Des jeux pour iPhone et iPad avec Gloup, la petite créature aux grands yeux. Des applications du quotidien, sans compte, gratuites sauf Telora. Et des utilitaires libres pour Mac.',
+            en: 'Games for iPhone and iPad starring Gloup, the little creature with big eyes. Everyday apps with no account, free except Telora. Plus free utilities for Mac.'
         },
         soonStore: { fr: 'Bientôt sur l’App Store', en: 'Coming soon to the App Store' },
         menuApps: { fr: 'Applications', en: 'Apps' },
@@ -958,23 +962,23 @@
         storeShotsTitle: { fr: 'Les huit écrans de la fiche App Store.', en: 'The eight App Store screens.' },
         deviceLabel: { fr: 'Choisir l’appareil', en: 'Choose the device' },
         statsEyebrow: { fr: 'En chiffres', en: 'By the numbers' },
-        faqEyebrow: { fr: 'Questions fréquentes', en: 'Frequent questions' },
+        faqEyebrow: { fr: 'Questions fréquentes', en: 'Frequently asked questions' },
         faqTitle: { fr: 'Tout ce qu’il faut savoir.', en: 'Everything you need to know.' },
         /* Chaque réponse reprend un fait déjà écrit ailleurs sur le site : rien
            n'est affirmé ici qui ne soit dit sur la page d'une application. */
         faq: {
             fr: [
-                ['Les applications sont-elles gratuites ?', 'Oui. Les applications iPhone et les jeux se téléchargent gratuitement et sont financés par une publicité discrète. ChromaFight, ChromaTraque, ChromaFerme et ChromaCiel sont gratuits eux aussi, avec des achats intégrés facultatifs. CarbuFrance, IRVEFrance, ToiletteFrance et DefibFrance proposent un abonnement facultatif « Sans pub » (0,99 € par mois ou 4,99 € par an) qui retire toute publicité ; une vidéo facultative y offre aussi 6 h sans publicité. Telzo propose le sien à 0,99 € par mois ou 4,99 € par an. Les deux utilitaires Mac sont libres et open source, sans publicité ni achat. Telora est sans publicité et s’utilise avec l’abonnement Telora+, au mois ou à l’année, après un essai gratuit de 7 jours.'],
-                ['Faut-il créer un compte ?', 'Non. Aucune application ne demande de compte ni d’inscription. Favoris et réglages restent sur votre appareil.'],
-                ['Fonctionnent-elles sans connexion ?', 'Les applications de données publiques les mettent en cache pour rester utilisables hors connexion ; Telora lit vos propres sources et a donc besoin du réseau. Les jeux se jouent hors connexion ; seuls la publicité et, pour ChromaFight, ChromaTraque, ChromaFerme et ChromaCiel, les achats et la copie iCloud de la sauvegarde utilisent le réseau.'],
-                ['Sur quels appareils ?', 'iPhone et iPad sous iOS 18 ou plus pour les applications et les jeux. Telora aussi sur Apple TV (tvOS 18 ou plus). Mac Apple Silicon sous macOS 26 ou 27 pour MacTuner et DNSTuner.'],
+                ['Les applications sont-elles gratuites ?', 'Presque toutes : Telora s’utilise avec l’abonnement Telora+, après 7 jours d’essai. Les autres applications iPhone et les jeux se téléchargent gratuitement et sont financés par une publicité discrète ; ChromaFight, ChromaTraque, ChromaFerme et ChromaCiel proposent aussi des achats intégrés facultatifs. CarbuFrance, IRVEFrance, ToiletteFrance, DefibFrance et Telzo proposent un abonnement facultatif « Sans pub » (0,99 € par mois ou 4,99 € par an) qui retire toute publicité, et Netta le propose à 4,99 € par an. Dans les apps avec publicité, une vidéo facultative offre aussi 6 h sans publicité. Les deux utilitaires Mac sont libres et open source, sans publicité ni achat.'],
+                ['Faut-il créer un compte ?', 'Non. Aucune application ne demande de compte ni d’inscription. Favoris et réglages restent sur votre appareil ; seules la publicité (avec votre accord), les achats et iCloud ou Game Center utilisent le réseau.'],
+                ['Fonctionnent-elles sans connexion ?', 'Les applications de données publiques les mettent en cache pour rester utilisables hors connexion ; Telora lit vos propres sources et a donc besoin du réseau. Les jeux se jouent hors connexion ; seuls la publicité, iCloud, Game Center et, pour ChromaFight, ChromaTraque, ChromaFerme et ChromaCiel, les achats utilisent le réseau.'],
+                ['Sur quels appareils ?', 'iPhone et iPad sous iOS 18 ou plus pour les applications et les jeux, iPhone Duo compris, ouvert comme fermé. ToiletteFrance aussi sur Apple Watch (watchOS 11 ou plus), Telora aussi sur Apple TV (tvOS 18 ou plus). Mac Apple Silicon sous macOS 26 ou 27 pour MacTuner et DNSTuner.'],
                 ['Où trouver de l’aide ?', 'Chaque application a sa page d’assistance. Je réponds moi-même à chaque message, en général sous 24 à 48 heures.']
             ],
             en: [
-                ['Are the apps free?', 'Yes. The iPhone apps and the games are free to download and funded by discreet advertising. ChromaFight, ChromaTraque, ChromaFerme and ChromaCiel are free too, with optional in-app purchases. CarbuFrance, IRVEFrance, ToiletteFrance and DefibFrance offer an optional “Ad-Free” subscription (€0.99 per month or €4.99 per year) that removes every ad; an optional video also gives 6 hours ad-free. Telzo offers its own at €0.99 per month or €4.99 per year. The two Mac utilities are free and open source, with no ads and no purchases. Telora has no ads and is used with the Telora+ subscription, monthly or yearly, after a 7-day free trial.'],
-                ['Do I need an account?', 'No. None of the apps asks for an account or a sign-up. Favorites and settings stay on your device.'],
-                ['Do they work offline?', 'The public data apps cache it so they keep working offline; Telora plays your own sources and therefore needs the network. The games play offline; only advertising and, for ChromaFight, ChromaTraque, ChromaFerme and ChromaCiel, purchases and the iCloud copy of the save use the network.'],
-                ['Which devices?', 'iPhone and iPad on iOS 18 or later for the apps and games. Telora on Apple TV too (tvOS 18 or later). Apple Silicon Macs on macOS 26 or 27 for MacTuner and DNSTuner.'],
+                ['Are the apps free?', 'Almost all of them: Telora is used with the Telora+ subscription, after a 7-day trial. The other iPhone apps and the games are free to download and funded by discreet advertising; ChromaFight, ChromaTraque, ChromaFerme and ChromaCiel also offer optional in-app purchases. CarbuFrance, IRVEFrance, ToiletteFrance, DefibFrance and Telzo offer an optional “Ad-Free” subscription (€0.99 per month or €4.99 per year) that removes every ad, and Netta offers it at €4.99 per year. In the apps with ads, an optional video also gives 6 hours ad-free. The two Mac utilities are free and open source, with no ads and no purchases.'],
+                ['Do I need an account?', 'No. None of the apps asks for an account or a sign-up. Favorites and settings stay on your device; only advertising (with your consent), purchases, and iCloud or Game Center use the network.'],
+                ['Do they work offline?', 'The public data apps cache it so they keep working offline; Telora plays your own sources and therefore needs the network. The games play offline; only advertising, iCloud, Game Center and, for ChromaFight, ChromaTraque, ChromaFerme and ChromaCiel, purchases use the network.'],
+                ['Which devices?', 'iPhone and iPad on iOS 18 or later for the apps and games, iPhone Duo included, open or closed. ToiletteFrance on Apple Watch too (watchOS 11 or later), Telora on Apple TV too (tvOS 18 or later). Apple Silicon Macs on macOS 26 or 27 for MacTuner and DNSTuner.'],
                 ['Where can I get help?', 'Each app has its own support page. I answer every message myself, usually within 24 to 48 hours.']
             ]
         }
@@ -1011,7 +1015,7 @@
     function esc(s) {
         return String(s).replace(/[&<>"]/g, function (c) {
             return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
-        }).replace(/ ([?!:;»])/g, '\u00a0$1').replace(/« /g, '«\u00a0');
+        }).replace(/ ([?!:;»%€])/g, ' $1').replace(/« /g, '« ');
     }
 
     function svg(corps, classe) {
@@ -1022,6 +1026,8 @@
 
     var CHEVRON = svg('<path d="m9 5 7 7-7 7"/>');
     var GLOBE = svg('<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.2 2.4 3.3 5.2 3.3 8.5s-1.1 6.1-3.3 8.5c-2.2-2.4-3.3-5.2-3.3-8.5s1.1-6.1 3.3-8.5Z"/>', 'btn-glyph');
+    var CHECK = svg('<path d="m5 12.5 4.2 4.2L19 7"/>', 'check');
+    var LOUPE = svg('<circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.4-4.4"/>', 'loupe');
 
     /* Les pictogrammes nommés par les contenus : [icône, titre, texte]. */
     var ICONES = {
@@ -1041,6 +1047,13 @@
         return '<span class="card-icon">' + svg(ICONES[nom] || ICONES.star) + '</span>';
     }
 
+    function icones(cles, taille, classe) {
+        return cles.map(function (k) {
+            return picture('./assets/img/' + k + '.png', ' width="' + taille + '" height="' + taille + '" alt="" decoding="async"' +
+                (classe ? ' class="' + classe + '"' : ''));
+        }).join('');
+    }
+
     function plateforme(app) {
         return pick(app.on || (app.platform === 'mac' ? V.onMac : (app.game ? V.onGame : V.onIPhone)));
     }
@@ -1049,63 +1062,105 @@
         return '<span class="btn btn-quiet' + (petit ? ' is-small' : '') + '" aria-disabled="true">' + esc(texte) + '</span>';
     }
 
-    /* Le site de l'application, à côté du badge de l'App Store. Il mène à la même
-       donnée sans rien installer : c'est une porte d'entrée, pas un doublon. */
+    /* Le site de l'application, à côté du badge de l'App Store : la même donnée sans rien installer. */
     function boutonWeb(cle) {
         var url = SITES_WEB[cle];
         if (!url) { return ''; }
-        return '<a class="btn btn-secondary" href="' + url + '" target="_blank" rel="noopener">' +
-            GLOBE + esc(pick(V.webVersion)) + '</a>';
+        return '<a class="btn btn-secondary" href="' + url + '" target="_blank" rel="noopener">' + GLOBE + esc(pick(V.webVersion)) + '</a>';
     }
 
-    /* Le badge officiel d'Apple (Marketing Resources), jamais redessiné : noir
-       sur fond clair, blanc sur fond sombre, dans la langue de la page. Hauteur
-       48 pixels, 40 dans les tuiles et le pied, minimum fixé par ses règles
-       d'usage. */
+    /* Le badge officiel d'Apple (Marketing Resources), jamais redessiné : noir sur fond clair, blanc sur fond sombre,
+       dans la langue de la page. Hauteur 48 pixels, 40 dans le pied, minimum fixé par ses règles d'usage. */
     var BADGE = { fr: ['app-store-fr', 152, 127], en: ['app-store-en', 144, 120] };
 
-    function badgeAppStore(url, texte, petit) {
+    function badgeAppStore(url, texte, petit, sombre) {
         var b = BADGE[lang] || BADGE.fr;
-        var img = '<img src="./assets/img/' + b[0] + '.svg" width="' + (petit ? b[2] : b[1]) +
+        var img = '<img src="./assets/img/' + b[0] + (sombre ? '-white' : '') + '.svg" width="' + (petit ? b[2] : b[1]) +
             '" height="' + (petit ? 40 : 48) + '" decoding="async" alt="' + esc(texte) + '">';
         return '<a class="store-badge' + (petit ? ' is-small' : '') + '" href="' + url + '" target="_blank" rel="noopener">' +
-            '<picture><source media="(prefers-color-scheme: dark)" srcset="./assets/img/' + b[0] + '-white.svg">' +
-                img + '</picture></a>';
+            (sombre ? img : '<picture><source media="(prefers-color-scheme: dark)" srcset="./assets/img/' + b[0] + '-white.svg">' + img + '</picture>') + '</a>';
     }
 
-    /* `cache` complète le libellé pour les lecteurs d'écran et les moteurs : quinze
-       « En savoir plus » identiques ne disent pas où ils mènent. */
+    /* `cache` complète le libellé pour les lecteurs d'écran : seize « En savoir plus » identiques ne disent pas où ils mènent. */
     function lienPlus(href, texte, cache) {
         return '<a class="link-more" href="' + href + '">' + esc(texte) +
             (cache ? '<span class="sr-only"> ' + esc(cache) + '</span>' : '') + CHEVRON + '</a>';
     }
 
-    /*
-     * Panneau des utilitaires Mac : sans capture d'écran, la fenêtre montre ce que
-     * l'application affiche réellement à l'ouverture, ses chiffres.
-     */
-    function fenetreMac(cle, charger) {
+    /* Fenêtre des utilitaires Mac : sans capture d'écran, elle montre ce que l'application affiche à l'ouverture. */
+    function fenetreMac(cle, k) {
         var app = APPS[cle];
         var lignes = pick(MAC_PANNEAU[cle]).map(function (l) {
             return '<div class="macwin-row"><span>' + esc(l[0]) + '</span><b>' + esc(l[1]) + '</b></div>';
         }).join('');
-        return '<div class="macwin"><div class="macwin-bar" aria-hidden="true">' +
+        return '<div class="macwin" style="--k:' + (k || 0) + '"><div class="macwin-bar" aria-hidden="true">' +
             '<i></i><i></i><i></i><span class="macwin-title">' + esc(app.name) + '</span></div>' +
-            '<div class="macwin-body"><div class="macwin-head">' +
-            picture('./assets/img/' + cle + '.png', ' width="60" height="60" alt=""' + (charger ? '' : ' loading="lazy"') + ' decoding="async"') +
+            '<div class="macwin-body"><div class="macwin-head">' + icones([cle], 56) +
             '<div><b>' + esc(app.name) + '</b><span>' + esc(pick(app.tag)) + '</span></div></div>' +
             '<div class="macwin-rows">' + lignes + '</div></div></div>';
     }
-
 
     function carte(contenu, classe) {
         return '<article class="card' + (classe ? ' ' + classe : '') + '">' + contenu + '</article>';
     }
 
-    function icones(cles, taille) {
-        return cles.map(function (k) {
-            return picture('./assets/img/' + k + '.png', ' width="' + taille + '" height="' + taille + '" alt="" decoding="async"');
-        }).join('');
+    /* Un appareil dessiné en volume autour d'un écran réel (site.css) : tranches, dos, touches, face avant.
+       `format` : clé de FORMATS ; `k` décale le flottement et l'entrée. TOUCHES : [tranche, position, longueur] en %
+       de ce côté, comme sur l'appareil réel tourné dans ce sens. L'Apple TV garde un simple cadre. */
+    var CLASSES_APPAREIL = { iphone: 'is-iphone', paysage: 'is-iphone is-land', ipad: 'is-ipad', ipadl: 'is-ipad is-land', duoi: 'is-duo', watch: 'is-watch', tv: 'is-tv' };
+    var TAILLES_APPAREIL = { iphone: '220px', paysage: '720px', ipad: '460px', ipadl: '640px', duo: '220px', duoi: '300px', watch: '124px', tv: '600px' };
+    var PLI = svg('<path d="M12 4v16"/><path d="M8.5 8.5 5 12l3.5 3.5M15.5 8.5 19 12l-3.5 3.5"/>');
+    var TOUCHES = {
+        iphone: [['l', 17, 5], ['l', 24, 8], ['l', 34, 8], ['r', 27, 13], ['r', 58, 9]],
+        paysage: [['b', 17, 5], ['b', 24, 8], ['b', 34, 8], ['t', 27, 13], ['t', 58, 9]],
+        ipad: [['t', 78, 9], ['r', 9, 7], ['r', 18, 7]],
+        ipadl: [['l', 13, 9], ['t', 9, 7], ['t', 18, 7]],
+        duoi: [['l', 15, 7], ['l', 24, 7], ['r', 20, 10]],
+        watch: [['r', 56, 20]]
+    };
+
+    /* Le Duo se plie et se déplie au toucher (attacheDuo) : écran intérieur ouvert, écran extérieur fermé. */
+    function appareil(cle, format, n, alt, k, charge) {
+        var nu = APPS[cle].game && format === 'iphone' ? ' is-plain' : '';
+        var duo = format === 'duoi';
+        var fr = lang === 'fr';
+        var ecran = capture(cle, format, n, alt, TAILLES_APPAREIL[format], charge) +
+            (duo ? '<span class="dev-ext">' + capture(cle, 'duo', n, alt + (fr ? ', fermé' : ', closed'), TAILLES_APPAREIL.duo, false) + '</span>' : '');
+        var ouvre = '<div class="dev ' + CLASSES_APPAREIL[format] + nu + (duo ? ' is-closed' : '') + '" style="--k:' + k + '"' +
+            (duo ? ' role="button" tabindex="0" aria-pressed="true" aria-label="' + esc(fr ? 'Déplier l’iPhone Duo' : 'Unfold the iPhone Duo') + '">' +
+                '<span class="dev-hint" aria-hidden="true">' + PLI + '<span class="is-o">' + (fr ? 'Plier' : 'Fold') + '</span><span class="is-f">' + (fr ? 'Déplier' : 'Unfold') + '</span></span>' : '>');
+        if (format === 'tv') { return ouvre + '<div class="dev-screen">' + ecran + '</div></div>'; }
+        var tranches = [1, 2, 3, 4, 5].map(function (l) { return '<i class="dev-slice" style="--l:' + l + '"></i>'; }).join('');
+        var touches = TOUCHES[format].map(function (t) { return '<i class="dev-key is-' + t[0] + '" style="--p:' + t[1] + '%;--s:' + t[2] + '%"></i>'; }).join('');
+        var montre = format === 'watch' ? '<i class="dev-crown"></i>' : '';
+        return ouvre + '<div class="dev-body">' + montre + tranches + '<div class="dev-back"><i class="dev-cam"></i></div>' + touches +
+            '<div class="dev-front"><div class="dev-screen">' + ecran + '<i class="dev-glare"></i></div></div></div></div>';
+    }
+
+    var NOMS_APPAREILS = { iphone: 'iPhone', ipad: 'iPad', duo: 'iPhone Duo', watch: 'Apple Watch', tv: 'Apple TV' };
+
+    /* Les appareils d'un produit, dans l'ordre de la scène : iPad derrière, iPhone devant, Duo, montre, téléviseur. */
+    function scene(cle, charge) {
+        var app = APPS[cle];
+        if (app.platform === 'mac') { return fenetreMac(cle, 0); }
+        var nom = app.name + ', ';
+        if (app.game) {
+            /* `ecran` : écran brut du jeu, sans le titre des visuels App Store (Marque/CapturesSite.mjs). */
+            var n = app.ecran ? 'ecran' : 1;
+            return appareil(cle, app.paysage ? 'paysage' : 'iphone', n, nom + 'iPhone', 0, charge) +
+                appareil(cle, 'ipadl', n, nom + 'iPad', 1, charge);
+        }
+        var s = app.shots || {};
+        return appareil(cle, 'ipad', 'ecran', nom + 'iPad', 1, charge) +
+            appareil(cle, 'iphone', 'ecran', nom + 'iPhone', 0, charge) +
+            (s.duo ? appareil(cle, 'duoi', 'ecran', nom + 'iPhone Duo', 2, false) : '') +
+            (s.watch ? appareil(cle, 'watch', 'ecran', nom + 'Apple Watch', 3, false) : '') +
+            (s.tv ? appareil(cle, 'tv', 'ecran', nom + 'Apple TV', 4, false) : '');
+    }
+
+    function etage(classe, contenu, accent) {
+        return '<div class="stage ' + classe + '"' + (accent || '') + '><div class="stage-glow" aria-hidden="true"></div>' +
+            '<div class="stage-rig">' + contenu + '</div></div>';
     }
 
     /* ---------------------------------------------------------------------
@@ -1119,37 +1174,59 @@
         ['photo', V.navPhoto, PHOTO_ORDER],
         ['mac', T.navMac, MAC_ORDER]
     ];
+    var TOUTES = GAME_ORDER.concat(IOS_ORDER, MAC_ORDER);
 
+    /* Pictogrammes du dock : accueil, familles, pages du site, toutes les apps. */
+    var PICTOS_DOCK = {
+        home: '<path d="M4 11.2 12 4.5l8 6.7V19a1.5 1.5 0 0 1-1.5 1.5H15v-5.5H9v5.5H5.5A1.5 1.5 0 0 1 4 19v-7.8Z"/>',
+        jeux: '<path d="M7.5 8h9a4.5 4.5 0 0 1 4.3 5.8l-1 3.4a2.3 2.3 0 0 1-3.9.9L14 16h-4l-1.9 2.1a2.3 2.3 0 0 1-3.9-.9l-1-3.4A4.5 4.5 0 0 1 7.5 8Z"/><path d="M8 11v3M6.5 12.5h3"/><circle cx="16" cy="11.5" r=".6"/><circle cx="17.2" cy="13.6" r=".6"/>',
+        france: '<path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.4"/>',
+        salon: '<rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8.5 20.5h7M12 17v3.5"/>',
+        photo: '<rect x="3.5" y="5.5" width="17" height="14" rx="2.5"/><circle cx="9" cy="10.5" r="1.6"/><path d="m4 17.5 4.6-4.4 3.4 3.1 2.7-2.4 5.3 4.6"/>',
+        mac: '<rect x="4.5" y="5" width="15" height="10.5" rx="1.6"/><path d="M2.5 19h19"/>',
+        about: '<circle cx="12" cy="8.5" r="3.5"/><path d="M5 20c.8-3.6 3.6-5.6 7-5.6s6.2 2 7 5.6"/>',
+        contact: '<rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m3.5 7 8.5 6 8.5-6"/>',
+        apps: '<rect x="4" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.8"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.8"/>'
+    };
+
+    /* En haut, la marque et la langue posées sur le premier écran ; la navigation vit dans un dock de verre flottant
+       en bas de l'écran, à portée du pouce. Libellés visibles sur grand écran, repliés en descendant. */
     function navHTML(page) {
-        var entrees = FAMILLES.map(function (f) { return ['./index.html#' + f[0], pick(f[1]), false]; }).concat([
-            ['./about.html', pick(T.navAbout), page === 'v2-about'],
-            ['./contact.html', pick(T.navContact), page === 'v2-contact']
-        ]);
-        var menu = entrees.map(function (e, i) {
+        var entrees = [['./index.html', lang === 'fr' ? 'Accueil' : 'Home', 'home', page === 'v2-home', true]].concat(
+            FAMILLES.map(function (f) { return ['./index.html#' + f[0], pick(f[1]), f[0], false, false]; }),
+            [['./about.html', pick(T.navAbout), 'about', page === 'v2-about', false],
+                ['./contact.html', pick(T.navContact), 'contact', page === 'v2-contact', false]]);
+        var menu = entrees.slice(1).map(function (e, i) {
             return '<a href="' + withLang(e[0]) + '" style="--i:' + i + '">' + esc(e[1]) + '</a>';
         }).join('') +
             '<small>' + esc(pick(V.menuApps)) + '</small>' +
-            '<div class="nav-menu-apps">' + GAME_ORDER.concat(IOS_ORDER, MAC_ORDER).map(function (k, i) {
+            '<div class="nav-menu-apps">' + TOUTES.map(function (k, i) {
                 return '<a class="nav-menu-app" href="' + withLang('./' + k + '.html') + '" style="--i:' + (i + entrees.length) + '">' +
                     icones([k], 28) + esc(APPS[k].name) + '</a>';
             }).join('') + '</div>';
 
+        function lien(e) {
+            return '<a class="dock-item' + (e[2] === 'about' || e[2] === 'contact' ? ' is-page' : '') + '" href="' + withLang(e[0]) + '"' +
+                (e[2] !== 'home' && e[0].indexOf('#') !== -1 ? ' data-spy="' + e[2] + '"' : '') +
+                (e[3] ? ' aria-current="page"' : '') + (e[4] ? ' aria-label="' + esc(e[1]) + '"' : '') + ' data-nom="' + esc(e[1]) + '">' +
+                svg(PICTOS_DOCK[e[2]]) + (e[4] ? '' : '<span class="dock-label">' + esc(e[1]) + '</span>') + '</a>';
+        }
+
         return '<a class="skip-link" href="#main">' + esc(pick(T.skipLink)) + '</a>' +
-            '<header class="nav" id="nav"><div class="nav-inner">' +
+            '<header class="topbar is-dark-zone" id="nav">' +
             '<a class="nav-brand" href="' + withLang('./index.html') + '">' +
-            '<img src="./assets/img/favicon.svg" width="24" height="24" alt="" decoding="async">' +
+            '<img src="./assets/img/favicon.svg" width="28" height="28" alt="" decoding="async">' +
             '<span>Rodolphe Vandaele</span></a>' +
-            '<nav class="nav-links" aria-label="Navigation">' +
-            entrees.map(function (e) {
-                return '<a href="' + withLang(e[0]) + '"' + (e[2] ? ' aria-current="page"' : '') + '>' + esc(e[1]) + '</a>';
-            }).join('') + '</nav>' +
             '<span class="lang-switch">' +
             '<a href="?lang=fr" data-lang="fr" lang="fr" aria-current="' + (lang === 'fr') + '">FR</a>' +
             '<a href="?lang=en" data-lang="en" lang="en" aria-current="' + (lang === 'en') + '">EN</a>' +
-            '</span>' +
-            '<button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu"' +
-            ' aria-label="' + esc(pick(V.menuOpen)) + '"><span></span><span></span></button>' +
-            '</div></header>' +
+            '</span></header>' +
+            '<nav class="dock" aria-label="Navigation"><div class="dock-inner">' +
+            entrees.slice(0, 6).map(lien).join('') + '<i class="dock-sep" aria-hidden="true"></i>' +
+            entrees.slice(6).map(lien).join('') + '<i class="dock-sep is-page" aria-hidden="true"></i>' +
+            '<button class="dock-item nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu"' +
+            ' aria-label="' + esc(pick(V.menuOpen)) + '" data-nom="' + esc(pick(V.menuApps)) + '">' + svg(PICTOS_DOCK.apps) + '</button>' +
+            '<span class="nav-progress" aria-hidden="true"></span></div></nav>' +
             '<nav class="nav-menu" id="nav-menu" aria-label="Menu" inert>' + menu + '</nav>';
     }
 
@@ -1193,10 +1270,6 @@
        Fragments du catalogue et des fiches
        --------------------------------------------------------------------- */
 
-    var TOUTES = GAME_ORDER.concat(IOS_ORDER, MAC_ORDER);
-    var CHECK = svg('<path d="m5 12.5 4.2 4.2L19 7"/>', 'check');
-    var LOUPE = svg('<circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.4-4.4"/>', 'loupe');
-
     var FAM_TEXTES = {
         jeux: [V.newEyebrow, V.newTitle, V.gamesLead],
         france: [V.onIPhone, T.iosTitle, V.franceLead],
@@ -1213,7 +1286,7 @@
         return FAMILLES[0];
     }
 
-    /* L'icône d'un produit porte le même nom de transition sur sa fiche du catalogue et en tête de sa page :
+    /* L'icône d'un produit porte le même nom de transition sur une seule carte de l'accueil et en tête de sa page :
        la transition entre pages la fait glisser de l'une à l'autre. */
     function vt(cle) {
         return ' style="view-transition-name:icone-' + cle + '"';
@@ -1242,12 +1315,6 @@
         return withLang('./' + cle + '-' + (sorte === 'privacy' ? 'confidentialite' : 'assistance') + '.html');
     }
 
-    /* Un visuel posé à plat : le visuel App Store porte déjà son titre et son appareil. */
-    function visuel(cle, n, alt, paresseux, sizes, appareil, classe) {
-        return '<div class="vis' + (classe ? ' ' + classe : '') + (appareil && appareil !== 'iphone' ? ' is-' + appareil : '') + '">' +
-            captureJeu(cle, n, alt, paresseux, sizes, appareil) + '</div>';
-    }
-
     function faqHTML() {
         return '<div class="faq">' + pick(V.faq).map(function (q) {
             return '<details><summary>' + esc(q[0]) + '<span class="faq-sign" aria-hidden="true"></span></summary>' +
@@ -1255,51 +1322,22 @@
         }).join('') + '</div>';
     }
 
-    /* Colonnes de la grille de captures sur grand écran : un nombre qui divise le compte, sinon le premier choix.
-       Portrait : 8 visuels en 4 colonnes, 5 en 5, 6 en 6 ; paysage : 6 en 3, 8 en 4. */
-    function colonnes(n, choix) {
-        for (var i = 0; i < choix.length; i++) { if (n % choix[i] === 0) { return choix[i]; } }
-        return choix[0];
+    function enTete(sur, titre, chapo, classe, id) {
+        return '<header class="head' + (classe ? ' ' + classe : '') + '">' + (sur ? '<p class="eyebrow">' + sur + '</p>' : '') +
+            '<h2' + (id ? ' id="' + id + '"' : '') + '>' + titre + '</h2>' + (chapo ? '<p class="lead">' + chapo + '</p>' : '') + '</header>';
     }
 
-    /* Les captures en grille de cartes, une grille par appareil et le sélecteur. Les utilitaires Mac, sans captures,
-       montrent leur fenêtre dans une carte de même format. */
-    function galerie(cle, titre) {
-        var app = APPS[cle];
-        if (!app.storeShots && app.platform === 'ios') { return ''; }
-        if (!app.storeShots) {
-            return '<section class="band sec-shots" id="captures"><div class="wrap"><div class="rail-head"><h2>' + esc(titre) + '</h2></div>' +
-                '<div class="shots is-wide" style="--cols:2"><div class="shot-card is-mac">' + fenetreMac(cle, true) + '</div></div></div></section>';
-        }
-        var legendes = pick(app.storeShots);
-        var appareils = app.devices || (app.game ? ['iphone', 'ipad'] : ['iphone']);
-        var formats = {
-            iphone: [app.paysage ? 'paysage' : 'iphone', app.paysage ? '(max-width: 700px) 92vw, 440px' : '(max-width: 700px) 46vw, 300px'],
-            ipad: [app.ipadPortrait ? 'ipadv' : 'ipad', app.ipadPortrait ? '(max-width: 700px) 46vw, 300px' : '(max-width: 700px) 92vw, 440px'],
-            tv: ['tv', '(max-width: 700px) 92vw, 440px']
-        };
-        var grille = function (a) {
-            var large = formats[a][0] === 'paysage' || formats[a][0] === 'ipad' || a === 'tv';
-            var n = colonnes(legendes.length, large ? [3, 4, 2] : [4, 5, 6, 3]);
-            return '<div class="shots' + (large ? ' is-wide' : '') + '" data-device="' + a + '" style="--cols:' + n + '"' + (a !== 'iphone' ? ' hidden' : '') + '>' +
-                legendes.map(function (legende, i) {
-                    return '<figure class="shot-card">' + visuel(cle, i + 1, app.name + ', ' + legende, true, formats[a][1], formats[a][0]) +
-                        '<figcaption>' + esc(legende) + '</figcaption></figure>';
-                }).join('') + '</div>';
-        };
-        return '<section class="band sec-shots" id="captures"><div class="wrap">' +
-            '<div class="rail-head"><h2>' + esc(titre) + '</h2>' +
-            (appareils.length > 1 ? '<div class="segmented" role="group" aria-label="' + esc(pick(V.deviceLabel)) + '">' +
-                appareils.map(function (a, i) {
-                    return '<button type="button" data-device="' + a + '" aria-pressed="' + (i === 0) + '">' + NOMS_APPAREILS[a] + '</button>';
-                }).join('') + '</div>' : '') +
-            '</div>' + appareils.map(grille).join('') + '</div></section>';
+    /* Rail à défilement aimanté, avec ses flèches (le script les active selon la position). */
+    function rail(classe, contenu, etiquette, attrs) {
+        var fr = lang === 'fr';
+        return '<div class="rail"' + (attrs || '') + '><div class="rail-track ' + classe + '" tabindex="0" role="group" aria-label="' + esc(etiquette) + '">' + contenu + '</div>' +
+            '<div class="rail-nav"><button type="button" data-dir="-1" aria-label="' + (fr ? 'Précédent' : 'Previous') + '">' + CHEVRON + '</button>' +
+            '<button type="button" data-dir="1" aria-label="' + (fr ? 'Suivant' : 'Next') + '">' + CHEVRON + '</button></div></div>';
     }
 
-    function statsHTML(app) {
-        if (!app.stats) { return ''; }
-        return '<dl class="p-stats">' + pick(app.stats).map(function (st) {
-            return '<div class="stat"><dt>' + esc(st[1]) + '</dt><dd data-count="' + esc(st[0]) + '">' + esc(st[0]) + '</dd></div>';
+    function chiffres(liste, classe) {
+        return '<dl class="numbers' + (classe ? ' ' + classe : '') + '">' + liste.map(function (st) {
+            return '<div class="number reveal"><dt>' + esc(st[1]) + '</dt><dd data-count="' + esc(st[0]) + '">' + esc(st[0]) + '</dd></div>';
         }).join('') + '</dl>';
     }
 
@@ -1310,7 +1348,7 @@
         var cta = !app.store ? '' : '<a class="subnav-cta" href="' + app.store + '" target="_blank" rel="noopener"' +
             (mac ? '>' + esc(pick(V.openSource)) : ' aria-label="' + esc(pick(V.getAria).replace('{app}', app.name)) + '">' + esc(pick(V.get))) + '</a>';
         return '<nav class="subnav" aria-label="' + esc(app.name) + '"><div class="subnav-inner">' +
-            '<a class="subnav-title" href="' + withLang('./' + cle + '.html') + '">' + icones([cle], 24) + esc(app.name) + '</a>' +
+            '<a class="subnav-title" href="' + withLang('./' + cle + '.html') + '">' + icones([cle], 26) + esc(app.name) + '</a>' +
             '<div class="subnav-links">' + sections.map(function (s) {
                 return '<a href="' + s[0] + '"' + (s[2] ? ' aria-current="page"' : '') + '>' + esc(s[1]) + '</a>';
             }).join('') + '</div>' + cta + '</div></nav>';
@@ -1325,46 +1363,48 @@
         }).join('') + '</ol></nav>';
     }
 
-    /* L'identité d'une fiche : icône et nom. `titre` remplace le nom par celui d'une page légale. */
-    function identite(cle, titre, sur) {
+    /* La tête d'une fiche ou d'une page légale : fil, icône, surtitre et titre. */
+    function teteProduit(cle, suite, titre, sur) {
         var app = APPS[cle];
-        var nom = '<h1>' + esc(titre || app.name) + '</h1>';
-        return '<div class="p-id">' + picture('./assets/img/' + cle + '.png', ' class="p-icon" width="128" height="128" alt="" decoding="async"' + vt(cle)) +
-            '<div><p class="eyebrow">' + esc(sur || pick(app.tag)) + '</p>' + nom + '</div></div>';
+        return filAriane(cle, suite) +
+            picture('./assets/img/' + cle + '.png', ' class="p-icon app-icon" width="136" height="136" alt="" decoding="async"' + vt(cle)) +
+            '<p class="eyebrow">' + esc(sur || pick(app.tag)) + '</p><h1>' + esc(titre || app.name) + '</h1>';
     }
 
-    /* ---------------------------------------------------------------------
-       Accueil : le catalogue
-       --------------------------------------------------------------------- */
-
-    /* La tuile du catalogue : l'icône sur un fond de sa couleur, le nom et une ligne, toute la tuile en lien. Accueil,
-       produits de la même famille, assistance par application. `ligne` et `href` remplacent le genre et la fiche ;
-       `rang` : les six premières tuiles de l'accueil sont visibles dès l'arrivée et ne sont pas différées. */
-    function tuile(cle, ligne, href, rang) {
+    /* La tuile du catalogue : l'icône sur un fond de sa couleur, le nom et une ligne, toute la tuile en lien.
+       `ligne` et `href` remplacent le genre et la fiche (assistance par application). */
+    function tuile(cle, ligne, href) {
         var app = APPS[cle];
         var f = familleDe(cle);
         var externe = href && href.indexOf('http') === 0;
         var cherche = (app.name + ' ' + pick(app.tag) + ' ' + pick(app.promo) + ' ' + pick(f[1])).toLowerCase();
         return '<article class="tile is-' + f[0] + '" data-fam="' + f[0] + '" data-search="' + esc(cherche) + '"' + styleAccent(app) + '>' +
-            '<div class="tile-art">' + picture('./assets/img/' + cle + '.png', ' width="96" height="96" alt=""' +
-                (rang < 6 ? '' : ' loading="lazy"') + ' decoding="async"' + (externe ? '' : vt(cle))) +
-            (app.store ? '' : '<span class="tile-flag">' + esc(lang === 'fr' ? 'Bientôt' : 'Soon') + '</span>') + '</div>' +
+            '<div class="tile-art">' + icones([cle], 88) + '</div>' +
+            (app.store ? '' : '<span class="tile-flag">' + esc(lang === 'fr' ? 'Bientôt' : 'Soon') + '</span>') +
             '<div class="tile-body"><h3><a class="tile-link" href="' + (href || withLang('./' + cle + '.html')) + '"' +
             (externe ? ' target="_blank" rel="noopener"' : '') + '>' + esc(app.name) + '</a></h3>' +
             '<p>' + esc(ligne || pick(app.tag)) + '</p></div></article>';
     }
 
     function tuiles(cles, ligne, lien) {
-        return '<div class="tiles">' + cles.map(function (k, i) { return tuile(k, ligne && ligne(k), lien && lien(k), i); }).join('') + '</div>';
+        return '<div class="tiles">' + cles.map(function (k) { return tuile(k, ligne && ligne(k), lien && lien(k)); }).join('') + '</div>';
     }
 
-    function rayon(f, n) {
-        var t = FAM_TEXTES[f[0]];
-        return '<section class="shelf" id="' + f[0] + '" data-fam="' + f[0] + '" aria-labelledby="' + f[0] + '-titre">' +
-            '<header class="shelf-head is-stacked"><div><p class="eyebrow"><i class="dot is-' + f[0] + '"></i>' + esc(pick(t[0])) + '</p>' +
-            '<h2 id="' + f[0] + '-titre">' + esc(pick(f[1])) + ' <span class="count">' + f[2].length + '</span></h2></div>' +
-            '<p class="shelf-lead"><b>' + esc(pick(t[1])) + '</b> ' + esc(pick(t[2])) + '</p></header>' +
-            '<div class="tiles">' + f[2].map(function (k, i) { return tuile(k, null, null, n ? 9 : i); }).join('') + '</div></section>';
+    /* La carte d'un produit dans la grille de son chapitre : identité, promesse et appareil. `etendue` : colonnes
+       occupées sur six, sur grand écran puis sur tablette. Une carte large passe le texte à gauche (requête de conteneur). */
+    function vitrine(cle, etendue) {
+        var app = APPS[cle];
+        var art = app.platform === 'mac' ? fenetreMac(cle, 0) :
+            appareil(cle, app.paysage ? 'paysage' : 'iphone', app.game && !app.ecran ? 1 : 'ecran', app.name + ', iPhone', 0, false);
+        var style = styleAccent(app).replace('"', '"--s:' + etendue[0] + ';--st:' + etendue[1] + ';');
+        return '<article class="show' + (app.paysage ? ' is-land' : '') + (app.platform === 'mac' ? ' is-mac' : '') + '"' + style + '><div class="show-in">' +
+            (app.store ? '' : '<span class="show-flag">' + esc(lang === 'fr' ? 'Bientôt' : 'Soon') + '</span>') +
+            '<div class="show-text"><div class="show-id">' + picture('./assets/img/' + cle + '.png', ' width="52" height="52" alt="" loading="lazy" decoding="async"' + vt(cle)) +
+            '<span class="show-tag">' + esc(pick(app.tag)) + '</span></div>' +
+            '<h3><a class="show-link" href="' + withLang('./' + cle + '.html') + '">' + esc(app.name) + '</a></h3>' +
+            '<p>' + esc(pick(app.promo)) + '</p>' +
+            '<span class="show-more" aria-hidden="true">' + esc(lang === 'fr' ? 'Découvrir' : 'Discover') + CHEVRON + '</span></div>' +
+            '<div class="show-art" aria-hidden="true">' + art + '</div></div></article>';
     }
 
     /* Une carte de lien : pictogramme, titre, une ligne. Pages légales, version web, code, mentions. */
@@ -1381,7 +1421,7 @@
         var c = [];
         if (sauf) { c.push(carteLien(withLang('./' + cle + '.html'), app.platform === 'mac' ? 'laptop' : 'phone', app.name, pick(app.tag))); }
         if (AVEC_LEGAL.indexOf(cle) !== -1) {
-            if (sauf !== 'support') { c.push(carteLien(l(lienLegal(cle, 'support')), 'mail', pick(T.supportLink), fr ? 'Questions fréquentes et contact' : 'Frequent questions and contact')); }
+            if (sauf !== 'support') { c.push(carteLien(l(lienLegal(cle, 'support')), 'mail', pick(T.supportLink), fr ? 'Questions fréquentes et contact' : 'Frequently asked questions and contact')); }
             if (sauf !== 'privacy') { c.push(carteLien(l(lienLegal(cle, 'privacy')), 'shield', pick(T.privacyLink), fr ? 'Données traitées et vos droits' : 'Data processed and your rights')); }
         }
         if (SITES_WEB[cle] && !sauf) { c.push(carteLien(SITES_WEB[cle], 'globe', pick(V.webVersion), SITES_WEB[cle].replace('https://', ''), true)); }
@@ -1390,149 +1430,211 @@
         return '<div class="link-cards">' + c.join('') + '</div>';
     }
 
-    /* Le filtre par famille et la recherche. La famille choisie suit l'ancre de l'adresse (#jeux...) : un lien
-       de la barre ou du pied ouvre le catalogue sur elle. */
-    function attacheFiltres() {
-        var barre = document.querySelector('.filters');
-        if (!barre) { return; }
-        var boutons = barre.querySelectorAll('button[data-fam]');
-        var champ = document.getElementById('recherche');
-        var bilan = document.getElementById('bilan');
-        var vide = document.getElementById('catalogue-vide');
-        function appliquer() {
-            var fam = barre.querySelector('button[aria-pressed="true"]').getAttribute('data-fam');
-            var q = (champ.value || '').trim().toLowerCase();
-            var n = 0;
-            document.querySelectorAll('.shelf').forEach(function (s) {
-                var vus = 0;
-                s.querySelectorAll('.tile').forEach(function (c) {
-                    var ok = (fam === 'tout' || c.getAttribute('data-fam') === fam) && (!q || c.getAttribute('data-search').indexOf(q) !== -1);
-                    c.hidden = !ok;
-                    if (ok) { vus++; }
-                });
-                s.hidden = !vus;
-                n += vus;
-            });
-            vide.hidden = n > 0;
-            bilan.textContent = n + (lang === 'fr' ? (n > 1 ? ' applications' : ' application') : (n > 1 ? ' apps' : ' app'));
-        }
-        function choisir(fam) {
-            boutons.forEach(function (o) { o.setAttribute('aria-pressed', String(o.getAttribute('data-fam') === fam)); });
-            appliquer();
-        }
-        boutons.forEach(function (b) {
-            b.addEventListener('click', function () {
-                var fam = b.getAttribute('data-fam');
-                choisir(fam);
-                history.replaceState(null, '', fam === 'tout' ? location.pathname + location.search : '#' + fam);
-            });
+    /* ---------------------------------------------------------------------
+       Accueil
+       --------------------------------------------------------------------- */
+
+    /* Les familles en bandes alternées, sombres et claires : chacune son chapitre et sa grille bento. */
+    var FONDS = { jeux: ' is-dark', france: ' is-alt', salon: ' is-dark', photo: '', mac: ' is-dark' };
+
+    /* Colonnes de chaque carte sur six, pour que chaque rangée soit pleine : un produit en paysage prend toute la
+       largeur ; les autres vont par trois, les premiers par deux quand le compte ne tombe pas juste. Sur tablette
+       (deux colonnes), une carte seule en tête prend la largeur. */
+    function etendues(cles) {
+        var portrait = cles.filter(function (k) { return !APPS[k].paysage; }).length;
+        var tete = portrait === 1 ? 1 : [0, 4, 2][portrait % 3];
+        var rang = 0;
+        return cles.map(function (k) {
+            if (APPS[k].paysage) { return [6, 6]; }
+            var i = rang++;
+            return [portrait === 1 ? 6 : (i < tete ? 3 : 2), (portrait % 2 && i === 0) ? 6 : 3];
         });
-        champ.addEventListener('input', appliquer);
-        var ancre = location.hash.slice(1);
-        if (FAM_TEXTES[ancre]) { choisir(ancre); }
     }
 
-    /* Les quinze icônes, chacune vers sa fiche : en-tête de la page À propos. */
-    function mosaique(classe, taille) {
-        return '<nav class="' + classe + '" aria-label="' + esc(pick(V.allApps)) + '"><ul>' + TOUTES.map(function (k) {
-            return '<li><a href="' + withLang('./' + k + '.html') + '" title="' + esc(APPS[k].name) + '">' + icones([k], taille) +
-                '<span class="sr-only">' + esc(APPS[k].name) + '</span></a></li>';
-        }).join('') + '</ul></nav>';
+    function chapitre(f) {
+        var t = FAM_TEXTES[f[0]];
+        var e = etendues(f[2]);
+        return '<section class="band chapter' + FONDS[f[0]] + '" id="' + f[0] + '" aria-labelledby="' + f[0] + '-titre">' +
+            '<div class="wrap">' + enTete('<i class="dot is-' + f[0] + '"></i>' + esc(pick(t[0])),
+                esc(pick(f[1])) + '<span class="count">' + f[2].length + '</span>',
+                '<b>' + esc(pick(t[1])) + '</b> ' + esc(pick(t[2])), 'reveal', f[0] + '-titre') + '</div>' +
+            '<div class="wrap bento">' + f[2].map(function (k, i) { return vitrine(k, e[i]); }).join('') + '</div></section>';
+    }
+
+    /* Premier écran : quatre apps sur quatre appareils, ou un seul produit sur tous ses appareils (selecteur). */
+    function sceneAccueil() {
+        return appareil('carbufrance', 'ipad', 'ecran', 'CarbuFrance, iPad', 1, true) +
+            appareil('telzo', 'iphone', 'ecran', 'Telzo, iPhone', 0, true) +
+            appareil('netta', 'duoi', 'ecran', 'Netta, iPhone Duo', 2, false) +
+            appareil('toilettefrance', 'watch', 'ecran', 'ToiletteFrance, Apple Watch', 3, false);
+    }
+
+    function selecteur() {
+        var fr = lang === 'fr';
+        var cles = TOUTES.filter(function (k) { return appareilsDe(APPS[k]).length; });
+        return '<div class="hero-pick"><div class="pick-row" role="group" aria-label="' + esc(fr ? 'Montrer un produit sur les appareils' : 'Show one product on the devices') + '">' +
+            '<button type="button" class="pick-item is-mix" data-pick="" aria-pressed="true" aria-label="' + esc(fr ? 'Sélection' : 'Selection') + '">' + svg(PICTOS_DOCK.apps) + '</button>' +
+            cles.map(function (k) {
+                return '<button type="button" class="pick-item" data-pick="' + k + '" aria-pressed="false" aria-label="' + esc(APPS[k].name) + '">' + icones([k], 40) + '</button>';
+            }).join('') + '</div>' +
+            '<p class="pick-name" aria-live="polite">' + esc(fr ? 'Touchez une icône : elle s’affiche sur chaque appareil.' : 'Tap an icon to see it on every device.') + '</p></div>';
     }
 
     function renderHome() {
-        var intro = '<section class="intro" id="main"><div class="wrap">' +
+        var fr = lang === 'fr';
+        var hero = '<section class="hero is-dark-zone" id="main"><div class="hero-sky" aria-hidden="true"></div><div class="wrap">' +
             '<p class="eyebrow">' + esc(pick(V.heroKicker)) + '</p>' +
-            '<h1>' + pick(V.heroTitleHTML).replace(' class="grad"', ' class="hl"').replace('<br>', ' ') + '</h1>' +
-            '<p class="intro-lead">' + esc(pick(V.heroShort)) + '</p>' +
-            '</div></section>';
+            '<h1>' + pick(V.heroTitleHTML) + '</h1>' +
+            '<p class="hero-lead">' + esc(pick(V.heroShort)) + '</p>' +
+            '<div class="btn-row"><a class="btn btn-primary" href="#jeux">' + esc(pick(V.seeGames)) + '</a>' +
+            '<a class="btn btn-secondary" href="#catalogue">' + esc(pick(V.allApps)) + '</a></div></div>' +
+            etage('hero-stage', sceneAccueil()) + selecteur() +
+            '<a class="hero-cue" href="#decouvrir" aria-label="' + (fr ? 'Découvrir la suite' : 'Discover more') + '">' + CHEVRON + '</a>' +
+            '</section>';
 
-        var filtres = '<div class="filters-bar"><div class="wrap filters">' +
-            '<div class="chips" role="group" aria-label="' + esc(pick(V.chaptersLabel)) + '">' +
-            '<button type="button" data-fam="tout" aria-pressed="true">' + esc(lang === 'fr' ? 'Tout' : 'All') + ' <span>' + TOUTES.length + '</span></button>' +
+        var n = TOUTES.length;
+        var anneau = '<section class="band orbit-band" id="decouvrir" aria-labelledby="anneau-titre"><div class="wrap">' +
+            enTete(esc(pick(V.heroKicker)), fr ? n + ' apps et jeux.<br><span class="grad">Une seule exigence.</span>' : n + ' apps and games.<br><span class="grad">One standard.</span>',
+                esc(fr ? 'Aucun compte à créer, aucune donnée personnelle envoyée au développeur. Touchez une icône pour ouvrir sa fiche.' : 'No account to create, no personal data sent to the developer. Tap an icon to open its page.'), 'is-center reveal', 'anneau-titre') +
+            '</div><div class="orbit"><ul class="orbit-ring" style="--n:' + n + '">' + TOUTES.map(function (k, i) {
+                return '<li style="--i:' + i + '"><a href="' + withLang('./' + k + '.html') + '" aria-label="' + esc(APPS[k].name) + '">' + icones([k], 112) + '</a></li>';
+            }).join('') + '</ul><nav class="icon-dock orbit-static wrap" aria-label="' + esc(pick(V.allApps)) + '">' + TOUTES.map(function (k) {
+                return '<a href="' + withLang('./' + k + '.html') + '" aria-label="' + esc(APPS[k].name) + '">' + icones([k], 64) + '</a>';
+            }).join('') + '</nav></div></section>';
+
+        var filtres = '<div class="filters">' +
+            '<div class="filter-chips" role="group" aria-label="' + esc(pick(V.chaptersLabel)) + '">' +
+            '<button type="button" data-fam="tout" aria-pressed="true">' + esc(fr ? 'Tout' : 'All') + ' <span>' + n + '</span></button>' +
             FAMILLES.map(function (f) {
-                return '<button type="button" data-fam="' + f[0] + '" aria-pressed="false"><i class="dot is-' + f[0] + '"></i>' + esc(pick(f[1])) + ' <span>' + f[2].length + '</span></button>';
+                return '<button type="button" class="is-' + f[0] + '" data-fam="' + f[0] + '" aria-pressed="false"><i class="dot"></i>' + esc(pick(f[1])) + ' <span>' + f[2].length + '</span></button>';
             }).join('') + '</div>' +
-            '<label class="search">' + LOUPE + '<span class="sr-only">' + esc(lang === 'fr' ? 'Rechercher une application' : 'Search an app') + '</span>' +
-            '<input id="recherche" type="search" autocomplete="off" placeholder="' + esc(lang === 'fr' ? 'Rechercher' : 'Search') + '"></label>' +
-            '<p class="bilan" id="bilan" aria-live="polite">' + TOUTES.length + (lang === 'fr' ? ' applications' : ' apps') + '</p>' +
-            '</div></div>';
+            '<label class="search">' + LOUPE + '<span class="sr-only">' + esc(fr ? 'Rechercher une application' : 'Search an app') + '</span>' +
+            '<input id="recherche" type="search" autocomplete="off" placeholder="' + esc(fr ? 'Rechercher' : 'Search') + '"></label>' +
+            '<p class="bilan" id="bilan" aria-live="polite">' + n + (fr ? ' applications' : ' apps') + '</p></div>';
 
-        var catalogue = '<div class="wrap catalogue">' + FAMILLES.map(function (f, i) { return rayon(f, i); }).join('') +
-            '<p class="empty" id="catalogue-vide" hidden>' + esc(lang === 'fr' ? 'Aucune application ne correspond à cette recherche.' : 'No app matches this search.') + '</p></div>';
+        var catalogue = '<section class="band" id="catalogue" aria-labelledby="catalogue-titre"><div class="wrap">' +
+            enTete(esc(fr ? 'Catalogue' : 'Catalog'), esc(pick(V.allApps)), null, 'reveal', 'catalogue-titre') + filtres +
+            '<div class="tiles" id="tuiles">' + TOUTES.map(function (k) { return tuile(k); }).join('') + '</div>' +
+            '<p class="empty" id="catalogue-vide" hidden>' + esc(fr ? 'Aucune application ne correspond à cette recherche.' : 'No app matches this search.') + '</p></div></section>';
 
-        var valeurs = '<section class="band principles"><div class="wrap">' +
-            '<header class="shelf-head is-simple"><div><p class="eyebrow">' + esc(pick(T.valuesEyebrow)) + '</p><h2>' + esc(pick(T.valuesTitle)) + '</h2></div></header>' +
-            '<div class="cards is-three">' + pick(T.values).map(function (v) {
-                return carte(icone(v[0]) + '<h3>' + esc(v[1]) + '</h3><p>' + esc(v[2]) + '</p>');
+        var nombres = '<section class="band is-tight is-alt"><div class="wrap">' + chiffres(fr ?
+            [[String(n), 'applications et jeux'], [String(GAME_ORDER.length), 'jeux avec Gloup'], ['0', 'compte à créer'], ['6', 'appareils : iPhone, iPad, iPhone Duo, Apple Watch, Apple TV et Mac']] :
+            [[String(n), 'apps and games'], [String(GAME_ORDER.length), 'games starring Gloup'], ['0', 'accounts to create'], ['6', 'devices: iPhone, iPad, iPhone Duo, Apple Watch, Apple TV and Mac']]) + '</div></section>';
+
+        var valeurs = '<section class="band"><div class="wrap">' + enTete(esc(pick(T.valuesEyebrow)), esc(pick(T.valuesTitle)), null, 'reveal') +
+            '<div class="cards">' + pick(T.values).map(function (v) {
+                return carte(icone(v[0]) + '<h3>' + esc(v[1]) + '</h3><p>' + esc(v[2]) + '</p>', 'reveal');
             }).join('') + '</div></div></section>';
 
-        var questions = '<section class="band" aria-labelledby="faq-titre"><div class="wrap faq-grid">' +
-            '<header><p class="eyebrow">' + esc(pick(V.faqEyebrow)) + '</p><h2 id="faq-titre">' + esc(pick(V.faqTitle)) + '</h2></header>' +
-            faqHTML() + '</div></section>';
+        var questions = '<section class="band is-alt" aria-labelledby="faq-titre"><div class="wrap">' +
+            enTete(esc(pick(V.faqEyebrow)), esc(pick(V.faqTitle)), null, 'reveal', 'faq-titre') + faqHTML() + '</div></section>';
 
-        return navHTML('v2-home') + '<main>' + intro + filtres + catalogue + valeurs + questions + boiteContact() + '</main>' + footerHTML();
+        return navHTML('v2-home') + '<main>' + hero + anneau + FAMILLES.map(chapitre).join('') + catalogue + nombres + valeurs + questions +
+            boiteContact() + '</main>' + footerHTML();
     }
 
     function boiteContact() {
-        return '<section class="band"><div class="wrap"><div class="contact-box">' +
-            '<div><h2>' + esc(pick(V.contactFinalTitle)) + '</h2><p>' + esc(pick(V.contactLead)) + '</p></div>' +
-            '<div class="btn-row"><a class="btn btn-primary" href="' + withLang('./contact.html') + '">' + esc(pick(V.contactWrite)) + '</a>' +
+        return '<section class="band"><div class="wrap"><div class="cta-box reveal">' +
+            '<h2>' + esc(pick(V.contactFinalTitle)) + '</h2><p>' + esc(pick(V.contactLead)) + '</p>' +
+            '<div class="btn-row is-center"><a class="btn btn-primary" href="' + withLang('./contact.html') + '">' + esc(pick(V.contactWrite)) + '</a>' +
             lienPlus(withLang('./about.html'), pick(T.navAbout)) + '</div></div></div></section>';
     }
 
     /* ---------------------------------------------------------------------
-       Page produit : un seul gabarit catalogue
+       Page produit
        --------------------------------------------------------------------- */
 
-    /* La boîte de la fiche : téléchargement, faits, chiffres, pages légales. */
-    function boiteFiche(cle) {
-        var app = APPS[cle];
-        var f = familleDe(cle);
-        return '<aside class="p-aside" aria-label="' + esc(app.name) + '"><div class="p-box">' +
-            '<div class="btn-row">' + appel(cle) + boutonWeb(cle) + '</div>' +
-            '<dl class="p-facts"><div><dt>' + esc(lang === 'fr' ? 'Appareils' : 'Devices') + '</dt><dd>' + esc(plateforme(app)) + '</dd></div>' +
-            '<div><dt>' + esc(lang === 'fr' ? 'Catégorie' : 'Category') + '</dt><dd>' + esc(pick(f[1])) + '</dd></div></dl>' +
-            '<ul class="p-chips">' + faitsDe(app).map(function (x) { return '<li>' + CHECK + esc(x) + '</li>'; }).join('') + '</ul>' +
-            statsHTML(app) +
-            '</div></aside>';
+    /* Les légendes d'un appareil : rangs dans `storeShots`, ou textes propres ({ fr, en }). Un jeu montre sur l'iPad
+       les mêmes écrans que sur l'iPhone. */
+    function legendes(app, a) {
+        var base = pick(app.storeShots);
+        var refs = app.shots && app.shots[a];
+        if (!refs) { return base; }
+        return refs.map(function (r) { return typeof r === 'number' ? base[r] : pick(r); });
     }
 
-    function enveloppe(page, contenu) {
-        return navHTML(page) + '<main class="fiche">' + contenu + '</main>' + footerHTML();
+    function appareilsDe(app) {
+        if (app.platform === 'mac' || !app.storeShots) { return []; }
+        if (app.game) { return ['iphone', 'ipad']; }
+        return ['iphone', 'ipad', 'duo', 'watch', 'tv'].filter(function (a) { return a === 'iphone' || (app.shots && app.shots[a]); });
+    }
+
+    function galerie(cle) {
+        var app = APPS[cle];
+        var appareils = appareilsDe(app);
+        if (!appareils.length) { return ''; }
+        var fr = lang === 'fr';
+        var format = {
+            iphone: [app.paysage ? 'paysage' : 'iphone', app.paysage ? '(max-width: 700px) 84vw, 640px' : '(max-width: 700px) 60vw, 290px'],
+            ipad: [app.game ? 'ipadl' : 'ipad', app.game ? '(max-width: 700px) 84vw, 640px' : '(max-width: 700px) 70vw, 420px'],
+            watch: ['watch', '240px'],
+            tv: ['tv', '(max-width: 700px) 84vw, 640px']
+        };
+        function cartes(a) {
+            var l = legendes(app, a);
+            if (a === 'duo') {
+                var faces = [['duo', fr ? 'Fermé' : 'Closed', '(max-width: 700px) 60vw, 320px'], ['duoi', fr ? 'Ouvert' : 'Open', '(max-width: 700px) 60vw, 320px']];
+                return faces.map(function (face) {
+                    return l.map(function (legende, i) {
+                        return '<figure class="shot">' + '<div class="vis">' + capture(cle, face[0], i + 1, app.name + ', iPhone Duo ' + face[1].toLowerCase() + ', ' + legende, face[2]) + '</div>' +
+                            '<figcaption><b>' + esc(face[1]) + '</b> · ' + esc(legende) + '</figcaption></figure>';
+                    }).join('');
+                }).join('');
+            }
+            return l.map(function (legende, i) {
+                return '<figure class="shot' + (a === 'watch' ? ' is-watch' : '') + '"><div class="vis">' +
+                    capture(cle, format[a][0], i + 1, app.name + ', ' + NOMS_APPAREILS[a] + ', ' + legende, format[a][1]) + '</div>' +
+                    '<figcaption>' + esc(legende) + '</figcaption></figure>';
+            }).join('');
+        }
+        var paysage = function (a) { return (a === 'iphone' && app.paysage) || (a === 'ipad' && app.game); };
+        return '<section class="band is-alt" id="captures" aria-labelledby="captures-titre">' +
+            '<div class="gallery-head"><h2 id="captures-titre" class="reveal">' + esc(pick(app.game ? V.storeShotsTitle : V.shotsTitle)) + '</h2>' +
+            (appareils.length > 1 ? '<div class="segmented" role="group" aria-label="' + esc(pick(V.deviceLabel)) + '">' +
+                appareils.map(function (a, i) {
+                    return '<button type="button" data-device="' + a + '" aria-pressed="' + (i === 0) + '">' + NOMS_APPAREILS[a] + '</button>';
+                }).join('') + '</div>' : '') + '</div>' +
+            appareils.map(function (a, i) {
+                return rail('shots' + (paysage(a) ? ' is-land' : ''), cartes(a), app.name + ', ' + NOMS_APPAREILS[a],
+                    ' data-device="' + a + '"' + (i ? ' hidden' : '')).replace('class="rail-track shots', 'data-device="' + a + '" class="rail-track shots');
+            }).join('') + '</section>';
     }
 
     function renderApp(cle) {
         var app = APPS[cle];
         var f = familleDe(cle);
-        var sections = [['#main', pick(V.subOverview)], ['#fonctions', pick(V.subFeatures)]]
-            .concat(app.storeShots || app.platform === 'mac' ? [['#captures', pick(app.storeShots ? V.subShots : T.macPreview)]] : []).concat([['#donnees', pick(V.subData)], ['#aide', lang === 'fr' ? 'Aide' : 'Help']]);
+        var fr = lang === 'fr';
+        var avecGalerie = appareilsDe(app).length > 0;
+        var sections = [['#main', pick(V.subOverview)]].concat(avecGalerie ? [['#captures', pick(V.subShots)]] : [])
+            .concat([['#fonctions', pick(V.subFeatures)], ['#donnees', pick(V.subData)], ['#aide', fr ? 'Aide' : 'Help']]);
 
-        var tete = '<section class="p-hero" id="main"><div class="wrap p-grid">' +
-            '<header class="p-head">' + filAriane(cle, [[null, app.name]]) + identite(cle) +
-            '<p class="p-promo">' + esc(pick(app.promo)) + '</p></header>' +
-            boiteFiche(cle) + '</div></section>';
+        var tete = '<section class="p-hero is-dark-zone" id="main"' + styleAccent(app) + '><div class="wrap p-head">' +
+            teteProduit(cle, [[null, app.name]]) +
+            '<p class="p-promo">' + esc(pick(app.promo)) + '</p>' +
+            '<div class="btn-row">' + appel(cle) + boutonWeb(cle) + '</div>' +
+            '<ul class="chips"><li>' + esc(plateforme(app)) + '</li>' + faitsDe(app).map(function (x) { return '<li>' + CHECK + esc(x) + '</li>'; }).join('') + '</ul>' +
+            '</div>' + etage('p-stage', scene(cle, true)) +
+            (app.stats ? '<div class="wrap p-numbers">' + chiffres(pick(app.stats)) + '</div>' : '') + '</section>';
 
-        var desc = '<section class="p-sec" id="fonctions"><h2>' + esc(pick(app.game ? V.featuresTitleGame : V.featuresTitle)) + '</h2>' +
-            '<p class="p-desc">' + esc(pick(app.desc)) + '</p>' +
-            '<ul class="feat-grid" style="--cols:' + colonnes(pick(app.features).length, [3, 4, 2]) + '">' + pick(app.features).map(function (t) { return '<li class="feat">' + CHECK + '<p>' + esc(t) + '</p></li>'; }).join('') + '</ul></section>';
+        var fonctions = '<section class="band" id="fonctions"' + styleAccent(app) + '><div class="wrap">' +
+            enTete(esc(pick(V.subFeatures)), esc(pick(app.game ? V.featuresTitleGame : V.featuresTitle)), null, 'reveal') +
+            '<p class="p-desc reveal">' + esc(pick(app.desc)) + '</p>' +
+            '<ul class="feat-grid">' + pick(app.features).map(function (t) { return '<li class="feat reveal"><p>' + esc(t) + '</p></li>'; }).join('') + '</ul></div></section>';
 
-        var donnees = '<section class="p-sec" id="donnees"><h2>' + esc(pick(V.methodTitle)) + '</h2>' +
-            '<div class="cards is-two">' + carte(icone('book') + '<h3>' + esc(pick(T.dataSources)) + '</h3><p>' + esc(pick(app.sources)) + '</p>') +
-            carte(icone('shield') + '<h3>' + esc(pick(T.dataBusiness)) + '</h3><p>' + esc(pick(app.business)) + '</p>') + '</div></section>';
+        var donnees = '<section class="band is-dark" id="donnees"' + styleAccent(app) + '><div class="wrap">' +
+            enTete(esc(pick(T.dataEyebrow)), esc(pick(V.methodTitle)), null, 'reveal') +
+            '<div class="cards">' + carte(icone('book') + '<h3>' + esc(pick(T.dataSources)) + '</h3><p>' + esc(pick(app.sources)) + '</p>', 'reveal') +
+            carte(icone('shield') + '<h3>' + esc(pick(T.dataBusiness)) + '</h3><p>' + esc(pick(app.business)) + '</p>', 'reveal') + '</div></div></section>';
 
-        var aide = '<section class="p-sec" id="aide"><h2>' + esc(lang === 'fr' ? 'Aide et informations' : 'Help and information') + '</h2>' +
-            cartesLiens(cle) + '</section>';
+        var aide = '<section class="band is-tight" id="aide"' + styleAccent(app) + '><div class="wrap">' +
+            enTete(null, esc(fr ? 'Aide et informations' : 'Help and information'), null, 'reveal') + cartesLiens(cle) + '</div></section>';
 
         var voisins = f[2].filter(function (k) { return k !== cle; });
-        var memes = !voisins.length ? '' : '<section class="band related"><div class="wrap"><header class="shelf-head is-simple"><div><p class="eyebrow">' + esc(pick(f[1])) + '</p>' +
-            '<h2>' + esc(lang === 'fr' ? 'Dans la même famille' : 'In the same family') + '</h2></div>' +
-            lienPlus(withLang('./index.html'), pick(V.allApps)) + '</header>' +
-            tuiles(voisins) + '</div></section>';
+        var memes = !voisins.length ? '' : '<section class="band is-alt"><div class="wrap">' +
+            enTete(esc(pick(f[1])), esc(fr ? 'Dans la même famille' : 'In the same family'), null, 'reveal') +
+            tuiles(voisins) + '<p style="margin-top:24px">' + lienPlus(withLang('./index.html#catalogue'), pick(V.allApps)) + '</p></div></section>';
 
-        return enveloppe('v2-app', sousBarre(cle, sections) + tete +
-            galerie(cle, pick(app.game ? V.storeShotsTitle : (app.storeShots ? V.shotsTitle : T.macPreview))) +
-            '<div class="p-body"><div class="wrap">' + desc + donnees + aide + '</div></div>' + memes);
+        return navHTML('v2-app') + '<main>' + sousBarre(cle, sections) + tete + galerie(cle) + fonctions + donnees + aide + memes + '</main>' + footerHTML();
     }
 
     /* ---------------------------------------------------------------------
@@ -1572,16 +1674,15 @@
         var sections = [[withLang('./' + cle + '.html'), app.name], [avecLangue(lienLegal(cle, 'support')), pick(T.supportLink), sorte === 'support'],
             [avecLangue(lienLegal(cle, 'privacy')), pick(T.privacyLink), sorte === 'privacy']];
 
-        var tete = '<section class="p-hero is-legal" id="main"><div class="wrap">' +
-            '<header class="p-head">' + filAriane(cle, [[withLang('./' + cle + '.html'), app.name], [null, nomPage]]) +
-            identite(cle, nomPage, app.name) +
-            (sous ? '<p class="p-promo">' + esc(sous.textContent) + '</p>' : '') + langues + '</header></div></section>';
+        var tete = '<section class="p-hero is-legal is-dark-zone" id="main"' + styleAccent(app) + '><div class="wrap p-head">' +
+            teteProduit(cle, [[withLang('./' + cle + '.html'), app.name], [null, nomPage]], nomPage, app.name) +
+            (sous ? '<p class="p-promo">' + esc(sous.textContent) + '</p>' : '') + langues + '</div></section>';
 
-        var pied = '<section class="band legal-next"><div class="wrap">' + cartesLiens(cle, sorte, avecLangue) + '</div></section>';
+        var pied = '<section class="band is-tight is-alt"><div class="wrap">' + cartesLiens(cle, sorte, avecLangue) + '</div></section>';
 
         root.className = '';
-        root.innerHTML = enveloppe('v2-legal', sousBarre(cle, sections) + tete +
-            '<div class="p-body legal-body"><div class="wrap" id="legal-texte"></div></div>' + pied);
+        root.innerHTML = navHTML('v2-legal') + '<main>' + sousBarre(cle, sections) + tete +
+            '<div class="legal-body"><div class="wrap" id="legal-texte"></div></div>' + pied + '</main>' + footerHTML();
         var texte = document.getElementById('legal-texte');
         texte.appendChild(fragment);
         texte.setAttribute('lang', langueTexte);
@@ -1601,54 +1702,51 @@
        À propos et Contact
        --------------------------------------------------------------------- */
 
-    function introPage(sur, titre, chapo, suite) {
-        return '<section class="intro" id="main"><div class="wrap intro-page"><p class="eyebrow">' + esc(sur) + '</p><h1>' + esc(titre) + '</h1>' +
-            '<p class="intro-lead">' + esc(chapo) + '</p>' + (suite || '') + '</div></section>';
-    }
-
     function renderAbout() {
-        var hero = '<section class="intro" id="main"><div class="wrap about-grid">' +
-            picture('./assets/img/profile.jpg', ' class="portrait" width="200" height="200" alt="Rodolphe Vandaele" decoding="async"') +
-            '<div><p class="eyebrow">' + esc(pick(T.profileEyebrow)) + '</p><h1>' + esc(pick(V.aboutTitle)) + '</h1>' +
-            '<p class="intro-lead">' + esc(pick(T.profileBio)) + '</p>' +
+        var hero = '<section class="page-hero is-dark-zone" id="main"><div class="wrap">' +
+            picture('./assets/img/profile.jpg', ' class="portrait" width="180" height="180" alt="Rodolphe Vandaele" decoding="async" fetchpriority="high"') +
+            '<p class="eyebrow">' + esc(pick(T.profileEyebrow)) + '</p><h1>' + esc(pick(V.aboutTitle)) + '</h1>' +
+            '<p class="lead">' + esc(pick(T.profileBio)) + '</p>' +
             '<div class="btn-row"><a class="btn btn-primary" href="' + withLang('./contact.html') + '">' + esc(pick(T.profileCTA)) + '</a>' +
-            lienPlus(withLang('./index.html'), pick(V.allApps)) + '</div>' + mosaique('about-icons', 44) + '</div></div></section>';
+            lienPlus(withLang('./index.html'), pick(V.allApps)) + '</div>' +
+            '<nav class="icon-dock" aria-label="' + esc(pick(V.allApps)) + '">' + TOUTES.map(function (k) {
+                return '<a href="' + withLang('./' + k + '.html') + '" aria-label="' + esc(APPS[k].name) + '">' + icones([k], 48) + '</a>';
+            }).join('') + '</nav></div></section>';
 
-        function grille(sur, titre, items, colonnes) {
-            return '<section class="band"><div class="wrap"><header class="shelf-head is-simple"><div><p class="eyebrow">' + esc(sur) + '</p><h2>' + esc(titre) + '</h2></div></header>' +
-                '<div class="cards ' + colonnes + '">' + items.map(function (l) {
-                    return carte(icone(l[0]) + '<h3>' + esc(l[1]) + '</h3><p>' + esc(l[2]) + '</p>');
+        function grille(sur, titre, items, classe) {
+            return '<section class="band' + (classe || '') + '"><div class="wrap">' + enTete(esc(sur), esc(titre), null, 'reveal') +
+                '<div class="cards">' + items.map(function (l) {
+                    return carte(icone(l[0]) + '<h3>' + esc(l[1]) + '</h3><p>' + esc(l[2]) + '</p>', 'reveal');
                 }).join('') + '</div></div></section>';
         }
 
-        var legal = '<section class="band is-legal" id="mentions"><div class="wrap"><header class="shelf-head is-simple"><div><h2>' + esc(pick(T.legalTitleSite)) + '</h2></div></header>' +
-            '<div class="cards is-three">' +
+        var legal = '<section class="band is-alt" id="mentions" aria-labelledby="mentions-titre"><div class="wrap">' + enTete(null, esc(pick(T.legalTitleSite)), null, '', 'mentions-titre') +
+            '<div class="cards">' +
             carte('<h3>' + esc(pick(T.legalEditor)) + '</h3><p>' + esc(pick(T.legalEditorText)) + '<br><a class="legal-mail" href="mailto:' + MAIL + '">' + MAIL + '</a></p>') +
             carte('<h3>' + esc(pick(T.legalHost)) + '</h3><p>' + esc(pick(T.legalHostText)) + '</p>') +
             carte('<h3>' + esc(pick(T.legalContent)) + '</h3><p>' + esc(pick(T.legalContentText)) + '</p>') +
             '</div></div></section>';
 
         return navHTML('v2-about') + '<main>' + hero +
-            grille(pick(T.aboutLinesEyebrow), pick(T.aboutLinesTitle), pick(T.aboutLines), 'is-two') +
-            grille(pick(T.aboutMethodEyebrow), pick(T.aboutMethodTitle), pick(T.aboutMethod), 'is-two') +
+            grille(pick(T.aboutLinesEyebrow), pick(T.aboutLinesTitle), pick(T.aboutLines), ' is-dark') +
+            grille(pick(T.aboutMethodEyebrow), pick(T.aboutMethodTitle), pick(T.aboutMethod)) +
             legal + '</main>' + footerHTML();
     }
 
     function renderContact() {
         var objet = encodeURIComponent(pick(T.mailSubject));
-        var hero = introPage(pick(T.contactEyebrow), pick(V.contactTitle), pick(V.contactLead),
+        var hero = '<section class="page-hero is-dark-zone" id="main"><div class="wrap"><p class="eyebrow">' + esc(pick(T.contactEyebrow)) + '</p>' +
+            '<h1>' + esc(pick(V.contactTitle)) + '</h1><p class="lead">' + esc(pick(V.contactLead)) + '</p>' +
             '<div class="btn-row"><a class="btn btn-primary contact-mail" href="mailto:' + MAIL + '?subject=' + objet + '">' +
-            svg(ICONES.mail, 'btn-glyph') + MAIL + '</a></div>');
+            svg(ICONES.mail, 'btn-glyph') + MAIL + '</a></div></div></section>';
 
-        var parApp = '<section class="band"><div class="wrap">' +
-            '<header class="shelf-head is-stacked"><div><p class="eyebrow">' + esc(pick(T.supportLink)) + '</p><h2>' + esc(pick(V.contactPerApp)) + '</h2></div>' +
-            '<p class="shelf-lead">' + esc(pick(V.contactPerAppLead)) + '</p></header><div class="catalogue">' +
-            FAMILLES.map(function (f) {
-                return '<div class="link-group"><h3><i class="dot is-' + f[0] + '"></i>' + esc(pick(f[1])) + '</h3>' +
+        var parApp = '<section class="band is-alt"><div class="wrap">' +
+            enTete(esc(pick(T.supportLink)), esc(pick(V.contactPerApp)), esc(pick(V.contactPerAppLead)), 'reveal') +
+            '<div class="support-groups">' + FAMILLES.map(function (f) {
+                return '<div class="is-' + f[0] + '"><h3><i class="dot"></i>' + esc(pick(f[1])) + '</h3>' +
                     tuiles(f[2], function (k) { return pick(APPS[k].platform === 'mac' ? T.macStore : T.supportLink); },
                         function (k) { return APPS[k].platform === 'mac' ? APPS[k].store : lienLegal(k, 'support'); }) + '</div>';
-            }).join('') +
-            '</div></div></section>';
+            }).join('') + '</div></div></section>';
 
         return navHTML('v2-contact') + '<main>' + hero + parApp + '</main>' + footerHTML();
     }
@@ -1657,12 +1755,10 @@
        Comportements
        --------------------------------------------------------------------- */
 
-    var reduceMotion = window.matchMedia
-        && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var survol = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
-    /* Le chapitre de l'accueil en cours de lecture s'allume dans la barre des familles. */
-    /* Le menu des écrans étroits. Fermé, il est `inert` : ses liens ne
-       reçoivent ni le focus ni les lecteurs d'écran. */
+    /* Le menu des écrans étroits. Fermé, il est `inert` : ses liens ne reçoivent ni le focus ni les lecteurs d'écran. */
     function basculerMenu(ouvrir) {
         var bouton = document.querySelector('.nav-toggle');
         var menu = document.getElementById('nav-menu');
@@ -1689,9 +1785,7 @@
         var menu = document.getElementById('nav-menu');
         if (!bouton || !menu) { return; }
         bouton.addEventListener('click', function () { basculerMenu(!menuOuvert()); });
-        menu.addEventListener('click', function (e) {
-            if (e.target.closest('a')) { basculerMenu(false); }
-        });
+        menu.addEventListener('click', function (e) { if (e.target.closest('a')) { basculerMenu(false); } });
     }
 
     function attacheMenuGlobal() {
@@ -1701,23 +1795,288 @@
             var bouton = document.querySelector('.nav-toggle');
             if (bouton) { bouton.focus(); }
         });
-        var large = matchMedia('(min-width: 834px)');
-        var fermer = function (m) { if (m.matches) { basculerMenu(false); } };
-        if (large.addEventListener) { large.addEventListener('change', fermer); }
+        document.addEventListener('click', function (e) {
+            if (menuOuvert() && !e.target.closest('#nav-menu, .nav-toggle')) { basculerMenu(false); }
+        });
+        attacheBarre();
+        attacheDuo();
     }
 
-    /* Le sélecteur d'appareil des captures : il montre la grille choisie. Les flèches passent d'un appareil à
-       l'autre, comme dans un contrôle segmenté natif. */
+    /* Le Duo se plie comme le vrai : tenu en portrait, sa charnière est horizontale. Une doublure `.pli` remplace
+       l'appareil le temps du geste : la moitié haute se rabat vers soi sur la basse (ombre et lumière selon l'angle)
+       et montre au dos l'écran extérieur, couché ; puis le bloc se redresse d'un quart de tour et prend la place du
+       Duo fermé. Ouverture : le même geste à l'envers. Délégation : le sélecteur remplace les appareils du premier
+       écran. */
+    var PLI_TOUR = { duration: 560, easing: 'cubic-bezier(.32, .72, 0, 1)', fill: 'forwards' };
+
+    function doublurePli(d) {
+        var interieur = d.querySelector('.dev-screen > picture img');
+        var exterieur = d.querySelector('.dev-ext img');
+        function image(src) { return '<img src="' + (src.currentSrc || src.src) + '" alt="">'; }
+        var p = document.createElement('div');
+        p.className = 'pli';
+        p.setAttribute('aria-hidden', 'true');
+        p.innerHTML = '<div class="pli-bas"><div class="pli-p"><div class="pli-s">' + image(interieur) + '</div></div><i class="pli-ombre"></i></div>' +
+            '<div class="pli-haut"><div class="pli-p pli-face"><div class="pli-s">' + image(interieur) + '</div><i class="pli-ombre"></i></div>' +
+            '<div class="pli-p pli-dos"><div class="pli-s">' + image(exterieur) + '</div><i class="pli-ombre"></i></div></div>';
+        d.appendChild(p);
+        var ecran = p.querySelector('.pli-dos .pli-s');
+        var couche = ecran.querySelector('img');
+        couche.style.width = ecran.clientHeight + 'px';
+        couche.style.height = ecran.clientWidth + 'px';
+        return p;
+    }
+
+    function plierDuo(d) {
+        if (d.querySelector('.pli')) { return; }
+        var ferme = !d.classList.contains('is-closed');
+        var fr = lang === 'fr';
+        function etiquette() {
+            d.setAttribute('aria-pressed', String(ferme));
+            d.setAttribute('aria-label', ferme ? (fr ? 'Déplier l’iPhone Duo' : 'Unfold the iPhone Duo') : (fr ? 'Plier l’iPhone Duo' : 'Fold the iPhone Duo'));
+        }
+        if (reduceMotion || !d.animate) { d.classList.toggle('is-closed', ferme); etiquette(); return; }
+        d.classList.remove('is-closed');
+        d.classList.add('is-pliant');
+        var p = doublurePli(d);
+        var debout = 'translateX(' + d.offsetHeight / 2 + 'px) rotate(-90deg)';
+        var volet = p.querySelector('.pli-haut');
+        var face = volet.querySelector('.pli-face');
+        var dos = volet.querySelector('.pli-dos');
+        var dessous = p.querySelector('.pli-bas .pli-ombre');
+        /* Rotation en deux moitiés égales : à 90°, volet vu de profil, l'autre face prend le relais (WebKit n'honore pas
+           toujours backface-visibility sous un enfant animé). */
+        function rabat(de, a) {
+            var montre = de === 0 ? dos : face;
+            var cache = de === 0 ? face : dos;
+            cache.animate([{ opacity: 1 }, { opacity: 1, offset: .5 }, { opacity: 0, offset: .5 }, { opacity: 0 }], { duration: 760, fill: 'forwards' });
+            montre.animate([{ opacity: 0 }, { opacity: 0, offset: .5 }, { opacity: 1, offset: .5 }, { opacity: 1 }], { duration: 760, fill: 'forwards' });
+            cache.querySelector('.pli-ombre').animate([{ opacity: 0 }, { opacity: .9 }], { duration: 380, easing: 'ease-in', fill: 'forwards' });
+            montre.querySelector('.pli-ombre').animate([{ opacity: .9 }, { opacity: 0 }], { duration: 380, delay: 380, easing: 'ease-out', fill: 'forwards' });
+            dessous.animate([{ opacity: 0 }, { opacity: .55, offset: .6 }, { opacity: 0 }], { duration: 760 });
+            p.animate([{ transform: 'translateZ(0)' }, { transform: 'translateZ(40px)', offset: .5 }, { transform: 'translateZ(0)' }], { duration: 760, easing: 'ease-in-out' });
+            return volet.animate([
+                { transform: 'translateZ(2px) rotateX(' + de + 'deg)', easing: 'cubic-bezier(.55, 0, .9, .45)' },
+                { transform: 'translateZ(2px) rotateX(' + (de + a) / 2 + 'deg)', offset: .5, easing: 'cubic-bezier(.1, .55, .3, 1)' },
+                { transform: 'translateZ(2px) rotateX(' + a + 'deg)' }
+            ], { duration: 760, fill: 'forwards' }).finished;
+        }
+        function fin() {
+            d.classList.toggle('is-closed', ferme);
+            d.classList.remove('is-pliant');
+            p.remove();
+            etiquette();
+        }
+        if (ferme) {
+            rabat(0, -180).then(function () { return p.animate([{ transform: 'none' }, { transform: debout }], PLI_TOUR).finished; }).then(fin);
+        } else {
+            p.style.transform = debout;
+            volet.style.transform = 'translateZ(2px) rotateX(-180deg)';
+            face.style.opacity = 0;
+            dos.style.opacity = 1;
+            p.animate([{ transform: debout }, { transform: 'none' }], PLI_TOUR).finished.then(function () { return rabat(-180, 0); }).then(fin);
+        }
+    }
+
+    function attacheDuo() {
+        document.addEventListener('click', function (e) {
+            var d = e.target.closest('.dev.is-duo[role="button"]');
+            if (d) { plierDuo(d); }
+        });
+        document.addEventListener('keydown', function (e) {
+            var d = e.target.closest && e.target.closest('.dev.is-duo[role="button"]');
+            if (d && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); plierDuo(d); }
+        });
+    }
+
+    /* Le sélecteur du premier écran garde les appareils en place, comme une page produit : les écrans s'éteignent,
+       chaque appareil glisse vers sa nouvelle place (FLIP sur .dev-body, sans relancer l'entrée ni le flottement),
+       l'iPad pivote s'il passe en paysage, ceux qui ne servent plus s'effacent, les nouveaux apparaissent, puis les
+       écrans se rallument quand leur image est décodée. Survoler une icône prépare ses images. */
+    var ROLES_APPAREIL = ['ipad', 'iphone', 'duo', 'watch', 'tv'];
+
+    function roleAppareil(d) {
+        return ROLES_APPAREIL.filter(function (r) { return d.classList.contains('is-' + r); })[0];
+    }
+
+    function sansEntree(d) {
+        var corps = d.querySelector('.dev-body');
+        if (corps) { corps.classList.add('sans-entree'); }
+    }
+
+    function attacheSelecteur() {
+        var boutons = document.querySelectorAll('.hero-pick .pick-item');
+        var rig = document.querySelector('.hero-stage .stage-rig');
+        var nom = document.querySelector('.hero-pick .pick-name');
+        if (!boutons.length || !rig) { return; }
+        var fr = lang === 'fr';
+        var invite = nom.innerHTML;
+        var prets = {};
+        var geste = 0;
+
+        function preparer(cle) {
+            if (prets[cle]) { return prets[cle]; }
+            var t = document.createElement('div');
+            t.innerHTML = cle ? scene(cle, true) : sceneAccueil();
+            var images = Array.prototype.slice.call(t.querySelectorAll('img'));
+            images.forEach(function (i) { i.removeAttribute('loading'); });
+            prets[cle] = {
+                devs: Array.prototype.slice.call(t.querySelectorAll('.dev')),
+                decode: Promise.all(images.map(function (i) { return i.decode ? i.decode().catch(function () {}) : null; }))
+            };
+            return prets[cle];
+        }
+
+        function montrer(cle) {
+            var pret = preparer(cle);
+            delete prets[cle];
+            var n = ++geste;
+            var anciens = {};
+            rig.querySelectorAll('.dev').forEach(function (d) { anciens[roleAppareil(d)] = d; });
+            var nouveaux = {};
+            pret.devs.forEach(function (d) { nouveaux[roleAppareil(d)] = d; });
+            if (reduceMotion || !rig.animate) {
+                rig.innerHTML = '';
+                pret.devs.forEach(function (d) { sansEntree(d); rig.appendChild(d); });
+                return;
+            }
+            Object.keys(anciens).forEach(function (r) {
+                anciens[r].classList.add('is-eteint');
+                if (!nouveaux[r]) { anciens[r].classList.add('is-sortie'); }
+            });
+            setTimeout(function () {
+                if (n !== geste) { return; }
+                var avant = {};
+                Object.keys(anciens).forEach(function (r) {
+                    if (nouveaux[r]) { avant[r] = anciens[r].getBoundingClientRect(); }
+                    else { anciens[r].remove(); }
+                });
+                var entrants = [];
+                pret.devs.forEach(function (neuf) {
+                    var r = roleAppareil(neuf);
+                    var vieux = anciens[r];
+                    sansEntree(neuf);
+                    if (!vieux) {
+                        neuf.classList.add('is-eteint', 'is-entree');
+                        rig.appendChild(neuf);
+                        entrants.push(neuf);
+                        return;
+                    }
+                    Array.prototype.slice.call(neuf.attributes).forEach(function (a) {
+                        if (a.name !== 'style') { vieux.setAttribute(a.name, a.value); }
+                    });
+                    Array.prototype.slice.call(vieux.attributes).forEach(function (a) {
+                        if (a.name !== 'style' && !neuf.hasAttribute(a.name)) { vieux.removeAttribute(a.name); }
+                    });
+                    vieux.classList.add('is-eteint');
+                    vieux.replaceChildren.apply(vieux, Array.prototype.slice.call(neuf.childNodes));
+                });
+                Object.keys(avant).forEach(function (r) {
+                    var d = anciens[r];
+                    var a = avant[r];
+                    var b = d.getBoundingClientRect();
+                    var tourne = (a.width > a.height) !== (b.width > b.height);
+                    var s = tourne ? a.height / b.width : a.width / b.width;
+                    var dx = a.left + a.width / 2 - (b.left + b.width / 2);
+                    var dy = a.top + a.height / 2 - (b.top + b.height / 2);
+                    (d.querySelector('.dev-body') || d).animate([
+                        { transform: 'translate(' + dx + 'px, ' + dy + 'px) rotate(' + (tourne ? (b.width > b.height ? 90 : -90) : 0) + 'deg) scale(' + s + ')' },
+                        { transform: 'none' }
+                    ], { duration: 820, easing: 'cubic-bezier(.32, .72, 0, 1)' });
+                });
+                requestAnimationFrame(function () {
+                    requestAnimationFrame(function () { entrants.forEach(function (d) { d.classList.remove('is-entree'); }); });
+                });
+                Promise.all([pret.decode, new Promise(function (ok) { setTimeout(ok, 380); })]).then(function () {
+                    if (n !== geste) { return; }
+                    rig.querySelectorAll('.dev').forEach(function (d, i) {
+                        setTimeout(function () { d.classList.remove('is-eteint'); }, i * 90);
+                    });
+                });
+            }, 240);
+        }
+
+        boutons.forEach(function (b) {
+            var cle = b.getAttribute('data-pick');
+            b.addEventListener('pointerenter', function () { preparer(cle); });
+            b.addEventListener('focus', function () { preparer(cle); });
+            b.addEventListener('click', function () {
+                if (b.getAttribute('aria-pressed') === 'true') { return; }
+                boutons.forEach(function (o) { o.setAttribute('aria-pressed', String(o === b)); });
+                var rangee = b.parentNode;
+                rangee.scrollTo({ left: b.offsetLeft - (rangee.clientWidth - b.offsetWidth) / 2, behavior: reduceMotion ? 'auto' : 'smooth' });
+                nom.innerHTML = cle ? '<b>' + esc(APPS[cle].name) + '</b> · ' + esc(plateforme(APPS[cle])) +
+                    ' · <a href="' + withLang('./' + cle + '.html') + '">' + esc(fr ? 'Voir la fiche' : 'View page') + '</a>' : invite;
+                montrer(cle);
+            });
+        });
+    }
+
+    /* La barre se resserre dès qu'on défile, se cache quand on descend et revient dès qu'on remonte. Jamais cachée
+       en haut de page, menu ouvert ou focus dans la barre (le CSS la montre alors). Sur l'accueil, le dock attend
+       qu'on ait quitté le premier écran (dock-attente). */
+    function attacheBarre() {
+        var racine = document.documentElement;
+        var avant = scrollY;
+        var image = 0;
+        function etat() {
+            var y = scrollY;
+            racine.classList.toggle('barre-defile', y > 24);
+            racine.classList.toggle('dock-attente', !!document.querySelector('.hero') && y < innerHeight * .4);
+            return y;
+        }
+        etat();
+        addEventListener('scroll', function () {
+            if (image) { return; }
+            image = requestAnimationFrame(function () {
+                image = 0;
+                var y = etat();
+                if (Math.abs(y - avant) < 8) { return; }
+                racine.classList.toggle('barre-cachee', y > avant && y > 240 && !menuOuvert());
+                avant = y;
+            });
+        }, { passive: true });
+    }
+
+    /* Les flèches d'un rail : un écran de cartes à la fois, désactivées aux extrémités. */
+    function attacheRails() {
+        document.querySelectorAll('.rail').forEach(function (r) {
+            var piste = r.querySelector('.rail-track');
+            var boutons = r.querySelectorAll('.rail-nav button');
+            function etat() {
+                var max = piste.scrollWidth - piste.clientWidth - 2;
+                var x = Math.abs(piste.scrollLeft);
+                boutons[0].disabled = x <= 2;
+                boutons[1].disabled = x >= max;
+                r.querySelector('.rail-nav').hidden = max <= 2;
+            }
+            boutons.forEach(function (b) {
+                b.addEventListener('click', function () {
+                    piste.scrollBy({ left: Number(b.getAttribute('data-dir')) * piste.clientWidth * 0.85, behavior: reduceMotion ? 'auto' : 'smooth' });
+                });
+            });
+            piste.addEventListener('scroll', etat, { passive: true });
+            addEventListener('resize', etat, { passive: true });
+            etat();
+            r.etatRail = etat;
+        });
+    }
+
+    /* Le sélecteur d'appareil des captures : il montre le rail choisi. Les flèches passent d'un appareil à l'autre,
+       comme dans un contrôle segmenté natif. */
     function attacheAppareils() {
-        document.querySelectorAll('.sec-shots .segmented').forEach(function (groupe) {
-            var section = groupe.closest('.band');
-            var grilles = section.querySelectorAll('.shots');
+        document.querySelectorAll('#captures .segmented').forEach(function (groupe) {
+            var section = groupe.closest('section');
+            var rails = section.querySelectorAll('.rail[data-device]');
             var appareils = groupe.querySelectorAll('button[data-device]');
             appareils.forEach(function (b, i) {
                 b.addEventListener('click', function () {
                     var choix = b.getAttribute('data-device');
                     appareils.forEach(function (o) { o.setAttribute('aria-pressed', String(o === b)); });
-                    grilles.forEach(function (g) { g.hidden = g.getAttribute('data-device') !== choix; });
+                    rails.forEach(function (r) {
+                        r.hidden = r.getAttribute('data-device') !== choix;
+                        if (!r.hidden && r.etatRail) { r.etatRail(); }
+                    });
                 });
                 b.addEventListener('keydown', function (e) {
                     var pas = e.key === 'ArrowRight' ? 1 : (e.key === 'ArrowLeft' ? -1 : 0);
@@ -1731,9 +2090,37 @@
         });
     }
 
-    /* Les chiffres comptent jusqu'à leur valeur quand ils entrent dans l'écran.
-       La valeur finale est déjà dans la page : sans script ou sans mouvement,
-       elle s'affiche telle quelle. */
+    /* Le filtre par famille et la recherche du catalogue. */
+    function attacheFiltres() {
+        var barre = document.querySelector('.filter-chips');
+        if (!barre) { return; }
+        var boutons = barre.querySelectorAll('button[data-fam]');
+        var champ = document.getElementById('recherche');
+        var bilan = document.getElementById('bilan');
+        var vide = document.getElementById('catalogue-vide');
+        function appliquer() {
+            var fam = barre.querySelector('button[aria-pressed="true"]').getAttribute('data-fam');
+            var q = (champ.value || '').trim().toLowerCase();
+            var n = 0;
+            document.querySelectorAll('#tuiles .tile').forEach(function (c) {
+                var ok = (fam === 'tout' || c.getAttribute('data-fam') === fam) && (!q || c.getAttribute('data-search').indexOf(q) !== -1);
+                c.hidden = !ok;
+                if (ok) { n++; }
+            });
+            vide.hidden = n > 0;
+            bilan.textContent = n + (lang === 'fr' ? (n > 1 ? ' applications' : ' application') : (n > 1 ? ' apps' : ' app'));
+        }
+        boutons.forEach(function (b) {
+            b.addEventListener('click', function () {
+                boutons.forEach(function (o) { o.setAttribute('aria-pressed', String(o === b)); });
+                appliquer();
+            });
+        });
+        champ.addEventListener('input', appliquer);
+    }
+
+    /* Les chiffres comptent jusqu'à leur valeur quand ils entrent dans l'écran. La valeur finale est déjà dans la
+       page : sans script ou sans mouvement, elle s'affiche telle quelle. */
     function attacheCompteurs() {
         if (reduceMotion || !('IntersectionObserver' in window)) { return; }
         var cibles = document.querySelectorAll('[data-count]');
@@ -1756,6 +2143,76 @@
         });
     }
 
+    /* Apparition au défilement. Avec les animations liées au défilement (Safari 26, Chrome 115), le CSS s'en charge ;
+       sinon un IntersectionObserver pose `is-in`. Sans l'une ni l'autre, rien n'est masqué. */
+    var defileNatif = window.CSS && CSS.supports('(animation-timeline: view()) and (animation-range: entry)');
+
+    function attacheApparitions() {
+        if (reduceMotion || (!defileNatif && !('IntersectionObserver' in window))) { return; }
+        document.documentElement.classList.add('js-reveal');
+        if (defileNatif) { return; }
+        var io = new IntersectionObserver(function (entrees) {
+            entrees.forEach(function (e) {
+                if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
+            });
+        }, { rootMargin: '0px 0px -8% 0px' });
+        document.querySelectorAll('.reveal').forEach(function (n) { io.observe(n); });
+    }
+
+    /* La scène 3D suit le pointeur, à la souris seulement : quelques degrés, lissés par la transition CSS. */
+    function attacheScenes() {
+        if (reduceMotion || !survol) { return; }
+        document.querySelectorAll('.stage').forEach(function (s) {
+            var rig = s.querySelector('.stage-rig');
+            var image = 0;
+            s.addEventListener('pointermove', function (e) {
+                if (image) { return; }
+                image = requestAnimationFrame(function () {
+                    image = 0;
+                    var b = s.getBoundingClientRect();
+                    var x = (e.clientX - b.left) / b.width - 0.5;
+                    rig.style.setProperty('--ry', x * 26 + 'deg');
+                    rig.style.setProperty('--rx', (0.5 - (e.clientY - b.top) / b.height) * 12 + 'deg');
+                    rig.style.setProperty('--gx', x * -40);
+                });
+            });
+            s.addEventListener('pointerleave', function () {
+                rig.style.setProperty('--ry', '0deg');
+                rig.style.setProperty('--rx', '0deg');
+                rig.style.setProperty('--gx', 0);
+            });
+        });
+        /* Un halo suit le pointeur sur les cartes ; les grandes cartes s'inclinent aussi vers lui. */
+        document.querySelectorAll('.show, .tile, .card, .feat, .link-card, .number').forEach(function (c) {
+            var grande = c.classList.contains('show');
+            c.addEventListener('pointermove', function (e) {
+                var b = c.getBoundingClientRect();
+                var x = (e.clientX - b.left) / b.width;
+                var y = (e.clientY - b.top) / b.height;
+                c.style.setProperty('--mx', x * 100 + '%');
+                c.style.setProperty('--my', y * 100 + '%');
+                if (grande) { c.style.transform = 'perspective(1200px) rotateY(' + (x - 0.5) * 5 + 'deg) rotateX(' + (0.5 - y) * 4 + 'deg)'; }
+            });
+            c.addEventListener('pointerleave', function () { c.style.transform = ''; });
+        });
+    }
+
+    /* Le dock allume la famille dont le chapitre occupe le milieu de l'écran (accueil seulement). */
+    function attacheDock() {
+        var liens = document.querySelectorAll('.dock [data-spy]');
+        if (!liens.length || !('IntersectionObserver' in window)) { return; }
+        var io = new IntersectionObserver(function (entrees) {
+            entrees.forEach(function (e) {
+                var lien = document.querySelector('.dock [data-spy="' + e.target.id + '"]');
+                if (lien) { lien.classList.toggle('is-active', e.isIntersecting); }
+            });
+        }, { rootMargin: '-45% 0px -50% 0px' });
+        liens.forEach(function (l) {
+            var section = document.getElementById(l.getAttribute('data-spy'));
+            if (section) { io.observe(section); }
+        });
+    }
+
     function attacheLangue() {
         document.querySelectorAll('[data-lang]').forEach(function (a) {
             a.addEventListener('click', function (e) {
@@ -1764,7 +2221,6 @@
             });
         });
     }
-
 
     /* ---------------------------------------------------------------------
        Rendu
@@ -1796,11 +2252,22 @@
             attacheLangue();
         }
 
+        var premier = !menuGlobal;
         if (!menuGlobal) { menuGlobal = true; attacheMenuGlobal(); }
         attacheMenu();
+        attacheRails();
         attacheAppareils();
         attacheCompteurs();
         attacheFiltres();
+        attacheApparitions();
+        attacheScenes();
+        attacheSelecteur();
+        attacheDock();
+        /* Le rendu remplace la page : l'ancre de l'adresse (#jeux...) n'existait pas au chargement. */
+        if (premier && location.hash.length > 1) {
+            var cible = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+            if (cible) { cible.scrollIntoView(); }
+        }
     }
 
     render();
