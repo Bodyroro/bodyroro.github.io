@@ -131,6 +131,21 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://bodyroro.github.io/netta.html</loc>
+    <lastmod>2026-10-27</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://bodyroro.github.io/netta-privacy.html</loc>
+    <lastmod>2026-10-27</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://bodyroro.github.io/netta-support.html</loc>
+    <lastmod>2026-10-27</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://bodyroro.github.io/trouchromatique.html</loc>
     <lastmod>2026-10-24</lastmod>
     <priority>0.8</priority>

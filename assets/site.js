@@ -478,6 +478,43 @@
                 en: ['Your TV remote in your pocket', 'Navigate with a swipe', 'All your screens one tap away', 'Type on your TV', 'Step-by-step help for every brand']
             }
         },
+        /* Pas encore sur l'App Store (`store: ''` : pastille « Bientôt disponible »), sans visuels App Store ni capture
+           (`storeShots` absent : pas de galerie, `galerie` et la sous-barre l'omettent pour une app iOS). */
+        netta: {
+            name: 'Netta', platform: 'ios', accent: '#0d9488', accent2: '#ccfbf1',
+            store: '',
+            on: { fr: 'iPhone et iPad', en: 'iPhone and iPad' },
+            tag: { fr: 'Tri de la photothèque', en: 'Photo library cleanup' },
+            promo: { fr: 'Triez et nettoyez votre photothèque, et retrouvez les photos de ce jour-là, année après année.', en: 'Sort and clean your photo library, and revisit the photos from this day, year after year.' },
+            desc: {
+                fr: 'Tri et nettoyage de la photothèque de l’iPhone : doublons, photos similaires et floues, captures d’écran, vidéos lourdes, et « Ce jour-là », vos photos du même jour les années passées. Tout se fait sur l’iPhone, aucun compte.',
+                en: 'Photo library sorting and cleanup for iPhone: duplicates, similar and blurry photos, screenshots, heavy videos, and “On This Day”, your photos from the same day in past years. Everything happens on the iPhone, no account.'
+            },
+            chips: {
+                fr: ['Gratuite', 'Sans compte', 'Analyse sur l’iPhone'],
+                en: ['Free', 'No account', 'Analysis on the iPhone']
+            },
+            features: {
+                fr: [
+                    'Doublons, photos similaires et rafales (Netta garde la meilleure), photos floues, captures d’écran et vidéos lourdes : tout ce qui encombre la photothèque est repéré.',
+                    '« Ce jour-là » : les photos prises le même jour les années passées, classées par année, à garder ou à supprimer.',
+                    'Le tri du jour par glissement : à gauche la corbeille, à droite on garde.',
+                    'La corbeille de Netta se relit avant toute suppression ; iOS demande ensuite confirmation et les éléments restent 30 jours dans « Supprimés récemment ».',
+                    'Widget Ce jour-là et raccourcis Siri.',
+                    'Toute l’analyse se fait sur l’iPhone : aucune photo envoyée, aucun compte, aucun serveur.'
+                ],
+                en: [
+                    'Duplicates, similar photos and bursts (Netta keeps the best one), blurry photos, screenshots and heavy videos: everything cluttering your library is spotted.',
+                    '“On This Day”: the photos taken on the same day in past years, grouped by year, to keep or delete.',
+                    'Daily sorting by swiping: left for the trash, right to keep.',
+                    'Netta’s trash is reviewed before anything is deleted; iOS then asks for confirmation and items stay 30 days in “Recently Deleted”.',
+                    'An On This Day widget and Siri shortcuts.',
+                    'All analysis happens on the iPhone: no photo sent, no account, no server.'
+                ]
+            },
+            sources: { fr: 'Aucune source de données externe : Netta analyse vos photos sur l’iPhone et ne communique avec aucun serveur du développeur. Photos, vignettes et décisions restent sur l’appareil.', en: 'No external data source: Netta analyzes your photos on the iPhone and talks to no server of the developer. Photos, thumbnails and decisions stay on the device.' },
+            business: { fr: 'Gratuite, toutes les fonctions comprises, financée par la publicité (une bannière discrète, jamais pendant le tri). Abonnement annuel facultatif « Sans pub » à 3,99 € par an, géré par StoreKit et votre compte Apple.', en: 'Free, every feature included, funded by advertising (a discreet banner, never while sorting). Optional yearly “Ad-Free” subscription at €3.99 per year, handled by StoreKit and your Apple account.' }
+        },
         mactuner: {
             name: 'MacTuner', platform: 'mac', accent: '#8eb8ff',
             store: GITHUB_MACTUNER,
@@ -812,9 +849,10 @@
         }
     };
     var NOMS_APPAREILS = { iphone: 'iPhone', ipad: 'iPad', tv: 'Apple TV' };
-    var IOS_ORDER = ['carbufrance', 'irvefrance', 'toilettefrance', 'defibfrance', 'dvffrance', 'telora', 'telzo'];
+    var IOS_ORDER = ['carbufrance', 'irvefrance', 'toilettefrance', 'defibfrance', 'dvffrance', 'telora', 'telzo', 'netta'];
     var FRANCE_ORDER = IOS_ORDER.slice(0, 5);
-    var SALON_ORDER = IOS_ORDER.slice(5);
+    var SALON_ORDER = IOS_ORDER.slice(5, 7);
+    var PHOTO_ORDER = IOS_ORDER.slice(7);
     /* Les jeux forment leur propre gamme : ni données publiques, ni utilitaire. */
     var GAME_ORDER = ['trouchromatique', 'mongloup', 'chromafight', 'chromatraque', 'chromaferme', 'chromaciel'];
 
@@ -869,6 +907,7 @@
         navGames: { fr: 'Jeux', en: 'Games' },
         navFrance: { fr: 'Apps France', en: 'French apps' },
         navSalon: { fr: 'Salon', en: 'Living room' },
+        navPhoto: { fr: 'Photo', en: 'Photo' },
         chaptersLabel: { fr: 'Les familles d’applications', en: 'App families' },
         gamesLead: {
             fr: 'Aventure, compagnon virtuel, combat, déduction, ferme et RPG : des jeux avec la petite créature aux grands yeux. Gratuits, et jouables hors connexion.',
@@ -885,6 +924,12 @@
         salonLead: {
             fr: 'Telora lit vos films, séries et chaînes depuis vos propres sources, jusque sur l’Apple TV. Telzo fait de l’iPhone une télécommande universelle par Wi-Fi.',
             en: 'Telora plays your movies, shows and channels from your own sources, all the way to Apple TV. Telzo turns the iPhone into a universal Wi-Fi remote.'
+        },
+        photoEyebrow: { fr: 'iPhone et iPad', en: 'iPhone and iPad' },
+        photoTitle: { fr: 'Pour vos photos.', en: 'For your photos.' },
+        photoLead: {
+            fr: 'Netta trie et nettoie la photothèque de l’iPhone : doublons, photos floues, captures d’écran et vidéos lourdes, et « Ce jour-là », les photos du même jour les années passées. Tout se fait sur l’iPhone.',
+            en: 'Netta sorts and cleans the iPhone photo library: duplicates, blurry photos, screenshots and heavy videos, and “On This Day”, the photos from the same day in past years. Everything happens on the iPhone.'
         },
         onGame: { fr: 'Jeu · iPhone et iPad', en: 'Game · iPhone and iPad' },
         /* Textes sans nombre d'apps : ils restent justes quand une app ou un jeu s'ajoute. */
@@ -1071,6 +1116,7 @@
         ['jeux', V.navGames, GAME_ORDER],
         ['france', V.navFrance, FRANCE_ORDER],
         ['salon', V.navSalon, SALON_ORDER],
+        ['photo', V.navPhoto, PHOTO_ORDER],
         ['mac', T.navMac, MAC_ORDER]
     ];
 
@@ -1155,6 +1201,7 @@
         jeux: [V.newEyebrow, V.newTitle, V.gamesLead],
         france: [V.onIPhone, T.iosTitle, V.franceLead],
         salon: [V.salonEyebrow, V.salonTitle, V.salonLead],
+        photo: [V.photoEyebrow, V.photoTitle, V.photoLead],
         mac: [V.onMac, T.macTitle, T.macLead]
     };
 
@@ -1219,6 +1266,7 @@
        montrent leur fenêtre dans une carte de même format. */
     function galerie(cle, titre) {
         var app = APPS[cle];
+        if (!app.storeShots && app.platform === 'ios') { return ''; }
         if (!app.storeShots) {
             return '<section class="band sec-shots" id="captures"><div class="wrap"><div class="rail-head"><h2>' + esc(titre) + '</h2></div>' +
                 '<div class="shots is-wide" style="--cols:2"><div class="shot-card is-mac">' + fenetreMac(cle, true) + '</div></div></div></section>';
@@ -1458,7 +1506,7 @@
         var app = APPS[cle];
         var f = familleDe(cle);
         var sections = [['#main', pick(V.subOverview)], ['#fonctions', pick(V.subFeatures)]]
-            .concat([['#captures', pick(app.storeShots ? V.subShots : T.macPreview)]]).concat([['#donnees', pick(V.subData)], ['#aide', lang === 'fr' ? 'Aide' : 'Help']]);
+            .concat(app.storeShots || app.platform === 'mac' ? [['#captures', pick(app.storeShots ? V.subShots : T.macPreview)]] : []).concat([['#donnees', pick(V.subData)], ['#aide', lang === 'fr' ? 'Aide' : 'Help']]);
 
         var tete = '<section class="p-hero" id="main"><div class="wrap p-grid">' +
             '<header class="p-head">' + filAriane(cle, [[null, app.name]]) + identite(cle) +
@@ -1477,7 +1525,7 @@
             cartesLiens(cle) + '</section>';
 
         var voisins = f[2].filter(function (k) { return k !== cle; });
-        var memes = '<section class="band related"><div class="wrap"><header class="shelf-head is-simple"><div><p class="eyebrow">' + esc(pick(f[1])) + '</p>' +
+        var memes = !voisins.length ? '' : '<section class="band related"><div class="wrap"><header class="shelf-head is-simple"><div><p class="eyebrow">' + esc(pick(f[1])) + '</p>' +
             '<h2>' + esc(lang === 'fr' ? 'Dans la même famille' : 'In the same family') + '</h2></div>' +
             lienPlus(withLang('./index.html'), pick(V.allApps)) + '</header>' +
             tuiles(voisins) + '</div></section>';
