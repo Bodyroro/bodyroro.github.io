@@ -146,6 +146,21 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://bodyroro.github.io/foyo.html</loc>
+    <lastmod>2026-10-28</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://bodyroro.github.io/foyo-privacy.html</loc>
+    <lastmod>2026-10-28</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://bodyroro.github.io/foyo-support.html</loc>
+    <lastmod>2026-10-28</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://bodyroro.github.io/trouchromatique.html</loc>
     <lastmod>2026-10-28</lastmod>
     <priority>0.8</priority>

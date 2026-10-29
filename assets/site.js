@@ -162,7 +162,7 @@
             en: 'Self-taught developer based in France, I build games and simple, useful, privacy-minded apps in Swift and SwiftUI, with Apple’s frameworks first for a coherent experience.'
         },
         profileCTA: { fr: 'Me contacter', en: 'Get in touch' },
-        footerLine: { fr: 'Des jeux avec Gloup, des apps de données publiques pour la France, des outils pour le salon (Telzo, Telora) et la photo (Netta) sur iPhone et iPad, et des utilitaires libres pour Mac.', en: 'Games starring Gloup, apps built on French public data, tools for the living room (Telzo, Telora) and photos (Netta) on iPhone and iPad, and free utilities for Mac.' },
+        footerLine: { fr: 'Des jeux avec Gloup, des apps de données publiques pour la France, des outils pour le salon (Telzo, Telora), la photo (Netta) et le budget du foyer (Foyo) sur iPhone et iPad, et des utilitaires libres pour Mac.', en: 'Games starring Gloup, apps built on French public data, tools for the living room (Telzo, Telora), photos (Netta) and the household budget (Foyo) on iPhone and iPad, and free utilities for Mac.' },
         footerSite: { fr: 'Site', en: 'Site' },
         footerTagline: { fr: 'Conçu et développé en France.', en: 'Designed and built in France.' },
         footerStore: { fr: 'Toutes les applications sur l\u2019App Store', en: 'All apps on the App Store' },
@@ -197,12 +197,12 @@
             en: 'App screenshots and icons belong to their author. Trademarks mentioned belong to their respective owners.'
         },
 
-        /* Les cinq familles n'ont ni le même public, ni le même mode de
+        /* Les six familles n'ont ni le même public, ni le même mode de
            distribution. La page À propos est l'endroit où le dire une fois,
            clairement, plutôt que de le laisser deviner app par app. */
-        aboutLinesEyebrow: { fr: 'Cinq familles', en: 'Five families' },
-        aboutLinesTitle: { fr: 'Jeux, données publiques, salon, photo et Mac.',
-                           en: 'Games, public data, living room, photos and Mac.' },
+        aboutLinesEyebrow: { fr: 'Six familles', en: 'Six families' },
+        aboutLinesTitle: { fr: 'Jeux, données publiques, salon, photo, foyer et Mac.',
+                           en: 'Games, public data, living room, photos, household and Mac.' },
         aboutLines: {
             fr: [
                 ['star', 'Jeux avec Gloup',
@@ -213,6 +213,8 @@
                  'Telzo transforme l’iPhone en télécommande universelle par Wi-Fi, gratuite avec publicité. Telora lit vos films, séries et chaînes depuis vos propres sources, sur iPhone, iPad et Apple TV, avec un abonnement et sans publicité.'],
                 ['shield', 'Pour vos photos',
                  'Netta trie et nettoie la photothèque de l’iPhone et de l’iPad : doublons, photos floues, captures d’écran. L’analyse se fait sur l’appareil, sans compte. Gratuite, financée par la publicité.'],
+                ['heart', 'Pour le foyer',
+                 'Foyo répertorie les abonnements et prélèvements récurrents de la famille : total par mois et par an, échéances à venir, rappels avant chaque prélèvement. Un foyer partagé par iCloud, sans compte ni connexion à une banque. Gratuite avec publicité, abonnement Foyo Plus facultatif.'],
                 ['laptop', 'Mac, en open source',
                  'Des utilitaires pour Mac Apple Silicon, chacun sur un sujet précis. Publiés sous licence MIT sur GitHub, code complet consultable et à compiler soi-même, sans publicité.']
             ],
@@ -225,6 +227,8 @@
                  'Telzo turns the iPhone into a universal Wi-Fi remote, free with ads. Telora plays your movies, shows and channels from your own sources, on iPhone, iPad and Apple TV, with a subscription and no ads.'],
                 ['shield', 'For your photos',
                  'Netta sorts and cleans the photo library of the iPhone and iPad: duplicates, blurry photos, screenshots. Analysis happens on the device, with no account. Free, funded by advertising.'],
+                ['heart', 'For the household',
+                 'Foyo lists the family’s recurring subscriptions and direct debits: total per month and per year, upcoming due dates, reminders before every charge. A household shared through iCloud, with no account and no bank connection. Free with ads, optional Foyo Plus subscription.'],
                 ['laptop', 'Mac, open source',
                  'Utilities for Apple Silicon Macs, each on one precise subject. Published under the MIT license on GitHub, full source readable and yours to build, with no ads.']
             ]
@@ -524,6 +528,47 @@
             storeShots: {
                 fr: ['Libérez de la place', 'Gardez ou jetez d’un geste', 'Vos souvenirs de ce jour', 'La meilleure de chaque série', 'Rien ne part sans vous'],
                 en: ['Free up space', 'Keep or toss with a swipe', 'Your memories of this day', 'The best shot of every set', 'Nothing goes without you']
+            }
+        },
+        /* Pas encore sur l'App Store (`store: ''`). Captures attendues : voir `shots` et `storeShots`. */
+        foyo: {
+            name: 'Foyo', platform: 'ios', accent: '#FF6B57', accent2: '#7C3AED',
+            store: '',
+            on: { fr: 'iPhone, iPad et iPhone Duo', en: 'iPhone, iPad and iPhone Duo' },
+            tag: { fr: 'Abonnements du foyer', en: 'Household subscriptions' },
+            promo: { fr: 'Tous les abonnements de la famille au même endroit : combien, quand, et qui paie quoi.', en: 'Every family subscription in one place: how much, when, and who pays what.' },
+            desc: {
+                fr: 'Suivi des abonnements et prélèvements récurrents de la famille : streaming, forfaits, énergie, assurances, crédits, loyer. Total par mois et par an, échéances des 12 prochains mois, rappels avant chaque prélèvement et avant la fin d’un essai gratuit, foyer partagé par iCloud. Aucun compte, aucune connexion à une banque.',
+                en: 'Tracking of the family’s recurring subscriptions and direct debits: streaming, phone plans, energy, insurance, loans, rent. Total per month and per year, due dates for the next 12 months, reminders before every charge and before a free trial ends, a household shared through iCloud. No account, no bank connection.'
+            },
+            chips: {
+                fr: ['Gratuite', 'Sans compte', 'Aucune banque connectée'],
+                en: ['Free', 'No account', 'No bank connection']
+            },
+            features: {
+                fr: [
+                    'Tous les abonnements et prélèvements récurrents de la famille (streaming, forfaits, énergie, assurances, crédits, loyer), avec le total par mois et par an.',
+                    'Les échéances des 12 prochains mois, des rappels avant chaque prélèvement et avant la fin d’un essai gratuit.',
+                    'Des catégories et des comptes de paiement à votre façon : de simples étiquettes, aucune donnée bancaire, aucune connexion à une banque.',
+                    'Des pastilles aux couleurs des services, dessinées dans l’application : aucun logo officiel.',
+                    'Un foyer partagé par iCloud : le créateur invite par un lien iCloud, les invités rejoignent gratuitement. Votre espace personnel reste privé. Seul l’auteur d’un abonnement le modifie, les autres demandent une modification.',
+                    'Un widget, et avec Foyo Plus : synchronisation iCloud, création du foyer, devises et export CSV.'
+                ],
+                en: [
+                    'Every recurring subscription and direct debit of the family (streaming, phone plans, energy, insurance, loans, rent), with the total per month and per year.',
+                    'Due dates for the next 12 months, and reminders before every charge and before a free trial ends.',
+                    'Categories and payment accounts your way: plain labels, no banking data, no connection to a bank.',
+                    'Badges in the colors of the services, drawn inside the app: no official logo.',
+                    'A household shared through iCloud: the creator invites with an iCloud link, guests join for free. Your personal space stays private. Only the author of a subscription edits it; the others ask for a change.',
+                    'A widget, and with Foyo Plus: iCloud sync, creating the household, currencies and CSV export.'
+                ]
+            },
+            sources: { fr: 'Aucune source de données externe : Foyo ne communique avec aucun serveur du développeur, qui ne voit aucune donnée. Vos abonnements restent sur l’appareil et, avec Foyo Plus ou dans un foyer, dans votre iCloud.', en: 'No external data source: Foyo talks to no server of the developer, who sees no data. Your subscriptions stay on the device and, with Foyo Plus or in a household, in your iCloud.' },
+            business: { fr: 'Gratuite, financée par la publicité Google AdMob (une bannière, et une vidéo récompensée facultative qui offre 6 h sans publicité), jusqu’à 5 abonnements, données sur l’appareil. Foyo Plus, à 0,99 € par mois ou 6,99 € par an, avec 7 jours d’essai gratuit et le partage familial Apple : sans publicité, abonnements sans limite, synchronisation iCloud, création du foyer, devises et export CSV. Rejoindre un foyer est gratuit. Abonnement géré par l’App Store et votre compte Apple.', en: 'Free, funded by Google AdMob advertising (a banner, and an optional rewarded video that gives 6 hours ad-free), up to 5 subscriptions, data on the device. Foyo Plus, at €0.99 per month or €6.99 per year, with a 7-day free trial and Apple Family Sharing: no ads, unlimited subscriptions, iCloud sync, creating the household, currencies and CSV export. Joining a household is free. Subscription handled by the App Store and your Apple account.' },
+            shots: { ipad: [0, 1, 2, 3], duo: [0, 1, 2, 3, 4] },
+            storeShots: {
+                fr: ['Tout ce que la famille paie', 'Les échéances des 12 prochains mois', 'Prévenu avant chaque prélèvement', 'Un foyer partagé par iCloud', 'Vos catégories et vos comptes'],
+                en: ['Everything the family pays', 'The next 12 months of due dates', 'Reminded before every charge', 'A household shared through iCloud', 'Your categories and your accounts']
             }
         },
         mactuner: {
@@ -853,10 +898,11 @@
             }
         }
     };
-    var IOS_ORDER = ['carbufrance', 'irvefrance', 'toilettefrance', 'defibfrance', 'dvffrance', 'telora', 'telzo', 'netta'];
+    var IOS_ORDER = ['carbufrance', 'irvefrance', 'toilettefrance', 'defibfrance', 'dvffrance', 'telora', 'telzo', 'netta', 'foyo'];
     var FRANCE_ORDER = IOS_ORDER.slice(0, 5);
     var SALON_ORDER = IOS_ORDER.slice(5, 7);
-    var PHOTO_ORDER = IOS_ORDER.slice(7);
+    var PHOTO_ORDER = IOS_ORDER.slice(7, 8);
+    var FOYER_ORDER = IOS_ORDER.slice(8);
     /* Les jeux forment leur propre gamme : ni données publiques, ni utilitaire. */
     var GAME_ORDER = ['trouchromatique', 'mongloup', 'chromafight', 'chromatraque', 'chromaferme', 'chromaciel'];
 
@@ -912,6 +958,7 @@
         navFrance: { fr: 'Apps France', en: 'French apps' },
         navSalon: { fr: 'Salon', en: 'Living room' },
         navPhoto: { fr: 'Photo', en: 'Photo' },
+        navFoyer: { fr: 'Foyer', en: 'Household' },
         chaptersLabel: { fr: 'Les familles d’applications', en: 'App families' },
         gamesLead: {
             fr: 'Aventure, compagnon virtuel, combat, déduction, ferme et RPG : des jeux avec la petite créature aux grands yeux. Gratuits, et jouables hors connexion.',
@@ -934,6 +981,12 @@
         photoLead: {
             fr: 'Netta trie et nettoie la photothèque de l’iPhone et de l’iPad : doublons, photos floues, captures d’écran et vidéos lourdes, et « Ce jour-là », les photos du même jour les années passées. Tout se fait sur l’appareil.',
             en: 'Netta sorts and cleans the iPhone and iPad photo library: duplicates, blurry photos, screenshots and heavy videos, and “On This Day”, the photos from the same day in past years. Everything happens on the device.'
+        },
+        foyerEyebrow: { fr: 'iPhone, iPad et iPhone Duo', en: 'iPhone, iPad and iPhone Duo' },
+        foyerTitle: { fr: 'Pour la famille.', en: 'For the family.' },
+        foyerLead: {
+            fr: 'Foyo répertorie les abonnements et prélèvements récurrents de la famille : total par mois et par an, échéances à venir, rappels avant chaque prélèvement et avant la fin d’un essai gratuit. Un foyer partagé par iCloud, sans compte ni connexion à une banque.',
+            en: 'Foyo lists the family’s recurring subscriptions and direct debits: total per month and per year, upcoming due dates, reminders before every charge and before a free trial ends. A household shared through iCloud, with no account and no bank connection.'
         },
         onGame: { fr: 'Jeu · iPhone et iPad', en: 'Game · iPhone and iPad' },
         /* Textes sans nombre d'apps : ils restent justes quand une app ou un jeu s'ajoute. */
@@ -968,14 +1021,14 @@
            n'est affirmé ici qui ne soit dit sur la page d'une application. */
         faq: {
             fr: [
-                ['Les applications sont-elles gratuites ?', 'Presque toutes : Telora s’utilise avec l’abonnement Telora+, après 7 jours d’essai. Les autres applications iPhone et les jeux se téléchargent gratuitement et sont financés par une publicité discrète ; ChromaFight, ChromaTraque, ChromaFerme et ChromaCiel proposent aussi des achats intégrés facultatifs. CarbuFrance, IRVEFrance, ToiletteFrance, DefibFrance et Telzo proposent un abonnement facultatif « Sans pub » (0,99 € par mois ou 4,99 € par an) qui retire toute publicité, et Netta le propose à 4,99 € par an. Dans les apps avec publicité, une vidéo facultative offre aussi 6 h sans publicité. Les deux utilitaires Mac sont libres et open source, sans publicité ni achat.'],
+                ['Les applications sont-elles gratuites ?', 'Presque toutes : Telora s’utilise avec l’abonnement Telora+, après 7 jours d’essai. Les autres applications iPhone et les jeux se téléchargent gratuitement et sont financés par une publicité discrète ; ChromaFight, ChromaTraque, ChromaFerme et ChromaCiel proposent aussi des achats intégrés facultatifs. CarbuFrance, IRVEFrance, ToiletteFrance, DefibFrance et Telzo proposent un abonnement facultatif « Sans pub » (0,99 € par mois ou 4,99 € par an) qui retire toute publicité, Netta le propose à 4,99 € par an, et Foyo propose Foyo Plus (0,99 € par mois ou 6,99 € par an, 7 jours d’essai) : sans publicité, avec la synchronisation iCloud et la création du foyer. Dans les apps avec publicité, une vidéo facultative offre aussi 6 h sans publicité. Les deux utilitaires Mac sont libres et open source, sans publicité ni achat.'],
                 ['Faut-il créer un compte ?', 'Non. Aucune application ne demande de compte ni d’inscription. Favoris et réglages restent sur votre appareil ; seules la publicité (avec votre accord), les achats et iCloud ou Game Center utilisent le réseau.'],
                 ['Fonctionnent-elles sans connexion ?', 'Les applications de données publiques les mettent en cache pour rester utilisables hors connexion ; Telora lit vos propres sources et a donc besoin du réseau. Les jeux se jouent hors connexion ; seuls la publicité, iCloud, Game Center et, pour ChromaFight, ChromaTraque, ChromaFerme et ChromaCiel, les achats utilisent le réseau.'],
                 ['Sur quels appareils ?', 'iPhone et iPad sous iOS 18 ou plus pour les applications et les jeux, iPhone Duo compris, ouvert comme fermé. ToiletteFrance aussi sur Apple Watch (watchOS 11 ou plus), Telora aussi sur Apple TV (tvOS 18 ou plus). Mac Apple Silicon sous macOS 26 ou 27 pour MacTuner et DNSTuner.'],
                 ['Où trouver de l’aide ?', 'Chaque application a sa page d’assistance. Je réponds moi-même à chaque message, en général sous 24 à 48 heures.']
             ],
             en: [
-                ['Are the apps free?', 'Almost all of them: Telora is used with the Telora+ subscription, after a 7-day trial. The other iPhone apps and the games are free to download and funded by discreet advertising; ChromaFight, ChromaTraque, ChromaFerme and ChromaCiel also offer optional in-app purchases. CarbuFrance, IRVEFrance, ToiletteFrance, DefibFrance and Telzo offer an optional “Ad-Free” subscription (€0.99 per month or €4.99 per year) that removes every ad, and Netta offers it at €4.99 per year. In the apps with ads, an optional video also gives 6 hours ad-free. The two Mac utilities are free and open source, with no ads and no purchases.'],
+                ['Are the apps free?', 'Almost all of them: Telora is used with the Telora+ subscription, after a 7-day trial. The other iPhone apps and the games are free to download and funded by discreet advertising; ChromaFight, ChromaTraque, ChromaFerme and ChromaCiel also offer optional in-app purchases. CarbuFrance, IRVEFrance, ToiletteFrance, DefibFrance and Telzo offer an optional “Ad-Free” subscription (€0.99 per month or €4.99 per year) that removes every ad, Netta offers it at €4.99 per year, and Foyo offers Foyo Plus (€0.99 per month or €6.99 per year, 7-day trial): no ads, with iCloud sync and creating the household. In the apps with ads, an optional video also gives 6 hours ad-free. The two Mac utilities are free and open source, with no ads and no purchases.'],
                 ['Do I need an account?', 'No. None of the apps asks for an account or a sign-up. Favorites and settings stay on your device; only advertising (with your consent), purchases, and iCloud or Game Center use the network.'],
                 ['Do they work offline?', 'The public data apps cache it so they keep working offline; Telora plays your own sources and therefore needs the network. The games play offline; only advertising, iCloud, Game Center and, for ChromaFight, ChromaTraque, ChromaFerme and ChromaCiel, purchases use the network.'],
                 ['Which devices?', 'iPhone and iPad on iOS 18 or later for the apps and games, iPhone Duo included, open or closed. ToiletteFrance on Apple Watch too (watchOS 11 or later), Telora on Apple TV too (tvOS 18 or later). Apple Silicon Macs on macOS 26 or 27 for MacTuner and DNSTuner.'],
@@ -1172,6 +1225,7 @@
         ['france', V.navFrance, FRANCE_ORDER],
         ['salon', V.navSalon, SALON_ORDER],
         ['photo', V.navPhoto, PHOTO_ORDER],
+        ['foyer', V.navFoyer, FOYER_ORDER],
         ['mac', T.navMac, MAC_ORDER]
     ];
     var TOUTES = GAME_ORDER.concat(IOS_ORDER, MAC_ORDER);
@@ -1183,6 +1237,7 @@
         france: '<path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.4"/>',
         salon: '<rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8.5 20.5h7M12 17v3.5"/>',
         photo: '<rect x="3.5" y="5.5" width="17" height="14" rx="2.5"/><circle cx="9" cy="10.5" r="1.6"/><path d="m4 17.5 4.6-4.4 3.4 3.1 2.7-2.4 5.3 4.6"/>',
+        foyer: '<circle cx="9" cy="8.5" r="3"/><path d="M3.5 19c.6-3.2 2.7-5 5.5-5s4.9 1.8 5.5 5"/><circle cx="17" cy="9.5" r="2.4"/><path d="M16 14.3c2.6-.2 4.5 1.4 5 4.2"/>',
         mac: '<rect x="4.5" y="5" width="15" height="10.5" rx="1.6"/><path d="M2.5 19h19"/>',
         about: '<circle cx="12" cy="8.5" r="3.5"/><path d="M5 20c.8-3.6 3.6-5.6 7-5.6s6.2 2 7 5.6"/>',
         contact: '<rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m3.5 7 8.5 6 8.5-6"/>',
@@ -1222,8 +1277,8 @@
             '<a href="?lang=en" data-lang="en" lang="en" aria-current="' + (lang === 'en') + '">EN</a>' +
             '</span></header>' +
             '<nav class="dock" aria-label="Navigation"><div class="dock-inner">' +
-            entrees.slice(0, 6).map(lien).join('') + '<i class="dock-sep" aria-hidden="true"></i>' +
-            entrees.slice(6).map(lien).join('') + '<i class="dock-sep is-page" aria-hidden="true"></i>' +
+            entrees.slice(0, FAMILLES.length + 1).map(lien).join('') + '<i class="dock-sep" aria-hidden="true"></i>' +
+            entrees.slice(FAMILLES.length + 1).map(lien).join('') + '<i class="dock-sep is-page" aria-hidden="true"></i>' +
             '<button class="dock-item nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu"' +
             ' aria-label="' + esc(pick(V.menuOpen)) + '" data-nom="' + esc(pick(V.menuApps)) + '">' + svg(PICTOS_DOCK.apps) + '</button>' +
             '<span class="nav-progress" aria-hidden="true"></span></div></nav>' +
@@ -1275,6 +1330,7 @@
         france: [V.onIPhone, T.iosTitle, V.franceLead],
         salon: [V.salonEyebrow, V.salonTitle, V.salonLead],
         photo: [V.photoEyebrow, V.photoTitle, V.photoLead],
+        foyer: [V.foyerEyebrow, V.foyerTitle, V.foyerLead],
         mac: [V.onMac, T.macTitle, T.macLead]
     };
 
@@ -1435,7 +1491,7 @@
        --------------------------------------------------------------------- */
 
     /* Les familles en bandes alternées, sombres et claires : chacune son chapitre et sa grille bento. */
-    var FONDS = { jeux: ' is-dark', france: ' is-alt', salon: ' is-dark', photo: '', mac: ' is-dark' };
+    var FONDS = { jeux: ' is-dark', france: ' is-alt', salon: ' is-dark', photo: '', foyer: ' is-alt', mac: ' is-dark' };
 
     /* Colonnes de chaque carte sur six, pour que chaque rangée soit pleine : un produit en paysage prend toute la
        largeur ; les autres vont par trois, les premiers par deux quand le compte ne tombe pas juste. Sur tablette

@@ -657,7 +657,7 @@
     .loupe { width: 18px; height: 18px; color: var(--ink-3); }
     .bilan { font-size: 14px; color: var(--ink-2); grid-column: 1 / -1; }
     .empty { padding: 40px 0; text-align: center; color: var(--ink-2); }
-    .is-jeux { --dot: #f26b3a; } .is-france { --dot: #0071e3; } .is-salon { --dot: #8b5cf6; } .is-photo { --dot: #0d9488; } .is-mac { --dot: #6e6e73; }
+    .is-jeux { --dot: #f26b3a; } .is-france { --dot: #0071e3; } .is-salon { --dot: #8b5cf6; } .is-photo { --dot: #0d9488; } .is-foyer { --dot: #ff6b57; } .is-mac { --dot: #6e6e73; }
 
     /* Boîte de contact finale */
     .cta-box { position: relative; overflow: hidden; isolation: isolate; display: grid; gap: 20px; justify-items: center; text-align: center; padding: clamp(56px, 9vw, 120px) clamp(20px, 5vw, 64px); border-radius: calc(var(--radius) + 8px); background: #000; color: #f5f5f7; --ink-2: #a1a1a6; --cta: #0071e3; color-scheme: dark; }
