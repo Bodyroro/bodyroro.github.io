@@ -179,6 +179,21 @@
                 en: 'Foyo is free: it is funded by Google AdMob advertising (a discreet banner and an optional rewarded video that gives 6 hours ad-free) and holds up to 5 subscriptions, with data on the device. The optional Foyo Plus subscription (€0.99 per month or €6.99 per year, with a 7-day free trial and Apple Family Sharing) removes every ad while it is active, and adds unlimited subscriptions, iCloud sync, creating the household, currencies and CSV export; it is handled by StoreKit and your Apple account, renews automatically unless cancelled at least 24 hours before the end of the period, and is managed in your Apple Account settings. Joining a household is free. The app never receives payment card data. On first launch in the European Economic Area and the United Kingdom, a Google form (UMP) asks for your consent, which you can change in the app Settings; Apple’s tracking permission (App Tracking Transparency) is requested next and can be declined, in the iOS prompt or later in iOS Settings › Privacy & Security › Tracking. Without it, the device’s advertising identifier (IDFA) is not shared; with it, the IDFA is used for advertising tracking, and it is the only data Foyo declares to Apple as used for tracking.'
             }
         },
+        // Écran ambiant pour l'Apple TV (tvOS seule), 29 octobre 2026, pas encore sur l'App Store
+        // (`status: 'soon'`, `store: ''`). Sans publicité (`noAds`), abonnement Ambiro Pro (0,99 € par mois,
+        // 5,99 € par an, essai de 7 jours, partage familial). Français et anglais seulement : `languages`.
+        ambiro: {
+            name: 'Ambiro', publisher: 'BodyCorp', icon: 'ambiro.png', type: 'ambient', status: 'soon', store: '', premium: true, noAds: true, webp: false, languages: ['fr', 'en'], platform: 'tvOS 18+',
+            updated: '2026-10-29',
+            description: {
+                fr: 'Écran ambiant pour l’Apple TV : une horloge élégante, la météo d’une ville choisie, le morceau joué par l’app Musique et des fonds animés, à la place de l’écran de veille.',
+                en: 'Ambient display for Apple TV: an elegant clock, the weather of a city you pick, the song playing in the Music app and animated backgrounds, instead of the screen saver.'
+            },
+            adText: {
+                fr: 'Aucune publicité, aucun pistage. L’horloge, les fonds de base, les bruits blanc, rose et brun et les réglages de veille sont gratuits. Ambiro Pro (0,99 € par mois ou 5,99 € par an, après un essai gratuit de 7 jours proposé une fois par compte Apple, avec le partage familial Apple) ajoute la météo, le lecteur de musique, la carte Maison, tous les fonds, polices, sons et styles, et des thèmes illimités. L’abonnement est géré par StoreKit et votre compte Apple, se renouvelle automatiquement sauf résiliation au moins 24 heures avant la fin de la période et se gère dans les réglages de votre compte Apple. L’application ne reçoit aucune donnée bancaire.',
+                en: 'No ads, no tracking. The clock, the basic backgrounds, the white, pink and brown noises and the sleep settings are free. Ambiro Pro (€0.99 per month or €5.99 per year, after a 7-day free trial offered once per Apple Account, with Apple Family Sharing) adds the weather, the music player, the Home card, every background, font, sound and style, and unlimited themes. The subscription is handled by StoreKit and your Apple account, renews automatically unless cancelled at least 24 hours before the end of the period, and is managed in your Apple Account settings. The app never receives payment card data.'
+            }
+        },
         // Onze langues, les neuf autres que le français et l'anglais plus bas. `adText` remplace le texte
         // publicitaire commun, qui promet une vidéo de 6 h sans publicité que le jeu n'offre pas.
         trouchromatique: {
@@ -311,6 +326,10 @@
     };
 
     var appFeatures = {
+        ambiro: {
+            fr: ['Une horloge à votre goût : cadrans numérique, superposé, géant, à aiguilles, en toutes lettres, palettes rétro et binaire ; polices, couleurs, dégradé, contour ou verre, effet et carillon facultatifs à l’heure pile.', 'Des fonds animés en shaders (onde liquide, aurore, soie, nébuleuse, prisme, aquarelle, ciel étoilé, pluie sur la vitre...), des particules, ou le diaporama de vos photos ; les couleurs de la pochette du morceau en cours.', 'La météo d’un lieu choisi à la main, sans localisation : conditions actuelles, heure par heure et dix jours.', 'Le morceau joué par l’app Musique, avec pochette et avancement, en carte ou en plein écran, piloté à la télécommande. Apple Music seulement.', 'Des sons d’ambiance synthétisés en direct (pluie, orage, vagues, vent, feu, ruisseau, forêt, nuit d’été, bruits blanc, rose et brun), avec arrêt programmé.', 'La carte Maison : caméras, sonnette, température, lumières, serrures, portes et piles faibles.', 'Des réglages à la manière de tvOS, des styles prêts, des thèmes synchronisés par iCloud, une plage de nuit, un délai de veille et la protection des écrans OLED.'],
+            en: ['A clock your way: digital, overlapping, giant, analog and spelled-out faces, retro and binary palettes; fonts, colors, gradient, outline or glass, with an optional effect and chime on the hour.', 'Animated shader backgrounds (liquid wave, aurora, silk, nebula, prism, watercolor, starry sky, rain on the window...), particles, or a slideshow of your photos; the colors of the current song’s cover.', 'The weather of a place you pick by hand, with no location: current conditions, hour by hour and ten days.', 'The song playing in the Music app, with cover and progress, as a card or full screen, controlled from the remote. Apple Music only.', 'Ambient sounds synthesized live (rain, thunderstorm, waves, wind, fire, stream, forest, summer night, white, pink and brown noise), with a sleep timer.', 'The Home card: cameras, doorbell, temperature, lights, locks, doors and low batteries.', 'tvOS-style settings, ready-made styles, themes synced through iCloud, a night window, a sleep delay and OLED screen protection.']
+        },
         carbufrance: {
             fr: ['Carte et liste des stations avec prix carburants en France.', 'Tri par prix ou distance, favoris, stations masquées et cache hors-ligne.', 'Widget station la moins chère, widget écran verrouillé et CarPlay.', 'Carnet de bord, entretien et observatoire des marchés inclus. Toutes les fonctions sont gratuites ; un abonnement facultatif retire la publicité.'],
             en: ['Map and list of French fuel stations with prices.', 'Sort by price or distance, favorites, hidden stations and offline cache.', 'Cheapest-station widget, Lock Screen widget and CarPlay.', 'Logbook, maintenance and market observatory included. Every feature is free; an optional subscription removes ads.'],
@@ -831,6 +850,56 @@
     // Faits relevés dans le code du jeu le 29 septembre 2026 (PrivacyInfo.xcprivacy,
     // AdBridge, NotifyBridge, GameCenterBridge, ui.js, life.js, economy.js).
     var appTypeText = {
+        ambiro: {
+            fr: {
+                data: 'Ambiro ne crée aucun compte et n’envoie au développeur aucune donnée : le développeur n’a aucun serveur et ne voit ni vos réglages, ni vos lieux, ni votre musique, ni votre maison. Vos réglages, vos thèmes et vos lieux favoris sont enregistrés sur l’Apple TV et dans votre iCloud (stockage clé-valeur iCloud), géré par Apple selon vos réglages iCloud. Météo : Ambiro ne demande aucune localisation. Le lieu est celui que vous tapez ; MapKit (Apple) trouve la ville, et ses coordonnées sont envoyées à Apple Météo (WeatherKit) pour obtenir les prévisions, au plus un relevé toutes les 8 heures et trois par jour. Le dernier relevé est gardé sur l’appareil, et les mentions légales d’Apple Météo sont affichées dans l’application. Musique : avec votre autorisation Apple Music, demandée depuis la page Lecteur seulement, Ambiro lit le morceau joué par l’app Musique de l’Apple TV et la pilote ; rien n’est envoyé ailleurs. Maison : avec votre autorisation Maison, demandée depuis la page Maison seulement, Ambiro lit les caméras, la sonnette et les capteurs par HomeKit, sur le réseau local et selon les réglages de l’app Maison ; rien n’est envoyé ailleurs. Photos : avec votre autorisation Photos, demandée depuis le réglage du fond Photos seulement, le diaporama d’un album est lu sur l’appareil. Les sons d’ambiance sont synthétisés sur l’Apple TV : aucun fichier n’est téléchargé.',
+                source: 'Aucune source de données externe : Ambiro ne communique avec aucun serveur du développeur. Seuls Apple Météo (WeatherKit) et MapKit, pour la météo et la recherche d’une ville, iCloud, pour la synchronisation des réglages, et l’App Store, pour l’abonnement, utilisent Internet. Le développeur n’ajoute aucun outil de mesure d’audience.',
+                privacyExtra: [
+                    { title: 'Enfants', paragraphs: [
+                        'Ambiro ne s’adresse pas spécialement aux enfants, ne leur demande aucune information personnelle et ne propose ni messagerie, ni échange entre utilisateurs, ni partage vers les réseaux sociaux.'
+                    ] },
+                    { title: 'Modifications de cette politique', paragraphs: [
+                        'Cette politique suit l’application : elle est revue quand un traitement change, et la date en tête de page indique sa dernière mise à jour. Une modification importante est aussi signalée dans les notes de version de l’App Store.'
+                    ] }
+                ],
+                retention: 'Les données restent sur l’Apple TV tant que l’application est installée. Les réglages, thèmes et lieux favoris restent aussi dans votre iCloud, que vous gérez dans les réglages iCloud de votre compte Apple.',
+                deletion: 'Ambiro ne crée aucun compte. Supprimer l’application efface ses données de l’Apple TV. Les réglages stockés dans votre iCloud se gèrent dans les réglages iCloud de votre compte Apple : le développeur n’y a pas accès.',
+                controller: 'Ambiro est édité par BodyCorp, développeur indépendant et responsable du traitement, qui répond personnellement à toute question sur vos données.',
+                support: [
+                    ['Comment ouvrir les réglages ?', 'Un clic sur la surface de la télécommande ouvre les réglages. Menu remonte d’un cran, puis ferme.'],
+                    ['Pourquoi l’Apple TV ne se met-elle plus en veille ?', 'Tant qu’Ambiro est ouverte, l’Apple TV reste allumée dans la limite du délai « Rester allumé » et de la plage de nuit, que vous réglez dans Sons et veille.'],
+                    ['Pourquoi Spotify ou Deezer ne s’affichent-ils pas ?', 'tvOS ne donne à une application aucun accès à la lecture des autres applications : Ambiro affiche Apple Music seulement.'],
+                    ['Pourquoi la météo ne se met-elle pas à jour en continu ?', 'Ambiro fait un relevé toutes les 8 heures au plus ; l’affichage avance heure par heure dans les prévisions déjà reçues.'],
+                    ['Je n’entends pas les sons d’ambiance', 'Vérifiez le volume du téléviseur ou de l’amplificateur, et l’option « Se taire pendant la musique » : l’ambiance s’arrête quand l’app Musique joue.'],
+                    ['Comment gérer ou restaurer Ambiro Pro ?', 'L’écran Ambiro Pro des Réglages de l’app ouvre l’abonnement (0,99 € par mois ou 5,99 € par an, avec 7 jours d’essai gratuit offerts une fois par compte Apple et le partage familial Apple), avec le bouton de restauration. Pour le résilier : Réglages de l’Apple TV › Utilisateurs et comptes › Abonnements.'],
+                    ['Toujours un problème ?', 'Écrivez au support avec le bouton ci-dessous, en précisant votre Apple TV et sa version de tvOS. Le développeur répond personnellement à chaque message.']
+                ]
+            },
+            en: {
+                data: 'Ambiro creates no account and sends the developer no data: the developer has no server and sees neither your settings, nor your places, nor your music, nor your home. Your settings, themes and favorite places are stored on the Apple TV and in your iCloud (iCloud key-value storage), managed by Apple according to your iCloud settings. Weather: Ambiro asks for no location. The place is the one you type; MapKit (Apple) finds the city, and its coordinates are sent to Apple Weather (WeatherKit) to get the forecast, at most one fetch every 8 hours and three a day. The latest fetch is kept on the device, and Apple Weather’s legal attributions are shown in the app. Music: with your Apple Music permission, requested from the Player page only, Ambiro reads the song playing in the Music app of the Apple TV and controls it; nothing is sent elsewhere. Home: with your Home permission, requested from the Home page only, Ambiro reads cameras, doorbell and sensors through HomeKit, on the local network and according to the Home app settings; nothing is sent elsewhere. Photos: with your Photos permission, requested from the Photos background setting only, the slideshow of an album is read on the device. Ambient sounds are synthesized on the Apple TV: no file is downloaded.',
+                source: 'No external data source: Ambiro talks to no server of the developer. Only Apple Weather (WeatherKit) and MapKit, for the weather and finding a city, iCloud, for syncing settings, and the App Store, for the subscription, use the Internet. The developer adds no analytics tool.',
+                privacyExtra: [
+                    { title: 'Children', paragraphs: [
+                        'Ambiro is not aimed specifically at children, asks them for no personal information and offers no messaging, no exchange between users and no sharing to social networks.'
+                    ] },
+                    { title: 'Changes to this policy', paragraphs: [
+                        'This policy follows the app: it is revised whenever a processing changes, and the date at the top of the page shows its latest update. A significant change is also noted in the App Store release notes.'
+                    ] }
+                ],
+                retention: 'Data stays on the Apple TV as long as the app is installed. Settings, themes and favorite places also stay in your iCloud, which you manage in the iCloud settings of your Apple Account.',
+                deletion: 'Ambiro creates no account. Deleting the app erases its data from the Apple TV. Settings stored in your iCloud are managed in the iCloud settings of your Apple Account: the developer has no access to them.',
+                controller: 'Ambiro is published by BodyCorp, an independent developer and the data controller, who personally answers any question about your data.',
+                support: [
+                    ['How do I open the settings?', 'A click on the remote’s touch surface opens the settings. Menu goes back one level, then closes.'],
+                    ['Why does the Apple TV no longer go to sleep?', 'As long as Ambiro is open, the Apple TV stays on within the limit of the “Stay awake” delay and the night window, which you set in Sounds and Sleep.'],
+                    ['Why do Spotify or Deezer not show up?', 'tvOS gives an app no access to what other apps are playing: Ambiro shows Apple Music only.'],
+                    ['Why does the weather not update continuously?', 'Ambiro fetches at most every 8 hours; the display moves forward hour by hour within the forecast already received.'],
+                    ['I cannot hear the ambient sounds', 'Check the volume of the TV or the amplifier, and the “Stay quiet during music” option: the ambience stops when the Music app is playing.'],
+                    ['How do I manage or restore Ambiro Pro?', 'The Ambiro Pro screen in the app Settings opens the subscription (€0.99 per month or €5.99 per year, with a 7-day free trial offered once per Apple Account and Apple Family Sharing), with the restore button. To cancel it: Apple TV Settings › Users and Accounts › Subscriptions.'],
+                    ['Still having a problem?', 'Write to support with the button below, stating your Apple TV and its tvOS version. The developer answers every message personally.']
+                ]
+            }
+        },
         telzo: {
             fr: {
                 data: 'Telzo ne crée aucun compte et n’envoie au développeur aucune donnée personnelle. L’application cherche vos téléviseurs, boîtiers et enceintes sur le réseau Wi-Fi local (autorisation « Réseau local » d’iOS, par Bonjour et par une recherche sur votre sous-réseau) et leur envoie les commandes directement, sans passer par aucun serveur. La liste des appareils associés (nom, modèle, adresse IP) et vos préférences sont enregistrées dans l’application ; les autorisations d’association (jetons, codes, mots de passe (Kodi, PJLink), certificats) restent dans le Trousseau de l’appareil, sans synchronisation iCloud. Le widget, la commande du Centre de contrôle et Siri ne font qu’ouvrir Telzo ou lui faire envoyer une touche. Telzo ne demande ni la localisation, ni les contacts, ni les photos, ni l’appareil photo, ni le micro.',

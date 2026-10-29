@@ -162,7 +162,7 @@
             en: 'Self-taught developer based in France, I build games and simple, useful, privacy-minded apps in Swift and SwiftUI, with Apple’s frameworks first for a coherent experience.'
         },
         profileCTA: { fr: 'Me contacter', en: 'Get in touch' },
-        footerLine: { fr: 'Des jeux avec Gloup, des apps de données publiques pour la France, des outils pour le salon (Telzo, Telora), la photo (Netta) et le budget du foyer (Foyo) sur iPhone et iPad, et des utilitaires libres pour Mac.', en: 'Games starring Gloup, apps built on French public data, tools for the living room (Telzo, Telora), photos (Netta) and the household budget (Foyo) on iPhone and iPad, and free utilities for Mac.' },
+        footerLine: { fr: 'Des jeux avec Gloup, des apps de données publiques pour la France, des outils pour le salon (Telzo, Telora, Ambiro), la photo (Netta) et le budget du foyer (Foyo) sur iPhone et iPad, et des utilitaires libres pour Mac.', en: 'Games starring Gloup, apps built on French public data, tools for the living room (Telzo, Telora, Ambiro), photos (Netta) and the household budget (Foyo) on iPhone and iPad, and free utilities for Mac.' },
         footerSite: { fr: 'Site', en: 'Site' },
         footerTagline: { fr: 'Conçu et développé en France.', en: 'Designed and built in France.' },
         footerStore: { fr: 'Toutes les applications sur l\u2019App Store', en: 'All apps on the App Store' },
@@ -210,7 +210,7 @@
                 ['map', 'Données publiques, pour la France',
                  'Des applications bâties sur les jeux de données publics français : carburants, bornes de recharge, toilettes, défibrillateurs et prix de l’immobilier. Distribuées sur l’App Store, financées par une publicité discrète, sans compte ni inscription.'],
                 ['phone', 'Pour le salon',
-                 'Telzo transforme l’iPhone en télécommande universelle par Wi-Fi, gratuite avec publicité. Telora lit vos films, séries et chaînes depuis vos propres sources, sur iPhone, iPad et Apple TV, avec un abonnement et sans publicité.'],
+                 'Telzo transforme l’iPhone en télécommande universelle par Wi-Fi, gratuite avec publicité. Telora lit vos films, séries et chaînes depuis vos propres sources, sur iPhone, iPad et Apple TV, avec un abonnement et sans publicité. Ambiro transforme l’Apple TV en écran ambiant : horloge, météo, musique et fonds animés, sans publicité.'],
                 ['shield', 'Pour vos photos',
                  'Netta trie et nettoie la photothèque de l’iPhone et de l’iPad : doublons, photos floues, captures d’écran. L’analyse se fait sur l’appareil, sans compte. Gratuite, financée par la publicité.'],
                 ['heart', 'Pour le foyer',
@@ -224,7 +224,7 @@
                 ['map', 'Public data, built for France',
                  'Apps built on French public datasets: fuel prices, EV chargers, public toilets, defibrillators and property prices. Shipped on the App Store, funded by discreet advertising, with no account or sign-up.'],
                 ['phone', 'For the living room',
-                 'Telzo turns the iPhone into a universal Wi-Fi remote, free with ads. Telora plays your movies, shows and channels from your own sources, on iPhone, iPad and Apple TV, with a subscription and no ads.'],
+                 'Telzo turns the iPhone into a universal Wi-Fi remote, free with ads. Telora plays your movies, shows and channels from your own sources, on iPhone, iPad and Apple TV, with a subscription and no ads. Ambiro turns the Apple TV into an ambient display: clock, weather, music and animated backgrounds, with no ads.'],
                 ['shield', 'For your photos',
                  'Netta sorts and cleans the photo library of the iPhone and iPad: duplicates, blurry photos, screenshots. Analysis happens on the device, with no account. Free, funded by advertising.'],
                 ['heart', 'For the household',
@@ -571,6 +571,49 @@
                 en: ['Everything the family pays', 'The next 12 months of due dates', 'Reminded before every charge', 'A household shared through iCloud', 'Your categories and your accounts']
             }
         },
+        /* Apple TV seule (`tvSeul` : scène et galerie sans iPhone ni iPad), pas encore sur l'App Store (`store: ''`). */
+        ambiro: {
+            name: 'Ambiro', platform: 'ios', tvSeul: true, accent: '#5B6CFF', accent2: '#FF8A6B',
+            store: '',
+            on: { fr: 'Apple TV', en: 'Apple TV' },
+            tag: { fr: 'Écran ambiant', en: 'Ambient display' },
+            promo: { fr: 'Une horloge élégante, la météo, votre musique et des fonds animés sur l’Apple TV, à la place de l’écran de veille.', en: 'An elegant clock, the weather, your music and animated backgrounds on Apple TV, instead of the screen saver.' },
+            desc: {
+                fr: 'Écran ambiant pour l’Apple TV : une horloge élégante, la météo d’une ville choisie, le morceau joué par l’app Musique et des fonds animés, à la place de l’écran de veille.',
+                en: 'Ambient display for Apple TV: an elegant clock, the weather of a city you pick, the song playing in the Music app and animated backgrounds, instead of the screen saver.'
+            },
+            chips: {
+                fr: ['Ambiro Pro', 'Sans publicité', 'Sans compte'],
+                en: ['Ambiro Pro', 'No ads', 'No account']
+            },
+            features: {
+                fr: [
+                    'Une horloge à votre goût : cadrans numérique, superposé, géant, à aiguilles, en toutes lettres, palettes rétro et binaire ; polices, couleurs, dégradé, contour ou verre, effet et carillon facultatifs à l’heure pile.',
+                    'Des fonds animés en shaders (onde liquide, aurore, soie, nébuleuse, prisme, aquarelle, ciel étoilé, pluie sur la vitre...), des particules, ou le diaporama de vos photos ; les couleurs de la pochette du morceau en cours.',
+                    'La météo d’un lieu choisi à la main, sans localisation : conditions actuelles, heure par heure et dix jours.',
+                    'Le morceau joué par l’app Musique, avec pochette et avancement, en carte ou en plein écran, piloté à la télécommande. Apple Music seulement.',
+                    'Des sons d’ambiance synthétisés en direct (pluie, orage, vagues, vent, feu, ruisseau, forêt, nuit d’été, bruits blanc, rose et brun), avec arrêt programmé.',
+                    'La carte Maison : caméras, sonnette, température, lumières, serrures, portes et piles faibles.',
+                    'Des réglages à la manière de tvOS, des styles prêts, des thèmes synchronisés par iCloud, une plage de nuit, un délai de veille et la protection des écrans OLED.'
+                ],
+                en: [
+                    'A clock your way: digital, overlapping, giant, analog and spelled-out faces, retro and binary palettes; fonts, colors, gradient, outline or glass, with an optional effect and chime on the hour.',
+                    'Animated shader backgrounds (liquid wave, aurora, silk, nebula, prism, watercolor, starry sky, rain on the window...), particles, or a slideshow of your photos; the colors of the current song’s cover.',
+                    'The weather of a place you pick by hand, with no location: current conditions, hour by hour and ten days.',
+                    'The song playing in the Music app, with cover and progress, as a card or full screen, controlled from the remote. Apple Music only.',
+                    'Ambient sounds synthesized live (rain, thunderstorm, waves, wind, fire, stream, forest, summer night, white, pink and brown noise), with a sleep timer.',
+                    'The Home card: cameras, doorbell, temperature, lights, locks, doors and low batteries.',
+                    'tvOS-style settings, ready-made styles, themes synced through iCloud, a night window, a sleep delay and OLED screen protection.'
+                ]
+            },
+            shots: { tv: [0, 1, 2, 3, 4] },
+            storeShots: {
+                fr: ['Votre salon prend vie', 'Le morceau en grand', 'Une horloge à votre goût', 'Tout se règle à la télécommande', 'La pluie, les vagues, le feu'],
+                en: ['Your living room comes alive', 'Your song on the big screen', 'A clock that suits you', 'Tune everything with the remote', 'Rain, waves, fire']
+            },
+            sources: { fr: 'Aucune source de données externe : Ambiro ne communique avec aucun serveur du développeur, qui ne voit aucune donnée. Seuls Apple Météo et MapKit (la météo et la recherche d’une ville), iCloud (les réglages) et l’App Store (l’abonnement) utilisent Internet.', en: 'No external data source: Ambiro talks to no server of the developer, who sees no data. Only Apple Weather and MapKit (the weather and finding a city), iCloud (the settings) and the App Store (the subscription) use the Internet.' },
+            business: { fr: 'Aucune publicité, aucun pistage. L’horloge, les fonds de base, les bruits blanc, rose et brun et les réglages de veille sont gratuits. Ambiro Pro, à 0,99 € par mois ou 5,99 € par an, avec 7 jours d’essai gratuit et le partage familial Apple : météo, lecteur de musique, carte Maison, tous les fonds, polices, sons et styles, thèmes illimités. Abonnement géré par l’App Store et votre compte Apple : l’application ne reçoit aucune donnée bancaire.', en: 'No ads, no tracking. The clock, the basic backgrounds, the white, pink and brown noises and the sleep settings are free. Ambiro Pro, at €0.99 per month or €5.99 per year, with a 7-day free trial and Apple Family Sharing: weather, music player, Home card, every background, font, sound and style, unlimited themes. Subscription handled by the App Store and your Apple account: the app never receives payment card data.' }
+        },
         mactuner: {
             name: 'MacTuner', platform: 'mac', accent: '#8eb8ff',
             store: GITHUB_MACTUNER,
@@ -898,11 +941,11 @@
             }
         }
     };
-    var IOS_ORDER = ['carbufrance', 'irvefrance', 'toilettefrance', 'defibfrance', 'dvffrance', 'telora', 'telzo', 'netta', 'foyo'];
+    var IOS_ORDER = ['carbufrance', 'irvefrance', 'toilettefrance', 'defibfrance', 'dvffrance', 'telora', 'telzo', 'ambiro', 'netta', 'foyo'];
     var FRANCE_ORDER = IOS_ORDER.slice(0, 5);
-    var SALON_ORDER = IOS_ORDER.slice(5, 7);
-    var PHOTO_ORDER = IOS_ORDER.slice(7, 8);
-    var FOYER_ORDER = IOS_ORDER.slice(8);
+    var SALON_ORDER = IOS_ORDER.slice(5, 8);
+    var PHOTO_ORDER = IOS_ORDER.slice(8, 9);
+    var FOYER_ORDER = IOS_ORDER.slice(9);
     /* Les jeux forment leur propre gamme : ni données publiques, ni utilitaire. */
     var GAME_ORDER = ['trouchromatique', 'mongloup', 'chromafight', 'chromatraque', 'chromaferme', 'chromaciel'];
 
@@ -973,8 +1016,8 @@
         salonEyebrow: { fr: 'iPhone, iPad et Apple TV', en: 'iPhone, iPad and Apple TV' },
         salonTitle: { fr: 'Pour le salon.', en: 'For the living room.' },
         salonLead: {
-            fr: 'Telora lit vos films, séries et chaînes depuis vos propres sources, jusque sur l’Apple TV. Telzo fait de l’iPhone une télécommande universelle par Wi-Fi.',
-            en: 'Telora plays your movies, shows and channels from your own sources, all the way to Apple TV. Telzo turns the iPhone into a universal Wi-Fi remote.'
+            fr: 'Telora lit vos films, séries et chaînes depuis vos propres sources, jusque sur l’Apple TV. Telzo fait de l’iPhone une télécommande universelle par Wi-Fi. Ambiro fait de l’Apple TV un écran ambiant : horloge, météo, musique et fonds animés.',
+            en: 'Telora plays your movies, shows and channels from your own sources, all the way to Apple TV. Telzo turns the iPhone into a universal Wi-Fi remote. Ambiro turns the Apple TV into an ambient display: clock, weather, music and animated backgrounds.'
         },
         photoEyebrow: { fr: 'iPhone et iPad', en: 'iPhone and iPad' },
         photoTitle: { fr: 'Pour vos photos.', en: 'For your photos.' },
@@ -1021,17 +1064,17 @@
            n'est affirmé ici qui ne soit dit sur la page d'une application. */
         faq: {
             fr: [
-                ['Les applications sont-elles gratuites ?', 'Presque toutes : Telora s’utilise avec l’abonnement Telora+, après 7 jours d’essai. Les autres applications iPhone et les jeux se téléchargent gratuitement et sont financés par une publicité discrète ; ChromaFight, ChromaTraque, ChromaFerme et ChromaCiel proposent aussi des achats intégrés facultatifs. CarbuFrance, IRVEFrance, ToiletteFrance, DefibFrance et Telzo proposent un abonnement facultatif « Sans pub » (0,99 € par mois ou 4,99 € par an) qui retire toute publicité, Netta le propose à 4,99 € par an, et Foyo propose Foyo Plus (0,99 € par mois ou 6,99 € par an, 7 jours d’essai) : sans publicité, avec la synchronisation iCloud et la création du foyer. Dans les apps avec publicité, une vidéo facultative offre aussi 6 h sans publicité. Les deux utilitaires Mac sont libres et open source, sans publicité ni achat.'],
+                ['Les applications sont-elles gratuites ?', 'Presque toutes : Telora s’utilise avec l’abonnement Telora+, après 7 jours d’essai. Les autres applications iPhone et les jeux se téléchargent gratuitement et sont financés par une publicité discrète ; ChromaFight, ChromaTraque, ChromaFerme et ChromaCiel proposent aussi des achats intégrés facultatifs. CarbuFrance, IRVEFrance, ToiletteFrance, DefibFrance et Telzo proposent un abonnement facultatif « Sans pub » (0,99 € par mois ou 4,99 € par an) qui retire toute publicité, Netta le propose à 4,99 € par an, et Foyo propose Foyo Plus (0,99 € par mois ou 6,99 € par an, 7 jours d’essai) : sans publicité, avec la synchronisation iCloud et la création du foyer. Ambiro est sans publicité : l’horloge et les fonds de base sont gratuits, et Ambiro Pro (0,99 € par mois ou 5,99 € par an, 7 jours d’essai) ajoute la météo, la musique, la carte Maison et tous les fonds. Dans les apps avec publicité, une vidéo facultative offre aussi 6 h sans publicité. Les deux utilitaires Mac sont libres et open source, sans publicité ni achat.'],
                 ['Faut-il créer un compte ?', 'Non. Aucune application ne demande de compte ni d’inscription. Favoris et réglages restent sur votre appareil ; seules la publicité (avec votre accord), les achats et iCloud ou Game Center utilisent le réseau.'],
                 ['Fonctionnent-elles sans connexion ?', 'Les applications de données publiques les mettent en cache pour rester utilisables hors connexion ; Telora lit vos propres sources et a donc besoin du réseau. Les jeux se jouent hors connexion ; seuls la publicité, iCloud, Game Center et, pour ChromaFight, ChromaTraque, ChromaFerme et ChromaCiel, les achats utilisent le réseau.'],
-                ['Sur quels appareils ?', 'iPhone et iPad sous iOS 18 ou plus pour les applications et les jeux, iPhone Duo compris, ouvert comme fermé. ToiletteFrance aussi sur Apple Watch (watchOS 11 ou plus), Telora aussi sur Apple TV (tvOS 18 ou plus). Mac Apple Silicon sous macOS 26 ou 27 pour MacTuner et DNSTuner.'],
+                ['Sur quels appareils ?', 'iPhone et iPad sous iOS 18 ou plus pour les applications et les jeux, iPhone Duo compris, ouvert comme fermé. ToiletteFrance aussi sur Apple Watch (watchOS 11 ou plus), Telora aussi sur Apple TV (tvOS 18 ou plus), Ambiro sur Apple TV seulement (tvOS 18 ou plus). Mac Apple Silicon sous macOS 26 ou 27 pour MacTuner et DNSTuner.'],
                 ['Où trouver de l’aide ?', 'Chaque application a sa page d’assistance. Je réponds moi-même à chaque message, en général sous 24 à 48 heures.']
             ],
             en: [
-                ['Are the apps free?', 'Almost all of them: Telora is used with the Telora+ subscription, after a 7-day trial. The other iPhone apps and the games are free to download and funded by discreet advertising; ChromaFight, ChromaTraque, ChromaFerme and ChromaCiel also offer optional in-app purchases. CarbuFrance, IRVEFrance, ToiletteFrance, DefibFrance and Telzo offer an optional “Ad-Free” subscription (€0.99 per month or €4.99 per year) that removes every ad, Netta offers it at €4.99 per year, and Foyo offers Foyo Plus (€0.99 per month or €6.99 per year, 7-day trial): no ads, with iCloud sync and creating the household. In the apps with ads, an optional video also gives 6 hours ad-free. The two Mac utilities are free and open source, with no ads and no purchases.'],
+                ['Are the apps free?', 'Almost all of them: Telora is used with the Telora+ subscription, after a 7-day trial. The other iPhone apps and the games are free to download and funded by discreet advertising; ChromaFight, ChromaTraque, ChromaFerme and ChromaCiel also offer optional in-app purchases. CarbuFrance, IRVEFrance, ToiletteFrance, DefibFrance and Telzo offer an optional “Ad-Free” subscription (€0.99 per month or €4.99 per year) that removes every ad, Netta offers it at €4.99 per year, and Foyo offers Foyo Plus (€0.99 per month or €6.99 per year, 7-day trial): no ads, with iCloud sync and creating the household. Ambiro has no ads: the clock and the basic backgrounds are free, and Ambiro Pro (€0.99 per month or €5.99 per year, 7-day trial) adds the weather, music, the Home card and every background. In the apps with ads, an optional video also gives 6 hours ad-free. The two Mac utilities are free and open source, with no ads and no purchases.'],
                 ['Do I need an account?', 'No. None of the apps asks for an account or a sign-up. Favorites and settings stay on your device; only advertising (with your consent), purchases, and iCloud or Game Center use the network.'],
                 ['Do they work offline?', 'The public data apps cache it so they keep working offline; Telora plays your own sources and therefore needs the network. The games play offline; only advertising, iCloud, Game Center and, for ChromaFight, ChromaTraque, ChromaFerme and ChromaCiel, purchases use the network.'],
-                ['Which devices?', 'iPhone and iPad on iOS 18 or later for the apps and games, iPhone Duo included, open or closed. ToiletteFrance on Apple Watch too (watchOS 11 or later), Telora on Apple TV too (tvOS 18 or later). Apple Silicon Macs on macOS 26 or 27 for MacTuner and DNSTuner.'],
+                ['Which devices?', 'iPhone and iPad on iOS 18 or later for the apps and games, iPhone Duo included, open or closed. ToiletteFrance on Apple Watch too (watchOS 11 or later), Telora on Apple TV too (tvOS 18 or later), Ambiro on Apple TV only (tvOS 18 or later). Apple Silicon Macs on macOS 26 or 27 for MacTuner and DNSTuner.'],
                 ['Where can I get help?', 'Each app has its own support page. I answer every message myself, usually within 24 to 48 hours.']
             ]
         }
@@ -1203,6 +1246,7 @@
             return appareil(cle, app.paysage ? 'paysage' : 'iphone', n, nom + 'iPhone', 0, charge) +
                 appareil(cle, 'ipadl', n, nom + 'iPad', 1, charge);
         }
+        if (app.tvSeul) { return appareil(cle, 'tv', 'ecran', nom + 'Apple TV', 0, charge); }
         var s = app.shots || {};
         return appareil(cle, 'ipad', 'ecran', nom + 'iPad', 1, charge) +
             appareil(cle, 'iphone', 'ecran', nom + 'iPhone', 0, charge) +
@@ -1612,6 +1656,7 @@
     function appareilsDe(app) {
         if (app.platform === 'mac' || !app.storeShots) { return []; }
         if (app.game) { return ['iphone', 'ipad']; }
+        if (app.tvSeul) { return ['tv']; }
         return ['iphone', 'ipad', 'duo', 'watch', 'tv'].filter(function (a) { return a === 'iphone' || (app.shots && app.shots[a]); });
     }
 
