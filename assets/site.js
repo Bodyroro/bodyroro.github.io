@@ -592,7 +592,7 @@
                     'Des fonds animés en shaders (onde liquide, aurore, soie, nébuleuse, prisme, aquarelle, ciel étoilé, pluie sur la vitre...), des particules, ou le diaporama de vos photos ; les couleurs de la pochette du morceau en cours.',
                     'La météo d’un lieu choisi à la main, sans localisation : conditions actuelles, heure par heure et dix jours.',
                     'Le morceau joué par l’app Musique, avec pochette et avancement, en carte ou en plein écran, piloté à la télécommande. Apple Music seulement.',
-                    'Des sons d’ambiance synthétisés en direct (pluie, orage, vagues, vent, feu, ruisseau, forêt, nuit d’été, bruits blanc, rose et brun), avec arrêt programmé.',
+                    'Des sons d’ambiance enregistrés dans la nature, en boucle sans coupure (pluie, orage, vagues, vent, feu, ruisseau, forêt, nuit d’été, bruits blanc, rose et brun), avec arrêt programmé.',
                     'La carte Maison : caméras, sonnette, température, lumières, serrures, portes et piles faibles.',
                     'Des réglages à la manière de tvOS, des styles prêts, des thèmes synchronisés par iCloud, une plage de nuit, un délai de veille et la protection des écrans OLED.'
                 ],
@@ -601,7 +601,7 @@
                     'Animated shader backgrounds (liquid wave, aurora, silk, nebula, prism, watercolor, starry sky, rain on the window...), particles, or a slideshow of your photos; the colors of the current song’s cover.',
                     'The weather of a place you pick by hand, with no location: current conditions, hour by hour and ten days.',
                     'The song playing in the Music app, with cover and progress, as a card or full screen, controlled from the remote. Apple Music only.',
-                    'Ambient sounds synthesized live (rain, thunderstorm, waves, wind, fire, stream, forest, summer night, white, pink and brown noise), with a sleep timer.',
+                    'Ambient sounds recorded in nature, looped seamlessly (rain, thunderstorm, waves, wind, fire, stream, forest, summer night, white, pink and brown noise), with a sleep timer.',
                     'The Home card: cameras, doorbell, temperature, lights, locks, doors and low batteries.',
                     'tvOS-style settings, ready-made styles, themes synced through iCloud, a night window, a sleep delay and OLED screen protection.'
                 ]
