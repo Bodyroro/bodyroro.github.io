@@ -1202,7 +1202,7 @@
 
     /* Un appareil dessiné en volume autour d'un écran réel (site.css) : tranches, dos, touches, face avant.
        `format` : clé de FORMATS ; `k` décale le flottement et l'entrée. TOUCHES : [tranche, position, longueur] en %
-       de ce côté, comme sur l'appareil réel tourné dans ce sens. L'Apple TV garde un simple cadre. */
+       de ce côté, comme sur l'appareil réel tourné dans ce sens. L'Apple TV : téléviseur à bord fin, boîtier et télécommande Siri posés à droite. */
     var CLASSES_APPAREIL = { iphone: 'is-iphone', paysage: 'is-iphone is-land', ipad: 'is-ipad', ipadl: 'is-ipad is-land', duoi: 'is-duo', watch: 'is-watch', tv: 'is-tv' };
     var TAILLES_APPAREIL = { iphone: '220px', paysage: '720px', ipad: '460px', ipadl: '640px', duo: '220px', duoi: '300px', watch: '124px', tv: '600px' };
     var PLI = svg('<path d="M12 4v16"/><path d="M8.5 8.5 5 12l3.5 3.5M15.5 8.5 19 12l-3.5 3.5"/>');
@@ -1225,7 +1225,10 @@
         var ouvre = '<div class="dev ' + CLASSES_APPAREIL[format] + nu + (duo ? ' is-closed' : '') + '" style="--k:' + k + '"' +
             (duo ? ' role="button" tabindex="0" aria-pressed="true" aria-label="' + esc(fr ? 'Déplier l’iPhone Duo' : 'Unfold the iPhone Duo') + '">' +
                 '<span class="dev-hint" aria-hidden="true">' + PLI + '<span class="is-o">' + (fr ? 'Plier' : 'Fold') + '</span><span class="is-f">' + (fr ? 'Déplier' : 'Unfold') + '</span></span>' : '>');
-        if (format === 'tv') { return ouvre + '<div class="dev-screen">' + ecran + '</div></div>'; }
+        if (format === 'tv') {
+            return ouvre + '<div class="dev-screen">' + ecran + '</div><i class="tv-box"></i>' +
+                '<i class="tv-remote"><i class="tv-pad"></i><i class="tv-k"></i><i class="tv-k"></i><i class="tv-k"></i><i class="tv-k"></i><i class="tv-vol"></i></i></div>';
+        }
         var tranches = [1, 2, 3, 4, 5].map(function (l) { return '<i class="dev-slice" style="--l:' + l + '"></i>'; }).join('');
         var touches = TOUCHES[format].map(function (t) { return '<i class="dev-key is-' + t[0] + '" style="--p:' + t[1] + '%;--s:' + t[2] + '%"></i>'; }).join('');
         var montre = format === 'watch' ? '<i class="dev-crown"></i>' : '';

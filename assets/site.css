@@ -363,10 +363,18 @@
     .dev.is-watch .dev-front { box-shadow: inset 0 calc(var(--u) * .012) calc(var(--u) * .02) rgb(255 255 255 / .28), inset 0 0 0 1px rgb(255 255 255 / .2), inset 0 0 calc(var(--rim) * 1.4) rgb(0 0 0 / .6); }
     .dev.is-watch .dev-crown::after { content: ""; position: absolute; left: 10%; top: 135%; width: 80%; height: 120%; border-radius: calc(var(--u) * .02); background: linear-gradient(90deg, #111113, #3c3c41 50%, #1a1a1d); }
 
-    /* Téléviseur : la capture dans un cadre noir, sur pied. */
-    .dev.is-tv { --w: 520px; aspect-ratio: 16 / 9; padding: calc(var(--w) * .009); border-radius: 1.6%; background: #0d0d0f; box-shadow: inset 0 0 0 1px rgb(255 255 255 / .1), 0 0 0 1px rgb(0 0 0 / .5), 0 40px 80px -30px rgb(0 0 0 / .55); }
-    .dev.is-tv .dev-screen { border: 0; border-radius: .8%; }
-    .dev.is-tv::after { content: ""; position: absolute; left: 38%; right: 38%; top: 100%; height: 9%; background: linear-gradient(#2a2a2d, #48484c); clip-path: polygon(30% 0, 70% 0, 100% 100%, 0 100%); }
+    /* Apple TV : téléviseur à bord fin, boîtier noir posé devant le coin droit, télécommande Siri en aluminium debout à
+       côté (cotes de la photo d'Apple : clickpad, retour et TV, lecture, silence, volume). */
+    .dev.is-tv { --w: 520px; aspect-ratio: 16 / 9; padding: calc(var(--w) * .005); border-radius: .9%; background: linear-gradient(#1a1a1c, #050506); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .14), 0 0 0 1px rgb(0 0 0 / .6), 0 40px 80px -30px rgb(0 0 0 / .55); }
+    .dev.is-tv .dev-screen { border: 0; border-radius: .5%; }
+    .tv-box { position: absolute; left: 80%; top: 102%; width: 11%; aspect-ratio: 1 / .36; border-radius: 14% / 36%; background: linear-gradient(#26262a, #060607 60%); box-shadow: inset 0 1px 0 rgb(255 255 255 / .18), 0 10px 18px -8px rgb(0 0 0 / .8); }
+    .tv-remote { position: absolute; left: 101.5%; top: 70%; width: 4.4%; aspect-ratio: 429 / 1668; border-radius: 22% / 6%; background: linear-gradient(90deg, #c9c9ce, #f4f4f6 40%, #d9d9dd 75%, #a9a9ae); box-shadow: inset 0 1px 0 #fff, 0 14px 22px -10px rgb(0 0 0 / .8); }
+    .tv-remote > i { position: absolute; border-radius: 50%; background: #0d0d0f; }
+    .tv-pad { left: 6%; top: 10.5%; width: 88%; aspect-ratio: 1; background: radial-gradient(circle, #2a2a2d 0 28%, #0b0b0d 29%) !important; }
+    .tv-k { width: 35%; aspect-ratio: 1; }
+    .tv-k:nth-child(2) { left: 11%; top: 33.5%; } .tv-k:nth-child(3) { left: 54%; top: 33.5%; }
+    .tv-k:nth-child(4) { left: 11%; top: 44%; } .tv-k:nth-child(5) { left: 11%; top: 54.6%; }
+    .tv-vol { left: 54%; top: 44%; width: 35%; height: 20%; border-radius: 999px !important; }
 
     /* Fenêtre macOS des utilitaires (sans capture : ses chiffres) */
     .macwin { width: var(--w, 520px); max-width: 100%; border-radius: 14px; overflow: hidden; background: #1c1c1e; color: #f5f5f7; box-shadow: 0 0 0 1px rgb(255 255 255 / .12), var(--dev-shadow, 0 40px 80px -30px rgb(0 0 0 / .6)); }
@@ -528,8 +536,12 @@
     /* Un jeu choisi : iPad en paysage, iPhone en paysage pour ChromaCiel. */
     .hero-stage .dev.is-ipad.is-land { --w: min(clamp(250px, 44vw, 600px), 116cqh, 64cqi); }
     .hero-stage .dev.is-iphone.is-land { --w: min(clamp(170px, 28vw, 400px), 152cqh, 42cqi); margin-inline-end: calc(var(--w) * -.22); margin-bottom: -2%; }
-    /* Apple TV : derrière l'iPad avec d'autres appareils (Telora), seule et dans le flux sinon (Ambiro). */
-    .hero-stage .dev.is-tv { --w: min(clamp(240px, 42vw, 600px), 116cqh, 70cqi); --z: -140px; position: absolute; left: 50%; top: 0; translate: -72% 0; }
+    /* Apple TV : en haut à droite avec d'autres appareils (Telora), resserrés devant en bas à gauche ; seule et dans le flux sinon (Ambiro). */
+    .hero-stage .dev.is-tv { --w: min(68cqi, 110cqh); --z: -140px; position: absolute; right: 4%; top: 2%; }
+    .hero-stage .stage-rig:has(.is-tv:not(:only-child)) { justify-content: flex-start; padding-inline-start: 2%; }
+    .hero-stage .stage-rig:has(.is-tv:not(:only-child)) .dev.is-ipad { --w: min(50cqh, 38cqi); }
+    .hero-stage .stage-rig:has(.is-tv:not(:only-child)) .dev.is-iphone { --w: min(24cqh, 18cqi); }
+    .hero-stage .stage-rig:has(.is-tv:not(:only-child)) .dev.is-duo { --w: min(34cqh, 26cqi); }
     .hero-stage .dev.is-tv:only-child { --w: min(clamp(260px, 46vw, 680px), 150cqh, 92cqi); --z: 0px; position: relative; left: auto; top: auto; translate: none; }
     /* Sélecteur : capsule de verre d'icônes, défilable si la fenêtre est étroite. */
     .hero-pick { display: grid; justify-items: center; gap: 8px; min-width: 0; margin-top: clamp(8px, 2vh, 20px); padding-inline: var(--gutter); }
@@ -694,13 +706,16 @@
     .p-stage .dev.is-iphone.is-land { --w: clamp(180px, 30vw, 430px); --z: 110px; margin-inline-end: -16%; margin-bottom: -2%; }
     .p-stage .dev.is-duo { --w: clamp(150px, 21vw, 290px); --z: 20px; --ms: -4%; }
     .p-stage .dev.is-watch { --w: clamp(74px, 10.5vw, 144px); --z: 120px; position: absolute; right: max(2%, 50% - 560px); bottom: 4%; }
-    .p-stage .dev.is-tv { --w: clamp(260px, 44vw, 600px); --z: -80px; position: absolute; left: 50%; bottom: 34%; translate: -50% 0; opacity: .96; }
+    /* Avec d'autres appareils (Telora), le téléviseur se lève au fond, décalé à droite : seul son bas passe derrière. */
+    .p-stage .dev.is-tv { --w: clamp(280px, 48vw, 700px); --z: -80px; position: absolute; left: 50%; top: 0; translate: -30% 0; }
     .p-stage .macwin { --w: min(680px, 100%); margin-inline: auto; }
-    .p-stage:has(.is-tv) .stage-rig { padding-top: clamp(120px, 18vw, 260px); }
-    .p-stage .dev.is-tv:only-child { --w: clamp(280px, 64vw, 860px); --z: 0px; position: relative; left: auto; bottom: auto; translate: none; opacity: 1; }
+    .p-stage:has(.is-tv) .stage-rig { padding-top: calc(clamp(280px, 48vw, 700px) * .44); }
+    .p-stage .dev.is-tv:only-child { --w: clamp(280px, 64vw, 860px); --z: 0px; position: relative; left: auto; top: auto; translate: none; margin-inline-end: 5%; }
     .p-stage:has(.is-tv:only-child) .stage-rig { padding-top: 0; }
     @media (max-width: 599px) {
         .p-stage .dev.is-duo { display: none; } .p-stage .dev.is-watch { right: 4%; }
+        .p-stage .dev.is-tv:not(:only-child) { --w: 76vw; translate: -54% 0; }
+        .p-stage:has(.is-tv:not(:only-child)) .stage-rig { padding-top: calc(76vw * .62); }
         .p-stage .dev.is-ipad.is-land { --w: 66vw; }
         .p-stage .dev.is-iphone.is-land { --w: 46vw; margin-inline-end: -30%; }
     }
