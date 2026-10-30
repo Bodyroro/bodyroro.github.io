@@ -525,10 +525,12 @@
     .hero-stage .dev.is-ipad { --w: min(clamp(200px, 34vw, 460px), 72cqh, 58cqi); --z: -60px; }
     .hero-stage .dev.is-iphone { --w: min(clamp(88px, 15vw, 203px), 31.8cqh, 25.6cqi); --z: 80px; margin-inline-end: calc(var(--w) * -.3); order: -1; }
     .hero-stage .dev.is-duo { --w: min(clamp(130px, 22vw, 298px), 46.6cqh, 37.5cqi); --z: 30px; --ms: calc(var(--w) * -.2); }
-    /* Un jeu choisi : iPad en paysage, iPhone en paysage pour ChromaCiel ; pas d'Apple TV sur le premier écran. */
+    /* Un jeu choisi : iPad en paysage, iPhone en paysage pour ChromaCiel. */
     .hero-stage .dev.is-ipad.is-land { --w: min(clamp(250px, 44vw, 600px), 116cqh, 64cqi); }
     .hero-stage .dev.is-iphone.is-land { --w: min(clamp(170px, 28vw, 400px), 152cqh, 42cqi); margin-inline-end: calc(var(--w) * -.22); margin-bottom: -2%; }
-    .hero-stage .dev.is-tv { display: none; }
+    /* Apple TV : derrière l'iPad avec d'autres appareils (Telora), seule et dans le flux sinon (Ambiro). */
+    .hero-stage .dev.is-tv { --w: min(clamp(240px, 42vw, 600px), 116cqh, 70cqi); --z: -140px; position: absolute; left: 50%; top: 0; translate: -72% 0; }
+    .hero-stage .dev.is-tv:only-child { --w: min(clamp(260px, 46vw, 680px), 150cqh, 92cqi); --z: 0px; position: relative; left: auto; top: auto; translate: none; }
     /* Sélecteur : capsule de verre d'icônes, défilable si la fenêtre est étroite. */
     .hero-pick { display: grid; justify-items: center; gap: 8px; min-width: 0; margin-top: clamp(8px, 2vh, 20px); padding-inline: var(--gutter); }
     .pick-row { position: relative; display: flex; gap: 6px; max-width: 100%; padding: 6px; overflow-x: auto; scrollbar-width: none; overscroll-behavior-x: contain; scroll-snap-type: x proximity; border-radius: 999px;
@@ -695,6 +697,8 @@
     .p-stage .dev.is-tv { --w: clamp(260px, 44vw, 600px); --z: -80px; position: absolute; left: 50%; bottom: 34%; translate: -50% 0; opacity: .96; }
     .p-stage .macwin { --w: min(680px, 100%); margin-inline: auto; }
     .p-stage:has(.is-tv) .stage-rig { padding-top: clamp(120px, 18vw, 260px); }
+    .p-stage .dev.is-tv:only-child { --w: clamp(280px, 64vw, 860px); --z: 0px; position: relative; left: auto; bottom: auto; translate: none; opacity: 1; }
+    .p-stage:has(.is-tv:only-child) .stage-rig { padding-top: 0; }
     @media (max-width: 599px) {
         .p-stage .dev.is-duo { display: none; } .p-stage .dev.is-watch { right: 4%; }
         .p-stage .dev.is-ipad.is-land { --w: 66vw; }

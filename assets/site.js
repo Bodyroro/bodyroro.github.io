@@ -1494,10 +1494,10 @@
        occupées sur six, sur grand écran puis sur tablette. Une carte large passe le texte à gauche (requête de conteneur). */
     function vitrine(cle, etendue) {
         var app = APPS[cle];
-        var art = app.platform === 'mac' ? fenetreMac(cle, 0) :
+        var art = app.platform === 'mac' ? fenetreMac(cle, 0) : app.tvSeul ? appareil(cle, 'tv', 'ecran', app.name + ', Apple TV', 0, false) :
             appareil(cle, app.paysage ? 'paysage' : 'iphone', app.game && !app.ecran ? 1 : 'ecran', app.name + ', iPhone', 0, false);
         var style = styleAccent(app).replace('"', '"--s:' + etendue[0] + ';--st:' + etendue[1] + ';');
-        return '<article class="show' + (app.paysage ? ' is-land' : '') + (app.platform === 'mac' ? ' is-mac' : '') + '"' + style + '><div class="show-in">' +
+        return '<article class="show' + (app.paysage || app.tvSeul ? ' is-land' : '') + (app.platform === 'mac' ? ' is-mac' : '') + '"' + style + '><div class="show-in">' +
             (app.store ? '' : '<span class="show-flag">' + esc(lang === 'fr' ? 'Bientôt' : 'Soon') + '</span>') +
             '<div class="show-text"><div class="show-id">' + picture('./assets/img/' + cle + '.png', ' width="52" height="52" alt="" loading="lazy" decoding="async"' + vt(cle)) +
             '<span class="show-tag">' + esc(pick(app.tag)) + '</span></div>' +
