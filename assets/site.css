@@ -367,14 +367,16 @@
        côté (cotes de la photo d'Apple : clickpad, retour et TV, lecture, silence, volume). */
     .dev.is-tv { --w: 520px; aspect-ratio: 16 / 9; padding: calc(var(--w) * .005); border-radius: .9%; background: linear-gradient(#1a1a1c, #050506); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .14), 0 0 0 1px rgb(0 0 0 / .6), 0 40px 80px -30px rgb(0 0 0 / .55); }
     .dev.is-tv .dev-screen { border: 0; border-radius: .5%; }
-    .tv-box { position: absolute; left: 80%; top: 102%; width: 11%; aspect-ratio: 1 / .36; border-radius: 14% / 36%; background: linear-gradient(#26262a, #060607 60%); box-shadow: inset 0 1px 0 rgb(255 255 255 / .18), 0 10px 18px -8px rgb(0 0 0 / .8); }
-    .tv-remote { position: absolute; left: 101.5%; top: 70%; width: 4.4%; aspect-ratio: 429 / 1668; border-radius: 22% / 6%; background: linear-gradient(90deg, #c9c9ce, #f4f4f6 40%, #d9d9dd 75%, #a9a9ae); box-shadow: inset 0 1px 0 #fff, 0 14px 22px -10px rgb(0 0 0 / .8); }
-    .tv-remote > i { position: absolute; border-radius: 50%; background: #0d0d0f; }
-    .tv-pad { left: 6%; top: 10.5%; width: 88%; aspect-ratio: 1; background: radial-gradient(circle, #2a2a2d 0 28%, #0b0b0d 29%) !important; }
+    .tv-box { position: absolute; left: 81%; top: 101.5%; width: 14%; aspect-ratio: 1 / .46; z-index: 1; filter: drop-shadow(0 10px 12px rgb(0 0 0 / .7)); }
+    .tv-box::before { content: ""; position: absolute; inset: 0 0 34% 0; clip-path: polygon(9% 0, 91% 0, 100% 100%, 0 100%); background: radial-gradient(60% 90% at 50% 20%, #4b4b50, #1b1b1e 70%), #1b1b1e; }
+    .tv-box::after { content: ""; position: absolute; inset: 66% 0 0; border-radius: 0 0 8% 8% / 0 0 45% 45%; background: linear-gradient(#141416, #000); box-shadow: inset 0 1px 0 rgb(255 255 255 / .22); }
+    .tv-remote { position: absolute; left: 101.2%; top: 70%; width: 5.6%; aspect-ratio: 429 / 1668; z-index: 2; border-radius: 26% / 6.5%; background: linear-gradient(90deg, #b9b9be, #f6f6f8 35%, #e4e4e7 70%, #9d9da2); box-shadow: inset 0 1px 0 #fff, inset 0 -1px 0 rgb(0 0 0 / .2), 0 18px 26px -10px rgb(0 0 0 / .85); }
+    .tv-remote > i { position: absolute; border-radius: 50%; background: #0c0c0e; }
+    .tv-pad { left: 6%; top: 15.5%; width: 88%; aspect-ratio: 1; background: radial-gradient(circle, #333336 0 27%, #0a0a0c 29%) !important; }
     .tv-k { width: 35%; aspect-ratio: 1; }
-    .tv-k:nth-child(2) { left: 11%; top: 33.5%; } .tv-k:nth-child(3) { left: 54%; top: 33.5%; }
-    .tv-k:nth-child(4) { left: 11%; top: 44%; } .tv-k:nth-child(5) { left: 11%; top: 54.6%; }
-    .tv-vol { left: 54%; top: 44%; width: 35%; height: 20%; border-radius: 999px !important; }
+    .tv-k:nth-child(2) { left: 10%; top: 37.5%; } .tv-k:nth-child(3) { left: 55%; top: 37.5%; }
+    .tv-k:nth-child(4) { left: 10%; top: 48.2%; } .tv-k:nth-child(5) { left: 10%; top: 58.8%; }
+    .tv-vol { left: 55%; top: 48.2%; width: 35%; height: 20%; border-radius: 999px !important; }
 
     /* Fenêtre macOS des utilitaires (sans capture : ses chiffres) */
     .macwin { width: var(--w, 520px); max-width: 100%; border-radius: 14px; overflow: hidden; background: #1c1c1e; color: #f5f5f7; box-shadow: 0 0 0 1px rgb(255 255 255 / .12), var(--dev-shadow, 0 40px 80px -30px rgb(0 0 0 / .6)); }
@@ -542,7 +544,7 @@
     .hero-stage .stage-rig:has(.is-tv:not(:only-child)) .dev.is-ipad { --w: min(50cqh, 38cqi); }
     .hero-stage .stage-rig:has(.is-tv:not(:only-child)) .dev.is-iphone { --w: min(24cqh, 18cqi); }
     .hero-stage .stage-rig:has(.is-tv:not(:only-child)) .dev.is-duo { --w: min(34cqh, 26cqi); }
-    .hero-stage .dev.is-tv:only-child { --w: min(clamp(260px, 46vw, 680px), 150cqh, 92cqi); --z: 0px; position: relative; left: auto; top: auto; translate: none; }
+    .hero-stage .dev.is-tv:only-child { --w: min(clamp(260px, 44vw, 640px), 140cqh, 86cqi); --z: 0px; position: relative; left: auto; top: auto; translate: none; margin-inline-end: 6%; margin-bottom: 4%; }
     /* Sélecteur : capsule de verre d'icônes, défilable si la fenêtre est étroite. */
     .hero-pick { display: grid; justify-items: center; gap: 8px; min-width: 0; margin-top: clamp(8px, 2vh, 20px); padding-inline: var(--gutter); }
     .pick-row { position: relative; display: flex; gap: 6px; max-width: 100%; padding: 6px; overflow-x: auto; scrollbar-width: none; overscroll-behavior-x: contain; scroll-snap-type: x proximity; border-radius: 999px;
@@ -639,6 +641,7 @@
     /* Produit en paysage : l'appareil entier, centré, sans rognure. */
     .show.is-land .show-art { margin-bottom: 0; padding-block: 32px 40px; align-items: center; }
     .show.is-land .show-art .dev { --w: 88cqi; transform: rotateY(-14deg) rotateX(10deg); }
+    .show.is-land .show-art .dev.is-tv { --w: 78cqi; margin: 0 8% 6% 0; transform: none; }
     @container (min-width: 760px) {
         .show-in { grid-template-rows: none; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: center; }
         .show-text { padding: clamp(32px, 5cqi, 64px); padding-inline-end: 0; }
@@ -646,6 +649,7 @@
         .show-art { align-self: stretch; align-items: center; padding: 40px 0; margin: 0; }
         .show-art .dev { --w: min(36cqi, 260px); margin-bottom: -40%; align-self: flex-start; }
         .show.is-land .show-art .dev { --w: 92cqi; margin: 0; align-self: center; }
+        .show.is-land .show-art .dev.is-tv { --w: 80cqi; margin: 0 8% 6% 0; }
         .show.is-mac .show-art .macwin { margin-inline-start: 8%; --w: 110%; }
     }
     .show-flag { position: absolute; z-index: 3; top: 20px; right: 20px; padding: 5px 12px; border-radius: 999px; background: rgb(255 255 255 / .16); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .25); font-size: 12px; font-weight: 600; }
@@ -710,7 +714,7 @@
     .p-stage .dev.is-tv { --w: clamp(280px, 48vw, 700px); --z: -80px; position: absolute; left: 50%; top: 0; translate: -30% 0; }
     .p-stage .macwin { --w: min(680px, 100%); margin-inline: auto; }
     .p-stage:has(.is-tv) .stage-rig { padding-top: calc(clamp(280px, 48vw, 700px) * .44); }
-    .p-stage .dev.is-tv:only-child { --w: clamp(280px, 64vw, 860px); --z: 0px; position: relative; left: auto; top: auto; translate: none; margin-inline-end: 5%; }
+    .p-stage .dev.is-tv:only-child { --w: clamp(280px, 62vw, 820px); --z: 0px; position: relative; left: auto; top: auto; translate: none; margin-inline-end: 6%; margin-bottom: 5%; }
     .p-stage:has(.is-tv:only-child) .stage-rig { padding-top: 0; }
     @media (max-width: 599px) {
         .p-stage .dev.is-duo { display: none; } .p-stage .dev.is-watch { right: 4%; }
