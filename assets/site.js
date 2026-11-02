@@ -658,6 +658,7 @@
                 fr: [
                     'Faites glisser le doigt pour déplacer Gloup : il n’attrape que les objets de sa couleur, grandit à chaque prise, et change de couleur en attrapant une gemme.',
                     'Dix îles de dix niveaux, de la cuisine à la base lunaire, chacune avec son décor, sa musique, son ami et un boss géant au dixième niveau.',
+                    'Nouveau, les Îles du Mirage, gratuites : l’Oasis des Mirages et les Mines de Cristal, deux îles de plus avec leur histoire, leurs amis et leurs succès, ouvertes une fois l’aventure terminée.',
                     'Une histoire complète : cinématiques, dialogues parlés, dix amis et le Baron Grisaille, qui a volé les couleurs de l’archipel.',
                     'Un défi du jour, le même pour tous, un cadeau quotidien et un bonus au choix avant chaque niveau.',
                     'Des looks pour Gloup, des quêtes annexes et une collection, tout se gagne en jouant.',
@@ -666,6 +667,7 @@
                 en: [
                     'Slide your finger to move Gloup: he only catches objects of his color, grows with every catch, and switches color when he grabs a gem.',
                     'Ten islands of ten levels, from the kitchen to the moon base, each with its own scenery, music, friend and a giant boss on the tenth level.',
+                    'New, the free Mirage Islands: the Mirage Oasis and the Crystal Mines, two more islands with their own story, friends and achievements, unlocked once the adventure is complete.',
                     'A full story: cutscenes, voiced dialogue, ten friends and Baron Grisaille, who stole the archipelago’s colors.',
                     'A daily challenge, the same for everyone, a daily gift and a booster of your choice before each level.',
                     'Looks for Gloup, side quests and a collection, all earned by playing.',
@@ -682,11 +684,11 @@
                 fr: [['10', 'îles flottantes'], ['100', 'niveaux'], ['45', 'langues'], ['0', 'achat intégré']],
                 en: [['10', 'floating islands'], ['100', 'levels'], ['45', 'languages'], ['0', 'in-app purchases']]
             },
-            /* Les huit captures App Store V0.1 (docs/screenshots du projet), dans
+            /* Les captures App Store (docs/screenshots du projet), dans
                l'ordre de la fiche. Légendes tirées du README des captures. */
             storeShots: {
-                fr: ['L’accueil et le logo du jeu', 'Une partie sur la base lunaire', 'Le boss du village de Noël', 'Dix îles à explorer', 'Le Baron Grisaille, qui a volé les couleurs', 'Les dix amis de Gloup', 'Des looks pour Gloup', 'Victoire et cadeau du jour'],
-                en: ['The home screen and the game logo', 'A level on the moon base', 'The Christmas village boss', 'Ten islands to explore', 'Baron Grisaille, who stole the colors', 'Gloup’s ten friends', 'Looks for Gloup', 'Victory and daily gift']
+                fr: ['L’accueil et le logo du jeu', 'Une partie sur la base lunaire', 'Le boss du village de Noël', 'Dix îles à explorer', 'Le Baron Grisaille, qui a volé les couleurs', 'Les dix amis de Gloup', 'Des looks pour Gloup', 'Victoire et cadeau du jour', 'Nouveau : les Îles du Mirage'],
+                en: ['The home screen and the game logo', 'A level on the moon base', 'The Christmas village boss', 'Ten islands to explore', 'Baron Grisaille, who stole the colors', 'Gloup’s ten friends', 'Looks for Gloup', 'Victory and daily gift', 'New: the Mirage Islands']
             }
         },
         mongloup: {
@@ -705,6 +707,7 @@
                     'Il grandit de bébé à adulte sur 60 niveaux et se forge un caractère parmi cinq traits : gourmand, joueur, coquet, rêveur ou jardinier.',
                     '33 aliments, 20 chapeaux, 14 looks, 24 couleurs, et des papiers peints, sols et meubles pour décorer chaque pièce.',
                     '9 mini-jeux, 18 activités, des quêtes du jour et de la semaine, un album de souvenirs, un ami en visite chaque jour et 20 trophées, aussi dans Game Center.',
+                    'Nouveau, la salle d’arcade gratuite : dix bornes faciles pour les enfants, des tickets gagnés selon les étoiles, des couleurs néon et des accessoires à échanger au comptoir, et des peluches à attraper à la pince.',
                     '45 langues, iPhone et iPad, qualité graphique réglée automatiquement selon l’appareil. Le jeu se joue hors connexion, sans compte, avec des rappels facultatifs quand Gloup a besoin de vous.'
                 ],
                 en: [
@@ -714,6 +717,7 @@
                     'He grows from baby to adult over 60 levels and builds a personality from five traits: foodie, playful, stylish, dreamer or gardener.',
                     '33 foods, 20 hats, 14 looks, 24 colors, and wallpapers, floors and furniture to decorate every room.',
                     '9 mini-games, 18 activities, daily and weekly quests, a memory album, a friend visiting each day and 20 trophies, also in Game Center.',
+                    'New, the free Arcade Room: ten easy cabinets for kids, tickets earned with stars, neon colors and accessories to trade at the counter, and plush toys to win at the claw machine.',
                     '45 languages, iPhone and iPad, with graphics quality adjusting automatically to the device. The game plays offline, with no account, with optional reminders when Gloup needs you.'
                 ]
             },
@@ -728,8 +732,8 @@
                 en: [['60', 'levels, from baby to adult'], ['9', 'mini-games'], ['33', 'foods'], ['45', 'languages']]
             },
             storeShots: {
-                fr: ['La maison et son jardin', 'La cuisine, un gâteau pour Gloup', 'Le bain moussant', 'Pyjama, doudou et au lit', 'Le potager à cultiver', 'De bébé à adulte', 'La garde-robe', 'Neuf mini-jeux'],
-                en: ['The house and its garden', 'The kitchen, a cake for Gloup', 'The bubble bath', 'Pajamas, teddy and bedtime', 'The vegetable patch to grow', 'From baby to adult', 'The wardrobe', 'Nine mini-games']
+                fr: ['La maison et son jardin', 'La cuisine, un gâteau pour Gloup', 'Le bain moussant', 'Pyjama, doudou et au lit', 'Le potager à cultiver', 'De bébé à adulte', 'La garde-robe', 'Neuf mini-jeux', 'Nouveau : la salle d’arcade'],
+                en: ['The house and its garden', 'The kitchen, a cake for Gloup', 'The bubble bath', 'Pajamas, teddy and bedtime', 'The vegetable patch to grow', 'From baby to adult', 'The wardrobe', 'Nine mini-games', 'New: the Arcade Room']
             }
         },
         /* En vente depuis octobre 2026 (STORE_CF). Un jeu sans fiche reprend `store: ''` : pastille « Bientôt
