@@ -2,7 +2,7 @@
 
 > Développeur indépendant basé en France. Des jeux pour iPhone et iPad avec
 > Gloup, la petite créature aux grands yeux, des applications iPhone et iPad du
-> quotidien (gratuites sauf Telora, sous abonnement), dont des services construits sur les données publiques françaises,
+> quotidien (gratuites sauf Telora, sous abonnement), dont des services construits sur les données publiques françaises et espagnoles,
 > et des utilitaires macOS libres et open source. Aucun compte à créer : favoris et réglages restent sur l'appareil ;
 > seules la publicité (avec l'accord de l'utilisateur), les achats et iCloud ou Game Center utilisent le réseau.
 

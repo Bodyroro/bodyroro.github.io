@@ -162,7 +162,7 @@
             en: 'Self-taught developer based in France, I build games and simple, useful, privacy-minded apps in Swift and SwiftUI, with Apple’s frameworks first for a coherent experience.'
         },
         profileCTA: { fr: 'Me contacter', en: 'Get in touch' },
-        footerLine: { fr: 'Des jeux avec Gloup, des apps de données publiques pour la France, des outils pour le salon (Telzo, Telora, Ambiro), la photo (Netta) et le budget du foyer (Foyo) sur iPhone et iPad, et des utilitaires libres pour Mac.', en: 'Games starring Gloup, apps built on French public data, tools for the living room (Telzo, Telora, Ambiro), photos (Netta) and the household budget (Foyo) on iPhone and iPad, and free utilities for Mac.' },
+        footerLine: { fr: 'Des jeux avec Gloup, des apps de données publiques pour la France et l’Espagne, des outils pour le salon (Telzo, Telora, Ambiro), la photo (Netta) et le budget du foyer (Foyo) sur iPhone et iPad, et des utilitaires libres pour Mac.', en: 'Games starring Gloup, apps built on French and Spanish public data, tools for the living room (Telzo, Telora, Ambiro), photos (Netta) and the household budget (Foyo) on iPhone and iPad, and free utilities for Mac.' },
         footerSite: { fr: 'Site', en: 'Site' },
         footerTagline: { fr: 'Conçu et développé en France.', en: 'Designed and built in France.' },
         footerStore: { fr: 'Toutes les applications sur l\u2019App Store', en: 'All apps on the App Store' },
@@ -207,8 +207,8 @@
             fr: [
                 ['star', 'Jeux avec Gloup',
                  'Six jeux pour iPhone et iPad avec Gloup, la petite créature aux grands yeux : aventure, compagnon virtuel, combat, déduction, ferme et RPG. Gratuits, financés par la publicité, avec des achats facultatifs dans quatre d’entre eux.'],
-                ['map', 'Données publiques, pour la France',
-                 'Des applications bâties sur les jeux de données publics français : carburants, bornes de recharge, toilettes, défibrillateurs et prix de l’immobilier. Distribuées sur l’App Store, financées par une publicité discrète, sans compte ni inscription.'],
+                ['map', 'Données publiques, France et Espagne',
+                 'Des applications bâties sur les jeux de données publics français et espagnols : carburants, bornes de recharge, toilettes, défibrillateurs et prix de l’immobilier. Distribuées sur l’App Store, financées par une publicité discrète, sans compte ni inscription.'],
                 ['phone', 'Pour le salon',
                  'Telzo transforme l’iPhone en télécommande universelle par Wi-Fi, gratuite avec publicité. Telora lit vos films, séries et chaînes depuis vos propres sources, sur iPhone, iPad et Apple TV, avec un abonnement et sans publicité. Ambiro transforme l’Apple TV en écran ambiant : horloge, météo, musique et fonds animés, sans publicité.'],
                 ['shield', 'Pour vos photos',
@@ -221,8 +221,8 @@
             en: [
                 ['star', 'Games starring Gloup',
                  'Six games for iPhone and iPad starring Gloup, the little creature with big eyes: adventure, virtual pet, battle, deduction, farming and RPG. Free, funded by advertising, with optional purchases in four of them.'],
-                ['map', 'Public data, built for France',
-                 'Apps built on French public datasets: fuel prices, EV chargers, public toilets, defibrillators and property prices. Shipped on the App Store, funded by discreet advertising, with no account or sign-up.'],
+                ['map', 'Public data, France and Spain',
+                 'Apps built on French and Spanish public datasets: fuel prices, EV chargers, public toilets, defibrillators and property prices. Shipped on the App Store, funded by discreet advertising, with no account or sign-up.'],
                 ['phone', 'For the living room',
                  'Telzo turns the iPhone into a universal Wi-Fi remote, free with ads. Telora plays your movies, shows and channels from your own sources, on iPhone, iPad and Apple TV, with a subscription and no ads. Ambiro turns the Apple TV into an ambient display: clock, weather, music and animated backgrounds, with no ads.'],
                 ['shield', 'For your photos',
@@ -299,9 +299,9 @@
                 en: ['Fuel stations near you', 'Compare effortlessly', 'Every station in detail', 'Your fuel budget', 'The market made clear']
             }
         },
-        /* Pas encore sur l'App Store (`store: ''`), pas de captures : voir `shots` et `storeShots` de CarbuFrance pour le format attendu. */
+        /* Pas encore sur l'App Store (`store: ''`). Galerie : mêmes visuels et légendes que CarbuFrance. */
         carbuespana: {
-            name: 'CarbuEspaña', platform: 'ios', accent: '#3d7bff',
+            name: 'CarbuEspaña', platform: 'ios', accent: '#e8323f',
             store: '',
             tag: { fr: 'Prix des carburants', en: 'Fuel prices' },
             promo: { fr: 'Le prix des carburants en Espagne, station par station, avec carnet de pleins et widget.', en: 'Fuel prices in Spain, station by station, with a fill-up logbook and a widget.' },
@@ -328,7 +328,12 @@
                 ]
             },
             sources: { fr: 'Données publiques du ministère espagnol de la Transition écologique (MITECO), relevées et servies par le serveur de carbufrance.fr. Contributions facultatives par notes OpenStreetMap.', en: 'Public data of the Spanish Ministry for the Ecological Transition (MITECO), collected and served by the carbufrance.fr server. Optional contributions through OpenStreetMap notes.' },
-            business: { fr: 'Application gratuite, financée par la publicité. Un abonnement facultatif « Sans pub » (0,99 € par mois ou 4,99 € par an) retire toute publicité tant qu’il est actif ; une vidéo récompensée offre aussi 6 h sans publicité. Géré par l’App Store et votre compte Apple : aucune donnée bancaire dans l’app.', en: 'Free app, funded by ads. An optional “Ad-Free” subscription (€0.99 per month or €4.99 per year) removes every ad while it is active; a rewarded video also gives 6 hours ad-free. Handled by the App Store and your Apple account: no payment card data in the app.' }
+            business: { fr: 'Application gratuite, financée par la publicité. Un abonnement facultatif « Sans pub » (0,99 € par mois ou 4,99 € par an) retire toute publicité tant qu’il est actif ; une vidéo récompensée offre aussi 6 h sans publicité. Géré par l’App Store et votre compte Apple : aucune donnée bancaire dans l’app.', en: 'Free app, funded by ads. An optional “Ad-Free” subscription (€0.99 per month or €4.99 per year) removes every ad while it is active; a rewarded video also gives 6 hours ad-free. Handled by the App Store and your Apple account: no payment card data in the app.' },
+            shots: { ipad: [0, 2, 3, 4], duo: [0, 1, 2, 3, 4] },
+            storeShots: {
+                fr: ['Les stations autour de vous', 'Comparez sans effort', 'Chaque station en détail', 'Votre budget carburant', 'Le marché en clair'],
+                en: ['Fuel stations near you', 'Compare effortlessly', 'Every station in detail', 'Your fuel budget', 'The market made clear']
+            }
         },
         irvefrance: {
             name: 'IRVEFrance', platform: 'ios', accent: '#6a5cff',
@@ -1033,7 +1038,7 @@
             en: ['Free', 'No in-app purchase', 'Plays offline']
         },
         navGames: { fr: 'Jeux', en: 'Games' },
-        navFrance: { fr: 'Apps France', en: 'French apps' },
+        navFrance: { fr: 'Données publiques', en: 'Public data' },
         navSalon: { fr: 'Salon', en: 'Living room' },
         navPhoto: { fr: 'Photo', en: 'Photo' },
         navFoyer: { fr: 'Foyer', en: 'Household' },
@@ -1045,8 +1050,8 @@
         reelTitle: { fr: 'Chaque jeu, son univers.', en: 'Every game, its own world.' },
         reelLabel: { fr: 'Un écran de chaque jeu', en: 'One screen from each game' },
         franceLead: {
-            fr: 'Carburants, bornes de recharge, toilettes, défibrillateurs et prix de l’immobilier : les données publiques françaises, sur la carte et hors connexion. Sans compte.',
-            en: 'Fuel, EV chargers, toilets, defibrillators and property prices: French public data, on the map and offline. No account.'
+            fr: 'Carburants en France et en Espagne, bornes de recharge, toilettes, défibrillateurs et prix de l’immobilier : les données publiques, sur la carte et hors connexion. Sans compte.',
+            en: 'Fuel in France and Spain, EV chargers, toilets, defibrillators and property prices: public data, on the map and offline. No account.'
         },
         salonEyebrow: { fr: 'iPhone, iPad et Apple TV', en: 'iPhone, iPad and Apple TV' },
         salonTitle: { fr: 'Pour le salon.', en: 'For the living room.' },
