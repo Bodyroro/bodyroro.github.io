@@ -299,6 +299,37 @@
                 en: ['Fuel stations near you', 'Compare effortlessly', 'Every station in detail', 'Your fuel budget', 'The market made clear']
             }
         },
+        /* Pas encore sur l'App Store (`store: ''`), pas de captures : voir `shots` et `storeShots` de CarbuFrance pour le format attendu. */
+        carbuespana: {
+            name: 'CarbuEspaña', platform: 'ios', accent: '#3d7bff',
+            store: '',
+            tag: { fr: 'Prix des carburants', en: 'Fuel prices' },
+            promo: { fr: 'Le prix des carburants en Espagne, station par station, avec carnet de pleins et widget.', en: 'Fuel prices in Spain, station by station, with a fill-up logbook and a widget.' },
+            desc: {
+                fr: 'Prix des carburants en Espagne, station par station : stations proches triées depuis votre position, carnet de pleins et widget. Toutes les fonctions sont gratuites ; un abonnement facultatif retire la publicité. Bientôt sur l’App Store.',
+                en: 'Fuel prices in Spain, station by station: nearby stations sorted from your position, fill-up logbook and widget. Every feature is free; an optional subscription removes ads. Coming soon to the App Store.'
+            },
+            features: {
+                fr: [
+                    'Prix des carburants en Espagne, station par station, d’après les données publiques du ministère de la Transition écologique (MITECO).',
+                    'Stations proches triées depuis votre position, qui reste sur l’appareil.',
+                    'Carnet de pleins conservé sur l’appareil, sans synchronisation iCloud.',
+                    'Un widget.',
+                    'Contribution facultative : proposer un lieu ou une correction par une note publique OpenStreetMap.',
+                    'Interface en 45 langues. Abonnement facultatif « Sans pub », et vidéo récompensée pour 6 h sans publicité.'
+                ],
+                en: [
+                    'Fuel prices in Spain, station by station, from the public data of the Ministry for the Ecological Transition (MITECO).',
+                    'Nearby stations sorted from your position, which stays on the device.',
+                    'Fill-up logbook kept on the device, with no iCloud sync.',
+                    'A widget.',
+                    'Optional contribution: suggest a place or a correction through a public OpenStreetMap note.',
+                    'Interface in 45 languages. Optional “Ad-Free” subscription, and a rewarded video for 6 ad-free hours.'
+                ]
+            },
+            sources: { fr: 'Données publiques du ministère espagnol de la Transition écologique (MITECO), relevées et servies par le serveur de carbufrance.fr. Contributions facultatives par notes OpenStreetMap.', en: 'Public data of the Spanish Ministry for the Ecological Transition (MITECO), collected and served by the carbufrance.fr server. Optional contributions through OpenStreetMap notes.' },
+            business: { fr: 'Application gratuite, financée par la publicité. Un abonnement facultatif « Sans pub » (0,99 € par mois ou 4,99 € par an) retire toute publicité tant qu’il est actif ; une vidéo récompensée offre aussi 6 h sans publicité. Géré par l’App Store et votre compte Apple : aucune donnée bancaire dans l’app.', en: 'Free app, funded by ads. An optional “Ad-Free” subscription (€0.99 per month or €4.99 per year) removes every ad while it is active; a rewarded video also gives 6 hours ad-free. Handled by the App Store and your Apple account: no payment card data in the app.' }
+        },
         irvefrance: {
             name: 'IRVEFrance', platform: 'ios', accent: '#6a5cff',
             store: STORE + 'irvefrance/id6760716931',
@@ -945,11 +976,11 @@
             }
         }
     };
-    var IOS_ORDER = ['carbufrance', 'irvefrance', 'toilettefrance', 'defibfrance', 'dvffrance', 'telora', 'telzo', 'ambiro', 'netta', 'foyo'];
-    var FRANCE_ORDER = IOS_ORDER.slice(0, 5);
-    var SALON_ORDER = IOS_ORDER.slice(5, 8);
-    var PHOTO_ORDER = IOS_ORDER.slice(8, 9);
-    var FOYER_ORDER = IOS_ORDER.slice(9);
+    var IOS_ORDER = ['carbufrance', 'carbuespana', 'irvefrance', 'toilettefrance', 'defibfrance', 'dvffrance', 'telora', 'telzo', 'ambiro', 'netta', 'foyo'];
+    var FRANCE_ORDER = IOS_ORDER.slice(0, 6);
+    var SALON_ORDER = IOS_ORDER.slice(6, 9);
+    var PHOTO_ORDER = IOS_ORDER.slice(9, 10);
+    var FOYER_ORDER = IOS_ORDER.slice(10);
     /* Les jeux forment leur propre gamme : ni données publiques, ni utilitaire. */
     var GAME_ORDER = ['trouchromatique', 'mongloup', 'chromafight', 'chromatraque', 'chromaferme', 'chromaciel'];
 

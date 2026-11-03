@@ -22,6 +22,7 @@ des applications iPhone et des jeux existent en onze langues (français et angla
 ## Applications iPhone
 
 - [CarbuFrance](https://bodyroro.github.io/carbufrance.html) : prix des carburants en France. Carte et liste des stations, tri par prix ou distance, favoris, widget de la station la moins chère, carnet de bord avec consommation et CO₂, observatoire des marchés, CarPlay. Stations complétées par OpenStreetMap. Abonnement facultatif « Sans pub » : 0,99 € par mois ou 4,99 € par an.
+- [CarbuEspaña](https://bodyroro.github.io/carbuespana.html) : prix des carburants en Espagne, station par station, pour iPhone et iPad, bientôt sur l'App Store. Stations proches triées depuis la position de l'appareil (qui y reste), carnet de pleins sur l'appareil, widget, contribution facultative par notes OpenStreetMap. Données publiques du ministère espagnol de la Transition écologique (MITECO), relevées et servies par le serveur de carbufrance.fr. Interface en 45 langues. Abonnement facultatif « Sans pub » : 0,99 € par mois ou 4,99 € par an.
 - [IRVEFrance](https://bodyroro.github.io/irvefrance.html) : bornes de recharge pour véhicules électriques. Réseaux, connecteurs, puissance, disponibilité, guidage, calculateur de recharge, catalogue de véhicules et CarPlay. Abonnement facultatif « Sans pub » : 0,99 € par mois ou 4,99 € par an.
 - [ToiletteFrance](https://bodyroro.github.io/toilettefrance.html) : toilettes publiques en France. Carte, filtres d'accessibilité, horaires, guidage, fonctionnement hors connexion. Abonnement facultatif « Sans pub » : 0,99 € par mois ou 4,99 € par an.
 - [DefibFrance](https://bodyroro.github.io/defibfrance.html) : défibrillateurs automatisés externes. Disponibilité, accessibilité, mode Urgence, appel du SAMU 15, guide de réanimation cardio-pulmonaire avec métronome haptique. Abonnement facultatif « Sans pub » : 0,99 € par mois ou 4,99 € par an.
@@ -55,6 +56,7 @@ navigateur :
 ## Optional
 
 - [Confidentialité CarbuFrance](https://bodyroro.github.io/carbufrance-privacy.html) · [Support](https://bodyroro.github.io/carbufrance-support.html)
+- [Confidentialité CarbuEspaña](https://bodyroro.github.io/carbuespana-privacy.html) · [Support](https://bodyroro.github.io/carbuespana-support.html)
 - [Confidentialité IRVEFrance](https://bodyroro.github.io/irvefrance-privacy.html) · [Support](https://bodyroro.github.io/irvefrance-support.html)
 - [Confidentialité ToiletteFrance](https://bodyroro.github.io/toilettefrance-privacy.html) · [Support](https://bodyroro.github.io/toilettefrance-support.html)
 - [Confidentialité DefibFrance](https://bodyroro.github.io/defibfrance-privacy.html) · [Support](https://bodyroro.github.io/defibfrance-support.html)
