@@ -1,10 +1,10 @@
 /* ===========================================================================
-   styles.css — pages légales et d'assistance des applications iPhone
+   styles.css : pages légales et d'assistance des applications iPhone
    ===========================================================================
    Ces dix pages s'ouvrent depuis les applications elles-mêmes : un réglage
    « Confidentialité » ou « Assistance » y mène en plein écran. Elles doivent
    donc ressembler à iOS, et non au site : mêmes fonds groupés, mêmes cartes à
-   coins arrondis, mêmes filets d'un pixel, même police système — et surtout
+   coins arrondis, mêmes filets d'un pixel, même police système : et surtout
    le thème du système, clair ou sombre, sans réglage à faire.
 
    `color-scheme` sur `:root` fait suivre les barres de défilement, les champs
@@ -83,7 +83,7 @@ body[data-app="dvffrance"]      { --accent: #0a6b34; --accent-fill: #0a6b34; }
 }
 
 /*
- * Teinte du texte accentué — liens et bouton de copie.
+ * Teinte du texte accentué : liens et bouton de copie.
  *
  * Sur fond clair, le bleu d'iOS plafonne à 3,95:1 : c'est le ton soutenu des
  * fonds pleins qu'il faut reprendre. Sur fond sombre, l'inverse : le ton soutenu
@@ -216,7 +216,7 @@ code {
 }
 
 /* Une carte de liste groupée : fond blanc, coins arrondis, aucun trait autour
-   en mode clair — c'est l'écart de fond qui la détache. */
+   en mode clair : c'est l'écart de fond qui la détache. */
 .page-card {
     padding: 4px 18px;
     border-radius: var(--radius-card);
@@ -288,7 +288,7 @@ code {
 }
 
 .summary-list li::before {
-    content: "—";
+    content: "-";
     color: var(--label-3);
     line-height: 1.47;
 }
