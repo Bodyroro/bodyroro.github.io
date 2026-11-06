@@ -162,7 +162,7 @@
             en: 'Self-taught developer based in France, I build games and simple, useful, privacy-minded apps in Swift and SwiftUI, with Apple’s frameworks first for a coherent experience.'
         },
         profileCTA: { fr: 'Me contacter', en: 'Get in touch' },
-        footerLine: { fr: 'Des jeux avec Gloup, des apps de données publiques pour la France et l’Espagne, des outils pour le salon (Telzo, Telora, Ambiro), la photo (Netta) et le budget du foyer (Foyo) sur iPhone et iPad, et des utilitaires libres pour Mac.', en: 'Games starring Gloup, apps built on French and Spanish public data, tools for the living room (Telzo, Telora, Ambiro), photos (Netta) and the household budget (Foyo) on iPhone and iPad, and free utilities for Mac.' },
+        footerLine: { fr: 'Des jeux avec Gloup, des apps de données publiques pour la France et l’Espagne, des outils pour le salon (Telzo, Telora, Ambiro), la photo (Netta) et le budget du foyer (Foyo) et les véhicules (Carnio) sur iPhone et iPad, et des utilitaires libres pour Mac.', en: 'Games starring Gloup, apps built on French and Spanish public data, tools for the living room (Telzo, Telora, Ambiro), photos (Netta) and the household budget (Foyo) and vehicles (Carnio) on iPhone and iPad, and free utilities for Mac.' },
         footerSite: { fr: 'Site', en: 'Site' },
         footerTagline: { fr: 'Conçu et développé en France.', en: 'Designed and built in France.' },
         footerStore: { fr: 'Toutes les applications sur l\u2019App Store', en: 'All apps on the App Store' },
@@ -197,12 +197,12 @@
             en: 'App screenshots and icons belong to their author. Trademarks mentioned belong to their respective owners.'
         },
 
-        /* Les six familles n'ont ni le même public, ni le même mode de
+        /* Les sept familles n'ont ni le même public, ni le même mode de
            distribution. La page À propos est l'endroit où le dire une fois,
            clairement, plutôt que de le laisser deviner app par app. */
-        aboutLinesEyebrow: { fr: 'Six familles', en: 'Six families' },
-        aboutLinesTitle: { fr: 'Jeux, données publiques, salon, photo, foyer et Mac.',
-                           en: 'Games, public data, living room, photos, household and Mac.' },
+        aboutLinesEyebrow: { fr: 'Sept familles', en: 'Seven families' },
+        aboutLinesTitle: { fr: 'Jeux, données publiques, salon, photo, foyer, véhicules et Mac.',
+                           en: 'Games, public data, living room, photos, household, vehicles and Mac.' },
         aboutLines: {
             fr: [
                 ['star', 'Jeux avec Gloup',
@@ -215,6 +215,8 @@
                  'Netta trie et nettoie la photothèque de l’iPhone et de l’iPad : doublons, photos floues, captures d’écran. L’analyse se fait sur l’appareil, sans compte. Gratuite, financée par la publicité.'],
                 ['heart', 'Pour le foyer',
                  'Foyo répertorie les abonnements et prélèvements récurrents de la famille : total par mois et par an, échéances à venir, rappels avant chaque prélèvement. Un foyer partagé par iCloud, sans compte ni connexion à une banque. Gratuite avec publicité, abonnement Foyo Plus facultatif.'],
+                ['car', 'Pour la route',
+                 'Carnio tient le carnet de bord de vos véhicules : pleins, recharges électriques, entretiens avec échéances et rappels, relevés de compteur et autres frais, avec la consommation, le coût au kilomètre et le budget. Données sur l’appareil et dans votre iCloud, sans compte. Gratuite avec publicité, abonnement « Sans pub » facultatif.'],
                 ['laptop', 'Mac, en open source',
                  'Des utilitaires pour Mac Apple Silicon, chacun sur un sujet précis. Publiés sous licence MIT sur GitHub, code complet consultable et à compiler soi-même, sans publicité.']
             ],
@@ -229,6 +231,8 @@
                  'Netta sorts and cleans the photo library of the iPhone and iPad: duplicates, blurry photos, screenshots. Analysis happens on the device, with no account. Free, funded by advertising.'],
                 ['heart', 'For the household',
                  'Foyo lists the family’s recurring subscriptions and direct debits: total per month and per year, upcoming due dates, reminders before every charge. A household shared through iCloud, with no account and no bank connection. Free with ads, optional Foyo Plus subscription.'],
+                ['car', 'For the road',
+                 'Carnio keeps the logbook of your vehicles: fuel fill-ups, EV charging sessions, maintenance with due dates and reminders, odometer readings and other costs, with consumption, cost per kilometer and budget. Data on the device and in your iCloud, with no account. Free with ads, optional “Ad-Free” subscription.'],
                 ['laptop', 'Mac, open source',
                  'Utilities for Apple Silicon Macs, each on one precise subject. Published under the MIT license on GitHub, full source readable and yours to build, with no ads.']
             ]
@@ -616,6 +620,43 @@
                 en: ['Everything the family pays', 'The next 12 months of due dates', 'Reminded before every charge', 'A household shared through iCloud', 'Your categories and your accounts']
             }
         },
+        /* Pas encore sur l'App Store (`store: ''`). Aucune capture d'écran encore : ni `shots` ni `storeShots`, donc ni galerie ni
+           légendes ; à ajouter avec les visuels (voir Foyo). */
+        carnio: {
+            name: 'Carnio', platform: 'ios', accent: '#0071E3', accent2: '#FF9500',
+            store: '',
+            on: { fr: 'iPhone, iPad et iPhone Duo', en: 'iPhone, iPad and iPhone Duo' },
+            tag: { fr: 'Carnet de bord des véhicules', en: 'Vehicle logbook' },
+            promo: { fr: 'Pleins, recharges, entretiens et frais de tous vos véhicules au même endroit : combien ça coûte, et quand l’entretien arrive.', en: 'Fill-ups, charging, maintenance and costs of all your vehicles in one place: what it costs, and when maintenance is due.' },
+            desc: {
+                fr: 'Carnet de bord de vos véhicules : pleins, recharges électriques, entretiens avec échéances et rappels, relevés de compteur et autres frais. Consommation, coût au kilomètre, kilométrage annuel, projection du mois et budget, statistiques en graphiques, export CSV et rapport PDF. Aucun compte.',
+                en: 'Logbook for your vehicles: fuel fill-ups, EV charging sessions, maintenance with due dates and reminders, odometer readings and other costs. Consumption, cost per kilometer, yearly mileage, month projection and budget, statistics in charts, CSV export and PDF report. No account.'
+            },
+            chips: {
+                fr: ['Gratuite', 'Sans compte', '45 langues'],
+                en: ['Free', 'No account', '45 languages']
+            },
+            features: {
+                fr: [
+                    'Plusieurs véhicules (voiture, moto, scooter, utilitaire, camping-car, poids lourd), en thermique, hybride, hybride rechargeable ou électrique, chacun avec son carnet.',
+                    'Pleins de carburant, recharges électriques (AC ou DC, kWh, pourcentage de charge), relevés de compteur et autres frais : assurance, péage, stationnement...',
+                    'Des entretiens avec échéances et rappels par notification.',
+                    'Les calculs : consommation de plein complet à plein complet, consommation électrique, coût au kilomètre, kilométrage annuel, projection du mois et budget.',
+                    'Des statistiques en graphiques, un export CSV et un rapport PDF.',
+                    'L’import d’un carnet .carnio depuis CarbuFrance et CarbuEspaña, un bouton pour ajouter un plein depuis la fiche d’une station de ces deux apps, et un widget. iPhone et iPad, 45 langues.'
+                ],
+                en: [
+                    'Several vehicles (car, motorcycle, scooter, van, motorhome, heavy truck), combustion, hybrid, plug-in hybrid or electric, each with its own logbook.',
+                    'Fuel fill-ups, EV charging sessions (AC or DC, kWh, charge percentage), odometer readings and other costs: insurance, tolls, parking...',
+                    'Maintenance with due dates and reminders by notification.',
+                    'The calculations: consumption from full tank to full tank, electric consumption, cost per kilometer, yearly mileage, month projection and budget.',
+                    'Statistics in charts, a CSV export and a PDF report.',
+                    'Import of a .carnio logbook from CarbuFrance and CarbuEspaña, a button to add a fill-up from a station page in those two apps, and a widget. iPhone and iPad, 45 languages.'
+                ]
+            },
+            sources: { fr: 'Aucune source de données externe : Carnio ne communique avec aucun serveur du développeur, qui ne voit aucune donnée. Vos véhicules et leur historique restent sur l’appareil et dans votre base iCloud privée ; photos et PDF de factures sur l’appareil seulement.', en: 'No external data source: Carnio talks to no server of the developer, who sees no data. Your vehicles and their history stay on the device and in your private iCloud database; invoice photos and PDFs on the device only.' },
+            business: { fr: 'Gratuite, toutes les fonctions comprises, financée par la publicité Google AdMob (une bannière, et une vidéo récompensée facultative qui offre 6 h sans publicité). Abonnement facultatif « Sans pub » à 0,99 € par mois ou 4,99 € par an, géré par l’App Store et votre compte Apple.', en: 'Free, every feature included, funded by Google AdMob advertising (a banner, and an optional rewarded video that gives 6 hours ad-free). Optional “Ad-Free” subscription at 0.99 € per month or 4.99 € per year, handled by the App Store and your Apple account.' }
+        },
         /* Apple TV seule (`tvSeul` : scène et galerie sans iPhone ni iPad), sur l'App Store. */
         ambiro: {
             name: 'Ambiro', platform: 'ios', tvSeul: true, accent: '#5B6CFF', accent2: '#FF8A6B',
@@ -990,11 +1031,12 @@
             }
         }
     };
-    var IOS_ORDER = ['carbufrance', 'carbuespana', 'irvefrance', 'toilettefrance', 'defibfrance', 'dvffrance', 'telora', 'telzo', 'ambiro', 'netta', 'foyo'];
+    var IOS_ORDER = ['carbufrance', 'carbuespana', 'irvefrance', 'toilettefrance', 'defibfrance', 'dvffrance', 'telora', 'telzo', 'ambiro', 'netta', 'foyo', 'carnio'];
     var FRANCE_ORDER = IOS_ORDER.slice(0, 6);
     var SALON_ORDER = IOS_ORDER.slice(6, 9);
     var PHOTO_ORDER = IOS_ORDER.slice(9, 10);
-    var FOYER_ORDER = IOS_ORDER.slice(10);
+    var FOYER_ORDER = IOS_ORDER.slice(10, 11);
+    var AUTO_ORDER = IOS_ORDER.slice(11);
     /* Les jeux forment leur propre gamme : ni données publiques, ni utilitaire. */
     var GAME_ORDER = ['trouchromatique', 'mongloup', 'chromafight', 'chromatraque', 'chromaferme', 'chromaciel'];
 
@@ -1051,6 +1093,7 @@
         navSalon: { fr: 'Salon', en: 'Living room' },
         navPhoto: { fr: 'Photo', en: 'Photo' },
         navFoyer: { fr: 'Foyer', en: 'Household' },
+        navAuto: { fr: 'Véhicules', en: 'Vehicles' },
         chaptersLabel: { fr: 'Les familles d’applications', en: 'App families' },
         gamesLead: {
             fr: 'Aventure, compagnon virtuel, combat, déduction, ferme et RPG : des jeux avec la petite créature aux grands yeux. Gratuits, et jouables hors connexion.',
@@ -1079,6 +1122,12 @@
         foyerLead: {
             fr: 'Foyo répertorie les abonnements et prélèvements récurrents de la famille : total par mois et par an, échéances à venir, rappels avant chaque prélèvement et avant la fin d’un essai gratuit. Un foyer partagé par iCloud, sans compte ni connexion à une banque.',
             en: 'Foyo lists the family’s recurring subscriptions and direct debits: total per month and per year, upcoming due dates, reminders before every charge and before a free trial ends. A household shared through iCloud, with no account and no bank connection.'
+        },
+        autoEyebrow: { fr: 'iPhone, iPad et iPhone Duo', en: 'iPhone, iPad and iPhone Duo' },
+        autoTitle: { fr: 'Pour la route.', en: 'For the road.' },
+        autoLead: {
+            fr: 'Carnio tient le carnet de bord de vos véhicules : pleins, recharges électriques, entretiens avec échéances et rappels, relevés de compteur et autres frais, avec la consommation, le coût au kilomètre et le budget. Données sur l’appareil et dans votre iCloud, sans compte.',
+            en: 'Carnio keeps the logbook of your vehicles: fuel fill-ups, EV charging sessions, maintenance with due dates and reminders, odometer readings and other costs, with consumption, cost per kilometer and budget. Data on the device and in your iCloud, with no account.'
         },
         onGame: { fr: 'Jeu · iPhone et iPad', en: 'Game · iPhone and iPad' },
         /* Textes sans nombre d'apps : ils restent justes quand une app ou un jeu s'ajoute. */
@@ -1113,14 +1162,14 @@
            n'est affirmé ici qui ne soit dit sur la page d'une application. */
         faq: {
             fr: [
-                ['Les applications sont-elles gratuites ?', 'Presque toutes : Telora s’utilise avec l’abonnement Telora+, après 7 jours d’essai. Les autres applications iPhone et les jeux se téléchargent gratuitement et sont financés par une publicité discrète ; ChromaFight, ChromaTraque, ChromaFerme et ChromaCiel proposent aussi des achats intégrés facultatifs. CarbuFrance, IRVEFrance, ToiletteFrance, DefibFrance et Telzo proposent un abonnement facultatif « Sans pub » (0,99 € par mois ou 4,99 € par an) qui retire toute publicité, Netta le propose à 4,99 € par an, et Foyo propose Foyo Plus (0,99 € par mois ou 6,99 € par an, 7 jours d’essai) : sans publicité, avec la synchronisation iCloud et la création du foyer. Ambiro est sans publicité : l’horloge et les fonds de base sont gratuits, et Ambiro Pro (0,99 € par mois ou 5,99 € par an, 7 jours d’essai) ajoute la météo, la musique, la carte Maison et tous les fonds. Dans les apps avec publicité, une vidéo facultative offre aussi 6 h sans publicité. Les deux utilitaires Mac sont libres et open source, sans publicité ni achat.'],
+                ['Les applications sont-elles gratuites ?', 'Presque toutes : Telora s’utilise avec l’abonnement Telora+, après 7 jours d’essai. Les autres applications iPhone et les jeux se téléchargent gratuitement et sont financés par une publicité discrète ; ChromaFight, ChromaTraque, ChromaFerme et ChromaCiel proposent aussi des achats intégrés facultatifs. CarbuFrance, IRVEFrance, ToiletteFrance, DefibFrance et Telzo proposent un abonnement facultatif « Sans pub » (0,99 € par mois ou 4,99 € par an) qui retire toute publicité, Netta le propose à 4,99 € par an, Carnio propose le même abonnement « Sans pub » (0,99 € par mois ou 4,99 € par an), et Foyo propose Foyo Plus (0,99 € par mois ou 6,99 € par an, 7 jours d’essai) : sans publicité, avec la synchronisation iCloud et la création du foyer. Ambiro est sans publicité : l’horloge et les fonds de base sont gratuits, et Ambiro Pro (0,99 € par mois ou 5,99 € par an, 7 jours d’essai) ajoute la météo, la musique, la carte Maison et tous les fonds. Dans les apps avec publicité, une vidéo facultative offre aussi 6 h sans publicité. Les deux utilitaires Mac sont libres et open source, sans publicité ni achat.'],
                 ['Faut-il créer un compte ?', 'Non. Aucune application ne demande de compte ni d’inscription. Favoris et réglages restent sur votre appareil ; seules la publicité (avec votre accord), les achats et iCloud ou Game Center utilisent le réseau.'],
                 ['Fonctionnent-elles sans connexion ?', 'Les applications de données publiques les mettent en cache pour rester utilisables hors connexion ; Telora lit vos propres sources et a donc besoin du réseau. Les jeux se jouent hors connexion ; seuls la publicité, iCloud, Game Center et, pour ChromaFight, ChromaTraque, ChromaFerme et ChromaCiel, les achats utilisent le réseau.'],
                 ['Sur quels appareils ?', 'iPhone et iPad sous iOS 18 ou plus pour les applications et les jeux, iPhone Duo compris, ouvert comme fermé. ToiletteFrance aussi sur Apple Watch (watchOS 11 ou plus), Telora aussi sur Apple TV (tvOS 18 ou plus), Ambiro sur Apple TV seulement (tvOS 18 ou plus). Mac Apple Silicon sous macOS 26 ou 27 pour MacTuner et DNSTuner.'],
                 ['Où trouver de l’aide ?', 'Chaque application a sa page d’assistance. Je réponds moi-même à chaque message, en général sous 24 à 48 heures.']
             ],
             en: [
-                ['Are the apps free?', 'Almost all of them: Telora is used with the Telora+ subscription, after a 7-day trial. The other iPhone apps and the games are free to download and funded by discreet advertising; ChromaFight, ChromaTraque, ChromaFerme and ChromaCiel also offer optional in-app purchases. CarbuFrance, IRVEFrance, ToiletteFrance, DefibFrance and Telzo offer an optional “Ad-Free” subscription that removes every ad, Netta offers it as a yearly subscription, and Foyo offers Foyo Plus (monthly or yearly, 7-day trial): no ads, with iCloud sync and creating the household. Ambiro has no ads: the clock and the basic backgrounds are free, and Ambiro Pro (monthly or yearly, 7-day trial) adds the weather, music, the Home card and every background. In the apps with ads, an optional video also gives 6 hours ad-free. The two Mac utilities are free and open source, with no ads and no purchases.'],
+                ['Are the apps free?', 'Almost all of them: Telora is used with the Telora+ subscription, after a 7-day trial. The other iPhone apps and the games are free to download and funded by discreet advertising; ChromaFight, ChromaTraque, ChromaFerme and ChromaCiel also offer optional in-app purchases. CarbuFrance, IRVEFrance, ToiletteFrance, DefibFrance and Telzo offer an optional “Ad-Free” subscription that removes every ad, Netta offers it as a yearly subscription, Carnio offers the same “Ad-Free” subscription (0.99 € per month or 4.99 € per year), and Foyo offers Foyo Plus (monthly or yearly, 7-day trial): no ads, with iCloud sync and creating the household. Ambiro has no ads: the clock and the basic backgrounds are free, and Ambiro Pro (monthly or yearly, 7-day trial) adds the weather, music, the Home card and every background. In the apps with ads, an optional video also gives 6 hours ad-free. The two Mac utilities are free and open source, with no ads and no purchases.'],
                 ['Do I need an account?', 'No. None of the apps asks for an account or a sign-up. Favorites and settings stay on your device; only advertising (with your consent), purchases, and iCloud or Game Center use the network.'],
                 ['Do they work offline?', 'The public data apps cache it so they keep working offline; Telora plays your own sources and therefore needs the network. The games play offline; only advertising, iCloud, Game Center and, for ChromaFight, ChromaTraque, ChromaFerme and ChromaCiel, purchases use the network.'],
                 ['Which devices?', 'iPhone and iPad on iOS 18 or later for the apps and games, iPhone Duo included, open or closed. ToiletteFrance on Apple Watch too (watchOS 11 or later), Telora on Apple TV too (tvOS 18 or later), Ambiro on Apple TV only (tvOS 18 or later). Apple Silicon Macs on macOS 26 or 27 for MacTuner and DNSTuner.'],
@@ -1185,6 +1234,7 @@
         phone: '<rect x="6.5" y="2.5" width="11" height="19" rx="2.8"/><path d="M10.5 18.5h3"/>',
         laptop: '<rect x="4.5" y="5" width="15" height="10.5" rx="1.6"/><path d="M2.5 19h19"/>',
         globe: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>',
+        car: '<path d="M4.5 15.5V12l1.7-4.1A2 2 0 0 1 8 6.7h8a2 2 0 0 1 1.8 1.2L19.5 12v3.5"/><path d="M3.5 12h17v6a1 1 0 0 1-1 1H18v-1.5H6V19H4.5a1 1 0 0 1-1-1v-6Z"/><circle cx="7.5" cy="15" r=".7"/><circle cx="16.5" cy="15" r=".7"/>',
         star: '<path d="m12 3.5 2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.8l-5.2 2.8 1-5.8-4.3-4.1 5.9-.9L12 3.5Z"/>'
     };
 
@@ -1322,6 +1372,7 @@
         ['salon', V.navSalon, SALON_ORDER],
         ['photo', V.navPhoto, PHOTO_ORDER],
         ['foyer', V.navFoyer, FOYER_ORDER],
+        ['auto', V.navAuto, AUTO_ORDER],
         ['mac', T.navMac, MAC_ORDER]
     ];
     var TOUTES = GAME_ORDER.concat(IOS_ORDER, MAC_ORDER);
@@ -1334,6 +1385,7 @@
         salon: '<rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8.5 20.5h7M12 17v3.5"/>',
         photo: '<rect x="3.5" y="5.5" width="17" height="14" rx="2.5"/><circle cx="9" cy="10.5" r="1.6"/><path d="m4 17.5 4.6-4.4 3.4 3.1 2.7-2.4 5.3 4.6"/>',
         foyer: '<circle cx="9" cy="8.5" r="3"/><path d="M3.5 19c.6-3.2 2.7-5 5.5-5s4.9 1.8 5.5 5"/><circle cx="17" cy="9.5" r="2.4"/><path d="M16 14.3c2.6-.2 4.5 1.4 5 4.2"/>',
+        auto: '<path d="M4.5 15.5V12l1.7-4.1A2 2 0 0 1 8 6.7h8a2 2 0 0 1 1.8 1.2L19.5 12v3.5"/><path d="M3.5 12h17v6a1 1 0 0 1-1 1H18v-1.5H6V19H4.5a1 1 0 0 1-1-1v-6Z"/><circle cx="7.5" cy="15" r=".7"/><circle cx="16.5" cy="15" r=".7"/>',
         mac: '<rect x="4.5" y="5" width="15" height="10.5" rx="1.6"/><path d="M2.5 19h19"/>',
         about: '<circle cx="12" cy="8.5" r="3.5"/><path d="M5 20c.8-3.6 3.6-5.6 7-5.6s6.2 2 7 5.6"/>',
         contact: '<rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m3.5 7 8.5 6 8.5-6"/>',
@@ -1427,6 +1479,7 @@
         salon: [V.salonEyebrow, V.salonTitle, V.salonLead],
         photo: [V.photoEyebrow, V.photoTitle, V.photoLead],
         foyer: [V.foyerEyebrow, V.foyerTitle, V.foyerLead],
+        auto: [V.autoEyebrow, V.autoTitle, V.autoLead],
         mac: [V.onMac, T.macTitle, T.macLead]
     };
 
@@ -1587,7 +1640,7 @@
        --------------------------------------------------------------------- */
 
     /* Les familles en bandes alternées, sombres et claires : chacune son chapitre et sa grille bento. */
-    var FONDS = { jeux: ' is-dark', france: ' is-alt', salon: ' is-dark', photo: '', foyer: ' is-alt', mac: ' is-dark' };
+    var FONDS = { jeux: ' is-dark', france: ' is-alt', salon: ' is-dark', photo: '', foyer: ' is-alt', auto: '', mac: ' is-dark' };
 
     /* Colonnes de chaque carte sur six, pour que chaque rangée soit pleine : un produit en paysage prend toute la
        largeur ; les autres vont par trois, les premiers par deux quand le compte ne tombe pas juste. Sur tablette
