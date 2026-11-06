@@ -78,11 +78,24 @@
        reste le repli des navigateurs anciens et des aperçus de réseaux sociaux.
        `picture { display: contents }` : l'<img> reste la boîte.
        --------------------------------------------------------------------- */
+    /* Mode Isolement d'iOS : Safari annonce l'AVIF et le WebP mais les affiche cassés (bogues WebKit 266988 et 291614).
+       Un essai de décodage écarte le format refusé : ses sources sont retirées, l'original prend le relais. */
+    var refuse = {};
+    ['avif', 'webp'].forEach(function (ext) {
+        var essai = new Image();
+        essai.onerror = function () {
+            refuse[ext] = true;
+            document.querySelectorAll('source[type="image/' + ext + '"]').forEach(function (s) { s.remove(); });
+        };
+        essai.src = './assets/img/telora.' + ext;
+    });
+    function source(ext, srcset, sizes) {
+        return refuse[ext] ? '' : '<source type="image/' + ext + '" srcset="' + srcset + '"' + (sizes ? ' sizes="' + sizes + '"' : '') + '>';
+    }
+
     function picture(src, attrs) {
         var base = src.replace(/\.(png|jpe?g)$/i, '');
-        return '<picture>' +
-            '<source type="image/avif" srcset="' + base + '.avif">' +
-            '<source type="image/webp" srcset="' + base + '.webp">' +
+        return '<picture>' + source('avif', base + '.avif') + source('webp', base + '.webp') +
             '<img src="' + src + '"' + (attrs || '') + '>' +
             '</picture>';
     }
@@ -107,9 +120,7 @@
         var f = FORMATS[format];
         var base = './assets/img/shots/' + cle + f[0] + lang + '-' + n;
         function jeu(ext) { return base + '-' + f[1] + '.' + ext + ' ' + f[1] + 'w, ' + base + '-' + f[2] + '.' + ext + ' ' + f[2] + 'w'; }
-        return '<picture>' +
-            '<source type="image/avif" srcset="' + jeu('avif') + '" sizes="' + sizes + '">' +
-            '<source type="image/webp" srcset="' + jeu('webp') + '" sizes="' + sizes + '">' +
+        return '<picture>' + source('avif', jeu('avif'), sizes) + source('webp', jeu('webp'), sizes) +
             '<img src="' + base + '-' + f[3] + '.jpg" width="' + f[4] + '" height="' + f[5] + '" alt="' + esc(alt) + '"' +
             (charge ? ' fetchpriority="high"' : ' loading="lazy"') + ' decoding="async">' +
             '</picture>';
