@@ -635,8 +635,7 @@
                 en: ['Everything the family pays', 'The next 12 months of due dates', 'Reminded before every charge', 'A household shared through iCloud', 'Your categories and your accounts']
             }
         },
-        /* Pas encore sur l'App Store (`store: ''`). Aucune capture d'écran encore : ni `shots` ni `storeShots`, donc ni galerie ni
-           légendes ; à ajouter avec les visuels (voir Foyo). */
+        /* Pas encore sur l'App Store (`store: ''`). */
         carnio: {
             name: 'Carnio', platform: 'ios', accent: '#0071E3', accent2: '#FF9500',
             store: '',
@@ -670,9 +669,14 @@
                 ]
             },
             sources: { fr: 'Aucune source de données externe : Carnio ne communique avec aucun serveur du développeur, qui ne voit aucune donnée. Vos véhicules et leur historique restent sur l’appareil et dans votre base iCloud privée ; photos et PDF de factures sur l’appareil seulement.', en: 'No external data source: Carnio talks to no server of the developer, who sees no data. Your vehicles and their history stay on the device and in your private iCloud database; invoice photos and PDFs on the device only.' },
+            shots: { ipad: [0, 2, 3, 1], duo: [0, 1, 2, 3, 4] },
+            storeShots: {
+                fr: ['Vos véhicules en un coup d’œil', 'Vos chiffres sans calcul', 'Thermique, hybride ou électrique', 'Chaque échéance sous contrôle', 'Pleins, entretiens et frais'],
+                en: ['Your vehicles at a glance', 'Your numbers, worked out', 'Combustion, hybrid or electric', 'Every due date under control', 'Fill-ups, maintenance and expenses']
+            },
             business: { fr: 'Gratuite, toutes les fonctions comprises, financée par la publicité Google AdMob (une bannière, et une vidéo récompensée facultative qui offre 6 h sans publicité). Abonnement facultatif « Sans pub » à 0,99 € par mois ou 4,99 € par an, géré par l’App Store et votre compte Apple.', en: 'Free, every feature included, funded by Google AdMob advertising (a banner, and an optional rewarded video that gives 6 hours ad-free). Optional “Ad-Free” subscription at 0.99 € per month or 4.99 € per year, handled by the App Store and your Apple account.' }
         },
-        /* Pas encore sur l'App Store (`store: ''`). Aucune capture d'écran encore : ni `shots` ni `storeShots`. */
+        /* Pas encore sur l'App Store (`store: ''`). */
         mondio: {
             name: 'Mondio', platform: 'ios', accent: '#086DAD', accent2: '#FF9500',
             store: '',
@@ -706,7 +710,12 @@
                 ]
             },
             sources: { fr: 'Données de voyage embarquées dans l’app (Wikidata, Natural Earth, Nager.Date, Wikipédia pour les visas, sous licence CC BY-SA 4.0), cours de référence de la BCE, détail et licences dans Réglages › Sources et licences. Mondio ne communique avec aucun serveur du développeur, qui ne voit aucune donnée : vos pays visités restent sur l’appareil et dans votre base iCloud privée.', en: 'Travel data bundled in the app (Wikidata, Natural Earth, Nager.Date, Wikipedia for visas under the CC BY-SA 4.0 license), ECB reference rates, details and licenses in Settings › Sources and licenses. Mondio talks to no server of the developer, who sees no data: your visited countries stay on the device and in your private iCloud database.' },
-            business: { fr: 'Gratuite, toutes les fonctions comprises, financée par la publicité Google AdMob (une bannière, et une vidéo récompensée facultative qui offre 6 h sans publicité). Abonnement facultatif « Sans pub » à 0,99 € par mois ou 4,99 € par an, géré par l’App Store et votre compte Apple.', en: 'Free, every feature included, funded by Google AdMob advertising (a banner, and an optional rewarded video that gives 6 hours ad-free). Optional “Ad-Free” subscription at 0.99 € per month or 4.99 € per year, handled by the App Store and your Apple account.' }
+            business: { fr: 'Gratuite, toutes les fonctions comprises, financée par la publicité Google AdMob (une bannière, et une vidéo récompensée facultative qui offre 6 h sans publicité). Abonnement facultatif « Sans pub » à 0,99 € par mois ou 4,99 € par an, géré par l’App Store et votre compte Apple.', en: 'Free, every feature included, funded by Google AdMob advertising (a banner, and an optional rewarded video that gives 6 hours ad-free). Optional “Ad-Free” subscription at 0.99 € per month or 4.99 € per year, handled by the App Store and your Apple account.' },
+            shots: { ipad: [0, 3, 1, 2], duo: [0, 1, 2, 3, 4] },
+            storeShots: {
+                fr: ['Le monde dans votre poche', 'Votre passeport, vos destinations', 'Convertissez en un instant', 'Grattez la carte du monde', 'Pays et régions visités'],
+                en: ['The world in your pocket', 'Your passport, your destinations', 'Convert in an instant', 'Scratch off your world map', 'Countries and regions visited']
+            }
         },
         /* Apple TV seule (`tvSeul` : scène et galerie sans iPhone ni iPad), sur l'App Store. */
         ambiro: {
