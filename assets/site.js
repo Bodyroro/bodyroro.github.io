@@ -79,15 +79,16 @@
        `picture { display: contents }` : l'<img> reste la boîte.
        --------------------------------------------------------------------- */
     /* Mode Isolement d'iOS : Safari annonce l'AVIF et le WebP mais les affiche cassés (bogues WebKit 266988 et 291614).
-       Un essai de décodage écarte le format refusé : ses sources sont retirées, l'original prend le relais. */
+       Un essai de décodage écarte le format refusé : ses sources sont retirées, l'original prend le relais. `decode()`
+       échoue aussi quand le fichier se charge mais ne se décode pas, cas où `onerror` ne se déclenche pas toujours. */
     var refuse = {};
     ['avif', 'webp'].forEach(function (ext) {
         var essai = new Image();
-        essai.onerror = function () {
+        essai.src = './assets/img/telora.' + ext;
+        essai.decode().catch(function () {
             refuse[ext] = true;
             document.querySelectorAll('source[type="image/' + ext + '"]').forEach(function (s) { s.remove(); });
-        };
-        essai.src = './assets/img/telora.' + ext;
+        });
     });
     function source(ext, srcset, sizes) {
         return refuse[ext] ? '' : '<source type="image/' + ext + '" srcset="' + srcset + '"' + (sizes ? ' sizes="' + sizes + '"' : '') + '>';
