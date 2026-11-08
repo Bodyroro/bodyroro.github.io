@@ -87,9 +87,21 @@
         essai.src = './assets/img/telora.' + ext;
         essai.decode().catch(function () {
             refuse[ext] = true;
-            document.querySelectorAll('source[type="image/' + ext + '"]').forEach(function (s) { s.remove(); });
+            document.querySelectorAll('source[type="image/' + ext + '"]').forEach(function (s) {
+                var img = s.parentNode.querySelector('img');
+                s.remove();
+                if (img && img.getAttribute('src')) img.src = img.getAttribute('src');
+            });
         });
     });
+    /* Une image de <picture> en erreur (format que le navigateur annonce sans le charger) : toutes les sources du
+       <picture> sont retirées et l'original est rechargé. WebKit ne rebascule pas toujours seul à la suppression d'une source. */
+    document.addEventListener('error', function (e) {
+        var img = e.target, pic = img && img.tagName === 'IMG' && img.parentNode;
+        if (!pic || pic.tagName !== 'PICTURE' || !pic.querySelector('source')) return;
+        pic.querySelectorAll('source').forEach(function (s) { s.remove(); });
+        img.src = img.getAttribute('src');
+    }, true);
     function source(ext, srcset, sizes) {
         return refuse[ext] ? '' : '<source type="image/' + ext + '" srcset="' + srcset + '"' + (sizes ? ' sizes="' + sizes + '"' : '') + '>';
     }
