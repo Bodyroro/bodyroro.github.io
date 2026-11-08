@@ -268,7 +268,7 @@
         // autres que le français et l'anglais plus bas ; sans publicité (`noAds`), abonnement Telora+ ; textes
         // dans `appTypeText`.
         telora: {
-            name: 'Telora', publisher: 'BodyCorp', email: 'contact@bodycorp.com', icon: 'telora.png', type: 'media', status: 'available', store: appStore + 'telora/id6821877987', premium: true, noAds: true, webp: false, platform: 'iOS 18+ · iPadOS 18+ · tvOS 18+',
+            name: 'Telora', publisher: 'BodyCorp', email: 'contact@bodycorp.fr', icon: 'telora.png', type: 'media', status: 'available', store: appStore + 'telora/id6821877987', premium: true, noAds: true, webp: false, platform: 'iOS 18+ · iPadOS 18+ · tvOS 18+',
             updated: '2026-10-28',
             description: {
                 fr: 'Lecteur multimédia pour iPhone, iPad et Apple TV : vos films, séries et chaînes, depuis vos propres sources (liste de lecture, Plex, Jellyfin, Emby, NAS, fichiers). Telora ne fournit aucun contenu.',
